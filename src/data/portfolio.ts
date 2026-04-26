@@ -1,7 +1,7 @@
 export type ProfileLink = {
   label: string;
   href: string;
-  kind: 'github' | 'email' | 'linkedin' | 'blog';
+  kind: 'github' | 'email' | 'blog';
 };
 
 export type Profile = {
@@ -45,13 +45,13 @@ export type Experience = {
 };
 
 export const profile: Profile = {
-  name: 'GrownDombo',
-  role: 'Frontend / Full-Stack Developer',
-  headline: '사용자의 흐름을 제품의 구조로 바꾸는 개발자',
+  name: '최준영 / GrownDombo',
+  role: 'C# / C++ 기반 Windows Software Developer',
+  headline: '제조 현장의 Windows 도구와 장비 소프트웨어를 개선하는 개발자',
   summary:
-    '문제를 작게 분해하고, 빠르게 검증 가능한 인터페이스로 연결하는 일을 좋아합니다. 이 포트폴리오는 프로젝트, 기술 선택, 협업 경험을 채용 담당자가 빠르게 살펴볼 수 있도록 구성했습니다.',
+    'C# / C++ 기반 Windows 프로그램을 개발하며, 반도체·SMT 제조라인에서 사용되는 검사 장비 소프트웨어의 개발 및 유지보수 경험이 있습니다. 공정 자동화, 생산 시스템 연동, UI 개선, 성능 최적화처럼 현장의 흐름을 안정적인 소프트웨어로 연결하는 일에 집중합니다.',
   location: 'Seoul, Korea',
-  availability: '새로운 기회와 협업을 찾고 있습니다',
+  availability: 'Windows 애플리케이션과 제조 자동화 영역의 기회를 찾고 있습니다',
   links: [
     {
       label: 'GitHub',
@@ -60,17 +60,12 @@ export const profile: Profile = {
     },
     {
       label: 'Email',
-      href: 'mailto:hello@example.com',
+      href: 'mailto:yjc0455@naver.com',
       kind: 'email',
     },
     {
-      label: 'LinkedIn',
-      href: '#',
-      kind: 'linkedin',
-    },
-    {
       label: 'Blog',
-      href: '#',
+      href: 'https://growndombo.tistory.com/',
       kind: 'blog',
     },
   ],
@@ -78,94 +73,112 @@ export const profile: Profile = {
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: 'Product Frontend',
-    description: '사용자가 반복해서 쓰는 화면을 빠르고 안정적으로 만듭니다.',
-    skills: ['React', 'TypeScript', 'Vite', 'Responsive UI', 'Accessibility'],
+    title: 'Languages',
+    description: 'Windows 데스크톱 도구와 성능 테스트, 업무 자동화 구현에 사용하는 언어입니다.',
+    skills: ['C#', 'C++', 'Java', 'Python'],
   },
   {
-    title: 'Application Logic',
-    description: '상태, 데이터 흐름, API 경계를 명확하게 설계합니다.',
-    skills: ['Node.js', 'REST API', 'Auth Flow', 'Data Modeling', 'Error Handling'],
+    title: 'Windows / Application',
+    description: '사용자가 반복해서 쓰는 업무 도구와 WinForms 기반 UI를 구현합니다.',
+    skills: ['.NET Framework', 'WinForms', 'ClosedXML', 'Visual Studio', 'Installer Project'],
   },
   {
-    title: 'Delivery',
-    description: '작동하는 결과물을 꾸준히 배포하고 개선하는 흐름을 챙깁니다.',
-    skills: ['GitHub Actions', 'Testing', 'Performance', 'Documentation', 'Code Review'],
+    title: 'Domain / Infra',
+    description: '제조라인 소프트웨어의 데이터, 장비 연동, 영상 처리 흐름을 다룹니다.',
+    skills: ['MSSQL', 'MariaDB', 'SQLite', 'iBATIS.NET', 'SECS/GEM', 'OpenCV'],
   },
 ];
 
 export const projects: Project[] = [
   {
-    title: 'TaskFlow Dashboard',
+    title: 'WinFormsCustomControls',
     summary:
-      '팀의 업무 흐름과 병목을 한눈에 파악하는 운영 대시보드 콘셉트입니다. 작업 상태, 우선순위, 담당자별 진행 상황을 카드와 차트로 정리합니다.',
-    role: 'UI 설계, 상태 구조, 반응형 화면 구현',
-    tech: ['React', 'TypeScript', 'Dashboard UX', 'Charts'],
+      '.NET Framework 4.8 기반 WinForms 프로젝트에서 반복적으로 쓰는 UI 패턴을 커스텀 컨트롤 DLL로 묶은 라이브러리입니다. 데모 프로젝트를 통해 각 컨트롤의 동작을 확인할 수 있도록 구성했습니다.',
+    role: '커스텀 컨트롤 설계, WinForms UI 패턴 재사용 구조화',
+    tech: ['C#', '.NET Framework 4.8', 'WinForms', 'System.Drawing'],
     highlights: [
-      '복잡한 업무 상태를 스캔 가능한 정보 구조로 재배치',
-      '데스크톱과 모바일에서 같은 우선순위가 유지되는 레이아웃',
-      '필터, 상태 배지, 핵심 지표를 한 화면에 통합',
+      'ColorComboBox, CheckBoxComboBox, CheckableGroupBox 등 반복 UI 요소 구현',
+      'DoubleBufferedDataGridView로 많은 행 표시 시 깜빡임을 줄이는 그리드 제공',
+      'DLL 직접 참조와 솔루션 내 프로젝트 참조 모두 가능한 사용 흐름 정리',
     ],
     links: [
-      { label: 'Repository', href: '#' },
-      { label: 'Live Demo', href: '#' },
+      {
+        label: 'Repository',
+        href: 'https://github.com/GrownDombo/WinFormsCustomControls',
+      },
     ],
-    image: '/assets/project-taskflow.png',
-    status: 'Case study draft',
+    image: '/assets/project-winforms-custom-controls.png',
+    status: '.NET Framework 4.8',
   },
   {
-    title: 'Code Review Notes',
+    title: 'ExcelConditionPainter',
     summary:
-      '리뷰 코멘트와 개선 이력을 정리하는 개발자 노트 앱 콘셉트입니다. 반복되는 피드백을 패턴화해 다음 구현에 반영할 수 있게 돕습니다.',
-    role: '정보 구조, 컴포넌트 설계, 로컬 데이터 흐름',
-    tech: ['React', 'Local Storage', 'Design System', 'Search'],
+      '사용자 정의 조건에 따라 Excel 데이터를 검색하고 강조 표시한 뒤, 결과를 새 파일로 내보낼 수 있는 Windows Forms 기반 데스크톱 도구입니다. 단순 필터링으로 부족한 데이터 정리 과정을 보조하기 위해 만들었습니다.',
+    role: '조건 설정 UI, Excel 처리 흐름, Export 기능 구현',
+    tech: ['C#', 'WinForms', 'ClosedXML', 'Visual Studio Setup Project'],
     highlights: [
-      '리뷰 유형별 태그와 검색 흐름 설계',
-      '작은 컴포넌트 단위로 재사용 가능한 UI 구성',
-      '학습 기록과 액션 아이템을 분리해 추적성 강화',
+      '중복값, 수량, 옵션 등 기준 검색과 AND / OR 조건 조합 지원',
+      '조건 우선순위와 Font / Fill 색상 지정으로 결과를 시각적으로 구분',
+      '원본을 덮어쓰지 않고 `_Painted.xlsx` 결과 파일로 저장하는 흐름 제공',
     ],
     links: [
-      { label: 'Repository', href: '#' },
-      { label: 'Live Demo', href: '#' },
+      {
+        label: 'Repository',
+        href: 'https://github.com/GrownDombo/ExcelConditionPainter',
+      },
+      {
+        label: 'Blog Post',
+        href: 'https://growndombo.tistory.com/entry/Excel-%EC%A1%B0%EA%B1%B4%EB%B6%80-%ED%91%9C%EC%8B%9C-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EC%82%AC%EC%9A%A9%EB%B2%95',
+      },
     ],
-    image: '/assets/project-review-notes.png',
-    status: 'Ready to customize',
+    image: '/assets/project-excel-condition-painter.png',
+    status: 'Desktop Utility',
   },
   {
-    title: 'Launch Metrics',
+    title: 'CPUMemoryStressTest',
     summary:
-      '사이드 프로젝트 출시 후 핵심 지표를 관찰하는 분석 화면 콘셉트입니다. 방문, 전환, 리텐션 신호를 간결하게 비교합니다.',
-    role: '프로토타입 제작, 지표 카드, 시각적 피드백',
-    tech: ['TypeScript', 'Analytics UX', 'CSS Grid', 'Automation'],
+      'CPU와 메모리 자원에 강한 부하를 발생시켜 단일 처리와 병렬 처리의 차이, 알고리즘별 부하 특성, 메모리 사용 패턴을 비교할 수 있도록 만든 C++ 콘솔 스트레스 테스트 도구입니다.',
+    role: '테스트 시나리오 구성, C++ 재구현, CSV 결과 로깅',
+    tech: ['C++', 'WinAPI', 'STL', 'Visual Studio 2022'],
     highlights: [
-      '초기 제품에 필요한 지표만 남기는 화면 밀도 조절',
-      '변화량과 다음 행동을 함께 보여주는 카드 패턴',
-      'GitHub Pages 배포를 염두에 둔 정적 사이트 구조',
+      '수학 연산, 재귀, 소수 탐색, 정렬, Mandelbrot, 메모리 할당 시나리오 구성',
+      '동일 작업을 단일 처리와 병렬 처리로 나누어 실행 시간과 특성을 비교',
+      '반복 실행 결과를 CSV로 기록해 누적 비교가 가능하도록 구성',
     ],
     links: [
-      { label: 'Repository', href: '#' },
-      { label: 'Live Demo', href: '#' },
+      {
+        label: 'Repository',
+        href: 'https://github.com/GrownDombo/CPUMemoryStressTest',
+      },
     ],
-    image: '/assets/project-launch-metrics.png',
-    status: 'Placeholder visual',
+    image: '/assets/project-cpu-memory-stress-test.png',
+    status: 'C++ Stress Tool',
   },
 ];
 
 export const experiences: Experience[] = [
   {
-    period: '2026',
-    title: 'Portfolio Refresh',
-    organization: 'Personal Project',
+    period: 'Professional',
+    title: '검사 장비 소프트웨어 개발 및 유지보수',
+    organization: 'Semiconductor / SMT Manufacturing Line',
     description:
-      '채용 담당자가 프로젝트와 기술 역량을 빠르게 확인할 수 있도록 포트폴리오 정보 구조를 재정리했습니다.',
-    outcomes: ['React/Vite 기반 정적 배포 구조 설계', '프로젝트 갤러리형 섹션 구성', '콘텐츠 데이터 분리'],
+      '반도체·SMT 제조라인에서 사용되는 검사 장비 소프트웨어를 개발하고 유지보수하며, 현장 운영에 필요한 안정성과 사용성을 개선했습니다.',
+    outcomes: ['C# / C++ 기반 Windows 프로그램 개발', '장비 소프트웨어 UI 개선', '성능 최적화 및 유지보수 대응'],
   },
   {
-    period: '2025',
-    title: 'Project-Based Learning',
-    organization: 'Independent Study',
+    period: 'Professional',
+    title: '공정 자동화 및 생산 시스템 연동',
+    organization: 'Manufacturing Software',
     description:
-      '프론트엔드 구현, API 연동, 자동화 배포를 작은 프로젝트 단위로 반복하며 실전 흐름을 정리했습니다.',
-    outcomes: ['TypeScript 컴포넌트 설계 연습', 'GitHub 기반 협업 워크플로 정리', '반응형 UI 개선'],
+      '공정 자동화와 생산 시스템 연동 흐름을 다루며, 장비·데이터·사용자 화면 사이의 연결을 안정적으로 구성하는 경험을 쌓았습니다.',
+    outcomes: ['생산 시스템 데이터 연동', 'MSSQL / MariaDB / SQLite 활용', 'SECS/GEM 및 OpenCV 기반 도메인 경험'],
+  },
+  {
+    period: 'Open Source',
+    title: 'Windows 도구와 학습 프로젝트 정리',
+    organization: 'GitHub / Technical Blog',
+    description:
+      '업무에서 반복되는 UI 패턴과 데이터 처리 문제를 개인 프로젝트로 정리하고, 사용 방법과 설계 의도를 README와 블로그에 기록했습니다.',
+    outcomes: ['WinForms 커스텀 컨트롤 라이브러리 공개', 'Excel 조건부 표시 도구 제작', 'C++ 성능 테스트 도구 구현'],
   },
 ];
