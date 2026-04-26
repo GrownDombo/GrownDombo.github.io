@@ -3,7 +3,6 @@ import {
   BriefcaseBusiness,
   FileText,
   Github,
-  Linkedin,
   Mail,
   MapPin,
   Sparkles,
@@ -21,7 +20,6 @@ const navItems = [
 const linkIcons: Record<ProfileLink['kind'], typeof Github> = {
   github: Github,
   email: Mail,
-  linkedin: Linkedin,
   blog: FileText,
 };
 
@@ -85,25 +83,26 @@ function App() {
         </section>
 
         <section className="intro-strip" aria-label="포트폴리오 핵심 관점">
-          <span>Product-minded UI</span>
-          <span>Readable TypeScript</span>
-          <span>Deployable Workflows</span>
+          <span>Windows Desktop Apps</span>
+          <span>Manufacturing Automation</span>
+          <span>Performance & Tools</span>
         </section>
 
         <section className="section two-column" id="about" aria-labelledby="about-title">
           <div>
             <p className="section-kicker">About</p>
-            <h2 id="about-title">문제 정의부터 배포 가능한 화면까지 연결합니다.</h2>
+            <h2 id="about-title">Windows 프로그램과 제조 현장의 업무 흐름을 안정적으로 연결합니다.</h2>
           </div>
           <div className="section-body">
             <p>
-              좋은 포트폴리오는 화려한 장식보다 의사결정의 흔적을 잘 보여준다고 믿습니다. 그래서 이
-              사이트는 프로젝트의 목적, 맡은 역할, 기술 선택, 개선 포인트를 빠르게 비교할 수 있는
-              구조로 만들었습니다.
+              제조라인에서 쓰이는 소프트웨어는 기능 구현만큼이나 안정성, 유지보수성, 현장 사용성이
+              중요하다고 생각합니다. C# / C++ 기반 Windows 프로그램을 중심으로 장비 소프트웨어와
+              업무 보조 도구를 만들고 다듬어 왔습니다.
             </p>
             <p>
-              실제 정보로 교체할 때는 각 프로젝트의 배경, 해결한 문제, 가장 크게 배운 점을 더하면
-              채용형 포트폴리오로 바로 확장할 수 있습니다.
+              이 포트폴리오는 GitHub에 정리한 프로젝트를 바탕으로, 반복 UI를 재사용 가능한 컨트롤로
+              묶는 방식, Excel 데이터를 업무 흐름에 맞게 가공하는 방식, 성능 테스트를 반복 가능한
+              도구로 만드는 방식을 보여줍니다.
             </p>
           </div>
         </section>
@@ -111,7 +110,7 @@ function App() {
         <section className="section" id="skills" aria-labelledby="skills-title">
           <div className="section-heading">
             <p className="section-kicker">Skills</p>
-            <h2 id="skills-title">제품을 만들고 다듬는 데 필요한 기술 묶음</h2>
+            <h2 id="skills-title">Windows 애플리케이션 개발에 맞춘 기술 스택</h2>
           </div>
           <div className="skill-grid">
             {skillGroups.map((group) => (
@@ -132,10 +131,11 @@ function App() {
           <div className="section-heading projects-heading">
             <div>
               <p className="section-kicker">Projects</p>
-              <h2 id="projects-title">대표 프로젝트 갤러리</h2>
+              <h2 id="projects-title">GitHub 대표 프로젝트</h2>
             </div>
             <p>
-              각 카드는 실제 스크린샷과 링크로 교체할 수 있도록 데이터 기반으로 구성되어 있습니다.
+              실제 저장소 README와 구현 목적을 바탕으로 문제, 역할, 기술, 결과를 빠르게 비교할 수
+              있게 정리했습니다.
             </p>
           </div>
 
@@ -179,7 +179,7 @@ function App() {
         <section className="section two-column" id="experience" aria-labelledby="experience-title">
           <div>
             <p className="section-kicker">Experience</p>
-            <h2 id="experience-title">학습과 프로젝트 경험을 결과 중심으로 정리합니다.</h2>
+            <h2 id="experience-title">장비 소프트웨어와 개인 프로젝트 경험을 결과 중심으로 정리합니다.</h2>
           </div>
           <div className="timeline">
             {experiences.map((item) => (
@@ -203,7 +203,7 @@ function App() {
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <div>
             <p className="section-kicker">Contact</p>
-            <h2 id="contact-title">프로젝트와 협업 이야기를 나눌 준비가 되어 있습니다.</h2>
+            <h2 id="contact-title">Windows 도구, 자동화, 유지보수 경험을 기반으로 이야기할 준비가 되어 있습니다.</h2>
           </div>
           <div className="contact-links">
             {profile.links.map((link) => {
