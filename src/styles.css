@@ -34,6 +34,17 @@ body {
     linear-gradient(180deg, #fbfbf8 0%, #f2f6f1 45%, #fbfbf8 100%);
 }
 
+h1,
+h2,
+h3,
+p,
+li,
+a,
+span {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -119,11 +130,16 @@ main {
 
 .hero-section {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 500px);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
   align-items: center;
-  gap: clamp(32px, 5vw, 72px);
-  min-height: calc(88vh - 74px);
-  padding: 52px 0 34px;
+  gap: clamp(28px, 5vw, 64px);
+  min-height: calc(76vh - 74px);
+  padding: 46px 0 28px;
+}
+
+.compact-hero {
+  min-height: auto;
+  padding-bottom: 64px;
 }
 
 .hero-copy {
@@ -148,12 +164,12 @@ main {
 .contact-section h2 {
   margin: 0;
   max-width: 850px;
-  font-size: clamp(2.55rem, 6vw, 5.9rem);
-  line-height: 0.98;
+  font-size: clamp(2.35rem, 4.7vw, 4.8rem);
+  line-height: 1.06;
 }
 
 .hero-summary {
-  max-width: 660px;
+  max-width: 760px;
   margin: 24px 0 0;
   color: var(--muted);
   font-size: clamp(1.05rem, 1.5vw, 1.28rem);
@@ -263,6 +279,52 @@ main {
   text-align: right;
 }
 
+.hero-card {
+  display: grid;
+  gap: 16px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 92%), rgb(234 242 232 / 92%)),
+    #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.hero-card > span {
+  color: var(--forest);
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.hero-card strong {
+  font-size: clamp(3.4rem, 7vw, 5.5rem);
+  line-height: 0.95;
+}
+
+.hero-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.hero-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hero-card-tags span {
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: #ffffff;
+  background: var(--forest);
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
 .intro-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -286,7 +348,12 @@ main {
 }
 
 .section {
-  padding: 94px 0;
+  padding: 78px 0;
+  border-top: 1px solid var(--line);
+}
+
+.metrics-section {
+  padding: 34px 0 78px;
   border-top: 1px solid var(--line);
 }
 
@@ -309,8 +376,11 @@ main {
 
 .section-body p,
 .projects-heading p,
+.section-heading > p,
 .project-content p,
-.timeline-item span {
+.timeline-item span,
+.experience-card p,
+.metric-card p {
   margin: 0;
   color: var(--muted);
   font-size: 1rem;
@@ -333,15 +403,47 @@ main {
   max-width: 390px;
 }
 
+.section-heading > p {
+  max-width: 420px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metric-card {
+  min-height: 184px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.metric-card strong {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--coral);
+  font-size: clamp(1.8rem, 3.4vw, 3.2rem);
+  line-height: 1;
+}
+
+.metric-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.08rem;
+}
+
 .skill-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
 }
 
 .skill-card,
 .project-card,
 .timeline-item,
+.experience-card,
 .contact-link {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -392,6 +494,10 @@ main {
   gap: 18px;
 }
 
+.compact-project-grid {
+  align-items: stretch;
+}
+
 .project-card {
   display: grid;
   grid-template-rows: auto 1fr;
@@ -401,9 +507,13 @@ main {
 
 .project-image-wrap {
   position: relative;
-  min-height: 210px;
+  min-height: 190px;
   overflow: hidden;
   background: #e8efe5;
+}
+
+.compact-project-card .project-image-wrap {
+  min-height: 150px;
 }
 
 .project-image-wrap img {
@@ -434,8 +544,13 @@ main {
 
 .project-content {
   display: grid;
-  gap: 20px;
+  gap: 16px;
   padding: 22px;
+}
+
+.compact-project-card .project-content {
+  gap: 14px;
+  padding: 20px;
 }
 
 .project-role {
@@ -501,6 +616,67 @@ main {
 
 .project-links a:nth-child(2) {
   background: var(--teal);
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.experience-card {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+}
+
+.experience-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.experience-card-header time {
+  color: var(--coral);
+  font-weight: 900;
+}
+
+.experience-card-header span {
+  color: var(--muted);
+  font-weight: 850;
+}
+
+.experience-card h3 {
+  margin: 0;
+  font-size: 1.55rem;
+}
+
+.experience-card ul {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.experience-card li {
+  position: relative;
+  padding-left: 16px;
+  color: #3f473d;
+  line-height: 1.55;
+}
+
+.experience-card li::before {
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  content: "";
 }
 
 .timeline {
@@ -605,11 +781,13 @@ main {
   }
 
   .hero-copy h1 {
-    font-size: clamp(2.4rem, 11vw, 5rem);
+    font-size: clamp(2.35rem, 9vw, 4.6rem);
   }
 
   .skill-grid,
-  .project-grid {
+  .project-grid,
+  .metric-grid,
+  .experience-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -634,7 +812,9 @@ main {
   .section-body p,
   .projects-heading p,
   .project-content p,
-  .timeline-item span {
+  .timeline-item span,
+  .experience-card p,
+  .metric-card p {
     font-size: 0.98rem;
   }
 
@@ -656,7 +836,9 @@ main {
 
   .intro-strip,
   .skill-grid,
-  .project-grid {
+  .project-grid,
+  .metric-grid,
+  .experience-grid {
     grid-template-columns: 1fr;
   }
 
@@ -665,7 +847,11 @@ main {
   }
 
   .section {
-    padding: 70px 0;
+    padding: 62px 0;
+  }
+
+  .metrics-section {
+    padding: 26px 0 62px;
   }
 
   .section-heading {
@@ -674,7 +860,7 @@ main {
   }
 
   .project-image-wrap {
-    min-height: 190px;
+    min-height: 170px;
   }
 
   .timeline-item {

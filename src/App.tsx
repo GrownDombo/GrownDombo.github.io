@@ -7,24 +7,32 @@ import {
   MapPin,
   Sparkles,
 } from 'lucide-react';
-import { experiences, profile, projects, skillGroups, type ProfileLink } from './data/portfolio';
+import {
+  experiences,
+  metrics,
+  profile,
+  projects,
+  skillGroups,
+  type ProfileLink,
+} from './data/portfolio';
 
 const navItems = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Contact', href: '#contact' },
+  { label: '성과', href: '#metrics' },
+  { label: '경험', href: '#experience' },
+  { label: '기술', href: '#skills' },
+  { label: '프로젝트', href: '#projects' },
+  { label: '연락', href: '#contact' },
 ];
 
 const linkIcons: Record<ProfileLink['kind'], typeof Github> = {
   github: Github,
   email: Mail,
   blog: FileText,
+  resume: FileText,
 };
 
 function App() {
-  const featuredProject = projects[0];
+  const resumeLink = profile.links.find((link) => link.kind === 'resume');
 
   return (
     <div className="site-shell">
@@ -43,7 +51,7 @@ function App() {
       </header>
 
       <main id="top">
-        <section className="hero-section" aria-labelledby="hero-title">
+        <section className="hero-section compact-hero" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow">
               <Sparkles size={16} aria-hidden="true" />
@@ -62,10 +70,12 @@ function App() {
               </span>
             </div>
             <div className="hero-actions">
-              <a className="button primary" href="#projects">
-                대표 프로젝트
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </a>
+              {resumeLink ? (
+                <a className="button primary" href={resumeLink.href}>
+                  이력서 원문
+                  <ArrowUpRight size={18} aria-hidden="true" />
+                </a>
+              ) : null}
               <a className="button secondary" href="#contact">
                 연락하기
                 <Mail size={18} aria-hidden="true" />
@@ -73,44 +83,76 @@ function App() {
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="대표 프로젝트 미리보기">
-            <img src={featuredProject.image} alt={`${featuredProject.title} 미리보기`} />
-            <div className="hero-visual-caption">
-              <span>{featuredProject.status}</span>
-              <strong>{featuredProject.title}</strong>
+          <aside className="hero-card" aria-label="핵심 프로필">
+            <span>Profile</span>
+            <strong>7년 차</strong>
+            <p>Windows 응용프로그램 · 검사 장비 소프트웨어 · 생산 시스템 연동</p>
+            <div className="hero-card-tags">
+              <span>C#</span>
+              <span>C++</span>
+              <span>.NET Framework</span>
+              <span>SECS/GEM</span>
             </div>
+          </aside>
+        </section>
+
+        <section className="metrics-section" id="metrics" aria-labelledby="metrics-title">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">Performance</p>
+              <h2 id="metrics-title">숫자로 남긴 개선</h2>
+            </div>
+            <p>공개 이력서의 핵심 성과만 골라 첫 화면 이후 바로 읽히도록 정리했습니다.</p>
+          </div>
+          <div className="metric-grid">
+            {metrics.map((metric) => (
+              <article className="metric-card" key={metric.label}>
+                <strong>{metric.value}</strong>
+                <h3>{metric.label}</h3>
+                <p>{metric.description}</p>
+              </article>
+            ))}
           </div>
         </section>
 
-        <section className="intro-strip" aria-label="포트폴리오 핵심 관점">
-          <span>Windows Desktop Apps</span>
-          <span>Manufacturing Automation</span>
-          <span>Performance & Tools</span>
-        </section>
-
-        <section className="section two-column" id="about" aria-labelledby="about-title">
-          <div>
-            <p className="section-kicker">About</p>
-            <h2 id="about-title">Windows 프로그램과 제조 현장의 업무 흐름을 안정적으로 연결합니다.</h2>
+        <section className="section" id="experience" aria-labelledby="experience-title">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">Experience</p>
+              <h2 id="experience-title">핵심 경력</h2>
+            </div>
+            <p>회사명, 역할, 주요 업무, 기술 키워드를 카드 단위로 짧게 정리했습니다.</p>
           </div>
-          <div className="section-body">
-            <p>
-              제조라인에서 쓰이는 소프트웨어는 기능 구현만큼이나 안정성, 유지보수성, 현장 사용성이
-              중요하다고 생각합니다. C# / C++ 기반 Windows 프로그램을 중심으로 장비 소프트웨어와
-              업무 보조 도구를 만들고 다듬어 왔습니다.
-            </p>
-            <p>
-              이 포트폴리오는 GitHub에 정리한 프로젝트를 바탕으로, 반복 UI를 재사용 가능한 컨트롤로
-              묶는 방식, Excel 데이터를 업무 흐름에 맞게 가공하는 방식, 성능 테스트를 반복 가능한
-              도구로 만드는 방식을 보여줍니다.
-            </p>
+          <div className="experience-grid">
+            {experiences.map((item) => (
+              <article className="experience-card" key={`${item.period}-${item.title}`}>
+                <div className="experience-card-header">
+                  <time>{item.period}</time>
+                  <span>{item.organization}</span>
+                </div>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <ul>
+                  {item.outcomes.map((outcome) => (
+                    <li key={outcome}>{outcome}</li>
+                  ))}
+                </ul>
+                <div className="tech-list" aria-label={`${item.title} 기술 키워드`}>
+                  {item.keywords.map((keyword) => (
+                    <span key={keyword}>{keyword}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
         <section className="section" id="skills" aria-labelledby="skills-title">
           <div className="section-heading">
-            <p className="section-kicker">Skills</p>
-            <h2 id="skills-title">Windows 애플리케이션 개발에 맞춘 기술 스택</h2>
+            <div>
+              <p className="section-kicker">Skills</p>
+              <h2 id="skills-title">기술 스택</h2>
+            </div>
           </div>
           <div className="skill-grid">
             {skillGroups.map((group) => (
@@ -131,17 +173,14 @@ function App() {
           <div className="section-heading projects-heading">
             <div>
               <p className="section-kicker">Projects</p>
-              <h2 id="projects-title">GitHub 대표 프로젝트</h2>
+              <h2 id="projects-title">GitHub 프로젝트</h2>
             </div>
-            <p>
-              실제 저장소 README와 구현 목적을 바탕으로 문제, 역할, 기술, 결과를 빠르게 비교할 수
-              있게 정리했습니다.
-            </p>
+            <p>업무에서 반복된 문제를 도구와 라이브러리 형태로 정리한 프로젝트입니다.</p>
           </div>
 
-          <div className="project-grid">
+          <div className="project-grid compact-project-grid">
             {projects.map((project) => (
-              <article className="project-card" key={project.title}>
+              <article className="project-card compact-project-card" key={project.title}>
                 <div className="project-image-wrap">
                   <img src={project.image} alt={`${project.title} 썸네일`} />
                   <span>{project.status}</span>
@@ -152,12 +191,7 @@ function App() {
                     <h3>{project.title}</h3>
                     <p>{project.summary}</p>
                   </div>
-                  <ul className="project-highlights">
-                    {project.highlights.map((highlight) => (
-                      <li key={highlight}>{highlight}</li>
-                    ))}
-                  </ul>
-                  <div className="tech-list" aria-label={`${project.title} 기술스택`}>
+                  <div className="tech-list" aria-label={`${project.title} 기술 스택`}>
                     {project.tech.map((tech) => (
                       <span key={tech}>{tech}</span>
                     ))}
@@ -176,34 +210,10 @@ function App() {
           </div>
         </section>
 
-        <section className="section two-column" id="experience" aria-labelledby="experience-title">
-          <div>
-            <p className="section-kicker">Experience</p>
-            <h2 id="experience-title">장비 소프트웨어와 개인 프로젝트 경험을 결과 중심으로 정리합니다.</h2>
-          </div>
-          <div className="timeline">
-            {experiences.map((item) => (
-              <article className="timeline-item" key={`${item.period}-${item.title}`}>
-                <time>{item.period}</time>
-                <div>
-                  <p>{item.organization}</p>
-                  <h3>{item.title}</h3>
-                  <span>{item.description}</span>
-                  <ul>
-                    {item.outcomes.map((outcome) => (
-                      <li key={outcome}>{outcome}</li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <div>
             <p className="section-kicker">Contact</p>
-            <h2 id="contact-title">Windows 도구, 자동화, 유지보수 경험을 기반으로 이야기할 준비가 되어 있습니다.</h2>
+            <h2 id="contact-title">더 자세한 이력과 기록은 아래 링크에서 확인할 수 있습니다.</h2>
           </div>
           <div className="contact-links">
             {profile.links.map((link) => {
