@@ -7,8 +7,18 @@
       name="description"
       content="최준영 / GrownDombo의 포트폴리오. 7년 차 Windows 응용프로그램 개발자의 경력, 성과, 기술 스택, GitHub 프로젝트를 확인할 수 있습니다."
     />
-    <meta name="theme-color" content="#f7f3ea" />
+    <meta name="theme-color" content="#2563eb" />
     <title>최준영 / GrownDombo | 잘 읽히는 개발자</title>
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var redirect = params.get('redirect');
+
+        if (redirect && redirect.startsWith('/')) {
+          window.history.replaceState(null, '', redirect);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
