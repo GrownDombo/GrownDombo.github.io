@@ -9,7 +9,6 @@ export type Profile = {
   role: string;
   headline: string;
   summary: string;
-  location: string;
   availability: string;
   links: ProfileLink[];
 };
@@ -56,7 +55,6 @@ export const profile: Profile = {
   headline: '잘 읽히는 구조와 안정적인 동작을 만드는 개발자',
   summary:
     '반도체/SMT 제조라인의 3D 검사 장비 소프트웨어를 개발·유지보수하며, 공정 자동화와 생산 시스템 연동을 중심으로 기능 고도화와 운영 안정화 업무를 수행하고 있습니다.',
-  location: 'Seoul, Korea',
   availability: '잘 읽히는 구조와 지속적으로 개선 가능한 소프트웨어를 지향합니다',
   links: [
     {
@@ -84,22 +82,22 @@ export const profile: Profile = {
 
 export const metrics: Metric[] = [
   {
-    value: '70%',
+    value: '70% 감소',
     label: '장애 이슈 메일 감소',
     description: '생산 시스템 연동 구조 개선 후 전분기 대비 감소',
   },
   {
-    value: '6m 20s → 5s',
+    value: '6분 20초 → 5초',
     label: 'ROI 겹침 판별 처리 단축',
     description: '9만 × 39만 좌표 데이터 기준 약 97% 개선',
   },
   {
-    value: '10+',
+    value: '10개 이상',
     label: '신규 고객사 연동 시나리오',
     description: '생산 시스템 요구사항에 맞춘 연동 기능 개발',
   },
   {
-    value: '2s → 0.3s',
+    value: '2초 → 0.3초',
     label: '단축키 응답 속도 개선',
     description: '복합키 자료구조 적용으로 사용성 향상',
   },
