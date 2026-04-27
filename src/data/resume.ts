@@ -53,10 +53,10 @@ export const resumeInfo = {
     {
       label: 'GitHub',
       value: 'GrownDombo',
-      href: 'https://github.com/GrownDombo/Dombos_Projects',
+      href: 'https://github.com/GrownDombo',
     },
     {
-      label: 'Blog',
+      label: 'Tech Blog',
       value: 'growndombo.tistory.com',
       href: 'https://growndombo.tistory.com',
     },

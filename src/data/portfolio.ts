@@ -63,14 +63,14 @@ export const profile: Profile = {
       kind: 'github',
     },
     {
-      label: 'Email',
-      href: 'mailto:yjc0455@naver.com',
-      kind: 'email',
-    },
-    {
-      label: 'Blog',
+      label: 'Tech Blog',
       href: 'https://growndombo.tistory.com/',
       kind: 'blog',
+    },
+    {
+      label: 'yjc0455@naver.com',
+      href: 'mailto:yjc0455@naver.com',
+      kind: 'email',
     },
     {
       label: 'Resume',
