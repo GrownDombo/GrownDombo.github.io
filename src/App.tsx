@@ -24,7 +24,6 @@ const navItems = [
   { label: '경험', href: '#experience' },
   { label: '기술', href: '#skills' },
   { label: '프로젝트', href: '#projects' },
-  { label: '연락', href: '#contact' },
 ];
 
 const linkIcons: Record<ProfileLink['kind'], typeof Github> = {
@@ -207,10 +206,21 @@ function PortfolioHome({
                   <FileText size={18} aria-hidden="true" />
                 </a>
               ) : null}
-              <a className="button secondary" href="#contact">
-                연락하기
-                <Mail size={18} aria-hidden="true" />
-              </a>
+            </div>
+            <div className="hero-channel-links" aria-label="프로필 채널">
+              {profile.links
+                .filter((link) => link.kind !== 'resume')
+                .map((link) => {
+                  const Icon = linkIcons[link.kind];
+
+                  return (
+                    <a key={link.label} href={link.href}>
+                      <Icon size={17} aria-hidden="true" />
+                      <span>{link.label}</span>
+                      <ArrowUpRight size={14} aria-hidden="true" />
+                    </a>
+                  );
+                })}
             </div>
           </div>
         </section>
@@ -329,31 +339,6 @@ function PortfolioHome({
           </div>
         </section>
 
-        <section className="contact-section" id="contact" aria-labelledby="contact-title">
-          <div>
-            <p className="section-kicker">Contact</p>
-            <h2 id="contact-title">더 자세한 이력과 기록은 아래 링크에서 확인할 수 있습니다.</h2>
-          </div>
-          <div className="contact-links">
-            {profile.links.map((link) => {
-              const Icon = linkIcons[link.kind];
-              const isResumeLink = link.kind === 'resume';
-
-              return (
-                <a
-                  key={link.label}
-                  href={isResumeLink ? resumePath : link.href}
-                  className="contact-link"
-                  onClick={isResumeLink ? (event) => onNavigate(event, resumePath) : undefined}
-                >
-                  <Icon size={20} aria-hidden="true" />
-                  <span>{link.label}</span>
-                  <ArrowUpRight size={16} aria-hidden="true" />
-                </a>
-              );
-            })}
-          </div>
-        </section>
       </main>
     </div>
   );
@@ -404,12 +389,26 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
                 <div>
                   <dt>Channel</dt>
                   <dd className="resume-channel-list">
-                    {resumeInfo.channels.map((channel) => (
-                      <a key={channel.label} href={channel.href} target="_blank" rel="noreferrer">
-                        <span>{channel.label}</span>
-                        {channel.value}
-                      </a>
-                    ))}
+                    {resumeInfo.channels.map((channel) => {
+                      const ChannelIcon = channel.label === 'GitHub' ? Github : FileText;
+
+                      return (
+                        <a
+                          key={channel.label}
+                          href={channel.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${channel.label} 바로가기`}
+                        >
+                          <span className="resume-channel-icon" aria-hidden="true">
+                            <ChannelIcon size={22} />
+                          </span>
+                          <span className="resume-channel-text">
+                            <strong>{channel.label}</strong>
+                          </span>
+                        </a>
+                      );
+                    })}
                   </dd>
                 </div>
                 <div>
