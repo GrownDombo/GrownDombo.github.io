@@ -85,7 +85,6 @@ function App() {
               <p className="section-kicker">Performance</p>
               <h2 id="metrics-title">숫자로 남긴 개선</h2>
             </div>
-            <p>공개 이력서의 핵심 성과만 골라 첫 화면 이후 바로 읽히도록 정리했습니다.</p>
           </div>
           <div className="impact-strip">
             {metrics.map((metric) => (
@@ -104,7 +103,6 @@ function App() {
               <p className="section-kicker">Experience</p>
               <h2 id="experience-title">핵심 경력</h2>
             </div>
-            <p>연도 흐름을 기준으로 회사, 역할, 주요 성과를 빠르게 훑을 수 있게 정리했습니다.</p>
           </div>
           <ol className="experience-timeline">
             {experiences.map((item) => (
@@ -161,7 +159,6 @@ function App() {
               <p className="section-kicker">Projects</p>
               <h2 id="projects-title">GitHub 프로젝트</h2>
             </div>
-            <p>업무에서 반복된 문제를 도구와 라이브러리 형태로 정리한 프로젝트입니다.</p>
           </div>
 
           <div className="project-grid compact-project-grid">
@@ -177,7 +174,7 @@ function App() {
                     <h3>{project.title}</h3>
                     <p>{project.summary}</p>
                   </div>
-                  <div className="tech-list" aria-label={`${project.title} 기술 스택`}>
+                  <div className="tech-list project-tech-list" aria-label={`${project.title} 기술 스택`}>
                     {project.tech.map((tech) => (
                       <span key={tech}>{tech}</span>
                     ))}
