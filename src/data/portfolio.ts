@@ -117,7 +117,7 @@ export const skillGroups: SkillGroup[] = [
   {
     title: 'Database',
     description: '검사 이력, 검색 기록, 운영 데이터를 저장하고 조회합니다.',
-    skills: ['MySQL', 'MariaDB', 'SQLite', 'MS SQL Server'],
+    skills: ['MSSQL', 'MariaDB', 'SQLite'],
   },
   {
     title: 'ORM',
