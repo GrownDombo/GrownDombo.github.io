@@ -4,7 +4,6 @@ import {
   FileText,
   Github,
   Mail,
-  MapPin,
   Sparkles,
 } from 'lucide-react';
 import {
@@ -61,10 +60,6 @@ function App() {
             <p className="hero-summary">{profile.summary}</p>
             <div className="hero-meta" aria-label="프로필 요약">
               <span>
-                <MapPin size={17} aria-hidden="true" />
-                {profile.location}
-              </span>
-              <span>
                 <BriefcaseBusiness size={17} aria-hidden="true" />
                 {profile.role}
               </span>
@@ -82,18 +77,6 @@ function App() {
               </a>
             </div>
           </div>
-
-          <aside className="hero-card" aria-label="핵심 프로필">
-            <span>Profile</span>
-            <strong>7년 차</strong>
-            <p>Windows 응용프로그램 · 검사 장비 소프트웨어 · 생산 시스템 연동</p>
-            <div className="hero-card-tags">
-              <span>C#</span>
-              <span>C++</span>
-              <span>.NET Framework</span>
-              <span>SECS/GEM</span>
-            </div>
-          </aside>
         </section>
 
         <section className="metrics-section" id="metrics" aria-labelledby="metrics-title">
@@ -104,9 +87,9 @@ function App() {
             </div>
             <p>공개 이력서의 핵심 성과만 골라 첫 화면 이후 바로 읽히도록 정리했습니다.</p>
           </div>
-          <div className="metric-grid">
+          <div className="impact-strip">
             {metrics.map((metric) => (
-              <article className="metric-card" key={metric.label}>
+              <article className="impact-item" key={metric.label}>
                 <strong>{metric.value}</strong>
                 <h3>{metric.label}</h3>
                 <p>{metric.description}</p>
@@ -121,30 +104,33 @@ function App() {
               <p className="section-kicker">Experience</p>
               <h2 id="experience-title">핵심 경력</h2>
             </div>
-            <p>회사명, 역할, 주요 업무, 기술 키워드를 카드 단위로 짧게 정리했습니다.</p>
+            <p>연도 흐름을 기준으로 회사, 역할, 주요 성과를 빠르게 훑을 수 있게 정리했습니다.</p>
           </div>
-          <div className="experience-grid">
+          <ol className="experience-timeline">
             {experiences.map((item) => (
-              <article className="experience-card" key={`${item.period}-${item.title}`}>
-                <div className="experience-card-header">
+              <li className="experience-timeline-item" key={`${item.period}-${item.title}`}>
+                <div className="timeline-period">
                   <time>{item.period}</time>
-                  <span>{item.organization}</span>
                 </div>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-                <ul>
-                  {item.outcomes.map((outcome) => (
-                    <li key={outcome}>{outcome}</li>
-                  ))}
-                </ul>
-                <div className="tech-list" aria-label={`${item.title} 기술 키워드`}>
-                  {item.keywords.map((keyword) => (
-                    <span key={keyword}>{keyword}</span>
-                  ))}
-                </div>
-              </article>
+                <span className="timeline-marker" aria-hidden="true" />
+                <article className="timeline-content">
+                  <span className="timeline-company">{item.organization}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                  <ul>
+                    {item.outcomes.map((outcome) => (
+                      <li key={outcome}>{outcome}</li>
+                    ))}
+                  </ul>
+                  <div className="tech-list" aria-label={`${item.title} 기술 키워드`}>
+                    {item.keywords.map((keyword) => (
+                      <span key={keyword}>{keyword}</span>
+                    ))}
+                  </div>
+                </article>
+              </li>
             ))}
-          </div>
+          </ol>
         </section>
 
         <section className="section" id="skills" aria-labelledby="skills-title">
