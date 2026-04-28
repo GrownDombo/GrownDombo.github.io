@@ -814,6 +814,14 @@ main {
   transition: transform 180ms ease;
 }
 
+.analytics-notice {
+  margin: 42px 0 28px;
+  color: #8a94a6;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .resume-page {
   width: min(980px, calc(100% - 40px));
   padding-bottom: 72px;

@@ -25,3 +25,7 @@ npm run preview
 이 저장소는 사용자 페이지 저장소인 `GrownDombo.github.io`이므로 Vite `base`는 기본값 `/`를 사용합니다.
 
 GitHub 저장소의 Settings -> Pages -> Build and deployment에서 Source를 `GitHub Actions`로 선택하면, `main` 브랜치 push 시 `.github/workflows/deploy.yml`이 사이트를 빌드하고 Pages에 배포합니다.
+
+## 방문자 분석
+
+Google Analytics 4를 사용합니다. GitHub 저장소의 Settings -> Secrets and variables -> Actions -> Variables에 `GA_MEASUREMENT_ID`를 등록하면 배포 빌드에 자동으로 반영됩니다.

@@ -16,6 +16,7 @@ import {
   type ProfileLink,
 } from './data/portfolio';
 import { additionalDetails, resumeExperiences, resumeInfo, resumeIntroduction } from './data/resume';
+import { trackAnalyticsEvent } from './analytics/google';
 
 const resumePath = '/resume';
 
@@ -32,6 +33,16 @@ const linkIcons: Record<ProfileLink['kind'], typeof Github> = {
   blog: FileText,
   resume: FileText,
 };
+
+const linkEvents: Partial<Record<ProfileLink['kind'], 'github_click' | 'tech_blog_click' | 'email_click'>> = {
+  github: 'github_click',
+  blog: 'tech_blog_click',
+  email: 'email_click',
+};
+
+function AnalyticsNotice() {
+  return <p className="analytics-notice">이 사이트는 방문 통계 분석을 위해 Google Analytics를 사용합니다.</p>;
+}
 
 type InternalNavigate = (event: MouseEvent<HTMLAnchorElement>, path: string) => void;
 
@@ -201,7 +212,14 @@ function PortfolioHome({
             </div>
             <div className="hero-actions">
               {resumeLink ? (
-                <a className="button primary" href={resumePath} onClick={(event) => onNavigate(event, resumePath)}>
+                <a
+                  className="button primary"
+                  href={resumePath}
+                  onClick={(event) => {
+                    trackAnalyticsEvent('resume_click', { link_location: 'hero' });
+                    onNavigate(event, resumePath);
+                  }}
+                >
                   이력서 보기
                   <FileText size={18} aria-hidden="true" />
                 </a>
@@ -212,9 +230,18 @@ function PortfolioHome({
                 .filter((link) => link.kind !== 'resume')
                 .map((link) => {
                   const Icon = linkIcons[link.kind];
+                  const eventName = linkEvents[link.kind];
 
                   return (
-                    <a key={link.label} href={link.href}>
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      onClick={() => {
+                        if (eventName) {
+                          trackAnalyticsEvent(eventName, { link_location: 'hero' });
+                        }
+                      }}
+                    >
                       <Icon size={17} aria-hidden="true" />
                       <span>{link.label}</span>
                       <ArrowUpRight size={14} aria-hidden="true" />
@@ -339,6 +366,7 @@ function PortfolioHome({
           </div>
         </section>
 
+        <AnalyticsNotice />
       </main>
     </div>
   );
@@ -383,7 +411,12 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
                 <div>
                   <dt>Contact</dt>
                   <dd>
-                    <a href={`mailto:${resumeInfo.contact}`}>{resumeInfo.contact}</a>
+                    <a
+                      href={`mailto:${resumeInfo.contact}`}
+                      onClick={() => trackAnalyticsEvent('email_click', { link_location: 'resume' })}
+                    >
+                      {resumeInfo.contact}
+                    </a>
                   </dd>
                 </div>
                 <div>
@@ -391,6 +424,7 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
                   <dd className="resume-channel-list">
                     {resumeInfo.channels.map((channel) => {
                       const ChannelIcon = channel.label === 'GitHub' ? Github : FileText;
+                      const eventName = channel.label === 'GitHub' ? 'github_click' : 'tech_blog_click';
 
                       return (
                         <a
@@ -399,6 +433,7 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
                           target="_blank"
                           rel="noreferrer"
                           aria-label={`${channel.label} 바로가기`}
+                          onClick={() => trackAnalyticsEvent(eventName, { link_location: 'resume' })}
                         >
                           <span className="resume-channel-icon" aria-hidden="true">
                             <ChannelIcon size={22} />
@@ -558,6 +593,8 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
             ))}
           </div>
         </section>
+
+        <AnalyticsNotice />
       </main>
     </div>
   );
