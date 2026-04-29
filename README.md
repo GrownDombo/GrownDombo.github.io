@@ -1,6 +1,35 @@
 # GrownDombo.github.io
 
-React, Vite, TypeScript로 만든 GitHub Pages용 개발자 포트폴리오입니다.
+개인 프로젝트와 개발 경험을 정리하기 위해 만든 GitHub Pages 기반 포트폴리오 웹사이트입니다.
+
+React, Vite, TypeScript를 사용해 구성했으며,  
+프로젝트 소개, 기술 스택, 개발 경험, 연락처 정보를 한 페이지에서 확인할 수 있도록 제작했습니다.
+
+## 주요 내용
+
+- 개발자 소개
+- 주요 프로젝트 정리
+- 기술 스택 정리
+- GitHub 및 블로그 링크 연결
+- GitHub Pages 배포
+- Google Analytics 4 방문자 분석 적용
+
+## 기술 스택
+
+- React
+- TypeScript
+- Vite
+- GitHub Pages
+- GitHub Actions
+- Google Analytics 4
+
+## 개발 방식
+
+본 프로젝트는 AI 도구를 활용해 초기 구조와 UI 구성을 빠르게 잡고,  
+포트폴리오 문구, 프로젝트 구성, 기술 스택 정리, 배포 설정을 직접 검토하며 제작했습니다.
+
+단순한 웹사이트 제작보다,  
+개인 프로젝트와 개발 경험을 정리하고 공개 가능한 형태로 관리하는 것을 목표로 했습니다.
 
 ## 로컬 실행
 
