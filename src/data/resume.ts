@@ -40,7 +40,7 @@ export type ResumeDetailGroup = {
 };
 
 export const resumeInfo = {
-  lastUpdated: '2026-04-27',
+  lastUpdated: '2026-05-01',
   name: '최준영',
   title: '7년 차 - 잘 읽히는 개발자',
   photo: '/assets/resume/profile.jpg',
@@ -114,8 +114,8 @@ export const resumeExperiences: ResumeExperience[] = [
           '10개 이상 신규 고객사 생산 시스템 연동 시나리오 개발',
         ],
         details: [
-          'SECS/GEM, FTP, TCP/IP 등 통신 표준 및 프로토콜을 활용해 다양한 요구사항에 맞는 기능을 개발',
-          '누적된 분기 구조를 디자인 패턴 기반으로 리팩토링해 생산 시스템 연동의 관리 효율과 운영 안정성을 향상',
+          'SECS/GEM·FTP·TCP/IP 기반으로 다양한 생산 연동 요구사항 구현',
+          '분기 구조를 디자인 패턴 기반으로 리팩토링해 관리 효율·운영 안정성 향상',
         ],
         keywords: ['C#', '.NET Framework', 'SECS/GEM', 'TCP/IP', 'FTP', 'Refactoring', 'Design Pattern'],
       },
@@ -130,9 +130,9 @@ export const resumeExperiences: ResumeExperience[] = [
         ],
         details: [
           '큰 ROI 기준 후보군 선별 구조를 적용해 대용량 좌표 기반 매칭 연산을 효율화',
-          'Producer-Consumer 패턴을 적용해 데이터 수신과 파라미터 생성 과정을 병렬화하고 전체 처리 시간을 단축',
+          'Producer-Consumer 패턴으로 수신·생성 과정을 병렬화해 처리 시간 단축',
           '복합키 자료구조를 개발·적용해 사용자 정의 단축키의 사용성과 응답성을 개선',
-          '실행 주체를 원격지 PC로 변경해 파일 이동 시 발생하던 프로토콜 처리 오버헤드를 줄이고 처리 시간을 단축',
+          '실행 주체를 원격 PC로 옮겨 파일 이동 프로토콜 오버헤드 축소',
         ],
         keywords: ['C#', 'Data Structure', 'Parallel Processing', 'Producer-Consumer', 'System Design'],
       },
@@ -146,7 +146,7 @@ export const resumeExperiences: ResumeExperience[] = [
         ],
         details: [
           '검사 이력 데이터의 저장·조회·필터링 기능을 DLL 형태로 구현',
-          'DB 생성, 테이블 초기화, 인덱스 구성 및 트랜잭션 기반 저장 구조를 구현해 데이터 관리 안정성을 높임',
+          'DB 생성·초기화·인덱스·트랜잭션 저장 구조로 데이터 관리 안정성 향상',
         ],
         keywords: ['C#', 'MSSQL', 'iBATIS.NET', 'DLL', 'Data Modeling'],
       },
@@ -155,8 +155,8 @@ export const resumeExperiences: ResumeExperience[] = [
         title: '검출 영역 기반 외곽 폴리곤 추출 기능 개발',
         metrics: ['고객사 장비 구입 조건으로 제시된 기능을 개발해 약 8억 원 매출에 기여'],
         details: [
-          '기존 검출 영역을 활용해 호환성을 유지하면서 불필요한 연산을 줄이는 다각형 처리 구조를 설계·개발',
-          '결과를 바이너리 파일셋 형식으로 저장하고, 타 프로세스에서도 시각화할 수 있도록 기능을 확장',
+          '기존 검출 영역을 활용해 호환성을 유지하고 불필요한 다각형 연산 축소',
+          '바이너리 파일셋 저장 구조로 타 프로세스 시각화 기능 확장',
         ],
         keywords: ['C++', 'OpenCV', 'Binary File', 'Image Processing'],
       },
@@ -179,8 +179,8 @@ export const resumeExperiences: ResumeExperience[] = [
           '비동기 주소 검색 제어와 SQLite 기반 검색 기록 저장 기능을 개발해 사용자 편의성 향상',
         ],
         details: [
-          '사용자 탑승 위치와 서비스 지역 경계를 구분할 수 있도록 다각형 내부 판별 알고리즘을 구현',
-          '입력이 일정 시간 멈춘 뒤에만 검색이 수행되도록 제어해 불필요한 API 요청을 줄이고 주소 검색 응답성을 개선',
+          '탑승 위치와 서비스 지역 경계를 구분하는 다각형 내부 판별 알고리즘 구현',
+          '입력 멈춤 후 검색을 수행해 API 요청을 줄이고 주소 검색 응답성 개선',
         ],
         keywords: ['Java', 'Android', 'Naver Map API', 'API Integration', 'SQLite', 'Async'],
       },
@@ -226,7 +226,7 @@ export const additionalDetails: ResumeDetailGroup[] = [
         title: '주차구역 단속 시스템 설계 및 구현',
         meta: '대전대학교 산업기술연구소 Vol.30 No.1',
         href: 'https://www.riss.kr/search/detail/DetailView.do?p_mat_type=1a0202e37d52c72d&control_no=a5a7a98742e78d74b7998d826d417196',
-        details: ['라즈베리 파이, Ubuntu 환경에서 C++ 기반 영상처리 및 I/O 연동 구현'],
+        details: ['Raspberry Pi/Ubuntu 기반 영상처리·I/O 연동'],
       },
     ],
   },
