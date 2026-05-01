@@ -34,7 +34,7 @@ React, Vite, TypeScript를 사용해 구성했으며,
 ## 디자인 출처
 
 이력서 페이지의 문서형 레이아웃은 Figma Community의
-[개발자 이력서 템플릿](https://www.figma.com/community/file/1539206512902667627?q_id=ce1ec60b-f5a2-44bc-80f6-8e8a3105f045)을 참고해 웹 환경에 맞게 재구성했습니다.
+[개발자 이력서 템플릿](https://www.figma.com/design/ruqRkzKlOhoko97nrMBb3O/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B4%EB%A0%A5%EC%84%9C-%ED%85%9C%ED%94%8C%EB%A6%BF--Community-?node-id=2-111)을 참고해 웹 환경에 맞게 재구성했습니다.
 
 ## 로컬 실행
 
