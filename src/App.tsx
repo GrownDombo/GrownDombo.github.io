@@ -131,6 +131,53 @@ function splitMetricText(metric: string, highlightTitle: string) {
   return { label: metric, result: '' };
 }
 
+function ResumeIconLink({
+  href,
+  label,
+  onClick,
+  isExternal = true,
+}: {
+  href: string;
+  label: string;
+  onClick?: () => void;
+  isExternal?: boolean;
+}) {
+  const externalProps = isExternal ? { target: '_blank', rel: 'noreferrer' } : {};
+
+  return (
+    <a className="resume-icon-link" href={href} aria-label={label} onClick={onClick} {...externalProps}>
+      <ArrowUpRight size={12} aria-hidden="true" strokeWidth={2.2} />
+    </a>
+  );
+}
+
+function renderMetricResult(result: string) {
+  const percentMatch = result.match(/(약\s*)?\d+%[^\s,]*(?:\s*(?:개선|감소|단축|향상))?/);
+
+  if (!percentMatch || percentMatch.index === undefined) {
+    return <span className="resume-metric-result-neutral">{result}</span>;
+  }
+
+  const beforeRaw = result.slice(0, percentMatch.index);
+  const hasCommaSeparator = /,\s*$/.test(beforeRaw);
+  const before = beforeRaw.replace(/[,\s]+$/, '');
+  const highlight = percentMatch[0];
+  const after = result.slice(percentMatch.index + highlight.length);
+
+  return (
+    <>
+      {before ? <span className="resume-metric-result-neutral">{before}</span> : null}
+      {before ? (
+        <span className={hasCommaSeparator ? 'resume-metric-result-separator' : 'resume-metric-result-gap'}>
+          {hasCommaSeparator ? ',' : ''}
+        </span>
+      ) : null}
+      <span className="resume-metric-result-accent">{highlight}</span>
+      {after ? <span className="resume-metric-result-neutral">{after}</span> : null}
+    </>
+  );
+}
+
 function App() {
   const [currentPath, setCurrentPath] = useState(getCurrentPath);
   const resumeLink = profile.links.find((link) => link.kind === 'resume');
@@ -406,6 +453,7 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
               <dt>이메일</dt>
               <dd>
                 <a
+                  className="resume-text-link"
                   href={`mailto:${resumeInfo.contact}`}
                   onClick={() => trackAnalyticsEvent('email_click', { link_location: 'resume' })}
                 >
@@ -421,6 +469,7 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
                   <dt>{channel.label}</dt>
                   <dd>
                     <a
+                      className="resume-text-link"
                       href={channel.href}
                       target="_blank"
                       rel="noreferrer"
@@ -468,13 +517,10 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
                 <article className="resume-job-card" key={`${job.company}-${job.period}`}>
                   <div className="resume-job-header">
                     <h3>
+                      <span>{job.company}</span>
                       {job.companyHref ? (
-                        <a href={job.companyHref} target="_blank" rel="noreferrer">
-                          {job.company}
-                        </a>
-                      ) : (
-                        <span>{job.company}</span>
-                      )}
+                        <ResumeIconLink href={job.companyHref} label={`${job.company} 웹사이트 바로가기`} />
+                      ) : null}
                     </h3>
                     <p>{job.role}</p>
                     <time>{job.period}</time>
@@ -497,15 +543,7 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
               {resumeExperiences.map((job) => (
                 <article className="resume-highlight-company" key={`${job.company}-${job.period}-highlights`}>
                   <header className="resume-highlight-company-header">
-                    <h3>
-                      {job.companyHref ? (
-                        <a href={job.companyHref} target="_blank" rel="noreferrer">
-                          {job.company}
-                        </a>
-                      ) : (
-                        job.company
-                      )}
-                    </h3>
+                    <h3>{job.company}</h3>
                     <p>
                       {job.role} · {job.period}
                     </p>
@@ -536,7 +574,7 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
                               return splitMetric.result ? (
                                 <li className="resume-metric-split" key={metric}>
                                   <span>{splitMetric.label}</span>
-                                  <strong>{splitMetric.result}</strong>
+                                  <strong className="resume-metric-result">{renderMetricResult(splitMetric.result)}</strong>
                                 </li>
                               ) : (
                                 <li key={metric}>{metric}</li>
@@ -575,13 +613,8 @@ function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
                     {group.items.map((item) => (
                       <section key={`${group.title}-${item.title}`} className="resume-detail-item">
                         <h4>
-                          {item.href ? (
-                            <a href={item.href} target="_blank" rel="noreferrer">
-                              {item.title}
-                            </a>
-                          ) : (
-                            item.title
-                          )}
+                          <span>{item.title}</span>
+                          {item.href ? <ResumeIconLink href={item.href} label={`${item.title} 링크 열기`} /> : null}
                         </h4>
                         {item.meta ? <p className="resume-detail-meta">{item.meta}</p> : null}
                         {item.period ? <time>{item.period}</time> : null}
