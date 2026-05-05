@@ -37,6 +37,7 @@ export type Project = {
   tech: string[];
   links: ProjectLink[];
   image: string;
+  detailPath?: string;
   status: string;
 };
 
@@ -183,12 +184,9 @@ export const projects: Project[] = [
         label: 'Repository',
         href: 'https://github.com/GrownDombo/ExcelConditionPainter',
       },
-      {
-        label: 'Blog Post',
-        href: 'https://growndombo.tistory.com/entry/Excel-%EC%A1%B0%EA%B1%B4%EB%B6%80-%ED%91%9C%EC%8B%9C-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EC%82%AC%EC%9A%A9%EB%B2%95',
-      },
     ],
-    image: '/assets/project-excel-condition-painter.png',
+    image: '/assets/excel-condition-painter/main-image.png',
+    detailPath: '/projects/excel-condition-painter',
     status: 'Desktop Utility',
   },
   {

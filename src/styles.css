@@ -509,25 +509,44 @@ main {
 
 .project-image-wrap {
   position: relative;
+  display: grid;
+  place-items: center;
   min-height: 190px;
+  padding: 14px;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #eaf3ff;
+  background: #f8fbff;
+}
+
+.project-image-link {
+  cursor: pointer;
+}
+
+.project-image-link:focus-visible {
+  outline: 3px solid rgb(56 189 248 / 72%);
+  outline-offset: -3px;
 }
 
 .compact-project-card .project-image-wrap {
-  min-height: 150px;
+  min-height: 0;
 }
 
 .project-image-wrap img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  transition: transform 220ms ease;
+  object-fit: contain;
 }
 
-.project-card:hover .project-image-wrap img {
-  transform: scale(1.035);
+.project-card {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 58px rgb(37 99 235 / 12%);
 }
 
 .project-image-wrap span {
@@ -551,8 +570,8 @@ main {
 }
 
 .compact-project-card .project-content {
-  gap: 14px;
-  padding: 20px;
+  align-content: start;
+  padding: 22px;
 }
 
 .project-role {
@@ -633,6 +652,245 @@ main {
 
 .project-links a:nth-child(2) {
   background: var(--teal);
+}
+
+.project-detail-page {
+  padding-bottom: 76px;
+}
+
+.project-detail-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(360px, 1.12fr);
+  gap: 42px;
+  align-items: center;
+  padding: 54px 0 66px;
+}
+
+.project-detail-back-link {
+  width: fit-content;
+  margin-bottom: 28px;
+}
+
+.project-detail-hero h1 {
+  max-width: 780px;
+  margin: 8px 0 16px;
+  color: var(--ink);
+  font-size: var(--display-title);
+  line-height: 1.08;
+}
+
+.project-detail-lead {
+  max-width: 660px;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.project-detail-tech-list {
+  margin-top: 22px;
+}
+
+.project-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.project-detail-hero-media {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 24px 68px rgb(15 23 42 / 12%);
+}
+
+.project-detail-hero-media img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #ffffff;
+}
+
+.project-guide {
+  padding-top: 56px;
+  border-top: 1px solid var(--line);
+}
+
+.project-guide-header {
+  max-width: 780px;
+  margin-bottom: 26px;
+}
+
+.project-guide-header h2 {
+  margin: 8px 0 12px;
+  font-size: clamp(2rem, 3vw, 2.55rem);
+  line-height: 1.14;
+}
+
+.project-guide-header p,
+.guide-section p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.project-guide code {
+  padding: 2px 5px;
+  border-radius: 5px;
+  color: #0f766e;
+  background: #ecfdf5;
+  font-size: 0.93em;
+  font-weight: 800;
+}
+
+.guide-flow {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0;
+  margin: 0 0 36px;
+  list-style: none;
+}
+
+.guide-flow li {
+  display: grid;
+  gap: 6px;
+  min-height: 94px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 34px rgb(37 99 235 / 7%);
+}
+
+.guide-flow strong {
+  color: var(--forest);
+  font-size: 0.88rem;
+}
+
+.guide-flow span {
+  color: #334155;
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.guide-section {
+  padding: 42px 0;
+  border-top: 1px solid var(--line);
+}
+
+.guide-section h3 {
+  margin: 0 0 18px;
+  color: var(--ink);
+  font-size: 1.52rem;
+}
+
+.guide-image-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 1180px;
+  margin: 0 0 22px;
+  margin-inline: auto;
+}
+
+.guide-figure,
+.guide-image-pair figure {
+  margin: 0 0 22px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.guide-image-pair figure {
+  margin: 0;
+}
+
+.guide-figure {
+  max-width: 920px;
+  margin-inline: auto;
+}
+
+.guide-figure--medium {
+  max-width: 920px;
+}
+
+.guide-figure--compact {
+  max-width: 800px;
+}
+
+.guide-figure--small {
+  max-width: 520px;
+}
+
+.guide-figure img,
+.guide-image-pair img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.guide-figure figcaption,
+.guide-image-pair figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.guide-table-wrap {
+  width: 100%;
+  margin: 18px 0 22px;
+  overflow-x: auto;
+}
+
+.project-guide table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.project-guide th,
+.project-guide td {
+  padding: 12px 14px;
+  border: 1px solid #d7dee8;
+  text-align: left;
+  vertical-align: top;
+}
+
+.project-guide th {
+  width: 22%;
+  color: #16324f;
+  background: #f1f6fb;
+  font-weight: 900;
+}
+
+.project-guide td {
+  color: #334155;
+  background: #ffffff;
+}
+
+.guide-checklist {
+  display: grid;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding-left: 22px;
+  color: #334155;
+  line-height: 1.65;
+}
+
+.guide-note {
+  margin-top: 24px;
+  padding: 16px 18px;
+  border-left: 4px solid #0f766e;
+  border-radius: 0 8px 8px 0;
+  color: #164e45;
+  background: #ecfdf5;
+  line-height: 1.65;
 }
 
 .experience-timeline {
@@ -1388,6 +1646,18 @@ main {
     grid-template-columns: 1fr 1fr;
   }
 
+  .project-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-hero h1 {
+    font-size: var(--display-title-tablet);
+  }
+
+  .guide-flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .impact-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1520,6 +1790,57 @@ main {
 
   .project-image-wrap {
     min-height: 170px;
+  }
+
+  .project-detail-page {
+    padding-bottom: 56px;
+  }
+
+  .project-detail-hero {
+    gap: 28px;
+    padding: 34px 0 48px;
+  }
+
+  .project-detail-back-link {
+    width: 100%;
+  }
+
+  .project-detail-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-hero-media img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .project-guide {
+    padding-top: 42px;
+  }
+
+  .project-guide-header h2 {
+    font-size: 1.85rem;
+  }
+
+  .guide-flow,
+  .guide-image-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-flow li {
+    min-height: auto;
+  }
+
+  .guide-section {
+    padding: 34px 0;
+  }
+
+  .guide-section h3 {
+    font-size: 1.32rem;
+  }
+
+  .project-guide table {
+    min-width: 620px;
   }
 
   .timeline-item,
