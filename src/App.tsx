@@ -13,12 +13,14 @@ import {
   profile,
   projects,
   skillGroups,
+  type Project,
   type ProfileLink,
 } from './data/portfolio';
 import { additionalDetails, resumeExperiences, resumeInfo, resumeIntroduction } from './data/resume';
 import { trackAnalyticsEvent } from './analytics/google';
 
 const resumePath = '/resume';
+const excelConditionPainterPath = '/projects/excel-condition-painter';
 
 const navItems = [
   { label: '성과', href: '#metrics' },
@@ -197,11 +199,24 @@ function App() {
     event.preventDefault();
     window.history.pushState(null, '', path);
     setCurrentPath(getCurrentPath());
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.setTimeout(() => {
+      const hash = path.split('#')[1];
+
+      if (hash) {
+        document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
   };
 
   if (currentPath === resumePath) {
     return <ResumePage onNavigate={handleInternalNavigate} />;
+  }
+
+  if (currentPath === excelConditionPainterPath) {
+    return <ExcelConditionPainterProjectPage onNavigate={handleInternalNavigate} />;
   }
 
   return <PortfolioHome resumeLink={resumeLink} onNavigate={handleInternalNavigate} />;
@@ -384,34 +399,388 @@ function PortfolioHome({
           <div className="project-grid compact-project-grid">
             {projects.map((project) => (
               <article className="project-card compact-project-card" key={project.title}>
-                <div className="project-image-wrap">
-                  <img src={project.image} alt={`${project.title} 썸네일`} />
-                  <span>{project.status}</span>
-                </div>
+                {project.detailPath ? (
+                  <a
+                    className="project-image-wrap project-image-link"
+                    href={project.detailPath}
+                    aria-label={`${project.title} 상세 페이지 보기`}
+                    onClick={(event) => onNavigate(event, project.detailPath!)}
+                  >
+                    <img src={project.image} alt={`${project.title} 썸네일`} />
+                    <span>{project.status}</span>
+                  </a>
+                ) : (
+                  <div className="project-image-wrap">
+                    <img src={project.image} alt={`${project.title} 썸네일`} />
+                    <span>{project.status}</span>
+                  </div>
+                )}
                 <div className="project-content">
                   <div>
                     <p className="project-role">{project.role}</p>
                     <h3>{project.title}</h3>
                     <p>{project.summary}</p>
                   </div>
-                  <div className="tech-list project-tech-list" aria-label={`${project.title} 기술 스택`}>
-                    {project.tech.map((tech) => (
-                      <span key={tech}>{tech}</span>
-                    ))}
-                  </div>
-                  <div className="project-links">
-                    {project.links.map((link) => (
-                      <a key={link.label} href={link.href} aria-label={`${project.title} ${link.label}`}>
-                        {link.label}
-                        <ArrowUpRight size={16} aria-hidden="true" />
-                      </a>
-                    ))}
-                  </div>
                 </div>
               </article>
             ))}
           </div>
         </section>
+
+        <AnalyticsNotice />
+      </main>
+    </div>
+  );
+}
+
+function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: InternalNavigate }) {
+  const project: Project | undefined = projects.find((item) => item.detailPath === excelConditionPainterPath);
+  const assetPath = '/assets/excel-condition-painter';
+
+  return (
+    <div className="site-shell">
+      <SiteHeader isResumePage onNavigate={onNavigate} />
+
+      <main className="project-detail-page" id="top">
+        <section className="project-detail-hero" aria-labelledby="excel-condition-painter-title">
+          <div className="project-detail-hero-copy">
+            <p className="section-kicker">Project Guide</p>
+            <h1 id="excel-condition-painter-title">{project?.title ?? 'ExcelConditionPainter'}</h1>
+            <p className="project-detail-lead">
+              Excel 주문 데이터를 열고, 조건에 맞는 행과 셀을 색상으로 표시한 뒤 결과 파일로 저장하는
+              Windows Forms 보조 도구입니다.
+            </p>
+            <div className="tech-list project-detail-tech-list" aria-label="ExcelConditionPainter 기술 스택">
+              {(project?.tech ?? ['C#', 'WinForms', 'ClosedXML']).map((tech) => (
+                <span key={tech}>{tech}</span>
+              ))}
+            </div>
+            {project?.links ? (
+              <div className="project-detail-actions">
+                {project.links.map((link) => (
+                  <a key={link.label} className="button primary" href={link.href} target="_blank" rel="noreferrer">
+                    {link.label}
+                    <ArrowUpRight size={17} aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
+          <figure className="project-detail-hero-media">
+            <img src={`${assetPath}/main-image.png`} alt="ExcelConditionPainter 대표 화면" />
+          </figure>
+        </section>
+
+        <article className="project-guide" aria-labelledby="excel-guide-title">
+          <header className="project-guide-header">
+            <p className="section-kicker">Usage Flow</p>
+            <h2 id="excel-guide-title">ExcelConditionPainter 사용 가이드</h2>
+            <p>
+              예시는 <code>DummyData_400Rows_Shuffled.xlsx</code> 기준입니다. 파일을 열고 조건을 설정한 뒤
+              검색과 Export까지 이어지는 흐름을 정리했습니다.
+            </p>
+          </header>
+
+          <ol className="guide-flow" aria-label="ExcelConditionPainter 사용 흐름">
+            <li>
+              <strong>1. Open</strong>
+              <span>Excel 파일 열기</span>
+            </li>
+            <li>
+              <strong>2. Set Conditions</strong>
+              <span>컬럼/조건 지정</span>
+            </li>
+            <li>
+              <strong>3. Set</strong>
+              <span>조건 색상 적용</span>
+            </li>
+            <li>
+              <strong>4. Ctrl+F</strong>
+              <span>결과 검색</span>
+            </li>
+            <li>
+              <strong>5. Options</strong>
+              <span>Export 방식 설정</span>
+            </li>
+            <li>
+              <strong>6. Export</strong>
+              <span>결과 저장</span>
+            </li>
+          </ol>
+
+          <section className="guide-section" aria-labelledby="open-excel-title">
+            <h3 id="open-excel-title">1. Excel 파일 열기</h3>
+            <div className="guide-image-pair">
+              <figure>
+                <img src={`${assetPath}/main-window-before-set-cropped.png`} alt="조건 적용 전 메인 화면" />
+                <figcaption>적용 전: 파일만 연 상태</figcaption>
+              </figure>
+              <figure>
+                <img src={`${assetPath}/main-window-cropped.png`} alt="조건 적용 후 메인 화면" />
+                <figcaption>적용 후: 조건 색상 표시</figcaption>
+              </figure>
+            </div>
+            <div className="guide-table-wrap">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>열기</th>
+                    <td>
+                      <b>Open</b> → <code>DummyData_400Rows_Shuffled.xlsx</code> 선택
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>확인</th>
+                    <td>
+                      <b>Current file</b>에 파일명이 표시되고, <b>Excel Viewer</b>에 데이터가 표시됩니다.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>차이</th>
+                    <td>
+                      처음에는 색상이 없고, <b>Set</b> 적용 후 조건 결과가 색상으로 표시됩니다.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="conditions-title">
+            <h3 id="conditions-title">2. 조건 설정</h3>
+            <figure className="guide-figure guide-figure--medium">
+              <img src={`${assetPath}/set-conditions-window.png`} alt="Set Conditions 창" />
+              <figcaption>Set Conditions: 컬럼 매핑, 옵션 수량, 조건 목록 설정</figcaption>
+            </figure>
+            <div className="guide-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>항목</th>
+                    <th>예제 값</th>
+                    <th>역할</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>기본키</td>
+                    <td>
+                      <code>상품고유번호</code>
+                    </td>
+                    <td>행 구분 기준</td>
+                  </tr>
+                  <tr>
+                    <td>정렬 1</td>
+                    <td>
+                      <code>주문일</code>
+                    </td>
+                    <td>날짜순 정렬</td>
+                  </tr>
+                  <tr>
+                    <td>정렬 2</td>
+                    <td>
+                      <code>주문자</code>
+                    </td>
+                    <td>같은 날짜 안의 보조 정렬</td>
+                  </tr>
+                  <tr>
+                    <td>수량</td>
+                    <td>
+                      <code>주문수량</code>
+                    </td>
+                    <td>총 구매 수량 계산</td>
+                  </tr>
+                  <tr>
+                    <td>옵션</td>
+                    <td>
+                      <code>판매옵션</code>
+                    </td>
+                    <td>옵션별 수량/특정 옵션 검색</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ul className="guide-checklist">
+              <li>
+                옵션명 옆 숫자는 실제 상품 수량입니다. 예: <code>멀티비타민 -30병</code> → <code>30</code>
+              </li>
+              <li>컬럼 선택이 맞으면 하단 조건 목록을 조정합니다.</li>
+            </ul>
+          </section>
+
+          <section className="guide-section" aria-labelledby="priority-title">
+            <h3 id="priority-title">3. 조건 추가, 삭제, 우선순위</h3>
+            <div className="guide-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>컨트롤</th>
+                    <th>의미</th>
+                    <th>추천 사용법</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <b>조건 추가</b> + <b>+</b>
+                    </td>
+                    <td>새 조건 행 추가</td>
+                    <td>
+                      필요한 조건만 추가하고, 불필요하면 <b>-</b>로 삭제
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>왼쪽 컬럼 선택</td>
+                    <td>조건 계산 기준 컬럼</td>
+                    <td>
+                      <code>주소</code>, <code>주문자</code>, <code>연락처</code> 등 선택
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>AND</b>
+                    </td>
+                    <td>선택 컬럼을 하나의 묶음으로 계산</td>
+                    <td>정확히 좁혀 찾을 때 사용</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>OR</b>
+                    </td>
+                    <td>선택 컬럼 중 하나라도 맞으면 포함</td>
+                    <td>넓게 훑어볼 때 사용</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>Lv</b>
+                    </td>
+                    <td>조건 우선순위</td>
+                    <td>중요 조건은 낮은 숫자, 보조 조건은 높은 숫자</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>Fill</b> / <b>Font</b>
+                    </td>
+                    <td>배경색 / 글자색</td>
+                    <td>선착순은 Fill, 중복 확인은 Font처럼 구분</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="guide-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>조건 종류</th>
+                    <th>짧은 설명</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>중복값 Cell 검색</td>
+                    <td>중복되는 셀 값을 표시</td>
+                  </tr>
+                  <tr>
+                    <td>중복 제외 순차 검색</td>
+                    <td>중복을 제외하고 앞에서부터 지정 인원 표시</td>
+                  </tr>
+                  <tr>
+                    <td>총 구매 수량 검색</td>
+                    <td>주문수량 × 옵션별 실제 수량으로 기준 이상 표시</td>
+                  </tr>
+                  <tr>
+                    <td>특정 옵션 구매 검색</td>
+                    <td>
+                      선택 옵션 구매자를 순서대로 표시, <code>OR</code> 고정
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="search-title">
+            <h3 id="search-title">4. 검색</h3>
+            <figure className="guide-figure guide-figure--compact">
+              <img src={`${assetPath}/search-window.png`} alt="Search 창" />
+              <figcaption>
+                <code>멀티비타민</code> 검색 결과
+              </figcaption>
+            </figure>
+            <ol className="guide-checklist">
+              <li>
+                메인 화면에서 <b>Ctrl+F</b>
+              </li>
+              <li>
+                검색어 입력: <code>멀티비타민</code>
+              </li>
+              <li>
+                <b>모두 찾기</b> 클릭
+              </li>
+              <li>결과 행 선택 후 메인 그리드 위치로 이동</li>
+            </ol>
+          </section>
+
+          <section className="guide-section" aria-labelledby="options-title">
+            <h3 id="options-title">5. Options</h3>
+            <figure className="guide-figure guide-figure--small">
+              <img src={`${assetPath}/options-window.png`} alt="Options 창" />
+              <figcaption>Export 분리 저장 및 조건별 기본 검색 방식</figcaption>
+            </figure>
+            <div className="guide-table-wrap">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Export Split By Conditions</th>
+                    <td>조건별 결과 파일을 따로 저장합니다.</td>
+                  </tr>
+                  <tr>
+                    <th>조건별 기본 검색 방식</th>
+                    <td>
+                      새 조건의 기본 <code>AND</code>/<code>OR</code> 값을 정합니다.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Save</th>
+                    <td>변경한 옵션을 저장합니다.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="export-title">
+            <h3 id="export-title">6. Export</h3>
+            <div className="guide-table-wrap">
+              <table>
+                <tbody>
+                  <tr>
+                    <th>버튼</th>
+                    <td>
+                      메인 화면 오른쪽 위 <b>Export</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>기본 파일</th>
+                    <td>
+                      <code>ExcelPainter/DummyData_400Rows_Shuffled_Default.xlsx</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>조건별 파일</th>
+                    <td>
+                      <b>Export Split By Conditions</b>가 켜져 있을 때 추가 생성
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="guide-note">
+              <b>핵심:</b> 컬럼 매핑을 먼저 확인하고, <b>AND/OR</b>로 검색 범위를 정한 뒤, <b>Lv</b>와
+              색상으로 중요도를 구분하면 결과를 빠르게 읽을 수 있습니다.
+            </div>
+          </section>
+        </article>
 
         <AnalyticsNotice />
       </main>
