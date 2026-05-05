@@ -21,6 +21,7 @@ import { trackAnalyticsEvent } from './analytics/google';
 
 const resumePath = '/resume';
 const excelConditionPainterPath = '/projects/excel-condition-painter';
+const cpuMemoryStressTestPath = '/projects/cpu-memory-stress-test';
 
 const navItems = [
   { label: '성과', href: '#metrics' },
@@ -219,6 +220,10 @@ function App() {
     return <ExcelConditionPainterProjectPage onNavigate={handleInternalNavigate} />;
   }
 
+  if (currentPath === cpuMemoryStressTestPath) {
+    return <CPUMemoryStressTestProjectPage onNavigate={handleInternalNavigate} />;
+  }
+
   return <PortfolioHome resumeLink={resumeLink} onNavigate={handleInternalNavigate} />;
 }
 
@@ -404,7 +409,11 @@ function PortfolioHome({
                     className="project-image-wrap project-image-link"
                     href={project.detailPath}
                     aria-label={`${project.title} 상세 페이지 보기`}
-                    onClick={(event) => onNavigate(event, project.detailPath!)}
+                    onClick={(event) => {
+                      if (project.detailMode !== 'document') {
+                        onNavigate(event, project.detailPath!);
+                      }
+                    }}
                   >
                     <img src={project.image} alt={`${project.title} 썸네일`} />
                     <span>{project.status}</span>
@@ -818,6 +827,290 @@ function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: Internal
             <div className="guide-note">
               <b>핵심:</b> 컬럼 매핑을 먼저 확인하고, <b>AND/OR</b>로 검색 범위를 정한 뒤, <b>Lv</b>와
               색상으로 중요도를 구분하면 결과를 빠르게 읽을 수 있습니다.
+            </div>
+          </section>
+        </article>
+
+        <AnalyticsNotice />
+      </main>
+    </div>
+  );
+}
+
+function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNavigate }) {
+  const project: Project | undefined = projects.find((item) => item.detailPath === cpuMemoryStressTestPath);
+  const assetPath = '/assets/cpu-memory-stress-test';
+  const repositoryLink = project?.links.find((link) => link.label === 'Repository');
+  const downloadLinks = project?.links.filter((link) => link.label !== 'Repository') ?? [];
+  const downloadDescriptions: Record<string, { title: string; description: string; buttonText: string }> = {
+    'Release Download': {
+      title: 'Release v1.0.0',
+      description: 'GitHub Releases에서 배포 버전과 포함된 에셋을 확인할 수 있습니다.',
+      buttonText: 'Open Release',
+    },
+    'Windows x64 ZIP': {
+      title: 'Windows x64 ZIP',
+      description: '압축을 풀고 실행 파일로 바로 테스트할 수 있는 Windows x64 배포본입니다.',
+      buttonText: 'Download ZIP',
+    },
+  };
+  const runModes = [
+    {
+      title: 'User 대화형',
+      command: 'CPUMemoryStressTestCpp.exe',
+      image: 'interactive-mode.png',
+      description: '질문에 답하면서 전체 테스트를 순서대로 실행합니다.',
+    },
+    {
+      title: 'Shell',
+      command: 'CPUMemoryStressTestCpp.exe shell',
+      image: 'shell-mode.png',
+      description: 'stress> 프롬프트에서 여러 명령을 이어서 실행합니다.',
+    },
+    {
+      title: 'CLI',
+      command: 'CPUMemoryStressTestCpp.exe run memory --preset quick',
+      image: 'cli-mode.png',
+      description: '한 줄 명령으로 실행하고 JSON과 exit code를 반환합니다.',
+    },
+  ];
+  const commandExamples = [
+    {
+      command: 'CPUMemoryStressTestCpp.exe list',
+      purpose: '테스트 목록 확인',
+    },
+    {
+      command: 'CPUMemoryStressTestCpp.exe run memory --preset quick',
+      purpose: '메모리 테스트 quick 실행',
+    },
+    {
+      command: 'CPUMemoryStressTestCpp.exe run cpu.prime.parallel --preset quick',
+      purpose: 'CPU 병렬 테스트 quick 실행',
+    },
+    {
+      command: 'CPUMemoryStressTestCpp.exe run memory --preset quick --save-csv',
+      purpose: 'JSON 출력과 CSV 저장',
+    },
+    {
+      command: 'CPUMemoryStressTestCpp.exe run cpu.foo --preset quick',
+      purpose: '잘못된 ID의 오류 응답 확인',
+    },
+  ];
+
+  return (
+    <div className="site-shell">
+      <SiteHeader isResumePage onNavigate={onNavigate} />
+
+      <main className="project-detail-page" id="top">
+        <section className="project-detail-hero" aria-labelledby="cpu-memory-stress-test-title">
+          <div className="project-detail-hero-copy">
+            <p className="section-kicker">Project Guide</p>
+            <h1 id="cpu-memory-stress-test-title">{project?.title ?? 'CPUMemoryStressTest'}</h1>
+            <p className="project-detail-lead">
+              CPU와 메모리 부하를 실행하는 C++20 콘솔 도구입니다. User 대화형, Shell, CLI 세 가지 방식으로
+              실행하고 결과는 JSON 또는 CSV로 남길 수 있습니다.
+            </p>
+            <div className="tech-list project-detail-tech-list" aria-label="CPUMemoryStressTest 기술 스택">
+              {(project?.tech ?? ['C++20', 'WinAPI', 'STL', 'JSON CLI']).map((tech) => (
+                <span key={tech}>{tech}</span>
+              ))}
+            </div>
+            {repositoryLink ? (
+              <div className="project-detail-actions">
+                <a className="button primary" href={repositoryLink.href} target="_blank" rel="noreferrer">
+                  {repositoryLink.label}
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </a>
+              </div>
+            ) : null}
+          </div>
+          <figure className="project-detail-hero-media project-detail-hero-media--console">
+            <img src={`${assetPath}/cli-mode.png`} alt="CPUMemoryStressTest CLI 실행 화면" />
+          </figure>
+        </section>
+
+        {downloadLinks.length > 0 ? (
+          <section className="project-download-section" aria-labelledby="cpu-download-title">
+            <div className="project-download-copy">
+              <p className="section-kicker">Downloads</p>
+              <h2 id="cpu-download-title">Release 다운로드</h2>
+              <p>
+                <b>v1.0.0</b>부터 Windows x64 ZIP 배포본을 제공합니다. 실행 파일 하나로 세 가지 실행 방식을
+                확인할 수 있습니다.
+              </p>
+            </div>
+            <div className="project-download-grid">
+              {downloadLinks.map((link) => {
+                const detail = downloadDescriptions[link.label] ?? {
+                  title: link.label,
+                  description: '프로젝트에서 제공하는 관련 배포 파일입니다.',
+                  buttonText: 'Open',
+                };
+
+                return (
+                  <article className="project-download-card" key={link.label}>
+                    <h3>{detail.title}</h3>
+                    <p>{detail.description}</p>
+                    <a className="button secondary" href={link.href} target="_blank" rel="noreferrer">
+                      {detail.buttonText}
+                      <ArrowUpRight size={16} aria-hidden="true" />
+                    </a>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        <article className="project-guide" aria-labelledby="cpu-guide-title">
+          <header className="project-guide-header">
+            <p className="section-kicker">Run Modes</p>
+            <h2 id="cpu-guide-title">상황에 맞게 고르는 3가지 실행 방식</h2>
+            <p>
+              캡처 이미지는 모두 실제 CMD 창만 다시 캡처한 화면입니다.
+              <br />
+              핵심 사용 방식과 출력 흐름만 간단히 정리했습니다.
+            </p>
+          </header>
+
+          <ol className="guide-flow cpu-guide-flow" aria-label="CPUMemoryStressTest 실행 방식">
+            <li>
+              <strong>1. User</strong>
+              <span>질문에 답하며 실행</span>
+            </li>
+            <li>
+              <strong>2. Shell</strong>
+              <span>반복 명령 실행</span>
+            </li>
+            <li>
+              <strong>3. CLI</strong>
+              <span>자동화와 JSON 출력</span>
+            </li>
+          </ol>
+
+          <section className="guide-section" aria-labelledby="cpu-run-modes-title">
+            <h3 id="cpu-run-modes-title">1. 실행 방식</h3>
+            <div className="run-mode-grid">
+              {runModes.map((mode) => (
+                <article className="run-mode-card" key={mode.title}>
+                  <figure>
+                    <img src={`${assetPath}/${mode.image}`} alt={`${mode.title} 실행 CMD 캡처`} />
+                  </figure>
+                  <div>
+                    <span className="mode-badge">{mode.title}</span>
+                    <h4>{mode.command}</h4>
+                    <p>{mode.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="cpu-cli-title">
+            <h3 id="cpu-cli-title">2. CLI 실행 예시</h3>
+            <figure className="guide-figure guide-figure--console">
+              <img src={`${assetPath}/cli-mode.png`} alt="CLI quick preset 실행 CMD 캡처" />
+              <figcaption>
+                <code>run cpu.prime.parallel --preset quick</code>: quick preset 결과를 JSON으로 출력
+              </figcaption>
+            </figure>
+            <div className="guide-table-wrap">
+              <table className="console-command-table">
+                <thead>
+                  <tr>
+                    <th>명령</th>
+                    <th>용도</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {commandExamples.map((item) => (
+                    <tr key={item.command}>
+                      <td>
+                        <code>{item.command}</code>
+                      </td>
+                      <td>{item.purpose}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="cpu-output-title">
+            <h3 id="cpu-output-title">3. CSV 저장</h3>
+            <figure className="guide-figure guide-figure--console">
+              <img src={`${assetPath}/csv-output.png`} alt="CSV 저장 옵션 실행 CMD 캡처" />
+              <figcaption>
+                <code>--save-csv</code>: CLI에서는 명시적으로 요청한 경우에만 CSV 저장
+              </figcaption>
+            </figure>
+            <div className="guide-note">
+              기본 결과는 stdout JSON으로 반환하고, 필요할 때만 <code>--save-csv</code>와 <code>--csv-dir</code>로
+              파일 로그를 남깁니다. 잘못된 명령도 JSON과 exit code로 구분됩니다.
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="cpu-preset-title">
+            <h3 id="cpu-preset-title">4. Preset과 안전장치</h3>
+            <div className="guide-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Preset</th>
+                    <th>용도</th>
+                    <th>대표 설정</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <code>quick</code>
+                    </td>
+                    <td>빠른 기능 확인</td>
+                    <td>worker 최대 2개, memory 128 MB</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <code>normal</code>
+                    </td>
+                    <td>일반 부하 확인</td>
+                    <td>worker 최대 4개, memory 512 MB</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <code>heavy</code>
+                    </td>
+                    <td>강한 부하 확인</td>
+                    <td>hardware worker, memory 2048 MB</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <code>extreme</code>
+                    </td>
+                    <td>장시간 고부하</td>
+                    <td>shell/대화형 모드에서 확인 입력 후 실행</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="guide-note">
+              <b>핵심:</b> <code>extreme</code>은 실수로 실행되지 않도록 shell 또는 대화형 모드에서 확인 입력을 거칩니다.
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="cpu-architecture-title">
+            <h3 id="cpu-architecture-title">5. 실행 구조</h3>
+            <div className="architecture-flow" aria-label="CPUMemoryStressTest CLI 실행 구조">
+              <span>CliParser</span>
+              <span>CliCommandExecutor</span>
+              <span>TestRegistry</span>
+              <span>IStressTest</span>
+              <span>TestResult</span>
+              <span>JsonResultWriter</span>
+            </div>
+            <div className="guide-note">
+              테스트는 <code>IStressTest</code> 전략으로 분리하고, <code>TestRegistry</code>에서 ID 기반으로 찾아 실행합니다.
+              출력은 JSON/CSV Writer로 나눠 실행 로직과 저장 형식을 분리했습니다.
             </div>
           </section>
         </article>
