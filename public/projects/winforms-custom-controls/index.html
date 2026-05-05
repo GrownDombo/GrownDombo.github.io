@@ -592,9 +592,7 @@
           <p class="section-kicker">Project Guide</p>
           <h1 id="project-title">WinFormsCustomControls</h1>
           <p class="hero-lead">
-            .NET Framework 4.8 기반 WinForms 프로젝트에서 반복적으로 사용하는 UI 패턴을 커스텀
-            컨트롤 DLL로 묶은 라이브러리입니다. 데모 실행 파일에서 색상 선택, 다중 선택,
-            체크 가능한 그룹 박스, 대량 행 표시, 세로 배치 패널의 동작을 한 화면에서 확인할 수 있습니다.
+            .NET Framework 4.8 기반 WinForms UI 패턴을 재사용 가능한 커스텀 컨트롤 DLL로 정리한 프로젝트입니다.
           </p>
           <div class="tech-list" aria-label="기술 스택">
             <span>C#</span>
@@ -617,20 +615,20 @@
         <div class="section-heading">
           <p class="section-kicker">Downloads</p>
           <h2 id="download-title">라이브러리와 데모 실행 파일</h2>
-          <p>GitHub Releases에서 다른 프로젝트에 참조할 DLL과 컨트롤 동작을 확인할 수 있는 데모 실행 파일을 함께 받을 수 있습니다.</p>
+          <p>GitHub Releases에서 DLL과 데모 실행 파일을 받을 수 있습니다.</p>
         </div>
 
         <div class="download-grid">
           <article class="download-card">
             <h3>Library DLL</h3>
-            <p>다른 WinForms 프로젝트에서 참조할 수 있는 커스텀 컨트롤 DLL 패키지입니다.</p>
+            <p>WinForms 프로젝트에서 참조할 컨트롤 DLL입니다.</p>
             <a class="button secondary" href="https://github.com/GrownDombo/WinFormsCustomControls/releases/latest" target="_blank" rel="noreferrer">
               Download
             </a>
           </article>
           <article class="download-card">
             <h3>Demo App</h3>
-            <p>ColorComboBox, CheckBoxComboBox 등 컨트롤 동작을 빠르게 확인할 수 있는 데모 실행 파일입니다.</p>
+            <p>주요 컨트롤 동작을 확인하는 데모 앱입니다.</p>
             <a class="button secondary" href="https://github.com/GrownDombo/WinFormsCustomControls/releases/latest" target="_blank" rel="noreferrer">
               Download
             </a>
@@ -643,27 +641,24 @@
           <p class="section-kicker">Why</p>
           <h2 id="why-title">반복되는 WinForms UI를 재사용 가능한 컨트롤로 분리</h2>
           <p>
-            업무용 Windows 애플리케이션을 만들다 보면 색상 선택, 체크 목록, 옵션 그룹, 대량
-            그리드, 스크롤 패널처럼 여러 화면에서 반복되는 UI가 생깁니다. 이 프로젝트는 그런
-            패턴을 개별 컨트롤로 묶어 화면 코드의 중복을 줄이고, 다른 WinForms 프로젝트에서도
-            DLL 참조만으로 가져다 쓸 수 있게 정리했습니다.
+            색상 선택, 체크 목록, 대량 그리드처럼 반복되는 WinForms UI를 컨트롤로 분리해 화면 코드 중복을 줄였습니다.
           </p>
         </div>
         <div class="why-grid">
           <article class="why-card">
             <strong>5 controls</strong>
             <h3>자주 쓰는 패턴 정리</h3>
-            <p>ComboBox, ContainerControl, DataGridView, FlowLayoutPanel 기반 컨트롤을 제공합니다.</p>
+            <p>WinForms UI 패턴 5종을 제공합니다.</p>
           </article>
           <article class="why-card">
             <strong>DLL</strong>
             <h3>프로젝트 간 재사용</h3>
-            <p>Release 빌드 산출물인 DLL을 다른 WinForms 앱에서 직접 참조할 수 있습니다.</p>
+            <p>DLL 참조만으로 다른 앱에서 재사용할 수 있습니다.</p>
           </article>
           <article class="why-card">
             <strong>Demo</strong>
             <h3>동작 확인용 실행 파일</h3>
-            <p>별도 데모 앱으로 드롭다운, 체크 상태, 대량 데이터 표시를 빠르게 확인합니다.</p>
+            <p>드롭다운, 체크 상태, 대량 데이터 표시를 확인합니다.</p>
           </article>
         </div>
       </section>
@@ -673,8 +668,7 @@
           <p class="section-kicker">Controls</p>
           <h2 id="controls-title">구성 컨트롤</h2>
           <p>
-            컨트롤별 책임을 작게 나누고, 필요한 공개 API만 노출해 폼 코드에서는 사용 목적이
-            바로 드러나도록 구성했습니다.
+            README 캡처로 각 컨트롤의 핵심 동작을 빠르게 볼 수 있습니다.
           </p>
         </div>
         <div class="control-grid">
@@ -731,8 +725,7 @@
           <p class="section-kicker">Usage Flow</p>
           <h2 id="usage-title">라이브러리 사용 흐름</h2>
           <p>
-            라이브러리 프로젝트를 Release로 빌드한 뒤 DLL을 참조하거나, 같은 솔루션 안에서
-            프로젝트 참조로 연결해 커스텀 컨트롤을 사용할 수 있습니다.
+            Release 빌드 후 DLL 또는 프로젝트 참조로 연결해 사용합니다.
           </p>
         </div>
 
@@ -765,25 +758,25 @@
               <tr>
                 <th>DLL 직접 참조</th>
                 <td>
-                  <code>WinFormsCustomControls.dll</code>을 빌드한 뒤 대상 WinForms 프로젝트의 참조에 추가합니다.
+                  <code>WinFormsCustomControls.dll</code> 참조 추가
                 </td>
               </tr>
               <tr>
                 <th>프로젝트 참조</th>
                 <td>
-                  같은 솔루션 안에서는 <code>WinFormsCustomControls.csproj</code>를 프로젝트 참조로 연결합니다.
+                  같은 솔루션에서는 <code>WinFormsCustomControls.csproj</code> 연결
                 </td>
               </tr>
               <tr>
                 <th>네임스페이스</th>
                 <td>
-                  폼 코드에서 <code>using WinFormsCustomControls;</code>를 추가한 뒤 컨트롤을 생성합니다.
+                  <code>using WinFormsCustomControls;</code> 추가
                 </td>
               </tr>
               <tr>
                 <th>데모 실행</th>
                 <td>
-                  <code>WinFormsCustomControls.Demo.exe</code>에서 각 컨트롤의 기본 동작과 대량 데이터 표시를 확인합니다.
+                  <code>WinFormsCustomControls.Demo.exe</code>로 동작 확인
                 </td>
               </tr>
             </tbody>

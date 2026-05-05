@@ -37,6 +37,7 @@ export type Project = {
   tech: string[];
   links: ProjectLink[];
   image: string;
+  priority?: number;
   detailPath?: string;
   detailMode?: 'spa' | 'document';
   status: string;
@@ -177,6 +178,7 @@ export const projects: Project[] = [
       },
     ],
     image: '/assets/project-winforms-custom-controls.png',
+    priority: 3,
     detailPath: '/projects/winforms-custom-controls/',
     detailMode: 'document',
     status: 'WinForms Library',
@@ -201,8 +203,30 @@ export const projects: Project[] = [
       },
     ],
     image: '/assets/excel-condition-painter/main-image.png',
+    priority: 1,
     detailPath: '/projects/excel-condition-painter',
     status: 'Desktop Utility',
+  },
+  {
+    title: 'RFID Collision Search Simulator',
+    summary: '재귀 방식과 반복 방식의 RFID 태그 충돌 탐색 과정을 비교하는 C++ 콘솔 시뮬레이터입니다.',
+    role: 'Prefix 탐색 모델 설계 · 재귀/반복 알고리즘 비교 구현',
+    tech: ['C++', 'STL', 'Visual Studio 2022'],
+    links: [
+      {
+        label: 'Repository',
+        href: 'https://github.com/GrownDombo/RFIDSearchSimulator',
+      },
+
+      {
+        label: 'Windows x64 EXE',
+        href: 'https://github.com/GrownDombo/RFIDSearchSimulator/releases/latest/download/RFIDSearchingSimulator.exe',
+      },
+    ],
+    image: '/assets/rfid-collision-search-simulator/main-image.png',
+    priority: 4,
+    detailPath: '/projects/rfid-collision-search-simulator',
+    status: 'Console Simulator',
   },
   {
     title: 'CPUMemoryStressTest',
@@ -224,6 +248,7 @@ export const projects: Project[] = [
       },
     ],
     image: '/assets/cpu-memory-stress-test/cli-mode.png',
+    priority: 2,
     detailPath: '/projects/cpu-memory-stress-test',
     status: 'Stress Tool',
   },

@@ -22,6 +22,7 @@ import { trackAnalyticsEvent } from './analytics/google';
 const resumePath = '/resume';
 const excelConditionPainterPath = '/projects/excel-condition-painter';
 const cpuMemoryStressTestPath = '/projects/cpu-memory-stress-test';
+const rfidCollisionSearchSimulatorPath = '/projects/rfid-collision-search-simulator';
 
 const navItems = [
   { label: '성과', href: '#metrics' },
@@ -224,6 +225,10 @@ function App() {
     return <CPUMemoryStressTestProjectPage onNavigate={handleInternalNavigate} />;
   }
 
+  if (currentPath === rfidCollisionSearchSimulatorPath) {
+    return <RFIDCollisionSearchSimulatorProjectPage onNavigate={handleInternalNavigate} />;
+  }
+
   return <PortfolioHome resumeLink={resumeLink} onNavigate={handleInternalNavigate} />;
 }
 
@@ -258,6 +263,10 @@ function PortfolioHome({
   resumeLink?: ProfileLink;
   onNavigate: InternalNavigate;
 }) {
+  const prioritizedProjects = [...projects].sort((left, right) => {
+    return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
+  });
+
   return (
     <div className="site-shell">
       <SiteHeader onNavigate={onNavigate} />
@@ -402,7 +411,7 @@ function PortfolioHome({
           </div>
 
           <div className="project-grid compact-project-grid">
-            {projects.map((project) => (
+            {prioritizedProjects.map((project) => (
               <article className="project-card compact-project-card" key={project.title}>
                 {project.detailPath ? (
                   <a
@@ -845,13 +854,13 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
   const downloadDescriptions: Record<string, { title: string; description: string; buttonText: string }> = {
     'Release Download': {
       title: 'Release v1.0.0',
-      description: 'GitHub Releases에서 배포 버전과 포함된 에셋을 확인할 수 있습니다.',
-      buttonText: 'Open Release',
+      description: '배포 버전과 파일 확인',
+      buttonText: 'Release',
     },
     'Windows x64 ZIP': {
       title: 'Windows x64 ZIP',
-      description: '압축을 풀고 실행 파일로 바로 테스트할 수 있는 Windows x64 배포본입니다.',
-      buttonText: 'Download ZIP',
+      description: '실행 파일 압축본',
+      buttonText: 'ZIP Download',
     },
   };
   const runModes = [
@@ -878,24 +887,119 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
     {
       command: 'CPUMemoryStressTestCpp.exe list',
       purpose: '테스트 목록 확인',
+      image: 'cli-list.gif?v=full-list-1',
     },
     {
       command: 'CPUMemoryStressTestCpp.exe run memory --preset quick',
       purpose: '메모리 테스트 quick 실행',
+      image: 'cli-memory.png',
     },
     {
       command: 'CPUMemoryStressTestCpp.exe run cpu.prime.parallel --preset quick',
       purpose: 'CPU 병렬 테스트 quick 실행',
+      image: 'cli-prime.png',
     },
     {
-      command: 'CPUMemoryStressTestCpp.exe run memory --preset quick --save-csv',
+      command: 'CPUMemoryStressTestCpp.exe run memory --preset quick --save-csv --csv-dir C:\\Csv',
       purpose: 'JSON 출력과 CSV 저장',
+      image: 'cli-csv.png',
     },
     {
       command: 'CPUMemoryStressTestCpp.exe run cpu.foo --preset quick',
       purpose: '잘못된 ID의 오류 응답 확인',
+      image: 'cli-invalid.png',
     },
   ];
+  const commandReferenceRows = [
+    {
+      name: 'Shell',
+      command: 'list / run memory --preset quick / exit',
+      description: 'stress> 프롬프트에서 실행 파일명 없이 명령만 입력합니다.',
+    },
+    {
+      name: 'CLI',
+      command: 'CPUMemoryStressTestCpp.exe run memory --preset quick',
+      description: '실행 파일 뒤에 명령을 붙여 JSON과 exit code를 받습니다.',
+    },
+    {
+      name: 'list',
+      command: 'CPUMemoryStressTestCpp.exe list',
+      description: '사용 가능한 테스트 ID를 확인합니다.',
+    },
+    {
+      name: '--preset',
+      command: '--preset quick | normal | heavy | extreme',
+      description: '테스트 부하 크기를 선택합니다.',
+    },
+    {
+      name: '--repeat',
+      command: '--repeat 3',
+      description: '같은 검사를 지정한 횟수만큼 반복합니다.',
+    },
+    {
+      name: '--save-csv',
+      command: '--save-csv [--csv-dir C:\\Csv]',
+      description: '--csv-dir이 없으면 바탕화면의 StressTestResult 폴더에 자동 저장합니다.',
+    },
+  ];
+  const savedResultExamples = [
+    {
+      fileName: 'SingleArrayMath.txt',
+      testName: '단일 배열 수학 계산',
+      image: 'txt-single-array-math.png',
+    },
+    {
+      fileName: 'ParallelArrayMath.txt',
+      testName: '병렬 배열 수학 계산',
+      image: 'txt-parallel-array-math.png',
+    },
+    {
+      fileName: 'SingleRecursive.txt',
+      testName: '단일 재귀 피보나치',
+      image: 'txt-single-recursive.png',
+    },
+    {
+      fileName: 'ParallelRecursive.txt',
+      testName: '병렬 재귀 피보나치',
+      image: 'txt-parallel-recursive.png',
+    },
+    {
+      fileName: 'SinglePrime.txt',
+      testName: '단일 소수 찾기',
+      image: 'txt-single-prime.png',
+    },
+    {
+      fileName: 'ParallelPrime.txt',
+      testName: '병렬 소수 찾기',
+      image: 'txt-parallel-prime.png',
+    },
+    {
+      fileName: 'SingleSort.txt',
+      testName: '단일 배열 정렬',
+      image: 'txt-single-sort.png',
+    },
+    {
+      fileName: 'ParallelSort.txt',
+      testName: '병렬 배열 정렬 및 병합',
+      image: 'txt-parallel-sort.png',
+    },
+    {
+      fileName: 'SingleMandelbrot.txt',
+      testName: '단일 Mandelbrot 계산',
+      image: 'txt-single-mandelbrot.png',
+    },
+    {
+      fileName: 'ParallelMandelbrot.txt',
+      testName: '병렬 Mandelbrot 계산',
+      image: 'txt-parallel-mandelbrot.png',
+    },
+    {
+      fileName: 'Memory.txt',
+      testName: '메모리 테스트',
+      image: 'txt-memory.png',
+    },
+  ];
+  const savedResultCaptureVersion = 'txt-window-uniform-2';
 
   return (
     <div className="site-shell">
@@ -907,8 +1011,7 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
             <p className="section-kicker">Project Guide</p>
             <h1 id="cpu-memory-stress-test-title">{project?.title ?? 'CPUMemoryStressTest'}</h1>
             <p className="project-detail-lead">
-              CPU와 메모리 부하를 실행하는 C++20 콘솔 도구입니다. User 대화형, Shell, CLI 세 가지 방식으로
-              실행하고 결과는 JSON 또는 CSV로 남길 수 있습니다.
+              CPU/Memory 부하 테스트를 세 가지 방식으로 실행하고 JSON/CSV로 기록하는 C++20 콘솔 도구입니다.
             </p>
             <div className="tech-list project-detail-tech-list" aria-label="CPUMemoryStressTest 기술 스택">
               {(project?.tech ?? ['C++20', 'WinAPI', 'STL', 'JSON CLI']).map((tech) => (
@@ -925,7 +1028,7 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
             ) : null}
           </div>
           <figure className="project-detail-hero-media project-detail-hero-media--console">
-            <img src={`${assetPath}/cli-mode.png`} alt="CPUMemoryStressTest CLI 실행 화면" />
+            <img src={`${assetPath}/main-console.png`} alt="CPUMemoryStressTest CLI 실행 화면" />
           </figure>
         </section>
 
@@ -935,15 +1038,14 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
               <p className="section-kicker">Downloads</p>
               <h2 id="cpu-download-title">Release 다운로드</h2>
               <p>
-                <b>v1.0.0</b>부터 Windows x64 ZIP 배포본을 제공합니다. 실행 파일 하나로 세 가지 실행 방식을
-                확인할 수 있습니다.
+                <b>v1.0.0</b> Windows x64 실행 ZIP을 제공합니다.
               </p>
             </div>
             <div className="project-download-grid">
               {downloadLinks.map((link) => {
                 const detail = downloadDescriptions[link.label] ?? {
                   title: link.label,
-                  description: '프로젝트에서 제공하는 관련 배포 파일입니다.',
+                  description: '관련 배포 파일',
                   buttonText: 'Open',
                 };
 
@@ -1008,45 +1110,67 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
 
           <section className="guide-section" aria-labelledby="cpu-cli-title">
             <h3 id="cpu-cli-title">2. CLI 실행 예시</h3>
-            <figure className="guide-figure guide-figure--console">
-              <img src={`${assetPath}/cli-mode.png`} alt="CLI quick preset 실행 CMD 캡처" />
-              <figcaption>
-                <code>run cpu.prime.parallel --preset quick</code>: quick preset 결과를 JSON으로 출력
-              </figcaption>
-            </figure>
-            <div className="guide-table-wrap">
-              <table className="console-command-table">
+            <div className="guide-table-wrap console-command-table">
+              <table>
                 <thead>
                   <tr>
+                    <th>구성</th>
                     <th>명령</th>
-                    <th>용도</th>
+                    <th>설명</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {commandExamples.map((item) => (
-                    <tr key={item.command}>
+                  {commandReferenceRows.map((row) => (
+                    <tr key={`${row.name}-${row.command}`}>
+                      <td>{row.name}</td>
                       <td>
-                        <code>{item.command}</code>
+                        <code>{row.command}</code>
                       </td>
-                      <td>{item.purpose}</td>
+                      <td>{row.description}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+            <div className="cli-output-grid">
+              {commandExamples.map((item) => (
+                <article className="cli-output-card" key={item.command}>
+                  <figure>
+                    <img src={`${assetPath}/${item.image}`} alt={`${item.purpose} CMD 출력 캡처`} />
+                  </figure>
+                  <div>
+                    <code>{item.command}</code>
+                    <p>{item.purpose}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </section>
 
           <section className="guide-section" aria-labelledby="cpu-output-title">
             <h3 id="cpu-output-title">3. CSV 저장</h3>
-            <figure className="guide-figure guide-figure--console">
-              <img src={`${assetPath}/csv-output.png`} alt="CSV 저장 옵션 실행 CMD 캡처" />
-              <figcaption>
-                <code>--save-csv</code>: CLI에서는 명시적으로 요청한 경우에만 CSV 저장
-              </figcaption>
-            </figure>
+            <div className="csv-file-grid">
+                {savedResultExamples.map((item) => (
+                  <article className="csv-file-card" key={item.fileName}>
+                    <figure>
+                      <img
+                        src={`${assetPath}/${item.image}?v=${savedResultCaptureVersion}`}
+                        alt={`${item.fileName} 파일 내용 캡처`}
+                      />
+                  </figure>
+                  <div>
+                    <code>{item.fileName}</code>
+                    <p>{item.testName}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
             <div className="guide-note">
-              기본 결과는 stdout JSON으로 반환하고, 필요할 때만 <code>--save-csv</code>와 <code>--csv-dir</code>로
-              파일 로그를 남깁니다. 잘못된 명령도 JSON과 exit code로 구분됩니다.
+              <code>run all --preset quick --repeat 3 --save-csv --csv-dir C:\Csv</code> 결과를 검사별 TXT 파일로 열어 확인했습니다.
+              <br />
+              <code>--repeat</code> 값을 주면 같은 검사를 지정한 횟수만큼 실행해 결과를 여러 줄로 저장합니다.
+              <br />
+              <code>--csv-dir</code>을 생략하면 <code>바탕화면\StressTestResult\yyyyMMdd_HHmmss</code> 폴더가 자동 생성됩니다.
             </div>
           </section>
 
@@ -1111,6 +1235,243 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
             <div className="guide-note">
               테스트는 <code>IStressTest</code> 전략으로 분리하고, <code>TestRegistry</code>에서 ID 기반으로 찾아 실행합니다.
               출력은 JSON/CSV Writer로 나눠 실행 로직과 저장 형식을 분리했습니다.
+            </div>
+          </section>
+        </article>
+
+        <AnalyticsNotice />
+      </main>
+    </div>
+  );
+}
+
+function RFIDCollisionSearchSimulatorProjectPage({ onNavigate }: { onNavigate: InternalNavigate }) {
+  const project: Project | undefined = projects.find((item) => item.detailPath === rfidCollisionSearchSimulatorPath);
+  const assetPath = '/assets/rfid-collision-search-simulator';
+  const repositoryLink = project?.links.find((link) => link.label === 'Repository');
+  const downloadLinks = project?.links.filter((link) => link.label !== 'Repository') ?? [];
+  const downloadDescriptions: Record<string, { title: string; description: string; buttonText: string }> = {
+
+    'Windows x64 EXE': {
+      title: 'Windows x64 EXE',
+      description: '',
+      buttonText: 'Download',
+    },
+  };
+  const searchStates = [
+    {
+      state: 'Empty',
+      description: '현재 Prefix와 일치하는 TAG가 없어 해당 분기를 종료합니다.',
+    },
+    {
+      state: 'Success',
+      description: 'TAG가 1개만 응답해 식별에 성공하고 발견 목록에 추가합니다.',
+    },
+    {
+      state: 'Collision',
+      description: '2개 이상의 TAG가 응답하면 Prefix에 0과 1을 붙여 하위 분기를 탐색합니다.',
+    },
+  ];
+  const comparisonRows = [
+    { label: '발견 Tag 동일 여부', recursive: '동일', iterative: '동일' },
+    { label: '질의 횟수', recursive: '11', iterative: '11' },
+    { label: '충돌 횟수', recursive: '5', iterative: '5' },
+    { label: '실행 시간', recursive: '11.100 us', iterative: '9.000 us' },
+    { label: '탐색 방식', recursive: '함수 호출로 하위 Prefix 탐색', iterative: 'Stack으로 탐색 대상 Prefix 관리' },
+  ];
+
+  return (
+    <div className="site-shell">
+      <SiteHeader isResumePage onNavigate={onNavigate} />
+
+      <main className="project-detail-page" id="top">
+        <section className="project-detail-hero" aria-labelledby="rfid-collision-search-simulator-title">
+          <div className="project-detail-hero-copy">
+            <p className="section-kicker">Project Guide</p>
+            <h1 id="rfid-collision-search-simulator-title">{project?.title ?? 'RFID Collision Search Simulator'}</h1>
+            <p className="project-detail-lead">
+              Prefix 질의로 RFID TAG 충돌을 탐색하고,
+              <br />
+              같은 문제를 재귀 방식과 반복 방식으로 풀어
+              <br />
+              결과를 비교하는 C++ 콘솔 시뮬레이터입니다.
+            </p>
+            <div className="tech-list project-detail-tech-list" aria-label="RFID Collision Search Simulator 기술 스택">
+              {(project?.tech ?? ['C++', 'STL', 'Visual Studio 2022']).map((tech) => (
+                <span key={tech}>{tech}</span>
+              ))}
+            </div>
+            {repositoryLink ? (
+              <div className="project-detail-actions">
+                <a className="button primary" href={repositoryLink.href} target="_blank" rel="noreferrer">
+                  {repositoryLink.label}
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </a>
+              </div>
+            ) : null}
+          </div>
+          <figure className="project-detail-hero-media project-detail-hero-media--console project-detail-hero-media--rfid">
+            <img src={`${assetPath}/main-image.png`} alt="RFID Collision Search Simulator preset 실행 화면" />
+          </figure>
+        </section>
+
+        {downloadLinks.length > 0 ? (
+          <section className="project-download-section" aria-labelledby="rfid-download-title">
+            <div className="project-download-copy">
+              <p className="section-kicker">Downloads</p>
+              <h2 id="rfid-download-title">실행 파일 다운로드</h2>
+              <p>
+                Windows x64 콘솔 실행 파일입니다.
+              </p>
+            </div>
+            <div className="project-download-grid rfid-download-grid">
+              {downloadLinks.map((link) => {
+                const detail = downloadDescriptions[link.label] ?? {
+                  title: link.label,
+                  description: '프로젝트에서 제공하는 관련 배포 파일입니다.',
+                  buttonText: 'Open',
+                };
+
+                return (
+                  <article className="project-download-card rfid-download-card" key={link.label}>
+                    <h3>{detail.title}</h3>
+                    {detail.description ? <p>{detail.description}</p> : null}
+                    <a className="button secondary" href={link.href} target="_blank" rel="noreferrer">
+                      {detail.buttonText}
+                      <ArrowUpRight size={16} aria-hidden="true" />
+                    </a>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        <article className="project-guide rfid-project-guide" aria-labelledby="rfid-guide-title">
+          <header className="project-guide-header">
+            <p className="section-kicker">Usage Flow</p>
+            <h2 id="rfid-guide-title">Prefix 충돌 탐색 흐름 확인</h2>
+            <p>
+              캡처 이미지는 실제 Release 실행 파일을
+              <br />
+              <code>1</code>번 preset 데이터로 실행한 출력입니다.
+              <br />
+              입력 방식, 탐색 로그, 최종 비교 결과를 정리했습니다.
+            </p>
+          </header>
+
+          <ol className="guide-flow rfid-guide-flow" aria-label="RFID Collision Search Simulator 실행 흐름">
+            <li>
+              <strong>1. Preset</strong>
+              <span>정해진 TAG 데이터 선택</span>
+            </li>
+            <li>
+              <strong>2. Search Log</strong>
+              <span>재귀/반복 로그와 전위 우선 흐름</span>
+            </li>
+            <li>
+              <strong>3. Compare</strong>
+              <span>결과와 탐색 지표 비교</span>
+            </li>
+          </ol>
+
+          <section className="guide-section" aria-labelledby="rfid-run-title">
+            <h3 id="rfid-run-title">1. 입력 데이터 선택</h3>
+            <figure className="guide-figure guide-figure--console rfid-console-figure">
+              <img src={`${assetPath}/preset-tags.png`} alt="정해진 TAG 데이터 선택과 TAG 목록 출력" />
+              <figcaption>
+                1. 정해진 데이터를 선택하면 4bit TAG 5개로 충돌 탐색을 시작합니다.
+              </figcaption>
+            </figure>
+          </section>
+
+          <section className="guide-section" aria-labelledby="rfid-recursive-title">
+            <h3 id="rfid-recursive-title">2. 재귀/반복 방식과 전위 우선 탐색</h3>
+            <div className="guide-image-pair rfid-search-pair">
+              <figure>
+                <img src={`${assetPath}/recursive-search.png`} alt="재귀 방식 Prefix 탐색 로그" />
+                <figcaption>
+                  재귀 방식: 함수 호출로 하위 Prefix를 깊게 탐색합니다.
+                </figcaption>
+              </figure>
+              <figure>
+                <img src={`${assetPath}/iterative-search.png`} alt="반복 방식 Prefix 탐색 로그" />
+                <figcaption>
+                  반복 방식: Stack으로 같은 Prefix 탐색 순서를 재현합니다.
+                </figcaption>
+              </figure>
+            </div>
+            <figure className="guide-figure guide-figure--tree rfid-preorder-figure">
+              <img src={`${assetPath}/preorder-tree.svg`} alt="RFID Prefix 트리의 전위 우선 탐색 방문 순서" />
+              <figcaption>
+                두 구현 방식 모두 현재 Prefix를 먼저 평가한 뒤 0 분기와 1 분기로 내려가는 전위 우선 순서를 따릅니다.
+              </figcaption>
+            </figure>
+            <div className="guide-note rfid-preorder-note">
+              <b>핵심:</b> 로그의 Cycle 순서는 Prefix 트리를 전위 우선으로 방문한 결과입니다.
+              충돌이 발생한 Prefix에서만 <code>prefix + "0"</code>, <code>prefix + "1"</code> 하위 질의를 이어갑니다.
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="rfid-comparison-title">
+            <h3 id="rfid-comparison-title">3. 반복 방식과 비교 결과</h3>
+            <figure className="guide-figure guide-figure--console rfid-console-figure">
+              <img src={`${assetPath}/comparison-summary.png`} alt="반복 방식 탐색 로그와 재귀 반복 비교 결과" />
+              <figcaption>
+                두 방식 모두 같은 TAG를 발견하고, 질의 횟수, 충돌 횟수, 실행 시간을 함께 비교합니다.
+              </figcaption>
+            </figure>
+            <div className="guide-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>비교 항목</th>
+                    <th>재귀 방식</th>
+                    <th>반복 방식</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparisonRows.map((row) => (
+                    <tr key={row.label}>
+                      <td>{row.label}</td>
+                      <td>{row.recursive}</td>
+                      <td>{row.iterative}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="rfid-search-model-title">
+            <h3 id="rfid-search-model-title">4. Search Model</h3>
+            <div className="search-state-grid">
+              {searchStates.map((item) => (
+                <article className="search-state-card" key={item.state}>
+                  <h4>{item.state}</h4>
+                  <p>{item.description}</p>
+                </article>
+              ))}
+            </div>
+            <div className="guide-note">
+              Prefix는 <code>ROOT</code>에서 시작해 충돌이 발생한 분기만 <code>0</code>, <code>1</code>로 확장합니다.
+              이 과정을 통해 불필요한 TAG 분기를 건너뛰면서 식별 가능한 TAG를 수집합니다.
+            </div>
+          </section>
+
+          <section className="guide-section" aria-labelledby="rfid-architecture-title">
+            <h3 id="rfid-architecture-title">5. 실행 구조</h3>
+            <div className="architecture-flow rfid-architecture-flow" aria-label="RFID Collision Search Simulator 실행 구조">
+              <span>TagUIConsole</span>
+              <span>TagProvider_Factory</span>
+              <span>ITagProvider</span>
+              <span>ITagSearcher</span>
+              <span>SearchResult</span>
+              <span>Comparison</span>
+            </div>
+            <div className="guide-note">
+              TAG 생성 방식은 <code>ITagProvider</code>로, 탐색 알고리즘은 <code>ITagSearcher</code>로 분리했습니다.
+              그래서 preset, 직접 입력, 랜덤 TAG 생성과 재귀/반복 탐색을 서로 독립적으로 교체할 수 있습니다.
             </div>
           </section>
         </article>

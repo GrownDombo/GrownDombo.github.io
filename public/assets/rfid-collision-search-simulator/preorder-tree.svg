@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="660" viewBox="0 0 1120 660" role="img" aria-labelledby="title desc">
+  <title id="title">RFID Prefix Tree Pre-order DFS</title>
+  <desc id="desc">RFID prefix collision search tree with compact straight arrows, a legend, and pre-order visit numbers.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 7 3.5 L 0 7 z" fill="#8495a6"/>
+    </marker>
+    <filter id="softShadow" x="-10%" y="-14%" width="120%" height="132%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#1f344a" flood-opacity="0.09"/>
+    </filter>
+    <style>
+      .canvas { fill: #f6f9fc; }
+      .edge { stroke: #9badbe; stroke-width: 2.4; stroke-linecap: round; marker-end: url(#arrow); }
+      .node { filter: url(#softShadow); }
+      .node-box { fill: #ffffff; stroke-width: 2; rx: 8; }
+      .collision .node-box { stroke: #f2a23a; fill: #fffaf3; }
+      .success .node-box { stroke: #36a36f; fill: #f5fff9; }
+      .empty .node-box { stroke: #a7b4c2; fill: #fbfcfe; }
+      .order-dot { fill: #155f9f; }
+      .order-text { fill: #ffffff; font: 700 13px "Segoe UI", Arial, sans-serif; }
+      .prefix { fill: #0f1f32; font: 800 22px "Segoe UI", Arial, sans-serif; }
+      .state { font: 700 13px "Segoe UI", Arial, sans-serif; }
+      .collision .state { fill: #a65d05; }
+      .success .state { fill: #14724d; }
+      .empty .state { fill: #667789; }
+      .legend-text { fill: #42576b; font: 700 13px "Segoe UI", Arial, sans-serif; }
+      .legend-box { fill: #ffffff; stroke-width: 2; rx: 5; }
+      .legend-collision { stroke: #f2a23a; fill: #fffaf3; }
+      .legend-success { stroke: #36a36f; fill: #f5fff9; }
+      .legend-empty { stroke: #a7b4c2; fill: #fbfcfe; }
+    </style>
+  </defs>
+
+  <rect class="canvas" width="1120" height="660" rx="24"/>
+
+  <g transform="translate(58 44)">
+    <circle class="order-dot" cx="11" cy="11" r="11"/>
+    <text class="order-text" x="11" y="16" text-anchor="middle">n</text>
+    <text class="legend-text" x="30" y="16">탐색 순서</text>
+
+    <rect class="legend-box legend-collision" x="0" y="34" width="30" height="18"/>
+    <text class="legend-text" x="42" y="48">Collision</text>
+
+    <rect class="legend-box legend-success" x="0" y="66" width="30" height="18"/>
+    <text class="legend-text" x="42" y="80">Success</text>
+
+    <rect class="legend-box legend-empty" x="0" y="98" width="30" height="18"/>
+    <text class="legend-text" x="42" y="112">Empty</text>
+  </g>
+
+  <g transform="translate(-40 0)">
+  <g class="edges">
+    <line class="edge" x1="600" y1="154" x2="360" y2="218"/>
+    <line class="edge" x1="600" y1="154" x2="840" y2="218"/>
+
+    <line class="edge" x1="360" y1="276" x2="240" y2="338"/>
+    <line class="edge" x1="360" y1="276" x2="480" y2="338"/>
+
+    <line class="edge" x1="840" y1="276" x2="760" y2="338"/>
+    <line class="edge" x1="840" y1="276" x2="960" y2="338"/>
+
+    <line class="edge" x1="240" y1="396" x2="150" y2="458"/>
+    <line class="edge" x1="240" y1="396" x2="330" y2="458"/>
+
+    <line class="edge" x1="330" y1="516" x2="240" y2="542"/>
+    <line class="edge" x1="330" y1="516" x2="420" y2="542"/>
+  </g>
+
+  <g class="node collision" transform="translate(536 96)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">1</text>
+    <text class="prefix" x="78" y="24" text-anchor="middle">ROOT</text>
+    <text class="state" x="78" y="46" text-anchor="middle">Collision</text>
+  </g>
+
+  <g class="node collision" transform="translate(296 218)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">2</text>
+    <text class="prefix" x="76" y="24" text-anchor="middle">0</text>
+    <text class="state" x="76" y="46" text-anchor="middle">Collision</text>
+  </g>
+
+  <g class="node collision" transform="translate(776 218)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">9</text>
+    <text class="prefix" x="76" y="24" text-anchor="middle">1</text>
+    <text class="state" x="76" y="46" text-anchor="middle">Collision</text>
+  </g>
+
+  <g class="node collision" transform="translate(176 338)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">3</text>
+    <text class="prefix" x="78" y="24" text-anchor="middle">00</text>
+    <text class="state" x="78" y="46" text-anchor="middle">Collision</text>
+  </g>
+
+  <g class="node success" transform="translate(416 338)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">8</text>
+    <text class="prefix" x="78" y="24" text-anchor="middle">01</text>
+    <text class="state" x="78" y="46" text-anchor="middle">Success</text>
+  </g>
+
+  <g class="node success" transform="translate(696 338)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="24" cy="20" r="12"/>
+    <text class="order-text" x="24" y="25" text-anchor="middle">10</text>
+    <text class="prefix" x="82" y="24" text-anchor="middle">10</text>
+    <text class="state" x="82" y="46" text-anchor="middle">Success</text>
+  </g>
+
+  <g class="node success" transform="translate(896 338)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="24" cy="20" r="12"/>
+    <text class="order-text" x="24" y="25" text-anchor="middle">11</text>
+    <text class="prefix" x="82" y="24" text-anchor="middle">11</text>
+    <text class="state" x="82" y="46" text-anchor="middle">Success</text>
+  </g>
+
+  <g class="node empty" transform="translate(86 458)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">4</text>
+    <text class="prefix" x="80" y="24" text-anchor="middle">000</text>
+    <text class="state" x="80" y="46" text-anchor="middle">Empty</text>
+  </g>
+
+  <g class="node collision" transform="translate(266 458)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">5</text>
+    <text class="prefix" x="80" y="24" text-anchor="middle">001</text>
+    <text class="state" x="80" y="46" text-anchor="middle">Collision</text>
+  </g>
+
+  <g class="node success" transform="translate(176 542)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">6</text>
+    <text class="prefix" x="84" y="24" text-anchor="middle">0010</text>
+    <text class="state" x="84" y="46" text-anchor="middle">Success</text>
+  </g>
+
+  <g class="node success" transform="translate(356 542)">
+    <rect class="node-box" width="128" height="58"/>
+    <circle class="order-dot" cx="22" cy="20" r="12"/>
+    <text class="order-text" x="22" y="25" text-anchor="middle">7</text>
+    <text class="prefix" x="84" y="24" text-anchor="middle">0011</text>
+    <text class="state" x="84" y="46" text-anchor="middle">Success</text>
+  </g>
+  </g>
+</svg>
