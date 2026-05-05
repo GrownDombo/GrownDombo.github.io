@@ -724,8 +724,15 @@ main {
 }
 
 .project-detail-hero-media--console img {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: auto;
+  height: auto;
   background: #080b0f;
+  object-fit: initial;
+}
+
+.project-detail-hero-media--rfid img {
+  object-fit: cover;
+  object-position: left top;
 }
 
 .project-download-section {
@@ -914,6 +921,13 @@ main {
   text-align: center;
 }
 
+.guide-figure figcaption code,
+.guide-image-pair figcaption code {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+}
+
 .guide-table-wrap {
   width: 100%;
   margin: 18px 0 22px;
@@ -974,6 +988,15 @@ main {
   background: #080b0f;
 }
 
+.guide-figure--tree {
+  max-width: 1040px;
+  background: #ffffff;
+}
+
+.guide-figure--tree img {
+  background: #f8fbff;
+}
+
 .run-mode-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -993,16 +1016,15 @@ main {
 
 .run-mode-card figure {
   margin: 0;
-  padding: 10px;
   background: #080b0f;
 }
 
 .run-mode-card img {
+  display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 6px;
+  height: auto;
   background: #080b0f;
-  object-fit: contain;
+  object-fit: initial;
 }
 
 .run-mode-card > div {
@@ -1044,6 +1066,98 @@ main {
   margin-bottom: 22px;
 }
 
+.cli-output-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cli-output-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 16px 42px rgb(37 99 235 / 8%);
+}
+
+.cli-output-card figure {
+  margin: 0;
+  background: #080b0f;
+}
+
+.cli-output-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #080b0f;
+}
+
+.cli-output-card > div {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px 16px;
+}
+
+.cli-output-card code {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow-wrap: anywhere;
+}
+
+.cli-output-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.csv-file-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.csv-file-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 16px 42px rgb(37 99 235 / 8%);
+}
+
+.csv-file-card figure {
+  margin: 0;
+  background: #ffffff;
+}
+
+.csv-file-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+}
+
+.csv-file-card > div {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px 16px;
+}
+
+.csv-file-card code {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow-wrap: anywhere;
+}
+
+.csv-file-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
 .console-capture-figure {
   margin: 0;
   padding: 12px;
@@ -1068,7 +1182,36 @@ main {
   text-align: center;
 }
 
+.console-command-table {
+  margin-bottom: 24px;
+}
+
+.console-command-table table {
+  min-width: 1180px;
+  table-layout: fixed;
+}
+
+.console-command-table th:nth-child(1),
+.console-command-table td:nth-child(1) {
+  width: 11%;
+}
+
+.console-command-table th:nth-child(2),
+.console-command-table td:nth-child(2) {
+  width: 44%;
+  white-space: nowrap;
+}
+
+.console-command-table th:nth-child(3),
+.console-command-table td:nth-child(3) {
+  width: 45%;
+  white-space: nowrap;
+}
+
 .console-command-table code {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
   overflow-wrap: anywhere;
 }
 
@@ -1094,6 +1237,104 @@ main {
   text-align: center;
 }
 
+
+.rfid-download-grid {
+  grid-template-columns: minmax(0, 360px);
+  justify-content: end;
+}
+
+
+.rfid-download-card {
+  gap: 8px;
+  min-height: 0;
+  align-content: start;
+}
+
+.rfid-download-card .button {
+  margin-top: 0;
+}
+
+.rfid-guide-flow {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.rfid-search-pair {
+  max-width: 940px;
+}
+
+.rfid-project-guide .guide-figure,
+.rfid-project-guide .guide-image-pair figure {
+  padding: 0;
+  overflow: hidden;
+}
+
+.rfid-project-guide .guide-figure--console,
+.rfid-project-guide .guide-figure--tree {
+  background: var(--card);
+}
+
+.rfid-project-guide .guide-figure img,
+.rfid-project-guide .guide-image-pair img {
+  display: block;
+  border-radius: 0;
+}
+
+.rfid-project-guide .guide-figure figcaption,
+.rfid-project-guide .guide-image-pair figcaption {
+  margin-top: 0;
+  padding: 10px 12px 12px;
+}
+
+.rfid-preorder-figure {
+  max-width: 760px;
+  margin-top: 16px;
+}
+
+.rfid-preorder-note {
+  margin-top: 16px;
+}
+
+.rfid-search-pair img {
+  background: #080b0f;
+}
+
+.rfid-console-figure {
+  max-width: 520px;
+}
+
+.search-state-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 18px 0 22px;
+}
+
+.search-state-card {
+  display: grid;
+  gap: 10px;
+  min-height: 150px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 16px 42px rgb(37 99 235 / 8%);
+}
+
+.search-state-card h4 {
+  margin: 0;
+  color: var(--forest);
+  font-size: 1.08rem;
+}
+
+.search-state-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.rfid-architecture-flow {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
 .experience-timeline {
   display: grid;
   gap: 0;
@@ -1864,7 +2105,9 @@ main {
   }
 
   .cpu-guide-flow,
+  .rfid-guide-flow,
   .run-mode-grid,
+  .search-state-grid,
   .architecture-flow {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2004,6 +2247,10 @@ main {
   }
 
   .project-detail-page {
+    width: auto;
+    max-width: none;
+    margin-right: 24px;
+    margin-left: 24px;
     padding-bottom: 56px;
   }
 
@@ -2023,6 +2270,16 @@ main {
 
   .project-detail-hero-media img {
     aspect-ratio: 4 / 3;
+  }
+
+  .project-detail-hero-media--console img {
+    aspect-ratio: auto;
+  }
+
+  .project-detail-lead,
+  .project-guide-header p {
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 
   .project-download-section {
@@ -2048,7 +2305,10 @@ main {
   .guide-flow,
   .guide-image-pair,
   .run-mode-grid,
+  .search-state-grid,
   .console-capture-grid,
+  .cli-output-grid,
+  .csv-file-grid,
   .architecture-flow {
     grid-template-columns: 1fr;
   }
