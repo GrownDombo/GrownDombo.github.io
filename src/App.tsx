@@ -436,6 +436,18 @@ function PortfolioHome({
 function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: InternalNavigate }) {
   const project: Project | undefined = projects.find((item) => item.detailPath === excelConditionPainterPath);
   const assetPath = '/assets/excel-condition-painter';
+  const repositoryLink = project?.links.find((link) => link.label === 'Repository');
+  const downloadLinks = project?.links.filter((link) => link.label !== 'Repository') ?? [];
+  const downloadDescriptions: Record<string, { title: string; description: string }> = {
+    'Sample Data': {
+      title: 'Sample Data',
+      description: '가이드 화면과 같은 흐름으로 테스트해볼 수 있는 주문 데이터 샘플 파일입니다.',
+    },
+    'Release Download': {
+      title: 'Setup',
+      description: 'GitHub Releases에서 Windows 실행 파일 또는 설치 패키지를 받을 수 있습니다.',
+    },
+  };
 
   return (
     <div className="site-shell">
@@ -455,14 +467,12 @@ function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: Internal
                 <span key={tech}>{tech}</span>
               ))}
             </div>
-            {project?.links ? (
+            {repositoryLink ? (
               <div className="project-detail-actions">
-                {project.links.map((link) => (
-                  <a key={link.label} className="button primary" href={link.href} target="_blank" rel="noreferrer">
-                    {link.label}
-                    <ArrowUpRight size={17} aria-hidden="true" />
-                  </a>
-                ))}
+                <a className="button primary" href={repositoryLink.href} target="_blank" rel="noreferrer">
+                  {repositoryLink.label}
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </a>
               </div>
             ) : null}
           </div>
@@ -471,13 +481,43 @@ function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: Internal
           </figure>
         </section>
 
+        {downloadLinks.length > 0 ? (
+          <section className="project-download-section" aria-labelledby="excel-download-title">
+            <div className="project-download-copy">
+              <p className="section-kicker">Downloads</p>
+              <h2 id="excel-download-title">샘플 데이터와 실행 파일</h2>
+              <p>가이드 내용을 직접 따라 해볼 수 있는 샘플 파일과 배포 버전을 함께 확인할 수 있습니다.</p>
+            </div>
+            <div className="project-download-grid">
+              {downloadLinks.map((link) => {
+                const detail = downloadDescriptions[link.label] ?? {
+                  title: link.label,
+                  description: '프로젝트에서 제공하는 관련 파일입니다.',
+                };
+
+                return (
+                  <article className="project-download-card" key={link.label}>
+                    <h3>{detail.title}</h3>
+                    <p>{detail.description}</p>
+                    <a className="button secondary" href={link.href} target="_blank" rel="noreferrer">
+                      Download
+                      <ArrowUpRight size={16} aria-hidden="true" />
+                    </a>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
         <article className="project-guide" aria-labelledby="excel-guide-title">
           <header className="project-guide-header">
             <p className="section-kicker">Usage Flow</p>
             <h2 id="excel-guide-title">ExcelConditionPainter 사용 가이드</h2>
             <p>
-              예시는 <code>DummyData_400Rows_Shuffled.xlsx</code> 기준입니다. 파일을 열고 조건을 설정한 뒤
-              검색과 Export까지 이어지는 흐름을 정리했습니다.
+              예시는 위 <b>Sample Data</b>에서 받을 수 있는 <code>DummyData_400Rows_Shuffled.xlsx</code> 기준입니다.
+              <br />
+              파일을 열고 조건을 설정한 뒤 검색과 Export까지 이어지는 흐름을 정리했습니다.
             </p>
           </header>
 

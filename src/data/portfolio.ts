@@ -184,6 +184,14 @@ export const projects: Project[] = [
         label: 'Repository',
         href: 'https://github.com/GrownDombo/ExcelConditionPainter',
       },
+      {
+        label: 'Sample Data',
+        href: 'https://github.com/GrownDombo/ExcelConditionPainter/raw/main/DummyData_400Rows_Shuffled.xlsx',
+      },
+      {
+        label: 'Release Download',
+        href: 'https://github.com/GrownDombo/ExcelConditionPainter/releases',
+      },
     ],
     image: '/assets/excel-condition-painter/main-image.png',
     detailPath: '/projects/excel-condition-painter',
