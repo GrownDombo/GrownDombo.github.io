@@ -38,6 +38,7 @@ export type Project = {
   links: ProjectLink[];
   image: string;
   detailPath?: string;
+  detailMode?: 'spa' | 'document';
   status: string;
 };
 
@@ -170,8 +171,14 @@ export const projects: Project[] = [
         label: 'Repository',
         href: 'https://github.com/GrownDombo/WinFormsCustomControls',
       },
+      {
+        label: 'Release Download',
+        href: 'https://github.com/GrownDombo/WinFormsCustomControls/releases/latest',
+      },
     ],
     image: '/assets/project-winforms-custom-controls.png',
+    detailPath: '/projects/winforms-custom-controls/',
+    detailMode: 'document',
     status: 'WinForms Library',
   },
   {
@@ -199,16 +206,25 @@ export const projects: Project[] = [
   },
   {
     title: 'CPUMemoryStressTest',
-    summary: 'CPU와 메모리 부하를 발생시켜 단일·병렬 처리와 알고리즘별 특성을 비교하는 C++ 콘솔 도구입니다.',
-    role: '테스트 시나리오 구성 · C++ 재구현 · CSV 로깅',
-    tech: ['C++', 'WinAPI', 'STL'],
+    summary: 'User 대화형, Shell, CLI를 모두 지원하는 C++20 CPU/Memory 스트레스 테스트 도구입니다.',
+    role: '3가지 실행 모드 설계 · JSON CLI · 테스트 Registry 구조화',
+    tech: ['C++20', 'WinAPI', 'STL', 'JSON CLI'],
     links: [
       {
         label: 'Repository',
         href: 'https://github.com/GrownDombo/CPUMemoryStressTest',
       },
+      {
+        label: 'Release Download',
+        href: 'https://github.com/GrownDombo/CPUMemoryStressTest/releases/tag/v1.0.0',
+      },
+      {
+        label: 'Windows x64 ZIP',
+        href: 'https://github.com/GrownDombo/CPUMemoryStressTest/releases/download/v1.0.0/CPUMemoryStressTestCpp-windows-x64-v1.0.0.zip',
+      },
     ],
-    image: '/assets/project-cpu-memory-stress-test.png',
+    image: '/assets/cpu-memory-stress-test/cli-mode.png',
+    detailPath: '/projects/cpu-memory-stress-test',
     status: 'Stress Tool',
   },
 ];

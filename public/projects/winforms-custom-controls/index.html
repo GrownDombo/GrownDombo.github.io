@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="WinFormsCustomControls는 .NET Framework 4.8 기반 WinForms 프로젝트에서 반복되는 UI 패턴을 재사용 가능한 커스텀 컨트롤 DLL로 정리한 라이브러리입니다."
+    />
+    <title>WinFormsCustomControls | GrownDombo Portfolio</title>
+    <style>
+      :root {
+        color: #172033;
+        background: #ffffff;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        --ink: #172033;
+        --muted: #556174;
+        --line: #dfe5ec;
+        --paper: #ffffff;
+        --soft: #f7f9fc;
+        --blue: #2563eb;
+        --sky: #0284c7;
+        --accent: #38bdf8;
+        --green: #0f766e;
+        --shadow: 0 22px 62px rgb(37 99 235 / 11%);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--ink);
+        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 52%, #ffffff 100%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      li,
+      a,
+      span,
+      th,
+      td {
+        word-break: keep-all;
+        overflow-wrap: break-word;
+      }
+
+      .site-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 18px 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-width: max-content;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        color: #ffffff;
+        background: var(--blue);
+        box-shadow: 0 10px 28px rgb(37 99 235 / 24%);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        overflow-x: auto;
+      }
+
+      .nav-links a {
+        min-height: 38px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        color: var(--muted);
+        font-size: 0.94rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        color: var(--ink);
+        background: #e8f1ff;
+        outline: none;
+      }
+
+      main {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(560px, 1fr) minmax(300px, 430px);
+        gap: clamp(24px, 3vw, 40px);
+        align-items: center;
+        padding: 54px 0 66px;
+      }
+
+      .section-kicker,
+      .project-role {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 16px;
+        color: var(--blue);
+        font-size: 0.84rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .hero h1 {
+        margin: 8px 0 16px;
+        max-width: none;
+        font-size: 2.75rem;
+        line-height: 1.08;
+        white-space: nowrap;
+      }
+
+      .hero-lead {
+        max-width: 690px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.75;
+      }
+
+      .tech-list,
+      .button-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .tech-list {
+        margin-top: 22px;
+      }
+
+      .tech-list span {
+        padding: 7px 10px;
+        border-radius: 8px;
+        color: #1e3a5f;
+        background: #eaf3ff;
+        font-size: 0.9rem;
+        font-weight: 800;
+      }
+
+      .button-row {
+        margin-top: 26px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 800;
+      }
+
+      .button.primary {
+        color: #ffffff;
+        background: var(--ink);
+      }
+
+      .button.secondary {
+        color: var(--ink);
+        background: #ffffff;
+        border-color: var(--line);
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        transform: translateY(-2px);
+        outline: none;
+      }
+
+      .hero-media {
+        margin: 0;
+        width: 100%;
+        max-width: 430px;
+        justify-self: end;
+        padding: 0;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        box-shadow: none;
+        overflow: hidden;
+      }
+
+      .hero-media img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #ffffff;
+        box-shadow: var(--shadow);
+      }
+
+      figcaption {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.55;
+        text-align: center;
+      }
+
+      .section {
+        padding: 54px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-heading {
+        max-width: 790px;
+        margin-bottom: 28px;
+      }
+
+      .section-heading h2 {
+        margin: 8px 0 12px;
+        font-size: clamp(2rem, 3vw, 2.55rem);
+        line-height: 1.14;
+      }
+
+      .section-heading p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      #download {
+        display: grid;
+        grid-template-columns: minmax(240px, 0.56fr) minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+        padding: 44px 0 50px;
+      }
+
+      #download .section-heading {
+        max-width: none;
+        margin-bottom: 0;
+      }
+
+      #download .section-heading h2 {
+        font-size: clamp(1.78rem, 2.4vw, 2.2rem);
+        line-height: 1.16;
+      }
+
+      #download .section-heading p:not(.section-kicker) {
+        max-width: 520px;
+      }
+
+      .why-grid,
+      .control-grid,
+      .download-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .why-card,
+      .download-card {
+        display: grid;
+        align-content: start;
+        gap: 10px;
+        min-height: 154px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        box-shadow: 0 16px 42px rgb(37 99 235 / 8%);
+      }
+
+      .why-card strong {
+        color: var(--blue);
+        font-size: 1.42rem;
+        line-height: 1.08;
+      }
+
+      .why-card h3,
+      .control-card h3,
+      .download-card h3 {
+        margin: 0;
+        font-size: 1.18rem;
+        line-height: 1.26;
+      }
+
+      .why-card p,
+      .control-card p,
+      .download-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.66;
+      }
+
+      .control-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        align-items: stretch;
+      }
+
+      .control-card {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        min-height: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+        box-shadow: 0 16px 42px rgb(37 99 235 / 8%);
+      }
+
+      .control-card-preview {
+        display: grid;
+        place-items: center;
+        min-height: 180px;
+        margin: 0;
+        padding: 10px;
+        border-bottom: 1px solid var(--line);
+        background: #f8fbff;
+      }
+
+      .control-card-preview img {
+        width: 100%;
+        height: 168px;
+        border-radius: 6px;
+        object-fit: contain;
+        background: #ffffff;
+      }
+
+      .control-card-body {
+        display: grid;
+        align-content: start;
+        gap: 10px;
+        min-width: 0;
+        padding: 18px;
+      }
+
+      .control-card-body h3,
+      .control-card-body code {
+        word-break: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .usage-table code {
+        display: inline-block;
+        max-width: 100%;
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: var(--green);
+        background: #ecfdf5;
+        font-size: 0.93em;
+        font-weight: 800;
+        line-height: 1.45;
+      }
+
+      .flow-list {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        padding: 0;
+        margin: 0 0 28px;
+        list-style: none;
+      }
+
+      .flow-list li {
+        display: grid;
+        gap: 6px;
+        min-height: 94px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 12px 34px rgb(37 99 235 / 7%);
+      }
+
+      .flow-list strong {
+        color: var(--blue);
+        font-size: 0.88rem;
+      }
+
+      .flow-list span {
+        color: #334155;
+        font-size: 0.92rem;
+        font-weight: 800;
+        line-height: 1.35;
+      }
+
+      .usage-table-wrap {
+        width: 100%;
+        margin: 18px 0 22px;
+        overflow-x: auto;
+      }
+
+      .usage-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+      }
+
+      .usage-table th,
+      .usage-table td {
+        padding: 12px 14px;
+        border: 1px solid #d7dee8;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .usage-table th {
+        width: 22%;
+        color: #16324f;
+        background: #f1f6fb;
+        font-weight: 900;
+      }
+
+      .usage-table td {
+        color: #334155;
+        background: #ffffff;
+      }
+
+      .download-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .download-card .button {
+        width: fit-content;
+        margin-top: auto;
+      }
+
+      .analytics-notice {
+        margin: 42px 0 28px;
+        color: #8a94a6;
+        font-size: 0.76rem;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      @media (max-width: 980px) {
+        .site-header {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .nav-links {
+          width: 100%;
+          justify-content: flex-start;
+          padding-bottom: 2px;
+        }
+
+        .why-grid,
+        .control-grid,
+        .flow-list {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .hero h1 {
+          font-size: 2.45rem;
+        }
+
+        .hero-media {
+          max-width: 520px;
+          justify-self: start;
+        }
+
+        #download {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 700px) {
+        main,
+        .site-header {
+          width: min(100% - 28px, 1180px);
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          padding: 34px 0 48px;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+          white-space: normal;
+          overflow-wrap: anywhere;
+        }
+
+        .button-row,
+        .tech-list {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .section {
+          padding: 42px 0;
+        }
+
+        .why-grid,
+        .control-grid,
+        .flow-list,
+        .download-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .flow-list li {
+          min-height: auto;
+        }
+
+        .usage-table {
+          min-width: 660px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="GrownDombo 포트폴리오 홈">
+        <span class="brand-mark">GD</span>
+        <span>최준영 / GrownDombo</span>
+      </a>
+      <nav class="nav-links" aria-label="주요 섹션">
+        <a href="/#metrics">성과</a>
+        <a href="/#experience">경험</a>
+        <a href="/#skills">기술</a>
+        <a href="/#projects">프로젝트</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="project-title">
+        <div>
+          <p class="section-kicker">Project Guide</p>
+          <h1 id="project-title">WinFormsCustomControls</h1>
+          <p class="hero-lead">
+            .NET Framework 4.8 기반 WinForms 프로젝트에서 반복적으로 사용하는 UI 패턴을 커스텀
+            컨트롤 DLL로 묶은 라이브러리입니다. 데모 실행 파일에서 색상 선택, 다중 선택,
+            체크 가능한 그룹 박스, 대량 행 표시, 세로 배치 패널의 동작을 한 화면에서 확인할 수 있습니다.
+          </p>
+          <div class="tech-list" aria-label="기술 스택">
+            <span>C#</span>
+            <span>.NET Framework 4.8</span>
+            <span>Windows Forms</span>
+            <span>Custom Controls</span>
+          </div>
+          <div class="button-row">
+            <a class="button primary" href="https://github.com/GrownDombo/WinFormsCustomControls" target="_blank" rel="noreferrer">
+              Repository
+            </a>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <img src="/assets/winforms-custom-controls/main-demo-tight.png" alt="WinFormsCustomControls 데모 실행 메인 화면" />
+        </figure>
+      </section>
+
+      <section class="section" id="download" aria-labelledby="download-title">
+        <div class="section-heading">
+          <p class="section-kicker">Downloads</p>
+          <h2 id="download-title">라이브러리와 데모 실행 파일</h2>
+          <p>GitHub Releases에서 다른 프로젝트에 참조할 DLL과 컨트롤 동작을 확인할 수 있는 데모 실행 파일을 함께 받을 수 있습니다.</p>
+        </div>
+
+        <div class="download-grid">
+          <article class="download-card">
+            <h3>Library DLL</h3>
+            <p>다른 WinForms 프로젝트에서 참조할 수 있는 커스텀 컨트롤 DLL 패키지입니다.</p>
+            <a class="button secondary" href="https://github.com/GrownDombo/WinFormsCustomControls/releases/latest" target="_blank" rel="noreferrer">
+              Download
+            </a>
+          </article>
+          <article class="download-card">
+            <h3>Demo App</h3>
+            <p>ColorComboBox, CheckBoxComboBox 등 컨트롤 동작을 빠르게 확인할 수 있는 데모 실행 파일입니다.</p>
+            <a class="button secondary" href="https://github.com/GrownDombo/WinFormsCustomControls/releases/latest" target="_blank" rel="noreferrer">
+              Download
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="why" aria-labelledby="why-title">
+        <div class="section-heading">
+          <p class="section-kicker">Why</p>
+          <h2 id="why-title">반복되는 WinForms UI를 재사용 가능한 컨트롤로 분리</h2>
+          <p>
+            업무용 Windows 애플리케이션을 만들다 보면 색상 선택, 체크 목록, 옵션 그룹, 대량
+            그리드, 스크롤 패널처럼 여러 화면에서 반복되는 UI가 생깁니다. 이 프로젝트는 그런
+            패턴을 개별 컨트롤로 묶어 화면 코드의 중복을 줄이고, 다른 WinForms 프로젝트에서도
+            DLL 참조만으로 가져다 쓸 수 있게 정리했습니다.
+          </p>
+        </div>
+        <div class="why-grid">
+          <article class="why-card">
+            <strong>5 controls</strong>
+            <h3>자주 쓰는 패턴 정리</h3>
+            <p>ComboBox, ContainerControl, DataGridView, FlowLayoutPanel 기반 컨트롤을 제공합니다.</p>
+          </article>
+          <article class="why-card">
+            <strong>DLL</strong>
+            <h3>프로젝트 간 재사용</h3>
+            <p>Release 빌드 산출물인 DLL을 다른 WinForms 앱에서 직접 참조할 수 있습니다.</p>
+          </article>
+          <article class="why-card">
+            <strong>Demo</strong>
+            <h3>동작 확인용 실행 파일</h3>
+            <p>별도 데모 앱으로 드롭다운, 체크 상태, 대량 데이터 표시를 빠르게 확인합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="controls" aria-labelledby="controls-title">
+        <div class="section-heading">
+          <p class="section-kicker">Controls</p>
+          <h2 id="controls-title">구성 컨트롤</h2>
+          <p>
+            컨트롤별 책임을 작게 나누고, 필요한 공개 API만 노출해 폼 코드에서는 사용 목적이
+            바로 드러나도록 구성했습니다.
+          </p>
+        </div>
+        <div class="control-grid">
+          <article class="control-card">
+            <figure class="control-card-preview">
+              <img src="/assets/winforms-custom-controls/readme-color-combobox.png" alt="ColorComboBox README 미리보기" />
+            </figure>
+            <div class="control-card-body">
+              <h3>ColorComboBox</h3>
+              <p>색상 팔레트를 드롭다운으로 열고 선택 색상을 사각형으로 표시합니다.</p>
+            </div>
+          </article>
+          <article class="control-card">
+            <figure class="control-card-preview">
+              <img src="/assets/winforms-custom-controls/readme-checkbox-combobox.png" alt="CheckBoxComboBox README 미리보기" />
+            </figure>
+            <div class="control-card-body">
+              <h3>CheckBoxComboBox</h3>
+              <p>체크박스 목록을 드롭다운으로 보여주는 다중 선택 콤보박스입니다.</p>
+            </div>
+          </article>
+          <article class="control-card">
+            <figure class="control-card-preview">
+              <img src="/assets/winforms-custom-controls/readme-checkable-groupbox.png" alt="CheckableGroupBox README 미리보기" />
+            </figure>
+            <div class="control-card-body">
+              <h3>CheckableGroupBox</h3>
+              <p>체크 상태에 따라 내부 컨트롤을 활성화하거나 비활성화합니다.</p>
+            </div>
+          </article>
+          <article class="control-card">
+            <figure class="control-card-preview">
+              <img src="/assets/winforms-custom-controls/readme-double-buffered-datagridview.gif" alt="DoubleBufferedDataGridView README GIF 미리보기" />
+            </figure>
+            <div class="control-card-body">
+              <h3>DoubleBufferedDataGridView</h3>
+              <p>많은 행을 표시할 때 깜빡임을 줄이도록 더블 버퍼링을 적용했습니다.</p>
+            </div>
+          </article>
+          <article class="control-card">
+            <figure class="control-card-preview">
+              <img src="/assets/winforms-custom-controls/readme-vertical-flow-layout.gif" alt="VerticalFlowLayoutPanel README GIF 미리보기" />
+            </figure>
+            <div class="control-card-body">
+              <h3>VerticalFlowLayoutPanel</h3>
+              <p>세로 방향 배치와 스크롤 사용에 맞춘 FlowLayoutPanel입니다.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="usage" aria-labelledby="usage-title">
+        <div class="section-heading">
+          <p class="section-kicker">Usage Flow</p>
+          <h2 id="usage-title">라이브러리 사용 흐름</h2>
+          <p>
+            라이브러리 프로젝트를 Release로 빌드한 뒤 DLL을 참조하거나, 같은 솔루션 안에서
+            프로젝트 참조로 연결해 커스텀 컨트롤을 사용할 수 있습니다.
+          </p>
+        </div>
+
+        <ol class="flow-list" aria-label="WinFormsCustomControls 사용 흐름">
+          <li>
+            <strong>1. Build</strong>
+            <span>Release 구성 빌드</span>
+          </li>
+          <li>
+            <strong>2. Reference</strong>
+            <span>DLL 또는 프로젝트 참조</span>
+          </li>
+          <li>
+            <strong>3. Namespace</strong>
+            <span>using 추가</span>
+          </li>
+          <li>
+            <strong>4. Drop</strong>
+            <span>폼에 컨트롤 배치</span>
+          </li>
+          <li>
+            <strong>5. Demo</strong>
+            <span>동작 확인</span>
+          </li>
+        </ol>
+
+        <div class="usage-table-wrap">
+          <table class="usage-table">
+            <tbody>
+              <tr>
+                <th>DLL 직접 참조</th>
+                <td>
+                  <code>WinFormsCustomControls.dll</code>을 빌드한 뒤 대상 WinForms 프로젝트의 참조에 추가합니다.
+                </td>
+              </tr>
+              <tr>
+                <th>프로젝트 참조</th>
+                <td>
+                  같은 솔루션 안에서는 <code>WinFormsCustomControls.csproj</code>를 프로젝트 참조로 연결합니다.
+                </td>
+              </tr>
+              <tr>
+                <th>네임스페이스</th>
+                <td>
+                  폼 코드에서 <code>using WinFormsCustomControls;</code>를 추가한 뒤 컨트롤을 생성합니다.
+                </td>
+              </tr>
+              <tr>
+                <th>데모 실행</th>
+                <td>
+                  <code>WinFormsCustomControls.Demo.exe</code>에서 각 컨트롤의 기본 동작과 대량 데이터 표시를 확인합니다.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <p class="analytics-notice">이 사이트는 방문 통계 분석을 위해 Google Analytics를 사용합니다.</p>
+    </main>
+  </body>
+</html>
