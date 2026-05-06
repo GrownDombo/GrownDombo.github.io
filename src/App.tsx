@@ -1,11 +1,16 @@
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import {
   ArrowUpRight,
-  BriefcaseBusiness,
+  CalendarDays,
+  Code2,
   FileText,
+  FolderKanban,
   Github,
   Mail,
+  Moon,
   Sparkles,
+  Sun,
+  UserRound,
 } from 'lucide-react';
 import {
   experiences,
@@ -15,7 +20,6 @@ import {
   skillGroups,
   workCaseStudies,
   type Project,
-  type ProfileLink,
 } from './data/portfolio';
 import { additionalDetails, resumeExperiences, resumeInfo, resumeIntroduction } from './data/resume';
 import { trackAnalyticsEvent } from './analytics/google';
@@ -48,24 +52,49 @@ const navItems = [
   { label: '프로젝트', href: '#projects' },
 ];
 
-const linkIcons: Record<ProfileLink['kind'], typeof Github> = {
-  github: Github,
-  email: Mail,
-  blog: FileText,
-  resume: FileText,
-};
-
-const linkEvents: Partial<Record<ProfileLink['kind'], 'github_click' | 'tech_blog_click' | 'email_click'>> = {
-  github: 'github_click',
-  blog: 'tech_blog_click',
-  email: 'email_click',
-};
+const portfolioRailItems = [
+  { id: 'about', label: 'About', href: '#about', icon: UserRound },
+  { id: 'metrics', label: 'Impact', href: '#metrics', icon: FileText },
+  { id: 'experience', label: 'Experience', href: '#experience', icon: CalendarDays },
+  { id: 'skills', label: 'Skills', href: '#skills', icon: Code2 },
+  { id: 'projects', label: 'Projects', href: '#projects', icon: FolderKanban },
+];
 
 function AnalyticsNotice() {
   return <p className="analytics-notice">이 사이트는 방문 통계 분석을 위해 Google Analytics를 사용합니다.</p>;
 }
 
 type InternalNavigate = (event: MouseEvent<HTMLAnchorElement>, path: string) => void;
+type ThemeMode = 'light' | 'dark';
+type ThemedPageProps = {
+  onNavigate: InternalNavigate;
+  themeMode: ThemeMode;
+  onThemeToggle: () => void;
+};
+
+const themeStorageKey = 'growndombo-theme';
+
+function isThemeMode(value: string | null): value is ThemeMode {
+  return value === 'light' || value === 'dark';
+}
+
+function getInitialThemeMode(): ThemeMode {
+  if (typeof window === 'undefined') {
+    return 'light';
+  }
+
+  try {
+    const storedTheme = window.localStorage.getItem(themeStorageKey);
+
+    if (isThemeMode(storedTheme)) {
+      return storedTheme;
+    }
+  } catch {
+    return 'light';
+  }
+
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
 
 function getCurrentPath() {
   return window.location.pathname.replace(/\/+$/, '') || '/';
@@ -201,7 +230,7 @@ function renderMetricResult(result: string) {
 
 function App() {
   const [currentPath, setCurrentPath] = useState(getCurrentPath);
-  const resumeLink = profile.links.find((link) => link.kind === 'resume');
+  const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialThemeMode);
 
   useEffect(() => {
     const handleRouteChange = () => setCurrentPath(getCurrentPath());
@@ -222,6 +251,18 @@ function App() {
     }, 0);
   }, [currentPath]);
 
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(themeStorageKey, themeMode);
+    } catch {
+      // Theme persistence is optional; the UI still works without storage access.
+    }
+  }, [themeMode]);
+
+  const toggleThemeMode = () => {
+    setThemeMode((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+  };
+
   const handleInternalNavigate: InternalNavigate = (event, path) => {
     if (!isPlainLeftClick(event)) {
       return;
@@ -234,6 +275,11 @@ function App() {
       const hash = path.split('#')[1];
 
       if (hash) {
+        if (hash === 'about') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+
         document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
@@ -252,56 +298,103 @@ function App() {
     return (
       <IndustrialAOIPlatformProjectPage
         onNavigate={handleInternalNavigate}
+        themeMode={themeMode}
+        onThemeToggle={toggleThemeMode}
         selectedAreaId={industrialAoiSelectedAreaId}
       />
     );
   }
 
   if (currentPath === excelConditionPainterPath) {
-    return <ExcelConditionPainterProjectPage onNavigate={handleInternalNavigate} />;
+    return (
+      <ExcelConditionPainterProjectPage
+        onNavigate={handleInternalNavigate}
+        themeMode={themeMode}
+        onThemeToggle={toggleThemeMode}
+      />
+    );
   }
 
   if (currentPath === cpuMemoryStressTestPath) {
-    return <CPUMemoryStressTestProjectPage onNavigate={handleInternalNavigate} />;
+    return (
+      <CPUMemoryStressTestProjectPage
+        onNavigate={handleInternalNavigate}
+        themeMode={themeMode}
+        onThemeToggle={toggleThemeMode}
+      />
+    );
   }
 
   if (currentPath === rfidCollisionSearchSimulatorPath) {
-    return <RFIDCollisionSearchSimulatorProjectPage onNavigate={handleInternalNavigate} />;
+    return (
+      <RFIDCollisionSearchSimulatorProjectPage
+        onNavigate={handleInternalNavigate}
+        themeMode={themeMode}
+        onThemeToggle={toggleThemeMode}
+      />
+    );
   }
 
-  return <PortfolioHome resumeLink={resumeLink} onNavigate={handleInternalNavigate} />;
+  return (
+    <PortfolioHome
+      onNavigate={handleInternalNavigate}
+      themeMode={themeMode}
+      onThemeToggle={toggleThemeMode}
+    />
+  );
 }
 
 function SiteHeader({
   isResumePage = false,
   onNavigate,
+  themeMode,
+  onThemeToggle,
+  isDashboardHeader = false,
 }: {
   isResumePage?: boolean;
   onNavigate: InternalNavigate;
+  themeMode?: ThemeMode;
+  onThemeToggle?: () => void;
+  isDashboardHeader?: boolean;
 }) {
+  const nextThemeLabel = themeMode === 'dark' ? '라이트 모드로 보기' : '다크 모드로 보기';
+
   return (
-    <header className="site-header">
+    <header className={`site-header${isDashboardHeader ? ' site-header--dashboard' : ''}`}>
       <a className="brand" href="/" aria-label="GrownDombo 포트폴리오 홈" onClick={(event) => onNavigate(event, '/')}>
         <span className="brand-mark">GD</span>
-        <span>{profile.name}</span>
+        <span>{isDashboardHeader ? 'Portfolio' : profile.name}</span>
       </a>
-      <nav className="nav-links" aria-label="주요 섹션">
-        {navItems.map((item) => (
-          <a key={item.href} href={isResumePage ? `/${item.href}` : item.href}>
-            {item.label}
-          </a>
-        ))}
-      </nav>
+      <div className="site-header-actions">
+        <nav className="nav-links" aria-label="주요 섹션">
+          {navItems.map((item) => (
+            <a key={item.href} href={isResumePage ? `/${item.href}` : item.href}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        {themeMode && onThemeToggle ? (
+          <button className="theme-toggle" type="button" aria-label={nextThemeLabel} onClick={onThemeToggle}>
+            {themeMode === 'dark' ? (
+              <Sun size={17} aria-hidden="true" strokeWidth={2.2} />
+            ) : (
+              <Moon size={17} aria-hidden="true" strokeWidth={2.2} />
+            )}
+          </button>
+        ) : null}
+      </div>
     </header>
   );
 }
 
 function PortfolioHome({
-  resumeLink,
   onNavigate,
+  themeMode,
+  onThemeToggle,
 }: {
-  resumeLink?: ProfileLink;
   onNavigate: InternalNavigate;
+  themeMode: ThemeMode;
+  onThemeToggle: () => void;
 }) {
   const prioritizedWorkCaseStudies = [...workCaseStudies].sort((left, right) => {
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
@@ -309,67 +402,134 @@ function PortfolioHome({
   const prioritizedProjects = [...projects].sort((left, right) => {
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
+  const [activeSection, setActiveSection] = useState(portfolioRailItems[0].id);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const profileCardDetails = [
+    {
+      label: 'Email',
+      value: resumeInfo.contact,
+      href: `mailto:${resumeInfo.contact}`,
+      icon: Mail,
+      eventName: 'email_click' as const,
+    },
+    {
+      label: 'GitHub',
+      value: 'GrownDombo',
+      href: 'https://github.com/GrownDombo',
+      icon: Github,
+      eventName: 'github_click' as const,
+    },
+    {
+      label: 'Tech Blog',
+      value: 'Tech Blog',
+      href: 'https://growndombo.tistory.com',
+      icon: FileText,
+      eventName: 'tech_blog_click' as const,
+    },
+  ];
+
+  useEffect(() => {
+    const updateActiveSection = () => {
+      const anchorY = Math.min(150, window.innerHeight * 0.18);
+      let nextActiveSection = portfolioRailItems[0].id;
+
+      for (const item of portfolioRailItems) {
+        const sectionElement = document.getElementById(item.id);
+
+        if (!sectionElement) {
+          continue;
+        }
+
+        if (sectionElement.getBoundingClientRect().top <= anchorY) {
+          nextActiveSection = item.id;
+        }
+      }
+
+      setActiveSection(nextActiveSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    window.addEventListener('resize', updateActiveSection);
+
+    return () => {
+      window.removeEventListener('scroll', updateActiveSection);
+      window.removeEventListener('resize', updateActiveSection);
+    };
+  }, []);
 
   return (
-    <div className="site-shell">
-      <SiteHeader onNavigate={onNavigate} />
+    <div className="site-shell" data-theme={themeMode}>
+      <SiteHeader
+        onNavigate={onNavigate}
+        themeMode={themeMode}
+        onThemeToggle={onThemeToggle}
+        isDashboardHeader
+      />
 
-      <main id="top">
-        <section className="hero-section compact-hero" aria-labelledby="hero-title">
-          <div className="hero-copy">
-            <p className="eyebrow">
-              <Sparkles size={16} aria-hidden="true" />
-              {profile.availability}
-            </p>
-            <h1 id="hero-title">{profile.headline}</h1>
-            <p className="hero-summary">{profile.summary}</p>
-            <div className="hero-meta" aria-label="프로필 요약">
-              <span>
-                <BriefcaseBusiness size={17} aria-hidden="true" />
-                {profile.role}
-              </span>
-            </div>
-            <div className="hero-actions">
-              {resumeLink ? (
-                <a
-                  className="button primary"
-                  href={resumePath}
-                  onClick={(event) => {
-                    trackAnalyticsEvent('resume_click', { link_location: 'hero' });
-                    onNavigate(event, resumePath);
-                  }}
-                >
-                  이력서 보기
-                  <FileText size={18} aria-hidden="true" />
-                </a>
-              ) : null}
-            </div>
-            <div className="hero-channel-links" aria-label="프로필 채널">
-              {profile.links
-                .filter((link) => link.kind !== 'resume')
-                .map((link) => {
-                  const Icon = linkIcons[link.kind];
-                  const eventName = linkEvents[link.kind];
+      <main className="portfolio-home-main" id="top">
+        <div className="portfolio-home-layout">
+          <aside className="portfolio-profile-card" aria-label="프로필 요약 카드">
+              <div className="portfolio-profile-photo">
+                <img src={resumeInfo.photo} alt={`${resumeInfo.name} 프로필 사진`} />
+              </div>
+              <h2>
+                <span>{resumeInfo.name}</span>
+                <span>GrownDombo</span>
+              </h2>
+              <p>{profile.role}</p>
+              <dl className="portfolio-profile-detail-list">
+                {profileCardDetails.map((item) => {
+                  const Icon = item.icon;
 
                   return (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      onClick={() => {
-                        if (eventName) {
-                          trackAnalyticsEvent(eventName, { link_location: 'hero' });
-                        }
-                      }}
-                    >
-                      <Icon size={17} aria-hidden="true" />
-                      <span>{link.label}</span>
-                      <ArrowUpRight size={14} aria-hidden="true" />
-                    </a>
+                    <div key={item.label}>
+                      <dt>
+                        <Icon size={17} aria-hidden="true" strokeWidth={2.2} />
+                        <span>{item.label}</span>
+                      </dt>
+                      <dd>
+                        <a
+                          href={item.href}
+                          onClick={() => trackAnalyticsEvent(item.eventName, { link_location: 'hero' })}
+                        >
+                          {item.value}
+                        </a>
+                      </dd>
+                    </div>
                   );
                 })}
-            </div>
-          </div>
-        </section>
+              </dl>
+              <a
+                className="portfolio-profile-resume"
+                href={resumePath}
+                onClick={(event) => {
+                  trackAnalyticsEvent('resume_click', { link_location: 'hero' });
+                  onNavigate(event, resumePath);
+                }}
+              >
+                View Resume
+              </a>
+            </aside>
+          <div className="portfolio-home-content" ref={contentRef}>
+            <section className="hero-section portfolio-hero" id="about" aria-labelledby="hero-title">
+              <div className="hero-copy">
+                <p className="eyebrow">
+                  <Sparkles size={16} aria-hidden="true" />
+                  {profile.availability}
+                </p>
+                <h1 id="hero-title">{profile.headline}</h1>
+                <p className="hero-summary">
+                  제조라인 장비 소프트웨어를 개발하며, 복잡한 운영 흐름을 읽기 쉬운 구조와 안정적인 동작으로 정리합니다.
+                </p>
+                <div className="hero-focus-list" aria-label="핵심 작업 영역">
+                  <span>Windows App</span>
+                  <span>공정 자동화</span>
+                  <span>생산 시스템 연동</span>
+                  <span>성능 개선</span>
+                </div>
+              </div>
+            </section>
 
         <section className="metrics-section" id="metrics" aria-labelledby="metrics-title">
           <div className="section-heading">
@@ -466,7 +626,7 @@ function PortfolioHome({
                     aria-label={`${project.title} 상세 페이지 보기`}
                     onClick={(event) => onNavigate(event, project.detailPath!)}
                   >
-                    <img src={project.image} alt={`${project.title} 썸네일`} />
+                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
                     <span>{project.status}</span>
                   </a>
                   <div className="project-content">
@@ -500,12 +660,12 @@ function PortfolioHome({
                         }
                       }}
                     >
-                      <img src={project.image} alt={`${project.title} 썸네일`} />
+                      <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
                       <span>{project.status}</span>
                     </a>
                   ) : (
                     <div className="project-image-wrap">
-                      <img src={project.image} alt={`${project.title} 썸네일`} />
+                      <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
                       <span>{project.status}</span>
                     </div>
                   )}
@@ -522,6 +682,31 @@ function PortfolioHome({
           </div>
         </section>
         <AnalyticsNotice />
+          </div>
+          <nav className="portfolio-section-rail" aria-label="포트폴리오 섹션 바로가기">
+            {portfolioRailItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeSection === item.id;
+
+              return (
+                <a
+                  className={isActive ? 'is-active' : undefined}
+                  href={item.href}
+                  key={item.id}
+                  aria-label={item.label}
+                  aria-current={isActive ? 'true' : undefined}
+                  onClick={(event) => {
+                    setActiveSection(item.id);
+                    onNavigate(event, item.href);
+                  }}
+                >
+                  <Icon size={18} aria-hidden="true" strokeWidth={2.2} />
+                  <span>{item.label}</span>
+                </a>
+              );
+            })}
+          </nav>
+        </div>
       </main>
     </div>
   );
@@ -529,9 +714,10 @@ function PortfolioHome({
 
 function IndustrialAOIPlatformProjectPage({
   onNavigate,
+  themeMode,
+  onThemeToggle,
   selectedAreaId,
-}: {
-  onNavigate: InternalNavigate;
+}: ThemedPageProps & {
   selectedAreaId?: string;
 }) {
   const representativeProject: Project | undefined = workCaseStudies[0];
@@ -679,8 +865,8 @@ function IndustrialAOIPlatformProjectPage({
     : 'Company and customer-specific details are omitted, and the work is grouped by AOI workflow, SECS/GEM · MES · AI integration, and Repair operations.';
 
   return (
-    <div className="site-shell">
-      <SiteHeader isResumePage onNavigate={onNavigate} />
+    <div className="site-shell" data-theme={themeMode}>
+      <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
       <main className="project-detail-page industrial-aoi-page" id="top">
         <section className="project-detail-hero" aria-labelledby="industrial-aoi-title">
@@ -827,7 +1013,7 @@ function IndustrialAOIPlatformProjectPage({
     </div>
   );
 }
-function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: InternalNavigate }) {
+function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle }: ThemedPageProps) {
   const project: Project | undefined = projects.find((item) => item.detailPath === excelConditionPainterPath);
   const assetPath = '/assets/excel-condition-painter';
   const repositoryLink = project?.links.find((link) => link.label === 'Repository');
@@ -844,8 +1030,8 @@ function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: Internal
   };
 
   return (
-    <div className="site-shell">
-      <SiteHeader isResumePage onNavigate={onNavigate} />
+    <div className="site-shell" data-theme={themeMode}>
+      <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
       <main className="project-detail-page" id="top">
         <section className="project-detail-hero" aria-labelledby="excel-condition-painter-title">
@@ -1222,7 +1408,7 @@ function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: Internal
   );
 }
 
-function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNavigate }) {
+function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }: ThemedPageProps) {
   const project: Project | undefined = projects.find((item) => item.detailPath === cpuMemoryStressTestPath);
   const assetPath = '/assets/cpu-memory-stress-test';
   const repositoryLink = project?.links.find((link) => link.label === 'Repository');
@@ -1378,8 +1564,8 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
   const savedResultCaptureVersion = 'txt-window-uniform-2';
 
   return (
-    <div className="site-shell">
-      <SiteHeader isResumePage onNavigate={onNavigate} />
+    <div className="site-shell" data-theme={themeMode}>
+      <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
       <main className="project-detail-page" id="top">
         <section className="project-detail-hero" aria-labelledby="cpu-memory-stress-test-title">
@@ -1621,7 +1807,7 @@ function CPUMemoryStressTestProjectPage({ onNavigate }: { onNavigate: InternalNa
   );
 }
 
-function RFIDCollisionSearchSimulatorProjectPage({ onNavigate }: { onNavigate: InternalNavigate }) {
+function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThemeToggle }: ThemedPageProps) {
   const project: Project | undefined = projects.find((item) => item.detailPath === rfidCollisionSearchSimulatorPath);
   const assetPath = '/assets/rfid-collision-search-simulator';
   const repositoryLink = project?.links.find((link) => link.label === 'Repository');
@@ -1657,8 +1843,8 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate }: { onNavigate: I
   ];
 
   return (
-    <div className="site-shell">
-      <SiteHeader isResumePage onNavigate={onNavigate} />
+    <div className="site-shell" data-theme={themeMode}>
+      <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
       <main className="project-detail-page" id="top">
         <section className="project-detail-hero" aria-labelledby="rfid-collision-search-simulator-title">
