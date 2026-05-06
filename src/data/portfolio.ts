@@ -161,6 +161,42 @@ export const experiences: Experience[] = [
   },
 ];
 
+export const workCaseStudies: Project[] = [
+  {
+    title: 'AOI Workflow Improvements',
+    summary: '검사 화면, Gerber/Part 매칭, AutoTeaching 흐름을 개선했습니다.',
+    role: 'AOI Matching · Teaching Workflow',
+    tech: ['C#', 'C++', '.NET Framework', 'WinForms', 'OpenCV', 'TCP/IP'],
+    links: [],
+    image: '/assets/industrial-aoi-inspection-automation.png',
+    priority: 0,
+    detailPath: '/projects/industrial-aoi-platform/inspection-automation',
+    status: 'Work Highlights',
+  },
+  {
+    title: 'SECS/GEM · MES · AI Integration',
+    summary: '장비와 생산 시스템, AI 솔루션 간 데이터 연동을 정리했습니다.',
+    role: 'Equipment Interface · AI Module Integration',
+    tech: ['C#', 'C++', '.NET Framework', 'WinForms', 'TCP/IP'],
+    links: [],
+    image: '/assets/project-industrial-aoi-platform.svg',
+    priority: 1,
+    detailPath: '/projects/industrial-aoi-platform/production-integration',
+    status: 'Work Highlights',
+  },
+  {
+    title: 'Repair & NG Buffer Operations',
+    summary: 'Repair 화면, NG Buffer, Rack 상태 처리 흐름을 개선했습니다.',
+    role: 'Repair Flow · NG Buffer · Rack State',
+    tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'Logging'],
+    links: [],
+    image: '/assets/project-industrial-aoi-platform.svg',
+    priority: 2,
+    detailPath: '/projects/industrial-aoi-platform/operation-flow',
+    status: 'Work Highlights',
+  },
+];
+
 export const projects: Project[] = [
   {
     title: 'WinFormsCustomControls',
