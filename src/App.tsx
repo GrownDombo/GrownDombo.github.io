@@ -13,6 +13,7 @@ import {
   profile,
   projects,
   skillGroups,
+  workCaseStudies,
   type Project,
   type ProfileLink,
 } from './data/portfolio';
@@ -23,6 +24,22 @@ const resumePath = '/resume';
 const excelConditionPainterPath = '/projects/excel-condition-painter';
 const cpuMemoryStressTestPath = '/projects/cpu-memory-stress-test';
 const rfidCollisionSearchSimulatorPath = '/projects/rfid-collision-search-simulator';
+const industrialAoiPlatformPath = '/projects/industrial-aoi-platform';
+const industrialAoiInspectionAutomationPath = '/projects/industrial-aoi-platform/inspection-automation';
+const industrialAoiProductionIntegrationPath = '/projects/industrial-aoi-platform/production-integration';
+const industrialAoiOperationFlowPath = '/projects/industrial-aoi-platform/operation-flow';
+
+const industrialAoiAreaRoutes: Record<string, string> = {
+  'inspection-automation': industrialAoiInspectionAutomationPath,
+  'production-integration': industrialAoiProductionIntegrationPath,
+  'operation-flow': industrialAoiOperationFlowPath,
+};
+
+const industrialAoiRouteAreaIds: Record<string, string> = {
+  [industrialAoiInspectionAutomationPath]: 'inspection-automation',
+  [industrialAoiProductionIntegrationPath]: 'production-integration',
+  [industrialAoiOperationFlowPath]: 'operation-flow',
+};
 
 const navItems = [
   { label: '성과', href: '#metrics' },
@@ -193,6 +210,18 @@ function App() {
     return () => window.removeEventListener('popstate', handleRouteChange);
   }, []);
 
+  useEffect(() => {
+    if (currentPath !== industrialAoiPlatformPath) {
+      return;
+    }
+
+    window.history.replaceState(null, '', '/#projects');
+    setCurrentPath(getCurrentPath());
+    window.setTimeout(() => {
+      document.getElementById('projects')?.scrollIntoView({ behavior: 'auto', block: 'start' });
+    }, 0);
+  }, [currentPath]);
+
   const handleInternalNavigate: InternalNavigate = (event, path) => {
     if (!isPlainLeftClick(event)) {
       return;
@@ -215,6 +244,17 @@ function App() {
 
   if (currentPath === resumePath) {
     return <ResumePage onNavigate={handleInternalNavigate} />;
+  }
+
+  const industrialAoiSelectedAreaId = industrialAoiRouteAreaIds[currentPath];
+
+  if (industrialAoiSelectedAreaId) {
+    return (
+      <IndustrialAOIPlatformProjectPage
+        onNavigate={handleInternalNavigate}
+        selectedAreaId={industrialAoiSelectedAreaId}
+      />
+    );
   }
 
   if (currentPath === excelConditionPainterPath) {
@@ -263,6 +303,9 @@ function PortfolioHome({
   resumeLink?: ProfileLink;
   onNavigate: InternalNavigate;
 }) {
+  const prioritizedWorkCaseStudies = [...workCaseStudies].sort((left, right) => {
+    return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
+  });
   const prioritizedProjects = [...projects].sort((left, right) => {
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
@@ -402,55 +445,388 @@ function PortfolioHome({
           </div>
         </section>
 
-        <section className="section" id="projects" aria-labelledby="projects-title">
+        <section className="section" id="projects" aria-label="Projects">
           <div className="section-heading projects-heading">
             <div>
               <p className="section-kicker">Projects</p>
-              <h2 id="projects-title">GitHub 프로젝트</h2>
             </div>
           </div>
 
-          <div className="project-grid compact-project-grid">
-            {prioritizedProjects.map((project) => (
-              <article className="project-card compact-project-card" key={project.title}>
-                {project.detailPath ? (
+          <div className="project-subsection" aria-labelledby="work-projects-title">
+            <div className="project-subsection-heading">
+              <h3 id="work-projects-title">업무 사례</h3>
+              <p>실무에서 해결한 장비 SW 개선 사례입니다.</p>
+            </div>
+            <div className="project-grid compact-project-grid work-case-grid">
+              {prioritizedWorkCaseStudies.map((project) => (
+                <article className="project-card compact-project-card" key={project.title}>
                   <a
                     className="project-image-wrap project-image-link"
                     href={project.detailPath}
                     aria-label={`${project.title} 상세 페이지 보기`}
-                    onClick={(event) => {
-                      if (project.detailMode !== 'document') {
-                        onNavigate(event, project.detailPath!);
-                      }
-                    }}
+                    onClick={(event) => onNavigate(event, project.detailPath!)}
                   >
                     <img src={project.image} alt={`${project.title} 썸네일`} />
                     <span>{project.status}</span>
                   </a>
-                ) : (
-                  <div className="project-image-wrap">
-                    <img src={project.image} alt={`${project.title} 썸네일`} />
-                    <span>{project.status}</span>
+                  <div className="project-content">
+                    <div>
+                      <p className="project-role">{project.role}</p>
+                      <h3>{project.title}</h3>
+                      <p>{project.summary}</p>
+                    </div>
                   </div>
-                )}
-                <div className="project-content">
-                  <div>
-                    <p className="project-role">{project.role}</p>
-                    <h3>{project.title}</h3>
-                    <p>{project.summary}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="project-subsection" aria-labelledby="personal-projects-title">
+            <div className="project-subsection-heading">
+              <h3 id="personal-projects-title">개인 프로젝트</h3>
+              <p>직접 설계하고 공개 저장소로 관리한 개인 작업물입니다.</p>
+            </div>
+            <div className="project-grid compact-project-grid">
+              {prioritizedProjects.map((project) => (
+                <article className="project-card compact-project-card" key={project.title}>
+                  {project.detailPath ? (
+                    <a
+                      className="project-image-wrap project-image-link"
+                      href={project.detailPath}
+                      aria-label={`${project.title} 상세 페이지 보기`}
+                      onClick={(event) => {
+                        if (project.detailMode !== 'document') {
+                          onNavigate(event, project.detailPath!);
+                        }
+                      }}
+                    >
+                      <img src={project.image} alt={`${project.title} 썸네일`} />
+                      <span>{project.status}</span>
+                    </a>
+                  ) : (
+                    <div className="project-image-wrap">
+                      <img src={project.image} alt={`${project.title} 썸네일`} />
+                      <span>{project.status}</span>
+                    </div>
+                  )}
+                  <div className="project-content">
+                    <div>
+                      <p className="project-role">{project.role}</p>
+                      <h3>{project.title}</h3>
+                      <p>{project.summary}</p>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
         </section>
-
         <AnalyticsNotice />
       </main>
     </div>
   );
 }
 
+function IndustrialAOIPlatformProjectPage({
+  onNavigate,
+  selectedAreaId,
+}: {
+  onNavigate: InternalNavigate;
+  selectedAreaId?: string;
+}) {
+  const representativeProject: Project | undefined = workCaseStudies[0];
+  const highlightAreas = [
+    {
+      id: 'inspection-automation',
+      step: '01',
+      title: 'AOI Workflow Improvements',
+      summary: 'Gerber/Part 매칭, Teaching 화면, 검사 흐름을 장비 내부 관점에서 개선했습니다.',
+      problem: '검사 대상 매칭과 Teaching 화면 조작 흐름이 복잡해 미매칭 원인과 상태 추적이 어려웠습니다.',
+      actions: [
+        'Gerber Pad와 Part/Fiducial 매칭 기준 정리',
+        'Teaching 화면과 검사 Window 처리 흐름 보완',
+        '기존 검사 결과를 유지하면서 미매칭 항목만 보정하는 흐름 정리',
+      ],
+      impact: [
+        'AOI 내부 매칭 흐름의 추적성 개선',
+        '기존 Window 결과를 보존하면서 보정 로직 추가',
+        'Teaching 화면 기준 검사 작업 흐름 정리',
+      ],
+      directions: [
+        {
+          label: 'Track 01',
+          title: 'AOI Matching',
+          points: ['Module 후보 Pad 매칭', 'Fiducial ROI 보완', '기존 Window 결과 보호'],
+        },
+        {
+          label: 'Track 02',
+          title: 'Teaching / Inspection UI',
+          points: ['Teaching 화면 흐름 정리', '검사 Window 상태 관리', '작업자 확인 포인트 개선'],
+        },
+      ],
+      improvements: [
+        {
+          title: 'Gerber / Part / Fiducial Matching',
+          description: 'AOI 내부 매칭 흐름을 Module 후보 Pad와 Fiducial ROI 기준으로 정리했습니다.',
+          details: ['Module 후보 Pad 선별', 'Fiducial 기반 ModuleID 보완'],
+        },
+        {
+          title: 'Teaching Screen Flow',
+          description: '검사 Window와 Teaching 화면에서 필요한 상태 변경 흐름을 정리했습니다.',
+          details: ['Window 상태 갱신 보완', '작업자 확인 흐름 단순화'],
+        },
+      ],
+      keywords: ['AOI Workflow', 'Teaching UI', 'Matching Logic', 'C# / C++', 'WinForms'],
+    },
+    {
+      id: 'production-integration',
+      step: '02',
+      title: 'SECS/GEM · MES · AI Integration',
+      summary: 'AOI 장비와 생산 시스템, AI 솔루션 사이의 데이터 연동 흐름을 정리했습니다.',
+      problem: 'SECS/GEM, MES, AI 솔루션 연동 요구가 각각 달라 Job, 검사 결과, AutoTeaching 데이터 흐름을 함께 추적하기 어려웠습니다.',
+      actions: [
+        'SECS/GEM, PEMTOGEM, MES 연동 메시지와 장비 내부 상태 매핑 보완',
+        'Job Change, Alarm, 검사 결과 전송 시점을 장비 시퀀스에 맞게 조정',
+        'Pembrain AutoTeaching 요청/응답 데이터 구조와 ROI 전달 흐름 정리',
+      ],
+      directions: [
+        {
+          label: 'Track 01',
+          title: 'Factory System Integration',
+          points: ['SECS/GEM 메시지 보완', 'MES Job/Alarm 흐름 정리', '검사 결과 전송 시점 조정'],
+        },
+        {
+          label: 'Track 02',
+          title: 'AI Solution Integration',
+          points: ['Pembrain AutoTeaching 연동', 'FullMap ROI 전달', 'AI 결과 추적 흐름 정리'],
+        },
+      ],
+      impact: [
+        '생산 시스템과 장비 상태 사이의 데이터 정합성 개선',
+        'AI 솔루션 연동 데이터의 입력/결과 추적성 개선',
+        '고객사별 연동 시나리오 대응 범위 확대',
+      ],
+      improvements: [
+        {
+          title: 'SECS/GEM / MES Message Flow',
+          description: '상위 생산 시스템과 장비 사이에서 오가는 상태/결과 메시지를 장비 시퀀스에 맞게 보완했습니다.',
+          details: ['PEMTOGEM 연동 보완', 'Job/Alarm 전송 조건 정리', 'CompanyCode별 요구 처리'],
+        },
+        {
+          title: 'Job Change / Board Metadata',
+          description: 'Job 변경 이후 생산 시스템이 필요한 Board/Module 정보를 회신에 포함하도록 연동 데이터를 확장했습니다.',
+          details: ['변경 Job 정보 회신', 'Board Size 전송', 'Module Original Position 저장'],
+        },
+        {
+          title: 'Pembrain AutoTeaching Interface',
+          description: 'AI 솔루션으로 전달되는 이미지/ROI 데이터와 추론 결과 처리 흐름을 정리했습니다.',
+          details: ['AI_ImageData / AI_FOVData 분리', 'FullMap ROI 전달', 'Backup 결과 추적'],
+        },
+      ],
+      keywords: ['Equipment Interface', 'SECS/GEM', 'MES', 'AI Solution', 'TCP/IP'],
+    },
+    {
+      id: 'operation-flow',
+      step: '03',
+      title: 'Repair & NG Buffer Operations',
+      summary: 'Repair 화면, NG Buffer 신호, Rack 상태 갱신과 로그 정리를 하나의 운영 흐름 개선 영역으로 묶었습니다.',
+      problem: 'Repair와 NG Buffer 처리에서 연속 신호, 상/하부 장비 전달, Rack 상태 갱신이 겹치면 현장 재현과 원인 추적이 어려웠습니다.',
+      actions: [
+        'NG Buffer In/Out 신호 처리와 Rack 상태 갱신 누락 가능성 점검',
+        'Repair 화면과 내부 Rack 데이터가 다르게 보이는 구간 정리',
+        '현장 장애 추적을 위해 신호/상태 로그와 데이터 처리 구조 개선',
+      ],
+      directions: [],
+      impact: [
+        'Repair와 NG Buffer 흐름의 상태 누락 가능성 완화',
+        '현장 장애 재현과 원인 추적에 필요한 로그 품질 개선',
+        '장비 운영 흐름 관련 코드의 읽기 쉬운 구조화',
+      ],
+      improvements: [
+        {
+          title: 'NG Buffer Signal Flow',
+          description: 'NG Buffer In/Out 신호와 Rack 상태 갱신 흐름을 점검해 누락 가능성을 줄였습니다.',
+          details: ['Bottom Rack 제거 누락 수정', 'Top/Bottom 신호 전달 확인', '연속 신호 처리 보완'],
+        },
+        {
+          title: 'Repair Rack State Sync',
+          description: 'Repair 화면과 내부 Rack 데이터가 서로 다르게 보이는 문제를 줄이도록 상태 갱신 흐름을 정리했습니다.',
+          details: ['Rack 표시 데이터 정합성 개선', 'Barcode Rack Search 보완', 'Without Empty Rack 조건 처리'],
+        },
+        {
+          title: 'Logging / Data Cleanup',
+          description: '현장 재현이 어려운 장비 이슈를 추적하기 위해 로그를 보강하고 데이터 처리 코드를 정리했습니다.',
+          details: ['신호 관련 로그 강화', '과도한 반복 로그 완화', 'NGBufferListCtrl 구조 정리'],
+        },
+      ],
+      keywords: ['Repair Flow', 'NG Buffer', 'Rack State', 'Logging', 'WinForms'],
+    },
+  ];
+  const selectedArea = selectedAreaId ? highlightAreas.find((area) => area.id === selectedAreaId) : undefined;
+  const selectedProject = selectedAreaId
+    ? workCaseStudies.find((project) => project.detailPath === industrialAoiAreaRoutes[selectedAreaId])
+    : undefined;
+  const displayedAreas = selectedArea ? [selectedArea] : highlightAreas;
+  const pageTitle = selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
+  const pageLead =
+    selectedArea?.summary ??
+    '3D AOI 장비 소프트웨어 개선 내역을 AOI, SECS/GEM·MES·AI 연동, Repair/NG Buffer 운영 기준으로 정리했습니다.';
+  const pageTech = selectedProject?.tech ?? ['C#', 'C++', '.NET Framework', 'WinForms', 'SECS/GEM', 'OpenCV'];
+  const heroImage = selectedProject?.image ?? representativeProject?.image ?? '/assets/project-industrial-aoi-platform.svg';
+  const guideTitle = selectedArea ? 'What I Improved' : '3 Work Areas';
+  const guideDescription = selectedArea
+    ? 'Key improvements grouped for a quick review.'
+    : 'Company and customer-specific details are omitted, and the work is grouped by AOI workflow, SECS/GEM · MES · AI integration, and Repair operations.';
+
+  return (
+    <div className="site-shell">
+      <SiteHeader isResumePage onNavigate={onNavigate} />
+
+      <main className="project-detail-page industrial-aoi-page" id="top">
+        <section className="project-detail-hero" aria-labelledby="industrial-aoi-title">
+          <div className="project-detail-hero-copy">
+            <p className="section-kicker">Work Highlights</p>
+            <h1 id="industrial-aoi-title">{pageTitle}</h1>
+            <p className="project-detail-lead">{pageLead}</p>
+            <div className="tech-list project-detail-tech-list" aria-label={`${pageTitle} 기술 스택`}>
+              {pageTech.map((tech) => (
+                <span key={tech}>{tech}</span>
+              ))}
+            </div>
+          </div>
+          <figure className="project-detail-hero-media industrial-aoi-hero-media">
+            <img src={heroImage} alt={`${pageTitle} mock interface`} />
+            <figcaption>Portfolio Mockup</figcaption>
+          </figure>
+        </section>
+
+        <article className="project-guide industrial-aoi-guide" aria-labelledby="industrial-aoi-guide-title">
+          <header className="project-guide-header">
+            <p className="section-kicker">{selectedArea ? 'Work Detail' : 'Work Areas'}</p>
+            <h2 id="industrial-aoi-guide-title">{guideTitle}</h2>
+            <p>{guideDescription}</p>
+          </header>
+
+          {selectedArea ? null : (
+            <>
+              <ol className="guide-flow industrial-aoi-flow" aria-label="Industrial AOI Platform 업무 사례 구성">
+                {highlightAreas.map((area) => (
+                  <li key={area.id}>
+                    <strong>{area.step}. {area.title.split(' ')[0]}</strong>
+                    <span>{area.summary}</span>
+                  </li>
+                ))}
+              </ol>
+
+              <section className="guide-section" aria-labelledby="industrial-aoi-overview-title">
+                <h3 id="industrial-aoi-overview-title">Overview</h3>
+                <div className="industrial-aoi-focus-grid">
+                  {highlightAreas.map((area) => {
+                    const areaPath = industrialAoiAreaRoutes[area.id];
+
+                    return (
+                      <a
+                        className="industrial-aoi-focus-card industrial-aoi-focus-link"
+                        href={areaPath}
+                        key={area.id}
+                        onClick={(event) => onNavigate(event, areaPath)}
+                      >
+                        <span>{area.step}</span>
+                        <h4>{area.title}</h4>
+                        <p>{area.summary}</p>
+                      </a>
+                    );
+                  })}
+                </div>
+              </section>
+            </>
+          )}
+
+          {displayedAreas.map((area) => (
+            <section className="guide-section industrial-aoi-work-section" id={area.id} aria-labelledby={`${area.id}-title`} key={area.id}>
+              <div className="industrial-aoi-work-header">
+                <p className="section-kicker">{area.step}</p>
+                <h3 id={`${area.id}-title`}>{area.title}</h3>
+                <p>{area.summary}</p>
+              </div>
+
+              {area.directions.length > 0 ? (
+                <div className="industrial-aoi-direction-block" aria-label={`${area.title} improvement tracks`}>
+                  <div className="industrial-aoi-direction-header">
+                    <span>Two Improvement Tracks</span>
+                  </div>
+                  <div className="industrial-aoi-direction-grid">
+                    {area.directions.map((direction) => (
+                      <article className="industrial-aoi-direction-card" key={direction.title}>
+                        <span>{direction.label}</span>
+                        <h4>{direction.title}</h4>
+                        <ul>
+                          {direction.points.map((point) => (
+                            <li key={point}>{point}</li>
+                          ))}
+                        </ul>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+
+              {area.directions.length === 0 ? (
+                <div className="industrial-aoi-detail-grid">
+                  <article className="industrial-aoi-detail-card">
+                    <h4>Problem</h4>
+                    <p>{area.problem}</p>
+                  </article>
+                  <article className="industrial-aoi-detail-card">
+                    <h4>What I Did</h4>
+                    <ul>
+                      {area.actions.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </article>
+                  <article className="industrial-aoi-detail-card">
+                    <h4>Impact</h4>
+                    <ul>
+                      {area.impact.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </article>
+                </div>
+              ) : null}
+
+              <div className="industrial-aoi-improvement-block">
+                <h4>Detail Highlights</h4>
+                <div className="industrial-aoi-improvement-grid">
+                  {area.improvements.map((item) => (
+                    <article className="industrial-aoi-improvement-card" key={item.title}>
+                      <h5>{item.title}</h5>
+                      {area.directions.length === 0 ? <p>{item.description}</p> : null}
+                      <ul>
+                        {item.details.map((detail) => (
+                          <li key={detail}>{detail}</li>
+                        ))}
+                      </ul>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div className="tech-list industrial-aoi-keywords" aria-label={`${area.title} 키워드`}>
+                {area.keywords.map((keyword) => (
+                  <span key={keyword}>{keyword}</span>
+                ))}
+              </div>
+            </section>
+          ))}
+        </article>
+
+        <AnalyticsNotice />
+      </main>
+    </div>
+  );
+}
 function ExcelConditionPainterProjectPage({ onNavigate }: { onNavigate: InternalNavigate }) {
   const project: Project | undefined = projects.find((item) => item.detailPath === excelConditionPainterPath);
   const assetPath = '/assets/excel-condition-painter';

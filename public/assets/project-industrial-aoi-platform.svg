@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Industrial AOI platform improvement diagram</title>
+  <desc id="desc">Abstract 3D AOI software workflow with Gerber, AutoTeaching, MES, Repair, and SPC modules.</desc>
+  <rect width="1200" height="675" fill="#f8fbff"/>
+  <rect x="76" y="70" width="1048" height="535" rx="26" fill="#ffffff" stroke="#cfe0f5" stroke-width="2"/>
+  <rect x="118" y="112" width="438" height="451" rx="18" fill="#0f172a"/>
+  <rect x="146" y="143" width="382" height="270" rx="14" fill="#111827" stroke="#334155" stroke-width="2"/>
+  <g fill="none" stroke="#38bdf8" stroke-width="4" opacity="0.95">
+    <rect x="188" y="180" width="108" height="72" rx="8"/>
+    <rect x="334" y="205" width="116" height="86" rx="8"/>
+    <rect x="220" y="312" width="210" height="48" rx="8"/>
+    <path d="M198 190h88M348 218h88M238 326h172" stroke-linecap="round"/>
+  </g>
+  <circle cx="471" cy="352" r="18" fill="#22c55e"/>
+  <circle cx="206" cy="277" r="10" fill="#facc15"/>
+  <rect x="146" y="442" width="88" height="18" rx="9" fill="#2563eb"/>
+  <rect x="254" y="442" width="156" height="18" rx="9" fill="#64748b"/>
+  <rect x="146" y="481" width="210" height="18" rx="9" fill="#38bdf8"/>
+  <rect x="146" y="520" width="300" height="18" rx="9" fill="#64748b"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="800">
+    <text x="610" y="152" fill="#172033" font-size="38">3D AOI Platform</text>
+    <text x="610" y="191" fill="#556174" font-size="22">Software improvement case study</text>
+  </g>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="800">
+    <rect x="610" y="236" width="205" height="76" rx="14" fill="#eaf3ff" stroke="#bfdbfe"/>
+    <text x="636" y="282" fill="#1d4ed8">Gerber Match</text>
+    <rect x="848" y="236" width="205" height="76" rx="14" fill="#ecfdf5" stroke="#bbf7d0"/>
+    <text x="875" y="282" fill="#047857">AutoTeaching</text>
+    <rect x="610" y="344" width="205" height="76" rx="14" fill="#fefce8" stroke="#fde68a"/>
+    <text x="648" y="390" fill="#a16207">PEMES</text>
+    <rect x="848" y="344" width="205" height="76" rx="14" fill="#f0f9ff" stroke="#bae6fd"/>
+    <text x="884" y="390" fill="#0369a1">NG Buffer</text>
+    <rect x="729" y="452" width="205" height="76" rx="14" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="784" y="498" fill="#334155">SPC Data</text>
+  </g>
+  <g fill="none" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 9">
+    <path d="M815 274h33"/>
+    <path d="M712 312v32"/>
+    <path d="M951 312v32"/>
+    <path d="M712 420l72 42"/>
+    <path d="M951 420l-72 42"/>
+  </g>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#64748b" font-weight="700">
+    <text x="610" y="566">SVN evidence · C# / C++ · WinForms · SECS/GEM</text>
+  </g>
+</svg>
