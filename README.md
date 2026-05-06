@@ -36,6 +36,12 @@ React, Vite, TypeScript를 사용해 구성했으며,
 이력서 페이지의 문서형 레이아웃은 Figma Community의
 [개발자 이력서 템플릿](https://www.figma.com/design/ruqRkzKlOhoko97nrMBb3O/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B4%EB%A0%A5%EC%84%9C-%ED%85%9C%ED%94%8C%EB%A6%BF--Community-?node-id=2-111)을 참고해 웹 환경에 맞게 재구성했습니다.
 
+포트폴리오 홈과 프로젝트 상세 페이지의 섹션 구성은 Figma Community의
+[Website Developer Personal PortFolio Template](https://www.figma.com/design/zZW0XBbhuSu8wj1U3hYFAc/Website-Developer-Personal-PortFolio-Template--Community-?node-id=1-4)을 참고해 현재 콘텐츠에 맞게 재구성했습니다.
+
+- Base Design Credit: confident_coder
+- GitHub Repo Credit: https://github.com/Vednidhi930/Personal-Portfolio-website
+
 ## 로컬 실행
 
 ```bash
