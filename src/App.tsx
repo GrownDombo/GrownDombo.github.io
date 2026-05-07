@@ -453,6 +453,48 @@ function PortfolioHome({
   const prioritizedProjects = [...projects].sort((left, right) => {
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
+  const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
+  const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 속도 개선');
+  const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
+  const customerMetric = metrics.find((metric) => metric.label === '신규 고객사 연동 시나리오');
+  const impactChartCards = [
+    {
+      metric: roiSpeedMetric,
+      category: '시간',
+      resultLabel: '개선율',
+      graphLabel: '99%',
+      before: '6분 20초',
+      after: '3초',
+      fill: 99,
+    },
+    {
+      metric: shortcutSpeedMetric,
+      category: '시간',
+      resultLabel: '개선율',
+      graphLabel: '85%',
+      before: '2초',
+      after: '0.3초',
+      fill: 85,
+    },
+    {
+      metric: issueMetric,
+      category: '이슈',
+      resultLabel: '감소율',
+      graphLabel: '70%',
+      before: '전분기',
+      after: '70% 감소',
+      fill: 70,
+    },
+    {
+      metric: customerMetric,
+      category: '신규 고객',
+      resultLabel: '연동 수',
+      graphLabel: '10+',
+      before: '요구 대응',
+      after: '10개 이상',
+      fill: 100,
+    },
+  ];
   const [activeSection, setActiveSection] = useState(portfolioRailItems[0].id);
   const contentRef = useRef<HTMLDivElement>(null);
   const profileCardDetails = [
@@ -589,14 +631,58 @@ function PortfolioHome({
               <h2 id="metrics-title">숫자로 남긴 개선</h2>
             </div>
           </div>
-          <div className="impact-strip">
-            {metrics.map((metric) => (
-              <article className="impact-item" key={metric.label}>
-                <strong>{metric.value}</strong>
-                <h3>{metric.label}</h3>
-                <p>{metric.description}</p>
-              </article>
-            ))}
+          <div className="impact-meter-grid" aria-label="숫자로 남긴 개선 도식">
+            {impactChartCards.map((card) => {
+              const cardContent = (
+                <>
+                  <div className="impact-meter-copy">
+                    <span className="impact-meter-kicker">{card.category}</span>
+                    <h3>{card.metric?.label}</h3>
+                    <p>{card.metric?.description}</p>
+                  </div>
+                  <div
+                    className="impact-meter-visual"
+                    aria-label={`${card.metric?.label} ${card.resultLabel} ${card.graphLabel}`}
+                  >
+                    <div className="impact-meter-row">
+                      <span>{card.resultLabel}</span>
+                      <strong>{card.graphLabel}</strong>
+                    </div>
+                    <div className="impact-meter-track" aria-hidden="true">
+                      <span style={{ width: `${card.fill}%` }} />
+                    </div>
+                    <div className="impact-meter-labels">
+                      <span>
+                        <b>Before</b>
+                        {card.before}
+                      </span>
+                      <span>
+                        <b>After</b>
+                        {card.after}
+                      </span>
+                    </div>
+                  </div>
+                </>
+              );
+
+              return card.metric?.evidence ? (
+                <a
+                  className="impact-meter-card impact-meter-card--link"
+                  href={card.metric.evidence.href}
+                  key={card.metric.label}
+                  onClick={(event) => onNavigate(event, card.metric!.evidence!.href)}
+                >
+                  {cardContent}
+                  <span className="impact-meter-link-icon" aria-hidden="true">
+                    <ArrowUpRight size={18} strokeWidth={2.2} />
+                  </span>
+                </a>
+              ) : (
+                <article className="impact-meter-card" key={card.metric?.label ?? card.category}>
+                  {cardContent}
+                </article>
+              );
+            })}
           </div>
         </section>
 
@@ -1018,7 +1104,12 @@ function IndustrialAOIPlatformProjectPage({
 
               {selectedArea && area.id === 'inspection-automation' ? (
                 <div className="industrial-aoi-contribution-list">
-                <article className="industrial-aoi-matching-section" aria-label="Gerber Part matching details">
+                <article
+                  className="industrial-aoi-matching-section"
+                  id="contribution-01"
+                  tabIndex={-1}
+                  aria-label="Gerber Part matching details"
+                >
                   <span className="industrial-aoi-contribution-label">Contribution 01</span>
                   <div className="industrial-aoi-matching-copy">
                     <h4>Gerber ROI · Part Window ROI 매칭 시퀀스 최적화</h4>

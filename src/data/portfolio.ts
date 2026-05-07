@@ -17,6 +17,11 @@ export type Metric = {
   value: string;
   label: string;
   description: string;
+  evidence?: {
+    label: string;
+    href: string;
+    suffix?: string;
+  };
 };
 
 export type SkillGroup = {
@@ -85,24 +90,29 @@ export const profile: Profile = {
 
 export const metrics: Metric[] = [
   {
-    value: '70% 감소',
-    label: '장애 이슈 메일 감소',
-    description: '생산 시스템 연동 구조 개선 후 전분기 대비 감소',
-  },
-  {
-    value: '6분 20초 → 5초',
-    label: 'ROI 겹침 판별 처리 단축',
-    description: '9만 × 39만 좌표 데이터 기준 약 97% 개선',
-  },
-  {
-    value: '10개 이상',
-    label: '신규 고객사 연동 시나리오',
-    description: '생산 시스템 요구사항에 맞춘 연동 기능 개발',
+    value: '6분 20초 → 3초',
+    label: 'Gerber-Part ROI 매칭 시간 단축',
+    description: '후보군 기반 매칭으로 대용량 검사 좌표 처리 최적화',
+    evidence: {
+      label: '9만 × 39만 좌표 데이터 기준',
+      href: '/projects/industrial-aoi-platform/inspection-automation#contribution-01',
+      suffix: ' 약 99% 개선',
+    },
   },
   {
     value: '2초 → 0.3초',
     label: '단축키 응답 속도 개선',
-    description: '복합키 자료구조 적용으로 사용성 향상',
+    description: '복합키 자료구조로 단축키 입력 지연 최소화',
+  },
+  {
+    value: '70% 감소',
+    label: '장애 이슈 메일 감소',
+    description: '연동 구조 안정화로 반복 장애 알림 감소',
+  },
+  {
+    value: '10개 이상',
+    label: '신규 고객사 연동 시나리오',
+    description: '고객사 요구사항 기반 연동 시나리오 확장',
   },
 ];
 
