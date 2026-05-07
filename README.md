@@ -1,18 +1,17 @@
 # GrownDombo.github.io
 
-개인 프로젝트와 개발 경험을 정리하기 위해 만든 GitHub Pages 기반 포트폴리오 웹사이트입니다.
+개인 프로젝트와 실무 경험을 정리한 GitHub Pages 기반 포트폴리오입니다.
 
-React, Vite, TypeScript를 사용해 구성했으며,  
-프로젝트 소개, 기술 스택, 개발 경험, 연락처 정보를 한 페이지에서 확인할 수 있도록 제작했습니다.
+React, Vite, TypeScript로 구성했으며 홈, 프로젝트 상세, 문서형 이력서, 외부 링크를 한 곳에서 확인할 수 있도록 정리했습니다.
 
 ## 주요 내용
 
-- 개발자 소개
-- 주요 프로젝트 정리
-- 기술 스택 정리
-- GitHub 및 블로그 링크 연결
-- GitHub Pages 배포
-- Google Analytics 4 방문자 분석 적용
+- 개발자 소개 및 핵심 성과
+- 업무 사례와 개인 프로젝트 상세 페이지
+- 기술 스택과 경험 요약
+- 문서형 이력서 페이지
+- GitHub, Tech Blog, 이메일 연결
+- GitHub Pages 배포 및 Google Analytics 4 적용
 
 ## 기술 스택
 
@@ -23,24 +22,13 @@ React, Vite, TypeScript를 사용해 구성했으며,
 - GitHub Actions
 - Google Analytics 4
 
-## 개발 방식
+## 디자인 참고
 
-본 프로젝트는 AI 도구를 활용해 초기 구조와 UI 구성을 빠르게 잡고,  
-포트폴리오 문구, 프로젝트 구성, 기술 스택 정리, 배포 설정을 직접 검토하며 제작했습니다.
+이 사이트는 아래 Figma Community 템플릿의 구조와 톤을 참고하되, 현재 콘텐츠와 웹 사용성에 맞게 재구성했습니다.
 
-단순한 웹사이트 제작보다,  
-개인 프로젝트와 개발 경험을 정리하고 공개 가능한 형태로 관리하는 것을 목표로 했습니다.
-
-## 디자인 출처
-
-이력서 페이지의 문서형 레이아웃은 Figma Community의
-[개발자 이력서 템플릿](https://www.figma.com/design/ruqRkzKlOhoko97nrMBb3O/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B4%EB%A0%A5%EC%84%9C-%ED%85%9C%ED%94%8C%EB%A6%BF--Community-?node-id=2-111)을 참고해 웹 환경에 맞게 재구성했습니다.
-
-포트폴리오 홈과 프로젝트 상세 페이지의 섹션 구성은 Figma Community의
-[Website Developer Personal PortFolio Template](https://www.figma.com/design/zZW0XBbhuSu8wj1U3hYFAc/Website-Developer-Personal-PortFolio-Template--Community-?node-id=1-4)을 참고해 현재 콘텐츠에 맞게 재구성했습니다.
-
-- Base Design Credit: confident_coder
-- GitHub Repo Credit: https://github.com/Vednidhi930/Personal-Portfolio-website
+- 이력서: [개발자 이력서 템플릿](https://www.figma.com/design/ruqRkzKlOhoko97nrMBb3O/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B4%EB%A0%A5%EC%84%9C-%ED%85%9C%ED%94%8C%EB%A6%BF--Community-?node-id=2-111)
+- 포트폴리오: [Website Developer Personal PortFolio Template](https://www.figma.com/design/zZW0XBbhuSu8wj1U3hYFAc/Website-Developer-Personal-PortFolio-Template--Community-?node-id=1-4)
+- 포트폴리오 템플릿 원작자: confident_coder
 
 ## 로컬 실행
 
@@ -58,7 +46,7 @@ npm run preview
 
 ## 콘텐츠 수정
 
-포트폴리오 문구, 프로젝트, 기술스택, 연락처는 `src/data/portfolio.ts`에서 교체할 수 있습니다.
+포트폴리오 문구, 프로젝트, 기술 스택, 연락처 정보는 `src/data/portfolio.ts`에서 수정할 수 있습니다.
 
 ## 배포
 
