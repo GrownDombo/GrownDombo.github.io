@@ -96,17 +96,19 @@ const gerberPartPerformanceMethods = [
 
 const navItems = [
   { label: '성과', href: '#metrics' },
+  { label: '업무 사례', href: '#work-cases' },
+  { label: 'GitHub', href: '#projects' },
   { label: '경험', href: '#experience' },
   { label: '기술', href: '#skills' },
-  { label: '프로젝트', href: '#projects' },
 ];
 
 const portfolioRailItems = [
   { id: 'about', label: 'About', href: '#about', icon: UserRound },
   { id: 'metrics', label: 'Impact', href: '#metrics', icon: FileText },
+  { id: 'work-cases', label: 'Work', href: '#work-cases', icon: FolderKanban },
+  { id: 'projects', label: 'GitHub', href: '#projects', icon: Github },
   { id: 'experience', label: 'Experience', href: '#experience', icon: CalendarDays },
   { id: 'skills', label: 'Skills', href: '#skills', icon: Code2 },
-  { id: 'projects', label: 'Projects', href: '#projects', icon: FolderKanban },
 ];
 
 function AnalyticsNotice() {
@@ -598,11 +600,87 @@ function PortfolioHome({
           </div>
         </section>
 
+        <section className="section" id="work-cases" aria-labelledby="work-cases-title">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">Work Cases</p>
+              <h2 id="work-cases-title">업무 사례</h2>
+            </div>
+          </div>
+
+          <div className="project-grid compact-project-grid work-case-grid">
+            {prioritizedWorkCaseStudies.map((project) => (
+              <article className="project-card compact-project-card" key={project.title}>
+                <a
+                  className="project-image-wrap project-image-link"
+                  href={project.detailPath}
+                  aria-label={`${project.title} 상세 페이지 보기`}
+                  onClick={(event) => onNavigate(event, project.detailPath!)}
+                >
+                  <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
+                  <span>{project.status}</span>
+                </a>
+                <div className="project-content">
+                  <div>
+                    <p className="project-role">{project.role}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.summary}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section" id="projects" aria-labelledby="projects-title">
+          <div className="section-heading projects-heading">
+            <div>
+              <p className="section-kicker">GitHub Projects</p>
+              <h2 id="projects-title">GitHub 프로젝트</h2>
+            </div>
+          </div>
+
+          <div className="project-grid compact-project-grid">
+            {prioritizedProjects.map((project) => (
+              <article className="project-card compact-project-card" key={project.title}>
+                {project.detailPath ? (
+                  <a
+                    className="project-image-wrap project-image-link"
+                    href={project.detailPath}
+                    aria-label={`${project.title} 상세 페이지 보기`}
+                    onClick={(event) => {
+                      if (project.detailMode !== 'document') {
+                        onNavigate(event, project.detailPath!);
+                      }
+                    }}
+                  >
+                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
+                    <span>{project.status}</span>
+                  </a>
+                ) : (
+                  <div className="project-image-wrap">
+                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
+                    <span>{project.status}</span>
+                  </div>
+                )}
+                <div className="project-content">
+                  <div>
+                    <p className="project-role">{project.role}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.summary}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section className="section" id="experience" aria-labelledby="experience-title">
           <div className="section-heading">
             <div>
               <p className="section-kicker">Experience</p>
               <h2 id="experience-title">핵심 경력</h2>
+              <p className="section-heading-copy">대표 작업이 만들어진 업무 맥락과 맡았던 역할을 함께 정리했습니다.</p>
             </div>
           </div>
           <ol className="experience-timeline">
@@ -637,6 +715,7 @@ function PortfolioHome({
             <div>
               <p className="section-kicker">Skills</p>
               <h2 id="skills-title">기술 스택</h2>
+              <p className="section-heading-copy">앞선 작업에서 반복적으로 사용한 기술을 영역별로 묶었습니다.</p>
             </div>
           </div>
           <div className="skill-grid">
@@ -651,83 +730,6 @@ function PortfolioHome({
                 </ul>
               </article>
             ))}
-          </div>
-        </section>
-
-        <section className="section" id="projects" aria-label="Projects">
-          <div className="section-heading projects-heading">
-            <div>
-              <p className="section-kicker">Projects</p>
-            </div>
-          </div>
-
-          <div className="project-subsection" aria-labelledby="work-projects-title">
-            <div className="project-subsection-heading">
-              <h3 id="work-projects-title">업무 사례</h3>
-              <p>실무에서 해결한 장비 SW 개선 사례입니다.</p>
-            </div>
-            <div className="project-grid compact-project-grid work-case-grid">
-              {prioritizedWorkCaseStudies.map((project) => (
-                <article className="project-card compact-project-card" key={project.title}>
-                  <a
-                    className="project-image-wrap project-image-link"
-                    href={project.detailPath}
-                    aria-label={`${project.title} 상세 페이지 보기`}
-                    onClick={(event) => onNavigate(event, project.detailPath!)}
-                  >
-                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
-                    <span>{project.status}</span>
-                  </a>
-                  <div className="project-content">
-                    <div>
-                      <p className="project-role">{project.role}</p>
-                      <h3>{project.title}</h3>
-                      <p>{project.summary}</p>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <div className="project-subsection" aria-labelledby="personal-projects-title">
-            <div className="project-subsection-heading">
-              <h3 id="personal-projects-title">개인 프로젝트</h3>
-              <p>직접 설계하고 공개 저장소로 관리한 개인 작업물입니다.</p>
-            </div>
-            <div className="project-grid compact-project-grid">
-              {prioritizedProjects.map((project) => (
-                <article className="project-card compact-project-card" key={project.title}>
-                  {project.detailPath ? (
-                    <a
-                      className="project-image-wrap project-image-link"
-                      href={project.detailPath}
-                      aria-label={`${project.title} 상세 페이지 보기`}
-                      onClick={(event) => {
-                        if (project.detailMode !== 'document') {
-                          onNavigate(event, project.detailPath!);
-                        }
-                      }}
-                    >
-                      <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
-                      <span>{project.status}</span>
-                    </a>
-                  ) : (
-                    <div className="project-image-wrap">
-                      <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
-                      <span>{project.status}</span>
-                    </div>
-                  )}
-                  <div className="project-content">
-                    <div>
-                      <p className="project-role">{project.role}</p>
-                      <h3>{project.title}</h3>
-                      <p>{project.summary}</p>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
           </div>
         </section>
         <AnalyticsNotice />

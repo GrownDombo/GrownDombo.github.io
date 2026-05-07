@@ -37,6 +37,9 @@
   --shadow: var(--site-shadow);
   --display-title: clamp(2.2rem, 3.2vw, 2.75rem);
   --display-title-tablet: clamp(2rem, 4vw, 2.45rem);
+  --section-title: clamp(1.72rem, 2.35vw, 2.08rem);
+  --section-title-tablet: clamp(1.58rem, 3.2vw, 1.92rem);
+  --subsection-title: clamp(1.32rem, 1.85vw, 1.62rem);
 }
 
 * {
@@ -408,8 +411,17 @@ main {
 .section h2 {
   margin: 0;
   max-width: 850px;
-  font-size: var(--display-title);
   line-height: 1.12;
+}
+
+.hero-copy h1 {
+  font-size: var(--display-title);
+}
+
+.metrics-section h2,
+.section h2 {
+  font-size: var(--section-title);
+  line-height: 1.18;
 }
 
 .compact-hero .hero-copy h1 {
@@ -949,6 +961,19 @@ main {
   max-width: 780px;
 }
 
+.section-heading > div {
+  display: grid;
+  gap: 8px;
+}
+
+.section-heading-copy {
+  max-width: 720px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
 .impact-strip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1055,8 +1080,8 @@ main {
 .project-subsection-heading h3 {
   margin: 0;
   color: var(--ink);
-  font-size: clamp(1.85rem, 3vw, 2.45rem);
-  line-height: 1.18;
+  font-size: var(--subsection-title);
+  line-height: 1.28;
 }
 
 .project-subsection-heading p {
@@ -1068,7 +1093,7 @@ main {
 .project-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 20px;
 }
 
 .compact-project-grid {
@@ -1140,23 +1165,30 @@ main {
 
 .project-content {
   display: grid;
-  gap: 16px;
-  padding: 22px;
+  gap: 14px;
+  padding: 24px;
 }
 
 .compact-project-card .project-content {
   align-content: start;
-  padding: 22px;
+  padding: 24px;
 }
 
 .project-role {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: var(--coral);
+  font-size: 0.94rem;
+  line-height: 1.45;
   text-transform: none;
 }
 
 .project-content h3 {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  line-height: 1.28;
+}
+
+.project-content p:not(.project-role) {
+  line-height: 1.68;
 }
 
 .project-highlights {
@@ -3527,11 +3559,14 @@ main {
   }
 
   .hero-copy h1,
-  .metrics-section h2,
-  .section h2,
   .compact-hero .hero-copy h1,
   .resume-hero h1 {
     font-size: var(--display-title-tablet);
+  }
+
+  .metrics-section h2,
+  .section h2 {
+    font-size: var(--section-title-tablet);
   }
 
   .compact-hero .hero-copy h1 {
