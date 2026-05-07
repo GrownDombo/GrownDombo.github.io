@@ -1198,7 +1198,6 @@ function IndustrialAOIPlatformProjectPage({
                       </div>
                     </div>
                   </div>
-
                 </article>
                 </div>
               ) : null}

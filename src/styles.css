@@ -1630,6 +1630,11 @@ main {
   border-top: 1px solid var(--line);
 }
 
+.industrial-aoi-guide .project-guide-header + .industrial-aoi-work-section {
+  padding-top: 18px;
+  border-top: 0;
+}
+
 .guide-section h3 {
   margin: 0 0 18px;
   color: var(--ink);
@@ -2395,7 +2400,7 @@ main {
 .industrial-aoi-matching-section {
   display: grid;
   gap: 18px;
-  margin: 8px 0 20px;
+  margin: 0;
   padding: 20px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -2446,10 +2451,7 @@ main {
 .industrial-aoi-performance-block {
   display: grid;
   gap: 14px;
-  padding: 18px;
-  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--accent-soft) 42%, var(--card));
+  padding-top: 2px;
 }
 
 .industrial-aoi-performance-header {
