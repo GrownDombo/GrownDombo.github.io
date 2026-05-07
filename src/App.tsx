@@ -45,6 +45,55 @@ const industrialAoiRouteAreaIds: Record<string, string> = {
   [industrialAoiOperationFlowPath]: 'operation-flow',
 };
 
+const gerberPartMatchingMockups = [
+  {
+    title: 'Module / Part View',
+    image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
+    description: 'Red: Module area · Green: Part ROI',
+    legend: [
+      { label: 'Module area', tone: 'red' },
+      { label: 'Part ROI', tone: 'green' },
+    ],
+  },
+  {
+    title: 'Gerber View',
+    image: '/assets/aoi-gerber-part-matching/gerber-aligned.png',
+    description: 'Gerber ROI 기준 Part Window ROI 후보 확인 화면',
+    legend: [
+      { label: 'Gerber ROI', tone: 'pink' },
+    ],
+  },
+];
+
+const gerberPartPerformanceSummary = {
+  before: '~6m 20s',
+  after: '~3s',
+  reduction: '99%+',
+};
+
+const gerberPartPerformanceScale = [
+  { label: 'Modules', value: '약 270개' },
+  { label: 'Part Window ROI', value: '약 7만 개' },
+  { label: 'Gerber ROI', value: '약 39만 개' },
+];
+
+const gerberPartMeasurementNotes = [
+  '동일 조건에서 Start/End 로그 타임스탬프 차이로 처리 시간 산출',
+  '각 단계별 2회 실행 후 평균값 기준 비교',
+  '개선 전 평균 6분 22.711초에서 최종 평균 3.5155초로 단축',
+];
+
+const gerberPartPerformanceMethods = [
+  {
+    title: '기존 구조',
+    points: ['Part Window ROI마다 전체 Gerber ROI를 반복 비교', 'Part Window ROI 수와 Gerber 수 증가 시 비교 횟수 급증'],
+  },
+  {
+    title: '개선 구조',
+    points: ['Module별 Gerber 후보를 먼저 계산', 'Part Window ROI는 해당 Module 후보 Gerber와만 비교', 'Gerber ROI 변환 결과를 캐싱해 동일 계산 반복 감소'],
+  },
+];
+
 const navItems = [
   { label: '성과', href: '#metrics' },
   { label: '경험', href: '#experience' },
@@ -726,10 +775,10 @@ function IndustrialAOIPlatformProjectPage({
       id: 'inspection-automation',
       step: '01',
       title: 'AOI Workflow Improvements',
-      summary: 'Gerber/Part 매칭, Teaching 화면, 검사 흐름을 장비 내부 관점에서 개선했습니다.',
-      problem: '검사 대상 매칭과 Teaching 화면 조작 흐름이 복잡해 미매칭 원인과 상태 추적이 어려웠습니다.',
+      summary: 'Gerber/Part 매칭, Teaching 화면, 검사 흐름의 장비 내부 구조 개선',
+      problem: '검사 대상 매칭과 Teaching 화면 조작 흐름이 복잡해 미매칭 원인과 상태 추적이 어려운 구조',
       actions: [
-        'Gerber Pad와 Part/Fiducial 매칭 기준 정리',
+        'Gerber와 Part/Fiducial 매칭 기준 정리',
         'Teaching 화면과 검사 Window 처리 흐름 보완',
         '기존 검사 결과를 유지하면서 미매칭 항목만 보정하는 흐름 정리',
       ],
@@ -742,7 +791,7 @@ function IndustrialAOIPlatformProjectPage({
         {
           label: 'Track 01',
           title: 'AOI Matching',
-          points: ['Module 후보 Pad 매칭', 'Fiducial ROI 보완', '기존 Window 결과 보호'],
+          points: ['Gerber/Part/Fiducial 매칭 기능 개선', 'Module별 Gerber 후보 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
         },
         {
           label: 'Track 02',
@@ -753,12 +802,12 @@ function IndustrialAOIPlatformProjectPage({
       improvements: [
         {
           title: 'Gerber / Part / Fiducial Matching',
-          description: 'AOI 내부 매칭 흐름을 Module 후보 Pad와 Fiducial ROI 기준으로 정리했습니다.',
-          details: ['Module 후보 Pad 선별', 'Fiducial 기반 ModuleID 보완'],
+          description: 'AOI 내부 매칭 기능을 하나의 흐름으로 통합. Gerber 후보 선별 기반 불필요한 탐색 감소.',
+          details: ['Matching flow consolidation', 'Gerber candidate filtering', 'Repeated calculation reduction'],
         },
         {
           title: 'Teaching Screen Flow',
-          description: '검사 Window와 Teaching 화면에서 필요한 상태 변경 흐름을 정리했습니다.',
+          description: '검사 Window와 Teaching 화면에 필요한 상태 변경 흐름 정리',
           details: ['Window 상태 갱신 보완', '작업자 확인 흐름 단순화'],
         },
       ],
@@ -768,8 +817,8 @@ function IndustrialAOIPlatformProjectPage({
       id: 'production-integration',
       step: '02',
       title: 'SECS/GEM · MES · AI Integration',
-      summary: 'AOI 장비와 생산 시스템, AI 솔루션 사이의 데이터 연동 흐름을 정리했습니다.',
-      problem: 'SECS/GEM, MES, AI 솔루션 연동 요구가 각각 달라 Job, 검사 결과, AutoTeaching 데이터 흐름을 함께 추적하기 어려웠습니다.',
+      summary: 'AOI 장비, 생산 시스템, AI 솔루션 사이의 데이터 연동 흐름 정리',
+      problem: 'SECS/GEM, MES, AI 솔루션별 연동 요구 차이로 Job, 검사 결과, AutoTeaching 데이터 흐름 추적이 어려운 구조',
       actions: [
         'SECS/GEM, PEMTOGEM, MES 연동 메시지와 장비 내부 상태 매핑 보완',
         'Job Change, Alarm, 검사 결과 전송 시점을 장비 시퀀스에 맞게 조정',
@@ -795,17 +844,17 @@ function IndustrialAOIPlatformProjectPage({
       improvements: [
         {
           title: 'SECS/GEM / MES Message Flow',
-          description: '상위 생산 시스템과 장비 사이에서 오가는 상태/결과 메시지를 장비 시퀀스에 맞게 보완했습니다.',
+          description: '상위 생산 시스템과 장비 사이의 상태/결과 메시지를 장비 시퀀스 기준으로 보완',
           details: ['PEMTOGEM 연동 보완', 'Job/Alarm 전송 조건 정리', 'CompanyCode별 요구 처리'],
         },
         {
           title: 'Job Change / Board Metadata',
-          description: 'Job 변경 이후 생산 시스템이 필요한 Board/Module 정보를 회신에 포함하도록 연동 데이터를 확장했습니다.',
+          description: 'Job 변경 이후 생산 시스템이 필요한 Board/Module 정보를 회신 데이터에 포함',
           details: ['변경 Job 정보 회신', 'Board Size 전송', 'Module Original Position 저장'],
         },
         {
           title: 'Pembrain AutoTeaching Interface',
-          description: 'AI 솔루션으로 전달되는 이미지/ROI 데이터와 추론 결과 처리 흐름을 정리했습니다.',
+          description: 'AI 솔루션으로 전달되는 이미지/ROI 데이터와 추론 결과 처리 흐름 정리',
           details: ['AI_ImageData / AI_FOVData 분리', 'FullMap ROI 전달', 'Backup 결과 추적'],
         },
       ],
@@ -815,8 +864,8 @@ function IndustrialAOIPlatformProjectPage({
       id: 'operation-flow',
       step: '03',
       title: 'Repair & NG Buffer Operations',
-      summary: 'Repair 화면, NG Buffer 신호, Rack 상태 갱신과 로그 정리를 하나의 운영 흐름 개선 영역으로 묶었습니다.',
-      problem: 'Repair와 NG Buffer 처리에서 연속 신호, 상/하부 장비 전달, Rack 상태 갱신이 겹치면 현장 재현과 원인 추적이 어려웠습니다.',
+      summary: 'Repair 화면, NG Buffer 신호, Rack 상태 갱신, 로그 정리를 하나의 운영 흐름으로 구성',
+      problem: 'Repair와 NG Buffer 처리에서 연속 신호, 상/하부 장비 전달, Rack 상태 갱신이 겹칠 때 현장 재현과 원인 추적이 어려운 구조',
       actions: [
         'NG Buffer In/Out 신호 처리와 Rack 상태 갱신 누락 가능성 점검',
         'Repair 화면과 내부 Rack 데이터가 다르게 보이는 구간 정리',
@@ -831,17 +880,17 @@ function IndustrialAOIPlatformProjectPage({
       improvements: [
         {
           title: 'NG Buffer Signal Flow',
-          description: 'NG Buffer In/Out 신호와 Rack 상태 갱신 흐름을 점검해 누락 가능성을 줄였습니다.',
+          description: 'NG Buffer In/Out 신호와 Rack 상태 갱신 흐름 점검. 상태 누락 가능성 완화.',
           details: ['Bottom Rack 제거 누락 수정', 'Top/Bottom 신호 전달 확인', '연속 신호 처리 보완'],
         },
         {
           title: 'Repair Rack State Sync',
-          description: 'Repair 화면과 내부 Rack 데이터가 서로 다르게 보이는 문제를 줄이도록 상태 갱신 흐름을 정리했습니다.',
+          description: 'Repair 화면과 내부 Rack 데이터 표시 차이를 줄이기 위한 상태 갱신 흐름 정리',
           details: ['Rack 표시 데이터 정합성 개선', 'Barcode Rack Search 보완', 'Without Empty Rack 조건 처리'],
         },
         {
           title: 'Logging / Data Cleanup',
-          description: '현장 재현이 어려운 장비 이슈를 추적하기 위해 로그를 보강하고 데이터 처리 코드를 정리했습니다.',
+          description: '현장 재현이 어려운 장비 이슈 추적을 위한 로그 보강과 데이터 처리 코드 정리',
           details: ['신호 관련 로그 강화', '과도한 반복 로그 완화', 'NGBufferListCtrl 구조 정리'],
         },
       ],
@@ -856,12 +905,12 @@ function IndustrialAOIPlatformProjectPage({
   const pageTitle = selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
   const pageLead =
     selectedArea?.summary ??
-    '3D AOI 장비 소프트웨어 개선 내역을 AOI, SECS/GEM·MES·AI 연동, Repair/NG Buffer 운영 기준으로 정리했습니다.';
+    '3D AOI 장비 소프트웨어 개선 내역을 AOI, SECS/GEM·MES·AI 연동, Repair/NG Buffer 운영 기준으로 구성';
   const pageTech = selectedProject?.tech ?? ['C#', 'C++', '.NET Framework', 'WinForms', 'SECS/GEM', 'OpenCV'];
   const heroImage = selectedProject?.image ?? representativeProject?.image ?? '/assets/project-industrial-aoi-platform.svg';
-  const guideTitle = selectedArea ? 'What I Improved' : '3 Work Areas';
+  const guideTitle = selectedArea ? 'Key Contributions' : '3 Work Areas';
   const guideDescription = selectedArea
-    ? 'Key improvements grouped for a quick review.'
+    ? '대표 개선 항목을 실제 변경 단위로 정리했습니다.'
     : 'Company and customer-specific details are omitted, and the work is grouped by AOI workflow, SECS/GEM · MES · AI integration, and Repair operations.';
 
   return (
@@ -882,13 +931,13 @@ function IndustrialAOIPlatformProjectPage({
           </div>
           <figure className="project-detail-hero-media industrial-aoi-hero-media">
             <img src={heroImage} alt={`${pageTitle} mock interface`} />
-            <figcaption>Portfolio Mockup</figcaption>
+            <figcaption>Mockup</figcaption>
           </figure>
         </section>
 
         <article className="project-guide industrial-aoi-guide" aria-labelledby="industrial-aoi-guide-title">
           <header className="project-guide-header">
-            <p className="section-kicker">{selectedArea ? 'Work Detail' : 'Work Areas'}</p>
+            <p className="section-kicker">{selectedArea ? 'Contribution List' : 'Work Areas'}</p>
             <h2 id="industrial-aoi-guide-title">{guideTitle}</h2>
             <p>{guideDescription}</p>
           </header>
@@ -929,14 +978,22 @@ function IndustrialAOIPlatformProjectPage({
           )}
 
           {displayedAreas.map((area) => (
-            <section className="guide-section industrial-aoi-work-section" id={area.id} aria-labelledby={`${area.id}-title`} key={area.id}>
-              <div className="industrial-aoi-work-header">
-                <p className="section-kicker">{area.step}</p>
-                <h3 id={`${area.id}-title`}>{area.title}</h3>
-                <p>{area.summary}</p>
-              </div>
+            <section
+              className="guide-section industrial-aoi-work-section"
+              id={area.id}
+              aria-label={selectedArea ? area.title : undefined}
+              aria-labelledby={selectedArea ? undefined : `${area.id}-title`}
+              key={area.id}
+            >
+              {!selectedArea ? (
+                <div className="industrial-aoi-work-header">
+                  <p className="section-kicker">{area.step}</p>
+                  <h3 id={`${area.id}-title`}>{area.title}</h3>
+                  <p>{area.summary}</p>
+                </div>
+              ) : null}
 
-              {area.directions.length > 0 ? (
+              {!selectedArea && area.directions.length > 0 ? (
                 <div className="industrial-aoi-direction-block" aria-label={`${area.title} improvement tracks`}>
                   <div className="industrial-aoi-direction-header">
                     <span>Two Improvement Tracks</span>
@@ -954,6 +1011,102 @@ function IndustrialAOIPlatformProjectPage({
                       </article>
                     ))}
                   </div>
+                </div>
+              ) : null}
+
+              {selectedArea && area.id === 'inspection-automation' ? (
+                <div className="industrial-aoi-contribution-list">
+                <article className="industrial-aoi-matching-section" aria-label="Gerber Part matching details">
+                  <span className="industrial-aoi-contribution-label">Contribution 01</span>
+                  <div className="industrial-aoi-matching-copy">
+                    <h4>Gerber ROI · Part Window ROI 매칭 시퀀스 최적화</h4>
+                    <p>
+                      동일 데이터 기준 실행 로그로 처리 시간 변화를 검증한 매칭 개선 작업.
+                    </p>
+                  </div>
+
+                  <div className="industrial-aoi-matching-grid">
+                    {gerberPartMatchingMockups.map((mockup) => (
+                      <figure className="industrial-aoi-matching-figure" key={mockup.title}>
+                        <div className="industrial-aoi-matching-media">
+                          <img src={mockup.image} alt={`${mockup.title} mockup`} />
+                          <span className="industrial-aoi-matching-mockup-tag">Mockup</span>
+                        </div>
+                        <figcaption>
+                          <strong>{mockup.title}</strong>
+                          {mockup.legend ? (
+                            <span className="industrial-aoi-matching-legend">
+                              {mockup.legend.map((item) => (
+                                <em className={`industrial-aoi-matching-legend-${item.tone}`} key={item.label}>
+                                  {item.label}
+                                </em>
+                              ))}
+                            </span>
+                          ) : (
+                            <span>{mockup.description}</span>
+                          )}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+
+                  <div className="industrial-aoi-performance-block" aria-label="Gerber matching speed improvement">
+                    <div className="industrial-aoi-performance-header">
+                      <div>
+                        <h5>성능 측정 결과</h5>
+                      </div>
+                    </div>
+                    <div className="industrial-aoi-performance-environment">
+                      <strong>측정 환경</strong>
+                      <ul className="industrial-aoi-performance-scale" aria-label="Measured input scale">
+                        {gerberPartPerformanceScale.map((item) => (
+                          <li key={item.label}>
+                            <span>{item.label}</span>
+                            <strong>{item.value}</strong>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="industrial-aoi-performance-main">
+                      <div className="industrial-aoi-performance-metric">
+                        <span>개선 전</span>
+                        <strong>{gerberPartPerformanceSummary.before}</strong>
+                      </div>
+                      <div className="industrial-aoi-performance-metric">
+                        <span>개선 후</span>
+                        <strong>{gerberPartPerformanceSummary.after}</strong>
+                      </div>
+                      <div className="industrial-aoi-performance-metric industrial-aoi-performance-metric-strong">
+                        <span>처리 시간 단축</span>
+                        <strong>{gerberPartPerformanceSummary.reduction}</strong>
+                      </div>
+                    </div>
+                    <div className="industrial-aoi-performance-measurement">
+                      <strong>측정 방법</strong>
+                      <ul>
+                        {gerberPartMeasurementNotes.map((note) => (
+                          <li key={note}>{note}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="industrial-aoi-performance-approach">
+                      <strong>문제와 개선 방향</strong>
+                      <div className="industrial-aoi-performance-methods">
+                        {gerberPartPerformanceMethods.map((method) => (
+                          <article key={method.title}>
+                            <span>{method.title}</span>
+                            <ul>
+                              {method.points.map((point) => (
+                                <li key={point}>{point}</li>
+                              ))}
+                            </ul>
+                          </article>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                </article>
                 </div>
               ) : null}
 
