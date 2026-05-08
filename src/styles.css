@@ -2742,6 +2742,119 @@ main {
   transform: translateY(-50%);
 }
 
+.industrial-aoi-step-flow-four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.industrial-aoi-step-flow-four .industrial-aoi-step-card {
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+}
+
+.industrial-aoi-step-flow-four .industrial-aoi-step-icon {
+  width: 42px;
+  height: 42px;
+}
+
+.industrial-aoi-integration-map {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--accent-soft) 72%, transparent), transparent 38%),
+    linear-gradient(180deg, color-mix(in srgb, var(--card-strong) 82%, transparent), var(--card));
+}
+
+.industrial-aoi-integration-diagram-badge {
+  justify-self: end;
+  width: fit-content;
+  padding: 5px 9px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 850;
+  background: color-mix(in srgb, var(--card) 76%, transparent);
+}
+
+.industrial-aoi-integration-map-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.18fr) auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.industrial-aoi-integration-map-flow > svg {
+  width: 24px;
+  height: 24px;
+  color: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+
+.industrial-aoi-integration-system {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  min-height: 98px;
+  align-content: center;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--card) 86%, transparent);
+  box-shadow: 0 14px 34px rgb(15 23 42 / 7%);
+}
+
+.industrial-aoi-integration-system-focus {
+  border-color: color-mix(in srgb, var(--success) 28%, var(--border));
+  background: color-mix(in srgb, var(--success) 8%, var(--card));
+}
+
+.industrial-aoi-integration-system strong {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 950;
+  line-height: 1.2;
+}
+
+.industrial-aoi-integration-system span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.industrial-aoi-integration-flow-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.industrial-aoi-integration-flow-list span {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.industrial-aoi-integration-flow-list strong {
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 950;
+}
+
+.industrial-aoi-integration-flow-list em {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .industrial-aoi-structure-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.12fr);
@@ -3241,6 +3354,110 @@ main {
   border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
   color: var(--accent);
   background: var(--accent-soft);
+}
+
+.industrial-aoi-integration-structure-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.industrial-aoi-integration-structure-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  min-height: 270px;
+  padding: 22px;
+}
+
+.industrial-aoi-integration-structure-layout > svg {
+  width: 24px;
+  height: 24px;
+  color: color-mix(in srgb, #df3d3d 48%, var(--border));
+}
+
+.industrial-aoi-integration-structure-layout-after > svg {
+  color: color-mix(in srgb, var(--success) 62%, var(--accent));
+}
+
+.industrial-aoi-integration-column {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--card-strong) 74%, transparent);
+}
+
+.industrial-aoi-integration-column strong {
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.industrial-aoi-integration-column span {
+  display: block;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 12%, var(--border));
+  border-radius: 7px;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 850;
+  line-height: 1.3;
+  background: var(--card);
+}
+
+.industrial-aoi-integration-risk {
+  border-color: color-mix(in srgb, #df3d3d 20%, var(--border));
+  background: color-mix(in srgb, #df3d3d 6%, var(--card));
+}
+
+.industrial-aoi-integration-risk span {
+  border-color: color-mix(in srgb, #df3d3d 18%, var(--border));
+  color: #b91c1c;
+  background: color-mix(in srgb, #df3d3d 5%, var(--card));
+}
+
+.industrial-aoi-integration-core {
+  border-color: color-mix(in srgb, var(--success) 24%, var(--border));
+  background: color-mix(in srgb, var(--success) 8%, var(--card));
+}
+
+.industrial-aoi-integration-success span {
+  border-color: color-mix(in srgb, var(--success) 18%, var(--border));
+  color: color-mix(in srgb, var(--success) 78%, var(--ink));
+  background: color-mix(in srgb, var(--success) 6%, var(--card));
+}
+
+.industrial-aoi-integration-result-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.industrial-aoi-integration-result-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+  border-radius: 8px;
+  background: var(--card-strong);
+}
+
+.industrial-aoi-integration-result-card strong {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+.industrial-aoi-integration-result-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.55;
 }
 
 .industrial-aoi-result-table {
@@ -4805,6 +5022,22 @@ main {
     display: none;
   }
 
+  .industrial-aoi-integration-map-flow,
+  .industrial-aoi-integration-structure-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-map-flow > svg,
+  .industrial-aoi-integration-structure-layout > svg {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .industrial-aoi-integration-flow-list,
+  .industrial-aoi-integration-result-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .industrial-aoi-structure-funnel::before,
   .industrial-aoi-structure-funnel::after,
   .industrial-aoi-structure-funnel li:last-child::after {
@@ -5079,6 +5312,15 @@ main {
   .industrial-aoi-report-stat-row,
   .industrial-aoi-skill-icon-grid {
     grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-flow-list,
+  .industrial-aoi-integration-result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-diagram-badge {
+    justify-self: start;
   }
 
   .industrial-aoi-structure-diagram {

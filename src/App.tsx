@@ -183,6 +183,86 @@ const gerberPartSkillItems = [
   { icon: Gauge, label: 'Profiling' },
 ];
 
+const integrationReportTech = ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM'];
+
+const integrationDirectionSteps = [
+  {
+    icon: Database,
+    title: '공통 메시지 파이프라인',
+    description: '전처리, 데이터 구성, 전송, 응답 검증 단계를 공통 흐름으로 분리',
+  },
+  {
+    icon: Layers,
+    title: '고객사별 확장 구조',
+    description: '공통 처리와 고객사별 예외를 분리해 연동 시나리오별 분기 증가를 완화',
+  },
+  {
+    icon: CheckCircle,
+    title: '전송 데이터 객체화',
+    description: '작업 정보, 검사 결과, 장비 이벤트 데이터를 생산 시스템 포맷에 맞게 정합화',
+  },
+  {
+    icon: Gauge,
+    title: '패킷 조립 안정화',
+    description: '헤더와 길이 정보를 기준으로 TCP/IP 메시지를 조립해 대용량 수신 안정화',
+  },
+];
+
+const integrationFlowRows = [
+  { title: '전처리', description: '연결 상태, 사용 옵션, 전송 조건 검증' },
+  { title: '데이터 구성', description: '작업 정보, 검사 결과, 장비 이벤트 객체화' },
+  { title: '전송 안정화', description: '포맷 변환, 문자 인코딩, 패킷 조립' },
+  { title: '응답 검증', description: '응답 결과, 예외 조건, 로그 추적' },
+];
+
+const integrationResultItems = [
+  {
+    title: '운영 이슈 감소',
+    description: '연동 관련 이슈 메일이 리팩토링 전 분기 대비 약 70% 감소',
+  },
+  {
+    title: '대용량 메시지 안정화',
+    description: '헤더/길이 기반 패킷 조립 구조를 적용해 대용량 메시지 수신 안정화',
+  },
+  {
+    title: '데이터 정합성 개선',
+    description: '작업 정보, 검사 결과, 장비 이벤트, 후속 조치 데이터의 전송 포맷과 시점 정합화',
+  },
+  {
+    title: '흐름 추적성 강화',
+    description: '장비 상태부터 미들웨어 응답까지 로그 기반 추적 경로 명확화',
+  },
+];
+
+const integrationRoleItems = [
+  '고객사별 MES 및 SECS/GEM 연동 요구사항 분석',
+  '레거시 연동 로직 분석 및 공통 메시지 처리 파이프라인 설계',
+  'AOI 장비와 미들웨어 간 메시지 처리 로직 구현',
+  'TCP/IP 패킷 조립, 응답 처리, 예외 처리 흐름 검증',
+];
+
+const integrationKeywordItems = [
+  'MES',
+  'SECS/GEM',
+  'MES Integration',
+  'Data Flow',
+  'Message Pipeline',
+  'Packet Framing',
+  'Template Method',
+  'Equipment State',
+  'Result Transfer',
+  'Middleware',
+  'TCP/IP',
+];
+
+const integrationSkillItems = [
+  { icon: Code2, label: 'C#' },
+  { icon: Database, label: '.NET Framework' },
+  { icon: Layers, label: 'WinForms' },
+  { icon: Gauge, label: 'TCP/IP' },
+  { icon: CheckCircle, label: 'SECS/GEM' },
+];
+
 const navItems = [
   { label: '성과', href: '#metrics' },
   { label: '업무 사례', href: '#work-cases' },
@@ -949,6 +1029,238 @@ function PortfolioHome({
   );
 }
 
+function ProductionIntegrationReport() {
+  return (
+    <article className="industrial-aoi-matching-section industrial-aoi-integration-section" aria-label="MES SECS GEM integration details">
+      <div className="industrial-aoi-report-grid industrial-aoi-problem-grid">
+        <section className="industrial-aoi-report-card" aria-labelledby="integration-problem-title">
+          <div className="industrial-aoi-report-heading">
+            <span>1</span>
+            <h5 id="integration-problem-title">문제 상황</h5>
+          </div>
+          <p>
+            고객사별 MES 및 SECS/GEM 연동 시나리오와 장비 상태 분기가 누적되며 작업 정보, 검사 결과,
+            장비 이벤트, 후속 조치 데이터의 전송 시점과 포맷이 분산된 구조
+          </p>
+          <div className="industrial-aoi-comparison-box">
+            <span>핵심 병목</span>
+            <strong>고객사별 예외와 장비 상태 분기가 누적된 레거시 연동 로직</strong>
+            <p>작업 정보, 검사 결과, 장비 이벤트, 후속 조치 흐름이 개별 조건 중심으로 흩어져 변경 영향과 추적 범위가 확대되는 구조</p>
+          </div>
+        </section>
+
+        <section className="industrial-aoi-report-card" aria-labelledby="integration-cause-title">
+          <div className="industrial-aoi-report-heading">
+            <span>2</span>
+            <h5 id="integration-cause-title">원인 분석</h5>
+          </div>
+          <p>
+            장비 내부 상태와 미들웨어 메시지 처리 흐름이 분리되어 데이터 누락, 포맷 불일치,
+            전송 타이밍 충돌 가능성 존재
+          </p>
+          <div className="industrial-aoi-comparison-box">
+            <span>원인</span>
+            <strong>장비 상태 · 미들웨어 처리 · 생산 시스템 포맷 기준의 분리</strong>
+            <p>전송 시점과 응답 처리 기준이 기능별로 달라 연동 오류 발생 시 원인 분석과 재현 검증 비용이 증가하는 구조</p>
+          </div>
+        </section>
+      </div>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-direction-title">
+        <div className="industrial-aoi-report-heading">
+          <span>3</span>
+          <h5 id="integration-direction-title">개선 방향</h5>
+        </div>
+        <div className="industrial-aoi-step-flow industrial-aoi-step-flow-four">
+          {integrationDirectionSteps.map((step, index) => {
+            const StepIcon = step.icon;
+
+            return (
+              <article className="industrial-aoi-step-card" key={step.title}>
+                <div className="industrial-aoi-step-icon">
+                  <StepIcon aria-hidden="true" />
+                </div>
+                <div>
+                  <strong>{step.title}</strong>
+                  <p>{step.description}</p>
+                </div>
+                {index < integrationDirectionSteps.length - 1 ? <ArrowRight className="industrial-aoi-step-arrow" aria-hidden="true" /> : null}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-flow-title">
+        <div className="industrial-aoi-report-heading">
+          <span>4</span>
+          <h5 id="integration-flow-title">연동 흐름 기준 화면</h5>
+        </div>
+        <div className="industrial-aoi-integration-map">
+          <span className="industrial-aoi-integration-diagram-badge">재구성 흐름도</span>
+          <div className="industrial-aoi-integration-map-flow" aria-label="AOI equipment to middleware to production system">
+            <div className="industrial-aoi-integration-system">
+              <strong>AOI 장비</strong>
+              <span>작업 정보 · 검사 결과 · 장비 이벤트 · 후속 조치</span>
+            </div>
+            <ArrowRight aria-hidden="true" />
+            <div className="industrial-aoi-integration-system industrial-aoi-integration-system-focus">
+              <strong>MES·SECS/GEM 미들웨어</strong>
+              <span>포맷 · 전송 시점 · 응답 처리</span>
+            </div>
+            <ArrowRight aria-hidden="true" />
+            <div className="industrial-aoi-integration-system">
+              <strong>생산 시스템</strong>
+              <span>추적 · 제어 · 보고</span>
+            </div>
+          </div>
+          <div className="industrial-aoi-integration-flow-list">
+            {integrationFlowRows.map((row) => (
+              <span key={row.title}>
+                <strong>{row.title}</strong>
+                <em>{row.description}</em>
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="industrial-aoi-structure-panel industrial-aoi-report-card" aria-labelledby="integration-structure-title">
+        <div className="industrial-aoi-structure-titlebar">
+          <div className="industrial-aoi-report-heading">
+            <span>5</span>
+            <h5 id="integration-structure-title">개선 전후 구조</h5>
+          </div>
+          <p>분산된 데이터 흐름을 공통 메시지 처리 파이프라인으로 재구성하여 정합성과 추적성을 강화한 구조</p>
+        </div>
+
+        <div className="industrial-aoi-structure-grid industrial-aoi-integration-structure-grid">
+          <article className="industrial-aoi-structure-card industrial-aoi-structure-before">
+            <header className="industrial-aoi-structure-card-header">
+              <div>
+                <strong>Before</strong>
+                <span>분산 처리 구조</span>
+              </div>
+            </header>
+            <div className="industrial-aoi-integration-structure-layout">
+              <div className="industrial-aoi-integration-column">
+                <strong>장비 상태별 개별 분기</strong>
+                <span>작업 정보 변경</span>
+                <span>검사 결과 전송</span>
+                <span>장비 이벤트 처리</span>
+                <span>후속 조치 결과</span>
+              </div>
+              <ArrowRight aria-hidden="true" />
+              <div className="industrial-aoi-integration-column industrial-aoi-integration-risk">
+                <strong>고객사별 예외 처리</strong>
+                <span>포맷 불일치</span>
+                <span>전송 시점 분산</span>
+                <span>추적 범위 확대</span>
+              </div>
+            </div>
+            <div className="industrial-aoi-structure-caption">
+              <p>장비 이벤트별 분기가 누적되어 메시지 흐름 파악과 장애 추적 범위가 확대되는 구조</p>
+            </div>
+          </article>
+
+          <article className="industrial-aoi-structure-card industrial-aoi-structure-after">
+            <header className="industrial-aoi-structure-card-header">
+              <div>
+                <strong>After</strong>
+                <span>통합 데이터 흐름</span>
+              </div>
+            </header>
+            <div className="industrial-aoi-integration-structure-layout industrial-aoi-integration-structure-layout-after">
+              <div className="industrial-aoi-integration-column industrial-aoi-integration-core">
+                <strong>공통 데이터 흐름</strong>
+                <span>전처리 파이프라인</span>
+                <span>전송 객체 구성</span>
+                <span>응답·예외 검증</span>
+              </div>
+              <ArrowRight aria-hidden="true" />
+              <div className="industrial-aoi-integration-column industrial-aoi-integration-success">
+                <strong>연동 메시지</strong>
+                <span>작업·식별 정보</span>
+                <span>검사 결과·이벤트</span>
+                <span>원격 명령·후속 조치</span>
+              </div>
+            </div>
+            <div className="industrial-aoi-structure-caption">
+              <p>공통 흐름 위에서 고객사별 조건을 분리하여 데이터 정합성과 운영 추적성을 강화</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-result-title">
+        <div className="industrial-aoi-report-heading">
+          <span>6</span>
+          <h5 id="integration-result-title">연동 개선 결과</h5>
+        </div>
+        <div className="industrial-aoi-integration-result-grid">
+          {integrationResultItems.map((item) => (
+            <article className="industrial-aoi-integration-result-card" key={item.title}>
+              <strong>{item.title}</strong>
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <div className="industrial-aoi-report-bottom-grid">
+        <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-tech-title">
+          <div className="industrial-aoi-report-heading">
+            <span>7</span>
+            <h5 id="integration-tech-title">기술 스택</h5>
+          </div>
+          <div className="industrial-aoi-skill-icon-grid">
+            {integrationSkillItems.map((item) => {
+              const SkillIcon = item.icon;
+
+              return (
+                <span key={item.label}>
+                  <SkillIcon aria-hidden="true" />
+                  {item.label}
+                </span>
+              );
+            })}
+          </div>
+        </section>
+        <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-role-title">
+          <div className="industrial-aoi-report-heading">
+            <span>8</span>
+            <h5 id="integration-role-title">담당 역할</h5>
+          </div>
+          <ul className="industrial-aoi-role-list">
+            {integrationRoleItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
+        <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-keyword-title">
+          <div className="industrial-aoi-report-heading">
+            <span>9</span>
+            <h5 id="integration-keyword-title">핵심 키워드</h5>
+          </div>
+          <div className="industrial-aoi-keyword-cloud">
+            {integrationKeywordItems.map((keyword) => (
+              <span key={keyword}>{keyword}</span>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <div className="industrial-aoi-learning-note">
+        <Sparkles aria-hidden="true" />
+        <p>
+          개선의 핵심은 단일 메시지 보완이 아니라 장비 상태, 미들웨어 처리, 생산 시스템 포맷을 공통 메시지 처리 파이프라인으로 재구성한 점이다.
+          고객사별 예외는 확장 구조로 분리하고, 대용량 TCP/IP 메시지는 패킷 조립 방식으로 안정화했다.
+        </p>
+      </div>
+    </article>
+  );
+}
+
 function IndustrialAOIPlatformProjectPage({
   onNavigate,
   themeMode,
@@ -1003,46 +1315,48 @@ function IndustrialAOIPlatformProjectPage({
     {
       id: 'production-integration',
       step: '02',
-      title: 'SECS/GEM · MES · AI Integration',
-      summary: 'AOI 장비, 생산 시스템, AI 솔루션 사이의 데이터 연동 흐름 정리',
-      problem: 'SECS/GEM, MES, AI 솔루션별 연동 요구 차이로 Job, 검사 결과, AutoTeaching 데이터 흐름 추적이 어려운 구조',
+      title: 'MES · SECS/GEM 연동 데이터 흐름 개선',
+      summary: '작업 정보, 검사 결과, 장비 이벤트 데이터를 미들웨어와 생산 시스템 요구 포맷에 맞게 정합화',
+      problem: '고객사별 MES 및 SECS/GEM 연동 시나리오와 장비 상태 분기가 누적되어 작업 정보, 검사 결과, 장비 이벤트, 후속 조치 데이터의 전송 시점과 포맷이 분산된 구조',
       actions: [
-        'SECS/GEM, PEMTOGEM, MES 연동 메시지와 장비 내부 상태 매핑 보완',
-        'Job Change, Alarm, 검사 결과 전송 시점을 장비 시퀀스에 맞게 조정',
-        'Pembrain AutoTeaching 요청/응답 데이터 구조와 ROI 전달 흐름 정리',
+        '고객사별 예외와 상태 분기가 누적된 레거시 연동 로직을 공통 메시지 처리 파이프라인으로 재구성',
+        '공통 처리와 고객사별 예외 처리를 분리해 확장 가능한 연동 구조로 개선',
+        '작업 정보, 검사 결과, 장비 이벤트 데이터를 생산 시스템 전송 객체 기준으로 정합화',
+        '헤더/길이 기반 TCP/IP 패킷 조립과 문자 인코딩 기준을 적용해 대용량 메시지 수신 안정화',
       ],
       directions: [
         {
           label: 'Track 01',
-          title: 'Factory System Integration',
-          points: ['SECS/GEM 메시지 보완', 'MES Job/Alarm 흐름 정리', '검사 결과 전송 시점 조정'],
+          title: 'Equipment Data Flow',
+          points: ['공통 메시지 파이프라인', '전송 객체 구성', '응답·예외 검증'],
         },
         {
           label: 'Track 02',
-          title: 'AI Solution Integration',
-          points: ['Pembrain AutoTeaching 연동', 'FullMap ROI 전달', 'AI 결과 추적 흐름 정리'],
+          title: 'Middleware Stability',
+          points: ['고객사별 확장 구조', 'TCP/IP 패킷 조립', '문자 인코딩·대용량 데이터 처리'],
         },
       ],
       impact: [
-        '생산 시스템과 장비 상태 사이의 데이터 정합성 개선',
-        'AI 솔루션 연동 데이터의 입력/결과 추적성 개선',
-        '고객사별 연동 시나리오 대응 범위 확대',
+        '연동 관련 이슈 메일이 리팩토링 전 분기 대비 약 70% 감소',
+        'TCP/IP 패킷 조립 구조 적용으로 대용량 메시지 수신 안정화',
+        '장비 상태와 생산 시스템 전송 데이터의 정합성 개선',
+        '작업 정보 변경부터 검사 결과, 후속 조치까지 이어지는 흐름의 추적성 강화',
       ],
       improvements: [
         {
-          title: 'SECS/GEM / MES Message Flow',
-          description: '상위 생산 시스템과 장비 사이의 상태/결과 메시지를 장비 시퀀스 기준으로 보완',
-          details: ['PEMTOGEM 연동 보완', 'Job/Alarm 전송 조건 정리', 'CompanyCode별 요구 처리'],
+          title: '작업·식별 정보 연동',
+          description: '작업 정보, 제품 식별 정보, 보드 상태 변경 흐름을 공통 메시지 처리 단계에 맞게 정합화',
+          details: ['작업 정보 변경 회신 보완', '제품 식별 정보 흐름 정리', '보드 상태 처리 시점 조정'],
         },
         {
-          title: 'Job Change / Board Metadata',
-          description: 'Job 변경 이후 생산 시스템이 필요한 Board/Module 정보를 회신 데이터에 포함',
-          details: ['변경 Job 정보 회신', 'Board Size 전송', 'Module Original Position 저장'],
+          title: '검사 결과·이벤트 전송',
+          description: '검사 결과, 알고리즘 판정, 장비 이벤트, 응답 데이터를 전송 객체 기준으로 구성',
+          details: ['검사 결과 데이터 보완', '장비 이벤트 처리 정리', '원격 명령·응답 흐름 검증'],
         },
         {
-          title: 'Pembrain AutoTeaching Interface',
-          description: 'AI 솔루션으로 전달되는 이미지/ROI 데이터와 추론 결과 처리 흐름 정리',
-          details: ['AI_ImageData / AI_FOVData 분리', 'FullMap ROI 전달', 'Backup 결과 추적'],
+          title: 'Middleware Message Stability',
+          description: '패킷 수신, 문자 인코딩, 대용량 데이터 전송 구간의 미들웨어 처리 안정성 개선',
+          details: ['헤더/길이 기반 패킷 조립', '문자 인코딩 불일치 보완', '대용량 메시지 처리 보완'],
         },
       ],
     },
@@ -1090,15 +1404,21 @@ function IndustrialAOIPlatformProjectPage({
   const pageTitle =
     selectedArea?.id === 'inspection-automation'
       ? 'Gerber-Part ROI 매칭 성능 최적화'
+      : selectedArea?.id === 'production-integration'
+        ? 'MES · SECS/GEM 연동 데이터 흐름 개선'
       : selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
   const pageLead =
     selectedArea?.id === 'inspection-automation'
       ? '대용량 Gerber-Part ROI 매칭 병목을 Module 후보 선별과 변환 결과 캐싱으로 개선한 성능 최적화 작업'
+      : selectedArea?.id === 'production-integration'
+        ? 'AOI 장비의 작업 정보, 제품 식별 정보, 검사 결과, 장비 이벤트 데이터를 미들웨어와 생산 시스템 요구 포맷에 맞게 정합화한 연동 개선 작업'
       : selectedArea?.summary ??
-        '3D AOI 장비 소프트웨어 개선 내역을 AOI, SECS/GEM·MES·AI 연동, Repair/NG Buffer 운영 기준으로 구성';
+        '3D AOI 장비 소프트웨어 개선 내역을 AOI, MES·SECS/GEM·AI 연동, Repair/NG Buffer 운영 기준으로 구성';
   const pageTech =
     selectedArea?.id === 'inspection-automation'
       ? gerberPartReportTech
+      : selectedArea?.id === 'production-integration'
+        ? integrationReportTech
       : selectedProject?.tech ?? ['C#', 'C++', '.NET Framework', 'WinForms', 'SECS/GEM', 'OpenCV'];
   const heroImage =
     selectedArea?.id === 'inspection-automation'
@@ -1122,7 +1442,7 @@ function IndustrialAOIPlatformProjectPage({
   const guideTitle = selectedArea ? 'Key Contributions' : '3 Work Areas';
   const guideDescription = selectedArea
     ? '실제 변경 단위와 검증 근거 중심 구성'
-    : 'Company and customer-specific details are omitted, and the work is grouped by AOI workflow, SECS/GEM · MES · AI integration, and Repair operations.';
+    : 'Company and customer-specific details are omitted, and the work is grouped by AOI workflow, MES·SECS/GEM·AI integration, and Repair operations.';
 
   return (
     <div className="site-shell" data-theme={themeMode}>
@@ -1656,6 +1976,8 @@ function IndustrialAOIPlatformProjectPage({
                   </div>
                 </article>
               ) : null}
+
+              {selectedArea && area.id === 'production-integration' ? <ProductionIntegrationReport /> : null}
 
               {area.directions.length === 0 ? (
                 <div className="industrial-aoi-detail-grid">
