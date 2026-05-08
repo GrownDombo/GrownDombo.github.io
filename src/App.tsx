@@ -1,15 +1,22 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import {
+  ArrowRight,
   ArrowUpRight,
+  Box,
   CalendarDays,
+  CheckCircle,
   Code2,
+  Database,
   FileText,
   FolderKanban,
+  Gauge,
   Github,
+  Layers,
   Mail,
   Moon,
   Sparkles,
   Sun,
+  Target,
   UserRound,
 } from 'lucide-react';
 import {
@@ -67,31 +74,113 @@ const gerberPartMatchingMockups = [
 
 const gerberPartPerformanceSummary = {
   before: '~6m 20s',
-  after: '~3s',
+  after: '~3.5s',
   reduction: '99%+',
 };
 
 const gerberPartPerformanceScale = [
-  { label: 'Modules', value: '약 270개' },
-  { label: 'Part Window ROI', value: '약 7만 개' },
-  { label: 'Gerber ROI', value: '약 39만 개' },
+  { label: 'Modules', value: '272개' },
+  { label: 'Part Window ROI', value: '70,448개' },
+  { label: 'Gerber ROI', value: '387,600개' },
 ];
 
 const gerberPartMeasurementNotes = [
-  '동일 조건에서 Start/End 로그 타임스탬프 차이로 처리 시간 산출',
-  '각 단계별 2회 실행 후 평균값 기준 비교',
-  '개선 전 평균 6분 22.711초에서 최종 평균 3.5155초로 단축',
+  '동일 검사 데이터에서 Start/End 로그 타임스탬프 기준으로 처리 시간 산출',
+  '개선 전/후 각각 2회 실행 후 평균값으로 비교',
+  '평균 처리 시간 6분 22.711초에서 3.5155초로 단축',
 ];
 
-const gerberPartPerformanceMethods = [
+const gerberPartReportTech = [
+  'C#',
+  '.NET Framework',
+  'WinForms',
+  'Algorithm',
+  'Performance Optimization',
+];
+
+const gerberPartOptimizationSteps = [
   {
-    title: '기존 구조',
-    points: ['Part Window ROI마다 전체 Gerber ROI를 반복 비교', 'Part Window ROI 수와 Gerber 수 증가 시 비교 횟수 급증'],
+    icon: Target,
+    title: 'Module 후보군 선별',
+    description: 'Module 영역 기준으로 Gerber 후보군을 먼저 좁혀 전체 순회 범위를 제한',
   },
   {
-    title: '개선 구조',
-    points: ['Module별 Gerber 후보를 먼저 계산', 'Part Window ROI는 해당 Module 후보 Gerber와만 비교', 'Gerber ROI 변환 결과를 캐싱해 동일 계산 반복 감소'],
+    icon: Box,
+    title: '변환 결과 캐싱',
+    description: 'Gerber ROI 변환 결과를 재사용해 동일 좌표 계산의 반복 수행을 감소',
   },
+  {
+    icon: CheckCircle,
+    title: '기존 흐름 호환',
+    description: '기존 매칭 결과 형식을 유지해 후속 검사 흐름 영향 없이 적용',
+  },
+];
+
+const structureRoiRows = [7, 24, 41, 59, 76, 93];
+
+const structureComparisonLinks = structureRoiRows.flatMap((fromY, fromIndex) =>
+  structureRoiRows.map((toY, toIndex) => ({
+    key: `${fromIndex}-${toIndex}`,
+    opacity: fromIndex === toIndex ? 0.62 : 0.34,
+    y1: fromY,
+    y2: toY,
+  })),
+);
+
+const structureModuleRows = [15.5, 50, 84.5];
+
+const structureModulePartLinks = structureRoiRows.map((toY, index) => ({
+  key: `module-part-${index}`,
+  y1: structureModuleRows[Math.min(Math.floor(index / 2), structureModuleRows.length - 1)],
+  y2: toY,
+}));
+
+const structurePartGerberLinks = [
+  ...structureRoiRows.slice(0, 2).flatMap((fromY, fromIndex) =>
+    structureRoiRows.slice(0, 2).map((toY, toIndex) => ({
+      key: `part-1-gerber-${fromIndex}-${toIndex}`,
+      y1: fromY,
+      y2: toY,
+    })),
+  ),
+  ...structureRoiRows.slice(2, 4).flatMap((fromY, fromIndex) =>
+    structureRoiRows.slice(2, 4).map((toY, toIndex) => ({
+      key: `part-2-gerber-${fromIndex}-${toIndex}`,
+      y1: fromY,
+      y2: toY,
+    })),
+  ),
+  ...structureRoiRows.slice(4).flatMap((fromY, fromIndex) =>
+    structureRoiRows.slice(4).map((toY, toIndex) => ({
+      key: `part-n-gerber-${fromIndex}-${toIndex}`,
+      y1: fromY,
+      y2: toY,
+    })),
+  ),
+];
+
+const gerberPartRoleItems = [
+  '대용량 ROI 매칭 병목 구간 분석 및 개선 방향 수립',
+  'Module 단위 Gerber 후보군 선별 로직 설계 및 구현',
+  'Gerber ROI 변환 결과 캐싱 구조 적용',
+  '실행 로그 기반 처리 시간 측정 및 개선 효과 검증',
+  '기존 검사 결과 포맷과 후속 처리 흐름의 호환성 검증',
+];
+
+const gerberPartKeywordItems = [
+  '성능 최적화',
+  '탐색 범위 축소',
+  'Gerber-Part Matching',
+  'ROI 캐싱',
+  '대용량 데이터',
+  '호환성 유지',
+];
+
+const gerberPartSkillItems = [
+  { icon: Code2, label: 'C#' },
+  { icon: Database, label: 'Data Structure' },
+  { icon: Layers, label: 'ROI Matching' },
+  { icon: Gauge, label: 'Profiling' },
 ];
 
 const navItems = [
@@ -695,26 +784,37 @@ function PortfolioHome({
           </div>
 
           <div className="project-grid compact-project-grid work-case-grid">
-            {prioritizedWorkCaseStudies.map((project) => (
-              <article className="project-card compact-project-card" key={project.title}>
-                <a
-                  className="project-image-wrap project-image-link"
-                  href={project.detailPath}
-                  aria-label={`${project.title} 상세 페이지 보기`}
-                  onClick={(event) => onNavigate(event, project.detailPath!)}
-                >
-                  <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
-                  <span>{project.status}</span>
-                </a>
-                <div className="project-content">
-                  <div>
-                    <p className="project-role">{project.role}</p>
-                    <h3>{project.title}</h3>
-                    <p>{project.summary}</p>
+            {prioritizedWorkCaseStudies.map((project) => {
+              const showPerformanceBadge = project.detailPath === industrialAoiInspectionAutomationPath;
+
+              return (
+                <article className="project-card compact-project-card" key={project.title}>
+                  <a
+                    className="project-image-wrap project-image-link"
+                    href={project.detailPath}
+                    aria-label={`${project.title} 상세 페이지 보기`}
+                    onClick={(event) => onNavigate(event, project.detailPath!)}
+                  >
+                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
+                    <span>{project.status}</span>
+                    {showPerformanceBadge ? (
+                      <aside className="work-case-performance-card" aria-label="Performance improvement summary">
+                        <span>Performance</span>
+                        <strong>{gerberPartPerformanceSummary.reduction}</strong>
+                        <p>{gerberPartPerformanceSummary.before} <ArrowRight aria-hidden="true" /> {gerberPartPerformanceSummary.after}</p>
+                      </aside>
+                    ) : null}
+                  </a>
+                  <div className="project-content">
+                    <div>
+                      <p className="project-role">{project.role}</p>
+                      <h3>{project.title}</h3>
+                      <p>{project.summary}</p>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </section>
 
@@ -863,35 +963,35 @@ function IndustrialAOIPlatformProjectPage({
       id: 'inspection-automation',
       step: '01',
       title: 'AOI Workflow Improvements',
-      summary: 'Gerber/Part 매칭, Teaching 화면, 검사 흐름의 장비 내부 구조 개선',
-      problem: '검사 대상 매칭과 Teaching 화면 조작 흐름이 복잡해 미매칭 원인과 상태 추적이 어려운 구조',
+      summary: 'Gerber-Part ROI 매칭 병목 개선과 검사/Teaching 흐름 정리',
+      problem: '대용량 Gerber ROI와 Part Window ROI를 매칭하는 과정에서 검사 준비 시간이 길어지고, 미매칭 원인 추적이 어려운 구조',
       actions: [
-        'Gerber와 Part/Fiducial 매칭 기준 정리',
-        'Teaching 화면과 검사 Window 처리 흐름 보완',
-        '기존 검사 결과를 유지하면서 미매칭 항목만 보정하는 흐름 정리',
+        'Gerber ROI와 Part Window ROI 매칭 기준 정리',
+        'Module 후보군 기반 탐색 범위 축소 로직 적용',
+        '기존 검사 결과를 유지하면서 미매칭 항목 보정 흐름 정리',
       ],
       impact: [
-        'AOI 내부 매칭 흐름의 추적성 개선',
-        '기존 Window 결과를 보존하면서 보정 로직 추가',
-        'Teaching 화면 기준 검사 작업 흐름 정리',
+        '대용량 ROI 매칭 처리 시간 단축',
+        '기존 검사 결과 포맷과 후속 흐름 호환성 유지',
+        '매칭 기준과 성능 측정 근거를 추적 가능한 형태로 정리',
       ],
       directions: [
         {
           label: 'Track 01',
           title: 'AOI Matching',
-          points: ['Gerber/Part/Fiducial 매칭 기능 개선', 'Module별 Gerber 후보 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
+          points: ['Gerber-Part ROI 매칭 병목 개선', 'Module 후보군 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
         },
         {
           label: 'Track 02',
           title: 'Teaching / Inspection UI',
-          points: ['Teaching 화면 흐름 정리', '검사 Window 상태 관리', '작업자 확인 포인트 개선'],
+          points: ['Teaching 화면 흐름 정리', '검사 Window 상태 관리', '작업자 확인 지점 보완'],
         },
       ],
       improvements: [
         {
           title: 'Gerber / Part / Fiducial Matching',
-          description: 'AOI 내부 매칭 기능을 하나의 흐름으로 통합. Gerber 후보 선별 기반 불필요한 탐색 감소.',
-          details: ['Matching flow consolidation', 'Gerber candidate filtering', 'Repeated calculation reduction'],
+          description: 'Gerber 후보 선별과 변환 결과 재사용으로 대용량 ROI 매칭 비용을 줄인 개선 작업',
+          details: ['Module candidate filtering', 'Gerber ROI caching', 'Compatibility validation'],
         },
         {
           title: 'Teaching Screen Flow',
@@ -899,7 +999,6 @@ function IndustrialAOIPlatformProjectPage({
           details: ['Window 상태 갱신 보완', '작업자 확인 흐름 단순화'],
         },
       ],
-      keywords: ['AOI Workflow', 'Teaching UI', 'Matching Logic', 'C# / C++', 'WinForms'],
     },
     {
       id: 'production-integration',
@@ -946,7 +1045,6 @@ function IndustrialAOIPlatformProjectPage({
           details: ['AI_ImageData / AI_FOVData 분리', 'FullMap ROI 전달', 'Backup 결과 추적'],
         },
       ],
-      keywords: ['Equipment Interface', 'SECS/GEM', 'MES', 'AI Solution', 'TCP/IP'],
     },
     {
       id: 'operation-flow',
@@ -982,7 +1080,6 @@ function IndustrialAOIPlatformProjectPage({
           details: ['신호 관련 로그 강화', '과도한 반복 로그 완화', 'NGBufferListCtrl 구조 정리'],
         },
       ],
-      keywords: ['Repair Flow', 'NG Buffer', 'Rack State', 'Logging', 'WinForms'],
     },
   ];
   const selectedArea = selectedAreaId ? highlightAreas.find((area) => area.id === selectedAreaId) : undefined;
@@ -990,15 +1087,41 @@ function IndustrialAOIPlatformProjectPage({
     ? workCaseStudies.find((project) => project.detailPath === industrialAoiAreaRoutes[selectedAreaId])
     : undefined;
   const displayedAreas = selectedArea ? [selectedArea] : highlightAreas;
-  const pageTitle = selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
+  const pageTitle =
+    selectedArea?.id === 'inspection-automation'
+      ? 'Gerber-Part ROI 매칭 성능 최적화'
+      : selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
   const pageLead =
-    selectedArea?.summary ??
-    '3D AOI 장비 소프트웨어 개선 내역을 AOI, SECS/GEM·MES·AI 연동, Repair/NG Buffer 운영 기준으로 구성';
-  const pageTech = selectedProject?.tech ?? ['C#', 'C++', '.NET Framework', 'WinForms', 'SECS/GEM', 'OpenCV'];
-  const heroImage = selectedProject?.image ?? representativeProject?.image ?? '/assets/project-industrial-aoi-platform.svg';
+    selectedArea?.id === 'inspection-automation'
+      ? '대용량 Gerber-Part ROI 매칭 병목을 Module 후보 선별과 변환 결과 캐싱으로 개선한 성능 최적화 작업'
+      : selectedArea?.summary ??
+        '3D AOI 장비 소프트웨어 개선 내역을 AOI, SECS/GEM·MES·AI 연동, Repair/NG Buffer 운영 기준으로 구성';
+  const pageTech =
+    selectedArea?.id === 'inspection-automation'
+      ? gerberPartReportTech
+      : selectedProject?.tech ?? ['C#', 'C++', '.NET Framework', 'WinForms', 'SECS/GEM', 'OpenCV'];
+  const heroImage =
+    selectedArea?.id === 'inspection-automation'
+      ? '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png'
+      : selectedProject?.image ?? representativeProject?.image ?? '/assets/project-industrial-aoi-platform.svg';
+  const heroImages =
+    selectedArea?.id === 'inspection-automation'
+      ? [
+          {
+            alt: 'Module and Part ROI matching mockup',
+            image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
+            label: 'Module / Part View',
+          },
+          {
+            alt: 'Gerber ROI matching mockup',
+            image: '/assets/aoi-gerber-part-matching/gerber-aligned.png',
+            label: 'Gerber View',
+          },
+        ]
+      : null;
   const guideTitle = selectedArea ? 'Key Contributions' : '3 Work Areas';
   const guideDescription = selectedArea
-    ? '대표 개선 항목을 실제 변경 단위로 정리했습니다.'
+    ? '실제 변경 단위와 검증 근거 중심 구성'
     : 'Company and customer-specific details are omitted, and the work is grouped by AOI workflow, SECS/GEM · MES · AI integration, and Repair operations.';
 
   return (
@@ -1017,18 +1140,43 @@ function IndustrialAOIPlatformProjectPage({
               ))}
             </div>
           </div>
-          <figure className="project-detail-hero-media industrial-aoi-hero-media">
-            <img src={heroImage} alt={`${pageTitle} mock interface`} />
-            <figcaption>Mockup</figcaption>
-          </figure>
+          {heroImages ? (
+            <figure className="project-detail-hero-media industrial-aoi-hero-media industrial-aoi-hero-media-pair">
+              <div>
+                {heroImages.map((item) => (
+                  <span key={item.label}>
+                    <img src={item.image} alt={item.alt} />
+                    <em>{item.label}</em>
+                  </span>
+                ))}
+              </div>
+              <aside className="industrial-aoi-hero-kpi" aria-label="Performance improvement summary">
+                <span>Performance</span>
+                <strong>{gerberPartPerformanceSummary.reduction}</strong>
+                <p>{gerberPartPerformanceSummary.before} <ArrowRight aria-hidden="true" /> {gerberPartPerformanceSummary.after}</p>
+              </aside>
+              <figcaption>Mockup</figcaption>
+            </figure>
+          ) : (
+            <figure className="project-detail-hero-media industrial-aoi-hero-media">
+              <img src={heroImage} alt={`${pageTitle} mock interface`} />
+              <figcaption>Mockup</figcaption>
+            </figure>
+          )}
         </section>
 
-        <article className="project-guide industrial-aoi-guide" aria-labelledby="industrial-aoi-guide-title">
-          <header className="project-guide-header">
-            <p className="section-kicker">{selectedArea ? 'Contribution List' : 'Work Areas'}</p>
-            <h2 id="industrial-aoi-guide-title">{guideTitle}</h2>
-            <p>{guideDescription}</p>
-          </header>
+        <article
+          className={`project-guide industrial-aoi-guide${selectedArea ? ' industrial-aoi-guide-detail' : ''}`}
+          aria-label={selectedArea ? 'AOI contribution details' : undefined}
+          aria-labelledby={selectedArea ? undefined : 'industrial-aoi-guide-title'}
+        >
+          {!selectedArea ? (
+            <header className="project-guide-header">
+              <p className="section-kicker">Work Areas</p>
+              <h2 id="industrial-aoi-guide-title">{guideTitle}</h2>
+              <p>{guideDescription}</p>
+            </header>
+          ) : null}
 
           {selectedArea ? null : (
             <>
@@ -1103,103 +1251,410 @@ function IndustrialAOIPlatformProjectPage({
               ) : null}
 
               {selectedArea && area.id === 'inspection-automation' ? (
-                <div className="industrial-aoi-contribution-list">
                 <article
                   className="industrial-aoi-matching-section"
-                  id="contribution-01"
-                  tabIndex={-1}
                   aria-label="Gerber Part matching details"
                 >
-                  <span className="industrial-aoi-contribution-label">Contribution 01</span>
-                  <div className="industrial-aoi-matching-copy">
-                    <h4>Gerber ROI · Part Window ROI 매칭 시퀀스 최적화</h4>
-                    <p>
-                      동일 데이터 기준 실행 로그로 처리 시간 변화를 검증한 매칭 개선 작업.
-                    </p>
-                  </div>
-
-                  <div className="industrial-aoi-matching-grid">
-                    {gerberPartMatchingMockups.map((mockup) => (
-                      <figure className="industrial-aoi-matching-figure" key={mockup.title}>
-                        <div className="industrial-aoi-matching-media">
-                          <img src={mockup.image} alt={`${mockup.title} mockup`} />
-                          <span className="industrial-aoi-matching-mockup-tag">Mockup</span>
-                        </div>
-                        <figcaption>
-                          <strong>{mockup.title}</strong>
-                          {mockup.legend ? (
-                            <span className="industrial-aoi-matching-legend">
-                              {mockup.legend.map((item) => (
-                                <em className={`industrial-aoi-matching-legend-${item.tone}`} key={item.label}>
-                                  {item.label}
-                                </em>
-                              ))}
-                            </span>
-                          ) : (
-                            <span>{mockup.description}</span>
-                          )}
-                        </figcaption>
-                      </figure>
-                    ))}
-                  </div>
-
-                  <div className="industrial-aoi-performance-block" aria-label="Gerber matching speed improvement">
-                    <div className="industrial-aoi-performance-header">
-                      <div>
-                        <h5>성능 측정 결과</h5>
+                  <div className="industrial-aoi-report-grid industrial-aoi-problem-grid">
+                    <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-problem-title">
+                      <div className="industrial-aoi-report-heading">
+                        <span>1</span>
+                        <h5 id="gerber-problem-title">문제 상황</h5>
                       </div>
-                    </div>
-                    <div className="industrial-aoi-performance-environment">
-                      <strong>측정 환경</strong>
-                      <ul className="industrial-aoi-performance-scale" aria-label="Measured input scale">
+                      <p>Gerber ROI 387,600개와 Part Window ROI 70,448개 매칭 과정에서 검사 준비 시간 병목 발생</p>
+                      <div className="industrial-aoi-report-stat-row">
                         {gerberPartPerformanceScale.map((item) => (
-                          <li key={item.label}>
+                          <div className="industrial-aoi-report-stat" key={item.label}>
                             <span>{item.label}</span>
                             <strong>{item.value}</strong>
-                          </li>
+                          </div>
                         ))}
-                      </ul>
+                        <div className="industrial-aoi-report-stat industrial-aoi-report-stat-danger">
+                          <span>처리 시간</span>
+                          <strong>약 6분 22초</strong>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-cause-title">
+                      <div className="industrial-aoi-report-heading">
+                        <span>2</span>
+                        <h5 id="gerber-cause-title">원인 분석</h5>
+                      </div>
+                      <p>각 Part Window ROI가 전체 Gerber ROI를 반복 순회하는 구조로, 데이터 규모 증가 시 비교 횟수 급증</p>
+                      <div className="industrial-aoi-comparison-box">
+                        <span>개선 전 비교 횟수</span>
+                        <strong>약 273억 회</strong>
+                        <p>70,448 x 387,600 기준. 동일 Gerber ROI를 Window마다 반복 비교</p>
+                      </div>
+                    </section>
+                  </div>
+
+                  <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-direction-title">
+                    <div className="industrial-aoi-report-heading">
+                      <span>3</span>
+                      <h5 id="gerber-direction-title">개선 방향</h5>
                     </div>
-                    <div className="industrial-aoi-performance-main">
-                      <div className="industrial-aoi-performance-metric">
-                        <span>개선 전</span>
-                        <strong>{gerberPartPerformanceSummary.before}</strong>
+                    <div className="industrial-aoi-step-flow">
+                      {gerberPartOptimizationSteps.map((step, index) => {
+                        const StepIcon = step.icon;
+
+                        return (
+                          <article className="industrial-aoi-step-card" key={step.title}>
+                            <div className="industrial-aoi-step-icon">
+                              <StepIcon aria-hidden="true" />
+                            </div>
+                            <div>
+                              <strong>{index + 1}. {step.title}</strong>
+                              <p>{step.description}</p>
+                            </div>
+                            {index < gerberPartOptimizationSteps.length - 1 ? <ArrowRight className="industrial-aoi-step-arrow" aria-hidden="true" /> : null}
+                          </article>
+                        );
+                      })}
+                    </div>
+                  </section>
+
+                  <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-view-title">
+                    <div className="industrial-aoi-report-heading">
+                      <span>4</span>
+                      <h5 id="gerber-view-title">ROI 기준 화면</h5>
+                    </div>
+                    <div className="industrial-aoi-matching-grid">
+                      {gerberPartMatchingMockups.map((mockup) => (
+                        <figure className="industrial-aoi-matching-figure" key={mockup.title}>
+                          <div className="industrial-aoi-matching-media">
+                            <img src={mockup.image} alt={`${mockup.title} mockup`} />
+                            <span className="industrial-aoi-matching-mockup-tag">Mockup</span>
+                          </div>
+                          <figcaption>
+                            <strong>{mockup.title}</strong>
+                            {mockup.legend ? (
+                              <span className="industrial-aoi-matching-legend">
+                                {mockup.legend.map((item) => (
+                                  <em className={`industrial-aoi-matching-legend-${item.tone}`} key={item.label}>
+                                    {item.label}
+                                  </em>
+                                ))}
+                              </span>
+                            ) : (
+                              <span>{mockup.description}</span>
+                            )}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  </section>
+
+                  <section className="industrial-aoi-report-panel industrial-aoi-structure-panel" aria-labelledby="gerber-structure-title">
+                    <div className="industrial-aoi-structure-titlebar">
+                      <div className="industrial-aoi-report-heading">
+                        <span>5</span>
+                        <h5 id="gerber-structure-title">개선 전후 구조</h5>
                       </div>
-                      <div className="industrial-aoi-performance-metric">
-                        <span>개선 후</span>
-                        <strong>{gerberPartPerformanceSummary.after}</strong>
+                      <p>전체 Gerber 순회 방식과 Module 후보 선별 방식을 동일한 ROI 기준으로 비교</p>
+                    </div>
+                    <div className="industrial-aoi-structure-grid">
+                      <article className="industrial-aoi-structure-card industrial-aoi-structure-before">
+                        <div className="industrial-aoi-structure-card-header">
+                          <div>
+                            <strong>Before (기존 구조)</strong>
+                            <p>Part Window ROI마다 전체 Gerber ROI를 반복 비교</p>
+                          </div>
+                        </div>
+                        <div className="industrial-aoi-structure-diagram industrial-aoi-structure-diagram-before">
+                          <div className="industrial-aoi-structure-node industrial-aoi-structure-tag-column">
+                            <strong>Part Window ROI</strong>
+                            <ul>
+                              <li>Part Window ROI 1</li>
+                              <li>Part Window ROI 2</li>
+                              <li>Part Window ROI 3</li>
+                              <li>Part Window ROI 4</li>
+                              <li>...</li>
+                              <li>Part Window ROI n</li>
+                            </ul>
+                          </div>
+                          <svg
+                            className="industrial-aoi-structure-lines"
+                            viewBox="0 0 100 100"
+                            preserveAspectRatio="none"
+                            aria-hidden="true"
+                            focusable="false"
+                          >
+                            <defs>
+                              <marker
+                                id="industrial-aoi-structure-arrow"
+                                markerWidth="8"
+                                markerHeight="8"
+                                refX="7"
+                                refY="4"
+                                orient="auto"
+                                markerUnits="strokeWidth"
+                              >
+                                <path d="M0,0 L8,4 L0,8 Z" />
+                              </marker>
+                            </defs>
+                            {structureComparisonLinks.map((link) => (
+                              <line
+                                key={link.key}
+                                x1="0"
+                                y1={link.y1}
+                                x2="100"
+                                y2={link.y2}
+                                markerEnd="url(#industrial-aoi-structure-arrow)"
+                                style={{
+                                  opacity: link.opacity,
+                                }}
+                              />
+                            ))}
+                          </svg>
+                          <div className="industrial-aoi-structure-node industrial-aoi-structure-tag-column industrial-aoi-structure-tag-column-danger">
+                            <strong>Gerber ROI</strong>
+                            <ul>
+                              <li>Gerber ROI 1</li>
+                              <li>Gerber ROI 2</li>
+                              <li>Gerber ROI 3</li>
+                              <li>Gerber ROI 4</li>
+                              <li>...</li>
+                              <li>Gerber ROI n</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div className="industrial-aoi-structure-caption">
+                          <div className="industrial-aoi-structure-formula" aria-label="Before comparison count formula">
+                            <span>
+                              <strong>70,448</strong>
+                              <em>Part Window ROI 전체</em>
+                            </span>
+                            <b>x</b>
+                            <span>
+                              <strong>387,600</strong>
+                              <em>Gerber ROI 전체</em>
+                            </span>
+                          </div>
+                          <strong>전체 ROI 반복 비교</strong>
+                        </div>
+                      </article>
+                      <article className="industrial-aoi-structure-card industrial-aoi-structure-after">
+                        <div className="industrial-aoi-structure-card-header">
+                          <div>
+                            <strong>After (개선 구조)</strong>
+                            <p>Module 후보군 내부에서 필요한 Gerber ROI만 비교</p>
+                          </div>
+                        </div>
+                        <div className="industrial-aoi-structure-diagram industrial-aoi-structure-diagram-after">
+                          <div className="industrial-aoi-structure-node industrial-aoi-structure-tag-column industrial-aoi-structure-module-column">
+                            <strong>Module 후보</strong>
+                            <ul>
+                              <li>Module 1 후보</li>
+                              <li>Module 2 후보</li>
+                              <li>Module N 후보</li>
+                            </ul>
+                          </div>
+                          <svg
+                            className="industrial-aoi-structure-lines industrial-aoi-structure-lines-filter"
+                            viewBox="0 0 100 100"
+                            preserveAspectRatio="none"
+                            aria-hidden="true"
+                            focusable="false"
+                          >
+                            <defs>
+                              <marker
+                                id="industrial-aoi-structure-arrow-filter-a"
+                                markerWidth="8"
+                                markerHeight="8"
+                                refX="7"
+                                refY="4"
+                                orient="auto"
+                                markerUnits="strokeWidth"
+                              >
+                                <path d="M0,0 L8,4 L0,8 Z" />
+                              </marker>
+                            </defs>
+                            {structureModulePartLinks.map((link) => (
+                              <line
+                                key={link.key}
+                                x1="0"
+                                y1={link.y1}
+                                x2="100"
+                                y2={link.y2}
+                                markerEnd="url(#industrial-aoi-structure-arrow-filter-a)"
+                              />
+                            ))}
+                          </svg>
+                          <div className="industrial-aoi-structure-node industrial-aoi-structure-tag-column">
+                            <strong>Part Window ROI</strong>
+                            <ul>
+                              <li>Part Window ROI 1</li>
+                              <li>Part Window ROI 2</li>
+                              <li>Part Window ROI 3</li>
+                              <li>Part Window ROI 4</li>
+                              <li>...</li>
+                              <li>Part Window ROI n</li>
+                            </ul>
+                          </div>
+                          <svg
+                            className="industrial-aoi-structure-lines industrial-aoi-structure-lines-filter"
+                            viewBox="0 0 100 100"
+                            preserveAspectRatio="none"
+                            aria-hidden="true"
+                            focusable="false"
+                          >
+                            <defs>
+                              <marker
+                                id="industrial-aoi-structure-arrow-filter-b"
+                                markerWidth="8"
+                                markerHeight="8"
+                                refX="7"
+                                refY="4"
+                                orient="auto"
+                                markerUnits="strokeWidth"
+                              >
+                                <path d="M0,0 L8,4 L0,8 Z" />
+                              </marker>
+                            </defs>
+                            {structurePartGerberLinks.map((link) => (
+                              <line
+                                key={link.key}
+                                x1="0"
+                                y1={link.y1}
+                                x2="100"
+                                y2={link.y2}
+                                markerEnd="url(#industrial-aoi-structure-arrow-filter-b)"
+                              />
+                            ))}
+                          </svg>
+                          <div className="industrial-aoi-structure-node industrial-aoi-structure-tag-column industrial-aoi-structure-tag-column-danger">
+                            <strong>Gerber ROI</strong>
+                            <ul>
+                              <li>Gerber ROI 1</li>
+                              <li>Gerber ROI 2</li>
+                              <li>Gerber ROI 3</li>
+                              <li>Gerber ROI 4</li>
+                              <li>...</li>
+                              <li>Gerber ROI n</li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div className="industrial-aoi-structure-caption industrial-aoi-structure-caption-success">
+                          <div className="industrial-aoi-structure-formula" aria-label="After comparison count formula">
+                            <span>
+                              <strong>272</strong>
+                              <em>Module 수</em>
+                            </span>
+                            <b>x</b>
+                            <span>
+                              <strong>259</strong>
+                              <em>Module당 Part Window ROI</em>
+                            </span>
+                            <b>x</b>
+                            <span>
+                              <strong>1,425</strong>
+                              <em>Module당 Gerber ROI</em>
+                            </span>
+                          </div>
+                          <strong>Module 후보군 기준 비교</strong>
+                        </div>
+                      </article>
+                    </div>
+                  </section>
+
+                  <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-result-title">
+                    <div className="industrial-aoi-report-heading">
+                      <span>6</span>
+                      <h5 id="gerber-result-title">성능 개선 결과</h5>
+                    </div>
+                    <div className="industrial-aoi-result-layout">
+                      <div className="industrial-aoi-result-table">
+                        <div><span>항목</span><span>개선 전</span><span>개선 후</span><span>개선율</span></div>
+                        <div><strong>처리 시간</strong><span>약 6분 22초</span><span>약 3.5초</span><strong>99%+</strong></div>
+                        <div><strong>비교 횟수</strong><span>약 273억 회</span><span>약 1억 회</span><strong>99%+</strong></div>
                       </div>
-                      <div className="industrial-aoi-performance-metric industrial-aoi-performance-metric-strong">
-                        <span>처리 시간 단축</span>
-                        <strong>{gerberPartPerformanceSummary.reduction}</strong>
+                      <div className="industrial-aoi-result-bars" aria-label="Matching time comparison">
+                        <strong>처리 시간</strong>
+                        <div className="industrial-aoi-result-bar-row">
+                          <span>개선 전</span>
+                          <div><em style={{ width: '100%' }} /></div>
+                          <strong>6m 22s</strong>
+                        </div>
+                        <div className="industrial-aoi-result-bar-row industrial-aoi-result-bar-row-after">
+                          <span>개선 후</span>
+                          <div><em style={{ width: '2%' }} /></div>
+                          <strong>3.5s</strong>
+                        </div>
+                      </div>
+                      <div className="industrial-aoi-result-bars industrial-aoi-result-bars-count" aria-label="Comparison count graph">
+                        <strong>비교 횟수</strong>
+                        <div className="industrial-aoi-result-bar-row">
+                          <span>개선 전</span>
+                          <div><em style={{ width: '100%' }} /></div>
+                          <strong>273억</strong>
+                        </div>
+                        <div className="industrial-aoi-result-bar-row industrial-aoi-result-bar-row-after">
+                          <span>개선 후</span>
+                          <div><em style={{ width: '1%' }} /></div>
+                          <strong>1억</strong>
+                        </div>
                       </div>
                     </div>
                     <div className="industrial-aoi-performance-measurement">
-                      <strong>측정 방법</strong>
+                      <strong>측정 기준</strong>
                       <ul>
                         {gerberPartMeasurementNotes.map((note) => (
                           <li key={note}>{note}</li>
                         ))}
                       </ul>
                     </div>
-                    <div className="industrial-aoi-performance-approach">
-                      <strong>문제와 개선 방향</strong>
-                      <div className="industrial-aoi-performance-methods">
-                        {gerberPartPerformanceMethods.map((method) => (
-                          <article key={method.title}>
-                            <span>{method.title}</span>
-                            <ul>
-                              {method.points.map((point) => (
-                                <li key={point}>{point}</li>
-                              ))}
-                            </ul>
-                          </article>
+                  </section>
+
+                  <div className="industrial-aoi-report-bottom-grid">
+                    <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-tech-title">
+                      <div className="industrial-aoi-report-heading">
+                        <span>7</span>
+                        <h5 id="gerber-tech-title">기술 스택</h5>
+                      </div>
+                      <div className="industrial-aoi-skill-icon-grid">
+                        {gerberPartSkillItems.map((item) => {
+                          const SkillIcon = item.icon;
+
+                          return (
+                            <span key={item.label}>
+                              <SkillIcon aria-hidden="true" />
+                              {item.label}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </section>
+                    <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-role-title">
+                      <div className="industrial-aoi-report-heading">
+                        <span>8</span>
+                        <h5 id="gerber-role-title">담당 역할</h5>
+                      </div>
+                      <ul className="industrial-aoi-role-list">
+                        {gerberPartRoleItems.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </section>
+                    <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-keyword-title">
+                      <div className="industrial-aoi-report-heading">
+                        <span>9</span>
+                        <h5 id="gerber-keyword-title">핵심 키워드</h5>
+                      </div>
+                      <div className="industrial-aoi-keyword-cloud">
+                        {gerberPartKeywordItems.map((keyword) => (
+                          <span key={keyword}>{keyword}</span>
                         ))}
                       </div>
-                    </div>
+                    </section>
+                  </div>
+
+                  <div className="industrial-aoi-learning-note">
+                    <Sparkles aria-hidden="true" />
+                    <p>단순 반복 속도 개선보다 불필요한 비교 자체를 줄이는 구조 전환에 집중. 대용량 데이터에서도 확장 가능한 매칭 흐름 확보</p>
                   </div>
                 </article>
-                </div>
               ) : null}
 
               {area.directions.length === 0 ? (
@@ -1227,28 +1682,24 @@ function IndustrialAOIPlatformProjectPage({
                 </div>
               ) : null}
 
-              <div className="industrial-aoi-improvement-block">
-                <h4>Detail Highlights</h4>
-                <div className="industrial-aoi-improvement-grid">
-                  {area.improvements.map((item) => (
-                    <article className="industrial-aoi-improvement-card" key={item.title}>
-                      <h5>{item.title}</h5>
-                      {area.directions.length === 0 ? <p>{item.description}</p> : null}
-                      <ul>
-                        {item.details.map((detail) => (
-                          <li key={detail}>{detail}</li>
-                        ))}
-                      </ul>
-                    </article>
-                  ))}
+              {!selectedArea ? (
+                <div className="industrial-aoi-improvement-block">
+                  <h4>Detail Highlights</h4>
+                  <div className="industrial-aoi-improvement-grid">
+                    {area.improvements.map((item) => (
+                      <article className="industrial-aoi-improvement-card" key={item.title}>
+                        <h5>{item.title}</h5>
+                        {area.directions.length === 0 ? <p>{item.description}</p> : null}
+                        <ul>
+                          {item.details.map((detail) => (
+                            <li key={detail}>{detail}</li>
+                          ))}
+                        </ul>
+                      </article>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              <div className="tech-list industrial-aoi-keywords" aria-label={`${area.title} 키워드`}>
-                {area.keywords.map((keyword) => (
-                  <span key={keyword}>{keyword}</span>
-                ))}
-              </div>
+              ) : null}
             </section>
           ))}
         </article>
