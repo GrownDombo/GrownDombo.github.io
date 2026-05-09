@@ -95,7 +95,7 @@ export const metrics: Metric[] = [
     description: '후보군 기반 매칭으로 대용량 검사 좌표 처리 최적화',
     evidence: {
       label: '9만 × 39만 좌표 데이터 기준',
-      href: '/projects/industrial-aoi-platform/inspection-automation',
+      href: '/work/gerber-part-roi-matching-optimization',
       suffix: ' 약 99% 개선',
     },
   },
@@ -173,25 +173,25 @@ export const experiences: Experience[] = [
 
 export const workCaseStudies: Project[] = [
   {
-    title: 'Gerber-Part ROI Matching Optimization',
+    title: 'Gerber-Part ROI 매칭 성능 최적화',
     summary: 'Module 후보 선별과 변환 결과 캐싱으로 대용량 ROI 매칭 시간 단축',
     role: 'AOI Matching · Performance Optimization',
     tech: ['C#', '.NET Framework', 'WinForms', 'Algorithm', 'Performance Optimization'],
     links: [],
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
     priority: 0,
-    detailPath: '/projects/industrial-aoi-platform/inspection-automation',
-    status: 'AOI Improvement',
+    detailPath: '/work/gerber-part-roi-matching-optimization',
+    status: 'Improvement',
   },
   {
-    title: 'MES · SECS/GEM Data Flow Integration',
+    title: 'MES · SECS/GEM 연동 데이터 흐름 개선',
     summary: '공통 메시지 파이프라인 설계와 대용량 메시지 수신 안정화',
     role: 'Factory System Integration · Middleware Stability',
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM'],
     links: [],
-    image: '/assets/project-industrial-aoi-platform.svg',
+    image: '/assets/industrial-aoi-production-integration/main-image.png',
     priority: 1,
-    detailPath: '/projects/industrial-aoi-platform/production-integration',
+    detailPath: '/work/mes-secs-gem-data-flow',
     status: 'Integration',
   },
   {
@@ -202,7 +202,7 @@ export const workCaseStudies: Project[] = [
     links: [],
     image: '/assets/project-industrial-aoi-platform.svg',
     priority: 2,
-    detailPath: '/projects/industrial-aoi-platform/operation-flow',
+    detailPath: '/work/repair-ng-buffer-operations',
     status: 'Operation Flow',
   },
 ];

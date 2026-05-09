@@ -29,16 +29,17 @@ import {
   type Project,
 } from './data/portfolio';
 import { additionalDetails, resumeExperiences, resumeInfo, resumeIntroduction } from './data/resume';
-import { trackAnalyticsEvent } from './analytics/google';
+import { trackAnalyticsEvent, trackPageView } from './analytics/google';
 
 const resumePath = '/resume';
 const excelConditionPainterPath = '/projects/excel-condition-painter';
 const cpuMemoryStressTestPath = '/projects/cpu-memory-stress-test';
 const rfidCollisionSearchSimulatorPath = '/projects/rfid-collision-search-simulator';
-const industrialAoiPlatformPath = '/projects/industrial-aoi-platform';
-const industrialAoiInspectionAutomationPath = '/projects/industrial-aoi-platform/inspection-automation';
-const industrialAoiProductionIntegrationPath = '/projects/industrial-aoi-platform/production-integration';
-const industrialAoiOperationFlowPath = '/projects/industrial-aoi-platform/operation-flow';
+const workCaseRootPath = '/work';
+const legacyIndustrialAoiPlatformPath = '/projects/industrial-aoi-platform';
+const industrialAoiInspectionAutomationPath = '/work/gerber-part-roi-matching-optimization';
+const industrialAoiProductionIntegrationPath = '/work/mes-secs-gem-data-flow';
+const industrialAoiOperationFlowPath = '/work/repair-ng-buffer-operations';
 
 const industrialAoiAreaRoutes: Record<string, string> = {
   'inspection-automation': industrialAoiInspectionAutomationPath,
@@ -50,6 +51,12 @@ const industrialAoiRouteAreaIds: Record<string, string> = {
   [industrialAoiInspectionAutomationPath]: 'inspection-automation',
   [industrialAoiProductionIntegrationPath]: 'production-integration',
   [industrialAoiOperationFlowPath]: 'operation-flow',
+  '/projects/industrial-aoi-platform/gerber-part-roi-matching-optimization': 'inspection-automation',
+  '/projects/industrial-aoi-platform/mes-secs-gem-data-flow': 'production-integration',
+  '/projects/industrial-aoi-platform/repair-ng-buffer-operations': 'operation-flow',
+  '/projects/industrial-aoi-platform/inspection-automation': 'inspection-automation',
+  '/projects/industrial-aoi-platform/production-integration': 'production-integration',
+  '/projects/industrial-aoi-platform/operation-flow': 'operation-flow',
 };
 
 const gerberPartMatchingMockups = [
@@ -320,6 +327,42 @@ function getCurrentPath() {
   return window.location.pathname.replace(/\/+$/, '') || '/';
 }
 
+function getFullCurrentPath() {
+  return `${window.location.pathname}${window.location.search}${window.location.hash}`;
+}
+
+function getCanonicalAnalyticsPath() {
+  const currentPathname = getCurrentPath();
+  const industrialAoiAreaId = industrialAoiRouteAreaIds[currentPathname];
+
+  if (industrialAoiAreaId) {
+    return `${industrialAoiAreaRoutes[industrialAoiAreaId]}${window.location.search}${window.location.hash}`;
+  }
+
+  if (currentPathname === workCaseRootPath || currentPathname === legacyIndustrialAoiPlatformPath) {
+    return '/#work-cases';
+  }
+
+  return getFullCurrentPath();
+}
+
+function getAnalyticsLinkText(link: HTMLAnchorElement) {
+  const text = link.textContent?.replace(/\s+/g, ' ').trim();
+  return text ? text.slice(0, 90) : undefined;
+}
+
+function getAnalyticsLinkLocation(link: HTMLAnchorElement) {
+  return link.closest<HTMLElement>('section[id], article[id], main[id], [id]')?.id;
+}
+
+function isAnalyticsDownloadLink(url: URL, link: HTMLAnchorElement) {
+  return (
+    link.hasAttribute('download') ||
+    /\.(csv|pdf|zip|msi|exe|xlsx|xlsm)$/i.test(url.pathname) ||
+    url.pathname.toLowerCase().includes('/releases')
+  );
+}
+
 function isPlainLeftClick(event: MouseEvent<HTMLAnchorElement>) {
   return event.button === 0 && !event.metaKey && !event.altKey && !event.ctrlKey && !event.shiftKey;
 }
@@ -451,23 +494,88 @@ function renderMetricResult(result: string) {
 function App() {
   const [currentPath, setCurrentPath] = useState(getCurrentPath);
   const [themeMode, setThemeMode] = useState<ThemeMode>(getInitialThemeMode);
+  const trackedPagePathRef = useRef('');
+
+  const trackCurrentPageView = () => {
+    const pagePath = getCanonicalAnalyticsPath();
+
+    if (trackedPagePathRef.current === pagePath) {
+      return;
+    }
+
+    trackedPagePathRef.current = pagePath;
+    trackPageView(pagePath, { actual_path: getFullCurrentPath() });
+  };
 
   useEffect(() => {
-    const handleRouteChange = () => setCurrentPath(getCurrentPath());
+    const handleRouteChange = () => {
+      setCurrentPath(getCurrentPath());
+      window.setTimeout(trackCurrentPageView, 0);
+    };
 
+    trackCurrentPageView();
     window.addEventListener('popstate', handleRouteChange);
     return () => window.removeEventListener('popstate', handleRouteChange);
   }, []);
 
   useEffect(() => {
-    if (currentPath !== industrialAoiPlatformPath) {
+    const handleTrackedLinkClick = (event: globalThis.MouseEvent) => {
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
+      const link = event.target.closest('a[href]');
+
+      if (!(link instanceof HTMLAnchorElement)) {
+        return;
+      }
+
+      const rawHref = link.getAttribute('href');
+
+      if (!rawHref || rawHref.startsWith('#')) {
+        return;
+      }
+
+      let url: URL;
+
+      try {
+        url = new URL(rawHref, window.location.href);
+      } catch {
+        return;
+      }
+
+      if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+        return;
+      }
+
+      const isDownloadLink = isAnalyticsDownloadLink(url, link);
+      const isExternalLink = url.origin !== window.location.origin;
+
+      if (!isDownloadLink && !isExternalLink) {
+        return;
+      }
+
+      trackAnalyticsEvent(isDownloadLink ? 'download_click' : 'external_link_click', {
+        link_location: getAnalyticsLinkLocation(link),
+        link_text: getAnalyticsLinkText(link),
+        link_url: url.href,
+      });
+    };
+
+    document.addEventListener('click', handleTrackedLinkClick, true);
+    return () => document.removeEventListener('click', handleTrackedLinkClick, true);
+  }, []);
+
+  useEffect(() => {
+    if (currentPath !== workCaseRootPath && currentPath !== legacyIndustrialAoiPlatformPath) {
       return;
     }
 
-    window.history.replaceState(null, '', '/#projects');
+    window.history.replaceState(null, '', '/#work-cases');
     setCurrentPath(getCurrentPath());
+    trackCurrentPageView();
     window.setTimeout(() => {
-      document.getElementById('projects')?.scrollIntoView({ behavior: 'auto', block: 'start' });
+      document.getElementById('work-cases')?.scrollIntoView({ behavior: 'auto', block: 'start' });
     }, 0);
   }, [currentPath]);
 
@@ -491,6 +599,11 @@ function App() {
     event.preventDefault();
     window.history.pushState(null, '', path);
     setCurrentPath(getCurrentPath());
+    trackAnalyticsEvent('internal_navigation', {
+      link_location: path.includes('#') ? 'section' : 'route',
+      target_path: path,
+    });
+    trackCurrentPageView();
     window.setTimeout(() => {
       const hash = path.split('#')[1];
 
@@ -587,11 +700,15 @@ function SiteHeader({
       </a>
       <div className="site-header-actions">
         <nav className="nav-links" aria-label="주요 섹션">
-          {navItems.map((item) => (
-            <a key={item.href} href={isResumePage ? `/${item.href}` : item.href}>
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const href = isResumePage ? `/${item.href}` : item.href;
+
+            return (
+              <a key={item.href} href={href} onClick={(event) => onNavigate(event, href)}>
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
         {themeMode && onThemeToggle ? (
           <button className="theme-toggle" type="button" aria-label={nextThemeLabel} onClick={onThemeToggle}>
@@ -692,6 +809,14 @@ function PortfolioHome({
 
   useEffect(() => {
     const updateActiveSection = () => {
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      if (scrollBottom >= documentHeight - 2) {
+        setActiveSection(portfolioRailItems[portfolioRailItems.length - 1].id);
+        return;
+      }
+
       const anchorY = Math.min(150, window.innerHeight * 0.18);
       let nextActiveSection = portfolioRailItems[0].id;
 

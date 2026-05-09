@@ -17,7 +17,7 @@ function googleAnalyticsHtmlPlugin(measurementId: string | undefined): Plugin {
       function gtag(){dataLayer.push(arguments);}
       window.gtag = gtag;
       gtag('js', new Date());
-      gtag('config', ${serializedMeasurementId});
+      gtag('config', ${serializedMeasurementId}, { send_page_view: false });
     </script>`;
 
       return html.replace('  </head>', `${snippet}\n  </head>`);
