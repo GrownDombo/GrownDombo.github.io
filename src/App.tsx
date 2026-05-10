@@ -1012,7 +1012,8 @@ function PortfolioHome({
 
           <div className="project-grid compact-project-grid work-case-grid">
             {prioritizedWorkCaseStudies.map((project) => {
-              const showPerformanceBadge = project.detailPath === industrialAoiInspectionAutomationPath;
+              const showGerberPerformanceBadge = project.detailPath === industrialAoiInspectionAutomationPath;
+              const showMesIssueBadge = project.detailPath === industrialAoiProductionIntegrationPath && issueMetric;
 
               return (
                 <article className="project-card compact-project-card" key={project.title}>
@@ -1024,11 +1025,18 @@ function PortfolioHome({
                   >
                     <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
                     <span>{project.status}</span>
-                    {showPerformanceBadge ? (
+                    {showGerberPerformanceBadge ? (
                       <aside className="work-case-performance-card" aria-label="Performance improvement summary">
                         <span>Performance</span>
                         <strong>{gerberPartPerformanceSummary.reduction}</strong>
                         <p>{gerberPartPerformanceSummary.before} <ArrowRight aria-hidden="true" /> {gerberPartPerformanceSummary.after}</p>
+                      </aside>
+                    ) : null}
+                    {showMesIssueBadge ? (
+                      <aside className="work-case-performance-card work-case-performance-card--compact" aria-label="Issue mail reduction summary">
+                        <span>Improvement</span>
+                        <strong>{issueMetric.value}</strong>
+                        <p>장애 이슈 메일</p>
                       </aside>
                     ) : null}
                   </a>
@@ -1650,6 +1658,8 @@ function IndustrialAOIPlatformProjectPage({
       : selectedArea?.id === 'production-integration'
         ? integrationReportTech
       : selectedProject?.tech ?? ['C#', 'C++', '.NET Framework', 'WinForms', 'SECS/GEM', 'OpenCV'];
+  const issueReductionMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
+  const showIntegrationIssueBadge = selectedArea?.id === 'production-integration' && issueReductionMetric;
   const heroImage =
     selectedArea?.id === 'inspection-automation'
       ? '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png'
@@ -1710,6 +1720,13 @@ function IndustrialAOIPlatformProjectPage({
           ) : (
             <figure className="project-detail-hero-media industrial-aoi-hero-media">
               <img src={heroImage} alt={`${pageTitle} mock interface`} />
+              {showIntegrationIssueBadge ? (
+                <aside className="industrial-aoi-hero-kpi industrial-aoi-hero-kpi--compact" aria-label="Issue mail reduction summary">
+                  <span>Improvement</span>
+                  <strong>{issueReductionMetric.value}</strong>
+                  <p>장애 이슈 메일</p>
+                </aside>
+              ) : null}
               <figcaption>Mockup</figcaption>
             </figure>
           )}

@@ -108,6 +108,10 @@ export const metrics: Metric[] = [
     value: '70% 감소',
     label: '장애 이슈 메일 감소',
     description: '연동 구조 안정화로 반복 장애 알림 감소',
+    evidence: {
+      label: 'MES · SECS/GEM 생산 연동 구조 개선',
+      href: '/work/mes-secs-gem-data-flow',
+    },
   },
   {
     value: '10개 이상',
