@@ -1567,6 +1567,39 @@ main {
   object-position: left top;
 }
 
+.excel-condition-page .project-detail-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+}
+
+.excel-condition-page .project-detail-hero-media {
+  justify-self: end;
+  width: min(100%, 620px);
+  max-height: 340px;
+}
+
+.excel-condition-page .project-detail-hero-media img {
+  max-height: 340px;
+  object-fit: contain;
+}
+
+.github-project-page .project-detail-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+}
+
+.github-project-page .project-detail-hero-media {
+  justify-self: end;
+  width: min(100%, 620px);
+  max-height: 340px;
+}
+
+.github-project-page .project-detail-hero-media img {
+  width: auto;
+  max-width: 100%;
+  max-height: 340px;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
 .project-download-section {
   display: grid;
   grid-template-columns: minmax(240px, 0.56fr) minmax(0, 1fr);
@@ -1773,6 +1806,32 @@ main {
   background: transparent;
 }
 
+.excel-condition-guide .guide-image-pair {
+  max-width: 920px;
+}
+
+.excel-condition-guide .guide-figure {
+  max-width: 760px;
+}
+
+.excel-condition-guide .guide-figure--compact {
+  max-width: 620px;
+}
+
+.excel-condition-guide .guide-figure--small {
+  max-width: 420px;
+}
+
+.excel-condition-guide .guide-figure img,
+.excel-condition-guide .guide-image-pair img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 340px;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
 .guide-table-wrap {
   width: 100%;
   margin: 18px 0 22px;
@@ -1870,6 +1929,20 @@ main {
   height: auto;
   background: #080b0f;
   object-fit: initial;
+}
+
+.cpu-project-guide .run-mode-card img,
+.cpu-project-guide .cli-output-card img,
+.cpu-project-guide .csv-file-card img {
+  width: auto;
+  max-width: 100%;
+  max-height: 240px;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+.cpu-project-guide .csv-file-card img {
+  max-height: 260px;
 }
 
 .run-mode-card > div {
@@ -2100,11 +2173,11 @@ main {
 }
 
 .rfid-guide-flow {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .rfid-search-pair {
-  max-width: 940px;
+  max-width: 820px;
 }
 
 .rfid-project-guide .guide-figure,
@@ -2121,7 +2194,12 @@ main {
 .rfid-project-guide .guide-figure img,
 .rfid-project-guide .guide-image-pair img {
   display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 360px;
+  margin-inline: auto;
   border-radius: 0;
+  object-fit: contain;
 }
 
 .rfid-project-guide .guide-figure figcaption,
@@ -2144,7 +2222,7 @@ main {
 }
 
 .rfid-console-figure {
-  max-width: 520px;
+  max-width: 480px;
 }
 
 .search-state-grid {
@@ -5421,6 +5499,24 @@ main {
 
   .industrial-aoi-page .project-detail-hero {
     grid-template-columns: 1fr;
+  }
+
+  .excel-condition-page .project-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .excel-condition-page .project-detail-hero-media {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .github-project-page .project-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .github-project-page .project-detail-hero-media {
+    justify-self: stretch;
+    width: 100%;
   }
 
   .industrial-aoi-page .project-detail-hero-media {

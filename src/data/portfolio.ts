@@ -59,11 +59,11 @@ export type Experience = {
 
 export const profile: Profile = {
   name: '최준영 / GrownDombo',
-  role: '7년 차 Windows 응용프로그램 개발자',
-  headline: '잘 읽히는 구조와 안정적인 동작을 만드는 개발자',
+  role: 'Windows 응용프로그램 개발자 · 제조 장비 소프트웨어',
+  headline: '제조 장비 소프트웨어의 성능과 운영 안정성을 개선하는 개발자',
   summary:
-    '반도체/SMT 제조라인의 3D 검사 장비 소프트웨어를 개발·유지보수하며, 공정 자동화와 생산 시스템 연동을 중심으로 기능 고도화와 운영 안정화 업무를 수행하고 있습니다.',
-  availability: '잘 읽히는 구조와 지속적으로 개선 가능한 소프트웨어를 지향합니다',
+    '반도체·SMT 제조라인의 3D 검사 장비 소프트웨어 개발과 유지보수를 담당하며, 공정 자동화, 생산 시스템 연동, 데이터 처리 성능 개선을 중심으로 운영 안정성과 확장성을 높여 왔습니다.',
+  availability: '성능 병목 분석 · 생산 연동 안정화 · 유지보수 가능한 구조 개선',
   links: [
     {
       label: 'GitHub',
@@ -92,9 +92,9 @@ export const metrics: Metric[] = [
   {
     value: '6분 20초 → 3초',
     label: 'Gerber-Part ROI 매칭 시간 단축',
-    description: '후보군 기반 매칭으로 대용량 검사 좌표 처리 최적화',
+    description: '후보군 선별과 캐싱 구조 적용을 통한 대용량 검사 좌표 매칭 최적화',
     evidence: {
-      label: '9만 × 39만 좌표 데이터 기준',
+      label: '대용량 검사 좌표 매칭 기준',
       href: '/work/gerber-part-roi-matching-optimization',
       suffix: ' 약 99% 개선',
     },
@@ -102,12 +102,12 @@ export const metrics: Metric[] = [
   {
     value: '2초 → 0.3초',
     label: '단축키 응답 속도 개선',
-    description: '복합키 자료구조로 단축키 입력 지연 최소화',
+    description: '복합키 자료구조 적용을 통한 입력 지연 최소화',
   },
   {
     value: '70% 감소',
     label: '장애 이슈 메일 감소',
-    description: '연동 구조 안정화로 반복 장애 알림 감소',
+    description: '생산 연동 채널 책임 분리를 통한 반복 장애 알림 감소',
     evidence: {
       label: 'MES · SECS/GEM 생산 연동 구조 개선',
       href: '/work/mes-secs-gem-data-flow',
@@ -116,34 +116,34 @@ export const metrics: Metric[] = [
   {
     value: '10개 이상',
     label: '신규 고객사 연동 시나리오',
-    description: '고객사 요구사항 기반 연동 시나리오 확장',
+    description: '고객사별 요구사항 분석을 통한 생산 연동 시나리오 확장',
   },
 ];
 
 export const skillGroups: SkillGroup[] = [
   {
     title: 'Languages',
-    description: '업무 프로그램, 장비 기능, 보조 도구 구현에 사용하는 언어입니다.',
+    description: 'Windows 응용프로그램, 장비 기능, 운영 보조 도구 구현에 활용',
     skills: ['C#', 'C++', 'Java', 'Python'],
   },
   {
     title: 'Core Tech',
-    description: 'Windows 응용프로그램과 Android 앱 개발 경험의 기반 기술입니다.',
+    description: '제조 장비용 Windows 애플리케이션과 Android 앱 개발 기반 기술',
     skills: ['.NET Framework', 'Android SDK'],
   },
   {
     title: 'Database',
-    description: '검사 이력, 검색 기록, 운영 데이터를 저장하고 조회합니다.',
+    description: '검사 이력, 검색 기록, 운영 데이터 저장 및 조회',
     skills: ['MSSQL', 'MariaDB', 'SQLite'],
   },
   {
     title: 'ORM',
-    description: '레거시 Windows 애플리케이션의 데이터 접근 계층을 다룹니다.',
+    description: '레거시 Windows 애플리케이션의 데이터 접근 계층 유지보수',
     skills: ['iBATIS.NET'],
   },
   {
     title: 'Domain Tech',
-    description: '제조라인 연동과 영상처리 기능 개발에 사용하는 도메인 기술입니다.',
+    description: '제조라인 생산 연동과 영상처리 기능 개발에 활용한 도메인 기술',
     skills: ['SECS/GEM', 'OpenCV', 'TCP/IP', 'FTP'],
   },
 ];
@@ -153,7 +153,7 @@ export const experiences: Experience[] = [
     period: '2020.04 ~ 현재',
     title: 'Windows 응용프로그램 개발자',
     organization: '펨트론 (Pemtron)',
-    description: '광학 검사 장비 소프트웨어 개발·유지보수와 생산 시스템 연동 기능을 담당합니다.',
+    description: '광학 검사 장비 소프트웨어 개발·유지보수 및 생산 시스템 연동 기능 담당',
     outcomes: [
       '생산 시스템 연동 기능 개발·유지보수 및 구조 개선',
       '병목 구간 분석을 통한 데이터 처리 성능 개선',
@@ -165,7 +165,7 @@ export const experiences: Experience[] = [
     period: '2019.10 ~ 2020.04',
     title: 'Android 개발자',
     organization: '비마시스',
-    description: '모빌리티 서비스 사용자용 Android 앱의 지도·검색 기능 개발에 참여했습니다.',
+    description: '모빌리티 서비스 사용자용 Android 앱의 지도·검색 기능 개발 참여',
     outcomes: [
       'Naver Map API 연동 및 지도·검색 기능 개발',
       'Polygon 영역 판별 알고리즘 직접 구현',
@@ -178,7 +178,7 @@ export const experiences: Experience[] = [
 export const workCaseStudies: Project[] = [
   {
     title: 'Gerber-Part ROI 매칭 성능 최적화',
-    summary: 'Module 후보 선별과 변환 결과 캐싱으로 대용량 ROI 매칭 시간 단축',
+    summary: 'Module 후보 선별과 변환 결과 캐싱을 통한 대용량 ROI 매칭 성능 개선',
     role: 'AOI Matching · Performance Optimization',
     tech: ['C#', '.NET Framework', 'WinForms', 'Algorithm', 'Performance Optimization'],
     links: [],
@@ -189,7 +189,7 @@ export const workCaseStudies: Project[] = [
   },
   {
     title: 'MES · SECS/GEM 생산 연동 구조 개선',
-    summary: '생산 연동 채널 책임 분리와 대용량 메시지 수신 안정화',
+    summary: '생산 연동 채널 책임 분리 및 대용량 메시지 수신 안정성 강화',
     role: 'Factory System Integration · Middleware Stability',
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM'],
     links: [],
@@ -200,7 +200,7 @@ export const workCaseStudies: Project[] = [
   },
   {
     title: 'Repair & NG Buffer Operations',
-    summary: 'Repair, NG Buffer, Rack 상태 처리 흐름 안정화',
+    summary: 'Repair, NG Buffer, Rack 상태 처리 흐름의 정합성 및 추적성 개선',
     role: 'Repair Flow · NG Buffer · Rack State',
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'Logging'],
     links: [],
@@ -214,8 +214,8 @@ export const workCaseStudies: Project[] = [
 export const projects: Project[] = [
   {
     title: 'WinFormsCustomControls',
-    summary: 'WinForms에서 반복적으로 쓰는 UI 패턴을 커스텀 컨트롤 DLL로 묶은 라이브러리입니다.',
-    role: '커스텀 컨트롤 설계 · UI 패턴 재사용 구조화',
+    summary: '반복되는 WinForms UI 패턴을 DLL 기반 커스텀 컨트롤로 표준화한 재사용 라이브러리',
+    role: 'UI 컴포넌트 표준화 · DLL 배포 구조 설계',
     tech: ['C#', '.NET Framework 4.8', 'WinForms'],
     links: [
       {
@@ -235,8 +235,8 @@ export const projects: Project[] = [
   },
   {
     title: 'ExcelConditionPainter',
-    summary: 'Excel 데이터를 조건에 따라 강조 표시하고 결과 파일로 내보내는 Windows Forms 보조 도구입니다.',
-    role: '조건 설정 UI · Excel 처리 · Export 기능 구현',
+    summary: '판매사 이벤트 주문 통계 산출과 조건별 Excel 강조 표시를 자동화한 Windows Forms 업무 보조 도구',
+    role: '조건 설정 UI · 주문 데이터 집계 · Excel Export 자동화',
     tech: ['C#', 'WinForms', 'ClosedXML'],
     links: [
       {
@@ -259,8 +259,8 @@ export const projects: Project[] = [
   },
   {
     title: 'RFID Collision Search Simulator',
-    summary: '재귀 방식과 반복 방식의 RFID 태그 충돌 탐색 과정을 비교하는 C++ 콘솔 시뮬레이터입니다.',
-    role: 'Prefix 탐색 모델 설계 · 재귀/반복 알고리즘 비교 구현',
+    summary: 'RFID 태그 충돌 탐색 문제를 Prefix 질의 모델로 검증한 C++ 콘솔 시뮬레이터',
+    role: 'Prefix 탐색 모델 설계 · 재귀/반복 알고리즘 검증',
     tech: ['C++', 'STL', 'Visual Studio 2022'],
     links: [
       {
@@ -280,8 +280,8 @@ export const projects: Project[] = [
   },
   {
     title: 'CPUMemoryStressTest',
-    summary: 'User 대화형, Shell, CLI를 모두 지원하는 C++20 CPU/Memory 스트레스 테스트 도구입니다.',
-    role: '3가지 실행 모드 설계 · JSON CLI · 테스트 Registry 구조화',
+    summary: 'CPU/Memory 부하 테스트 실행과 결과 수집을 자동화한 C++20 콘솔 기반 검증 도구',
+    role: '실행 모드 설계 · JSON/CSV 결과 수집 · 테스트 Registry 구조화',
     tech: ['C++20', 'WinAPI', 'STL', 'JSON CLI'],
     links: [
       {
