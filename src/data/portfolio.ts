@@ -184,8 +184,8 @@ export const workCaseStudies: Project[] = [
     status: 'Improvement',
   },
   {
-    title: 'MES · SECS/GEM 연동 데이터 흐름 개선',
-    summary: '공통 메시지 파이프라인 설계와 대용량 메시지 수신 안정화',
+    title: 'MES · SECS/GEM 생산 연동 구조 개선',
+    summary: '생산 연동 채널 책임 분리와 대용량 메시지 수신 안정화',
     role: 'Factory System Integration · Middleware Stability',
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM'],
     links: [],
