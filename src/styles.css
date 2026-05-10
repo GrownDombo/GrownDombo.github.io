@@ -1375,6 +1375,19 @@ main {
   height: 11px;
 }
 
+.work-case-performance-card--compact {
+  min-width: 104px;
+  padding: 9px 10px;
+}
+
+.work-case-performance-card--compact strong {
+  font-size: 1.26rem;
+}
+
+.work-case-performance-card--compact p {
+  white-space: nowrap;
+}
+
 .project-content {
   display: grid;
   gap: 14px;
@@ -2168,7 +2181,13 @@ main {
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 .industrial-aoi-page .project-detail-hero {
-  grid-template-columns: minmax(0, 0.78fr) minmax(420px, 1.22fr);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+}
+
+.industrial-aoi-page .project-detail-hero-media {
+  justify-self: end;
+  width: min(100%, 700px);
+  max-height: 360px;
 }
 
 .industrial-aoi-hero-media {
@@ -2179,6 +2198,7 @@ main {
 .project-detail-hero-media.industrial-aoi-hero-media img {
   display: block;
   aspect-ratio: auto;
+  max-height: 360px;
   height: auto;
   object-fit: contain;
   background: var(--media-bg);
@@ -2222,7 +2242,7 @@ main {
 
 .project-detail-hero-media.industrial-aoi-hero-media-pair img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
   object-position: center;
 }
@@ -2305,6 +2325,19 @@ main {
 .industrial-aoi-hero-kpi svg {
   width: 13px;
   height: 13px;
+}
+
+.industrial-aoi-hero-kpi--compact {
+  min-width: 118px;
+  padding: 10px 12px;
+}
+
+.industrial-aoi-hero-kpi--compact strong {
+  font-size: clamp(1.28rem, 2.1vw, 1.6rem);
+}
+
+.industrial-aoi-hero-kpi--compact p {
+  white-space: nowrap;
 }
 
 .industrial-aoi-flow {
@@ -5388,6 +5421,11 @@ main {
 
   .industrial-aoi-page .project-detail-hero {
     grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-page .project-detail-hero-media {
+    justify-self: stretch;
+    width: 100%;
   }
 
   .project-detail-hero h1 {
