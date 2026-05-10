@@ -2756,6 +2756,80 @@ main {
   height: 42px;
 }
 
+.industrial-aoi-implementation-block {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 12%, var(--border));
+}
+
+.industrial-aoi-implementation-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.industrial-aoi-implementation-title strong {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 950;
+}
+
+.industrial-aoi-implementation-title span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.industrial-aoi-implementation-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.industrial-aoi-implementation-card {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  min-width: 0;
+  min-height: 168px;
+  padding: 15px;
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--border));
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--card-strong) 90%, transparent), color-mix(in srgb, var(--accent) 4%, var(--card))),
+    var(--card);
+}
+
+.industrial-aoi-implementation-card span {
+  width: fit-content;
+  padding: 5px 8px;
+  border: 1px solid color-mix(in srgb, var(--success) 18%, var(--border));
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--success) 76%, var(--ink));
+  font-size: 0.72rem;
+  font-weight: 950;
+  background: color-mix(in srgb, var(--success) 6%, var(--card));
+}
+
+.industrial-aoi-implementation-card strong {
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 950;
+  line-height: 1.32;
+}
+
+.industrial-aoi-implementation-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
 .industrial-aoi-integration-map {
   position: relative;
   display: grid;
@@ -2794,6 +2868,13 @@ main {
   color: color-mix(in srgb, var(--accent) 55%, var(--border));
 }
 
+.industrial-aoi-integration-channel-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+}
+
 .industrial-aoi-integration-system {
   display: grid;
   gap: 8px;
@@ -2810,6 +2891,11 @@ main {
 .industrial-aoi-integration-system-focus {
   border-color: color-mix(in srgb, var(--success) 28%, var(--border));
   background: color-mix(in srgb, var(--success) 8%, var(--card));
+}
+
+.industrial-aoi-integration-system-alt {
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--border));
+  background: color-mix(in srgb, var(--accent) 7%, var(--card));
 }
 
 .industrial-aoi-integration-system strong {
@@ -2863,6 +2949,7 @@ main {
 }
 
 .industrial-aoi-structure-panel {
+  display: grid;
   gap: 18px;
   padding: 18px;
   border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
@@ -2887,6 +2974,11 @@ main {
   font-weight: 750;
   line-height: 1.55;
   text-align: right;
+}
+
+.industrial-aoi-integration-section .industrial-aoi-structure-titlebar p {
+  max-width: none;
+  white-space: nowrap;
 }
 
 .industrial-aoi-report-bottom-grid {
@@ -3357,19 +3449,20 @@ main {
 }
 
 .industrial-aoi-integration-structure-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .industrial-aoi-integration-structure-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-columns: minmax(140px, 0.92fr) auto minmax(170px, 1fr) auto minmax(150px, 0.95fr);
   gap: 14px;
-  align-items: center;
-  min-height: 270px;
+  align-items: stretch;
+  min-height: 0;
   padding: 22px;
 }
 
 .industrial-aoi-integration-structure-layout > svg {
+  align-self: center;
   width: 24px;
   height: 24px;
   color: color-mix(in srgb, #df3d3d 48%, var(--border));
@@ -3382,7 +3475,9 @@ main {
 .industrial-aoi-integration-column {
   display: grid;
   gap: 9px;
+  align-content: start;
   min-width: 0;
+  min-height: 190px;
   padding: 16px;
   border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
   border-radius: 8px;
@@ -3426,6 +3521,339 @@ main {
 
 .industrial-aoi-integration-success span {
   border-color: color-mix(in srgb, var(--success) 18%, var(--border));
+  color: color-mix(in srgb, var(--success) 78%, var(--ink));
+  background: color-mix(in srgb, var(--success) 6%, var(--card));
+}
+
+.industrial-aoi-refactor-flow,
+.industrial-aoi-refactor-after-map {
+  position: relative;
+  padding: 22px;
+}
+
+.industrial-aoi-refactor-flow {
+  display: grid;
+  grid-template-columns: minmax(176px, 0.95fr) minmax(92px, 0.38fr) minmax(176px, 0.95fr) 52px minmax(176px, 0.95fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.industrial-aoi-refactor-node {
+  display: grid;
+  grid-template-rows: min-content min-content 1fr;
+  gap: 0;
+  align-content: start;
+  min-width: 0;
+  min-height: 204px;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--card-strong) 92%, transparent), color-mix(in srgb, var(--accent) 5%, var(--card))),
+    var(--card);
+  box-shadow: 0 16px 32px color-mix(in srgb, var(--shadow) 24%, transparent);
+}
+
+.industrial-aoi-refactor-node > span,
+.industrial-aoi-refactor-contract > span,
+.industrial-aoi-refactor-implementation-grid span {
+  width: fit-content;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.industrial-aoi-refactor-node strong,
+.industrial-aoi-refactor-contract strong,
+.industrial-aoi-refactor-implementation-grid strong {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 950;
+  line-height: 1.25;
+}
+
+.industrial-aoi-refactor-node > strong {
+  margin-top: 4px;
+}
+
+.industrial-aoi-refactor-node div {
+  display: grid;
+  gap: 8px;
+  align-self: start;
+  margin-top: 14px;
+}
+
+.industrial-aoi-refactor-node em,
+.industrial-aoi-refactor-contract em,
+.industrial-aoi-refactor-result-row span,
+.industrial-aoi-refactor-event-row span,
+.industrial-aoi-refactor-implementation-grid em {
+  font-style: normal;
+}
+
+.industrial-aoi-refactor-node em {
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--border));
+  border-radius: 7px;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 850;
+  background: color-mix(in srgb, var(--card) 86%, transparent);
+}
+
+.industrial-aoi-refactor-node-risk {
+  border-color: color-mix(in srgb, #df3d3d 24%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, #df3d3d 8%, var(--card)), color-mix(in srgb, var(--card-strong) 90%, transparent)),
+    var(--card);
+}
+
+.industrial-aoi-refactor-node-risk > span {
+  color: #ef4444;
+}
+
+.industrial-aoi-refactor-node-risk em {
+  border-color: color-mix(in srgb, #df3d3d 20%, var(--border));
+  color: #b91c1c;
+  background: color-mix(in srgb, #df3d3d 5%, var(--card));
+}
+
+.industrial-aoi-refactor-tangle {
+  position: relative;
+  min-height: 204px;
+}
+
+.industrial-aoi-refactor-tangle::before,
+.industrial-aoi-refactor-tangle::after,
+.industrial-aoi-refactor-tangle span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0;
+  border-top: 2px dashed color-mix(in srgb, #ef4444 62%, transparent);
+  content: "";
+  transform-origin: center;
+}
+
+.industrial-aoi-refactor-tangle::before {
+  transform: translateY(-58px) rotate(16deg);
+}
+
+.industrial-aoi-refactor-tangle::after {
+  transform: translateY(54px) rotate(-16deg);
+}
+
+.industrial-aoi-refactor-tangle span:nth-child(1) {
+  transform: translateY(-22px) rotate(-9deg);
+}
+
+.industrial-aoi-refactor-tangle span:nth-child(2) {
+  transform: translateY(18px) rotate(10deg);
+}
+
+.industrial-aoi-refactor-tangle span:nth-child(3) {
+  transform: translateY(-62px) rotate(-19deg);
+  opacity: 0.6;
+}
+
+.industrial-aoi-refactor-tangle span:nth-child(4) {
+  transform: translateY(62px) rotate(19deg);
+  opacity: 0.6;
+}
+
+.industrial-aoi-refactor-tangle span:nth-child(5) {
+  transform: translateY(-44px) rotate(3deg);
+  opacity: 0.82;
+}
+
+.industrial-aoi-refactor-tangle span:nth-child(6) {
+  transform: translateY(40px) rotate(-3deg);
+  opacity: 0.82;
+}
+
+.industrial-aoi-refactor-tangle span:nth-child(7) {
+  transform: translateY(-6px) rotate(23deg);
+  opacity: 0.5;
+}
+
+.industrial-aoi-refactor-tangle span:nth-child(8) {
+  transform: translateY(4px) rotate(-24deg);
+  opacity: 0.5;
+}
+
+.industrial-aoi-refactor-arrow {
+  position: relative;
+  align-self: center;
+  justify-self: center;
+  min-width: 52px;
+  height: 36px;
+}
+
+.industrial-aoi-refactor-arrow::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in srgb, #ef4444 18%, transparent), color-mix(in srgb, #ef4444 74%, transparent));
+  clip-path: polygon(0 40%, calc(100% - 13px) 40%, calc(100% - 13px) 22%, 100% 50%, calc(100% - 13px) 78%, calc(100% - 13px) 60%, 0 60%);
+  content: "";
+  opacity: 0.9;
+  transform: translateY(-50%);
+}
+
+.industrial-aoi-refactor-arrow::after {
+  display: none;
+}
+
+.industrial-aoi-refactor-arrow-success::before {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--success) 18%, transparent), color-mix(in srgb, var(--success) 72%, transparent));
+}
+
+.industrial-aoi-refactor-after-map {
+  display: grid;
+  grid-template-columns: minmax(154px, 0.85fr) 52px minmax(210px, 1fr) 52px minmax(178px, 0.95fr) 52px minmax(178px, 0.95fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.industrial-aoi-refactor-after-map .industrial-aoi-refactor-node {
+  min-height: 218px;
+}
+
+.industrial-aoi-refactor-event-row,
+.industrial-aoi-refactor-result-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.industrial-aoi-refactor-event-row span,
+.industrial-aoi-refactor-result-row span {
+  display: grid;
+  place-items: center;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-align: center;
+  background: color-mix(in srgb, var(--accent) 5%, var(--card));
+}
+
+.industrial-aoi-refactor-downlink {
+  justify-self: center;
+  width: 2px;
+  height: 24px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 55%, transparent), color-mix(in srgb, var(--success) 55%, transparent));
+}
+
+.industrial-aoi-refactor-contract {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 10px;
+  max-width: 620px;
+  min-width: 0;
+  min-height: 218px;
+  margin: 0;
+  padding: 20px 24px;
+  border: 1px solid color-mix(in srgb, var(--success) 34%, var(--border));
+  border-radius: 12px;
+  text-align: left;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--success) 14%, transparent), transparent 58%),
+    linear-gradient(135deg, color-mix(in srgb, var(--success) 10%, var(--card)), var(--card));
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--success) 14%, transparent);
+}
+
+.industrial-aoi-refactor-contract strong {
+  font-size: 1.12rem;
+}
+
+.industrial-aoi-refactor-contract p {
+  max-width: 460px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 750;
+  line-height: 1.55;
+}
+
+.industrial-aoi-refactor-contract div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.industrial-aoi-refactor-contract em {
+  padding: 6px 9px;
+  border: 1px solid color-mix(in srgb, var(--success) 22%, var(--border));
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--success) 75%, var(--ink));
+  font-size: 0.78rem;
+  font-weight: 900;
+  background: color-mix(in srgb, var(--success) 7%, var(--card));
+}
+
+.industrial-aoi-refactor-implementation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.industrial-aoi-refactor-implementation-grid > div {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--success) 20%, var(--border));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--success) 6%, var(--card));
+}
+
+.industrial-aoi-refactor-implementation-grid em {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.industrial-aoi-refactor-result-row {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.industrial-aoi-refactor-result-row span {
+  border-color: color-mix(in srgb, var(--success) 22%, var(--border));
+  color: color-mix(in srgb, var(--success) 78%, var(--ink));
+  background: color-mix(in srgb, var(--success) 7%, var(--card));
+}
+
+.industrial-aoi-refactor-node-success,
+.industrial-aoi-refactor-channel-node,
+.industrial-aoi-refactor-result-node {
+  border-color: color-mix(in srgb, var(--success) 28%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--success) 8%, var(--card)), color-mix(in srgb, var(--card-strong) 90%, transparent)),
+    var(--card);
+}
+
+.industrial-aoi-refactor-node-success > span,
+.industrial-aoi-refactor-channel-node > span,
+.industrial-aoi-refactor-result-node > span {
+  color: color-mix(in srgb, var(--success) 78%, var(--accent));
+}
+
+.industrial-aoi-refactor-node-success em,
+.industrial-aoi-refactor-channel-node em,
+.industrial-aoi-refactor-result-node em {
+  border-color: color-mix(in srgb, var(--success) 20%, var(--border));
   color: color-mix(in srgb, var(--success) 78%, var(--ink));
   background: color-mix(in srgb, var(--success) 6%, var(--card));
 }
@@ -5008,6 +5436,10 @@ main {
     text-align: left;
   }
 
+  .industrial-aoi-integration-section .industrial-aoi-structure-titlebar p {
+    white-space: normal;
+  }
+
   .industrial-aoi-structure-card-header div {
     display: grid;
     gap: 4px;
@@ -5023,7 +5455,12 @@ main {
   }
 
   .industrial-aoi-integration-map-flow,
-  .industrial-aoi-integration-structure-layout {
+  .industrial-aoi-integration-structure-layout,
+  .industrial-aoi-implementation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-channel-group {
     grid-template-columns: 1fr;
   }
 
@@ -5035,6 +5472,37 @@ main {
 
   .industrial-aoi-integration-flow-list,
   .industrial-aoi-integration-result-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .industrial-aoi-refactor-flow,
+  .industrial-aoi-refactor-after-map {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-refactor-after-map .industrial-aoi-refactor-node,
+  .industrial-aoi-refactor-contract {
+    min-height: auto;
+  }
+
+  .industrial-aoi-refactor-tangle {
+    justify-self: center;
+    width: 96px;
+    min-height: 64px;
+    transform: rotate(90deg);
+  }
+
+  .industrial-aoi-refactor-arrow {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .industrial-aoi-refactor-event-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .industrial-aoi-refactor-implementation-grid,
+  .industrial-aoi-refactor-result-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -5162,8 +5630,25 @@ main {
   .project-grid,
   .impact-strip,
   .impact-meter-grid,
-  .portfolio-visual-grid {
+  .portfolio-visual-grid,
+  .industrial-aoi-refactor-event-row,
+  .industrial-aoi-refactor-implementation-grid,
+  .industrial-aoi-refactor-result-row {
     grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-refactor-flow,
+  .industrial-aoi-refactor-after-map {
+    padding: 14px;
+  }
+
+  .industrial-aoi-refactor-node {
+    min-height: auto;
+    padding: 15px;
+  }
+
+  .industrial-aoi-refactor-contract {
+    padding: 18px;
   }
 
   .impact-meter-card {
