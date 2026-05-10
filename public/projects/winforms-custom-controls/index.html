@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="WinFormsCustomControls는 .NET Framework 4.8 기반 WinForms 프로젝트에서 반복되는 UI 패턴을 재사용 가능한 커스텀 컨트롤 DLL로 정리한 라이브러리입니다."
+      content="WinFormsCustomControls는 .NET Framework 4.8 기반 WinForms 프로젝트에서 반복되는 UI 패턴을 DLL 기반 커스텀 컨트롤로 표준화한 재사용 라이브러리입니다."
     />
     <title>WinFormsCustomControls | GrownDombo Portfolio</title>
     <style>
@@ -579,20 +579,23 @@
         <span>최준영 / GrownDombo</span>
       </a>
       <nav class="nav-links" aria-label="주요 섹션">
-        <a href="/#metrics">성과</a>
-        <a href="/#experience">경험</a>
+        <a href="/#metrics">정량 성과</a>
+        <a href="/#work-cases">업무 개선</a>
+        <a href="/#projects">GitHub</a>
+        <a href="/#experience">경력</a>
         <a href="/#skills">기술</a>
-        <a href="/#projects">프로젝트</a>
       </nav>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="project-title">
         <div>
-          <p class="section-kicker">Project Guide</p>
+          <p class="section-kicker">Component Library</p>
           <h1 id="project-title">WinFormsCustomControls</h1>
           <p class="hero-lead">
-            .NET Framework 4.8 기반 WinForms UI 패턴을 재사용 가능한 커스텀 컨트롤 DLL로 정리한 프로젝트입니다.
+            .NET Framework 4.8 기반 WinForms UI 패턴을 DLL 기반 커스텀 컨트롤로 표준화한 재사용 라이브러리입니다.
+            <br />
+            반복 화면 구현을 줄이고 프로젝트 간 UI 컴포넌트 재사용 구조를 확보했습니다.
           </p>
           <div class="tech-list" aria-label="기술 스택">
             <span>C#</span>
@@ -615,20 +618,20 @@
         <div class="section-heading">
           <p class="section-kicker">Downloads</p>
           <h2 id="download-title">라이브러리와 데모 실행 파일</h2>
-          <p>GitHub Releases에서 DLL과 데모 실행 파일을 받을 수 있습니다.</p>
+          <p>WinForms 프로젝트 참조용 라이브러리와 동작 검증용 데모 실행 파일을 제공합니다.</p>
         </div>
 
         <div class="download-grid">
           <article class="download-card">
             <h3>Library DLL</h3>
-            <p>WinForms 프로젝트에서 참조할 컨트롤 DLL입니다.</p>
+            <p>WinForms 프로젝트 참조용 커스텀 컨트롤 DLL</p>
             <a class="button secondary" href="https://github.com/GrownDombo/WinFormsCustomControls/releases/latest" target="_blank" rel="noreferrer">
               Download
             </a>
           </article>
           <article class="download-card">
             <h3>Demo App</h3>
-            <p>주요 컨트롤 동작을 확인하는 데모 앱입니다.</p>
+            <p>주요 컨트롤 동작 검증용 데모 실행 파일</p>
             <a class="button secondary" href="https://github.com/GrownDombo/WinFormsCustomControls/releases/latest" target="_blank" rel="noreferrer">
               Download
             </a>
@@ -639,26 +642,26 @@
       <section class="section" id="why" aria-labelledby="why-title">
         <div class="section-heading">
           <p class="section-kicker">Why</p>
-          <h2 id="why-title">반복되는 WinForms UI를 재사용 가능한 컨트롤로 분리</h2>
+          <h2 id="why-title">반복 UI 패턴의 컴포넌트 표준화</h2>
           <p>
-            색상 선택, 체크 목록, 대량 그리드처럼 반복되는 WinForms UI를 컨트롤로 분리해 화면 코드 중복을 줄였습니다.
+            색상 선택, 체크 목록, 대량 그리드 등 반복 구현되는 WinForms UI를 컨트롤 단위로 분리해 화면 코드 중복과 유지보수 범위를 축소했습니다.
           </p>
         </div>
         <div class="why-grid">
           <article class="why-card">
             <strong>5 controls</strong>
-            <h3>자주 쓰는 패턴 정리</h3>
-            <p>WinForms UI 패턴 5종을 제공합니다.</p>
+            <h3>공통 패턴 컴포넌트화</h3>
+            <p>WinForms UI 패턴 5종 컴포넌트화</p>
           </article>
           <article class="why-card">
             <strong>DLL</strong>
             <h3>프로젝트 간 재사용</h3>
-            <p>DLL 참조만으로 다른 앱에서 재사용할 수 있습니다.</p>
+            <p>DLL 참조 기반 프로젝트 간 재사용</p>
           </article>
           <article class="why-card">
             <strong>Demo</strong>
-            <h3>동작 확인용 실행 파일</h3>
-            <p>드롭다운, 체크 상태, 대량 데이터 표시를 확인합니다.</p>
+            <h3>동작 검증</h3>
+            <p>드롭다운, 체크 상태, 대량 데이터 표시 동작 검증</p>
           </article>
         </div>
       </section>
@@ -668,7 +671,7 @@
           <p class="section-kicker">Controls</p>
           <h2 id="controls-title">구성 컨트롤</h2>
           <p>
-            README 캡처로 각 컨트롤의 핵심 동작을 빠르게 볼 수 있습니다.
+            각 컨트롤의 핵심 동작과 적용 목적을 README 캡처 기준으로 정리했습니다.
           </p>
         </div>
         <div class="control-grid">
@@ -678,7 +681,7 @@
             </figure>
             <div class="control-card-body">
               <h3>ColorComboBox</h3>
-              <p>색상 팔레트를 드롭다운으로 열고 선택 색상을 사각형으로 표시합니다.</p>
+              <p>색상 팔레트 선택과 선택 색상 표시를 하나의 컨트롤로 구성</p>
             </div>
           </article>
           <article class="control-card">
@@ -687,7 +690,7 @@
             </figure>
             <div class="control-card-body">
               <h3>CheckBoxComboBox</h3>
-              <p>체크박스 목록을 드롭다운으로 보여주는 다중 선택 콤보박스입니다.</p>
+              <p>체크박스 목록 기반 다중 선택 UI를 콤보박스 형태로 제공</p>
             </div>
           </article>
           <article class="control-card">
@@ -696,7 +699,7 @@
             </figure>
             <div class="control-card-body">
               <h3>CheckableGroupBox</h3>
-              <p>체크 상태에 따라 내부 컨트롤을 활성화하거나 비활성화합니다.</p>
+              <p>체크 상태에 따른 내부 컨트롤 활성화/비활성화 처리</p>
             </div>
           </article>
           <article class="control-card">
@@ -705,7 +708,7 @@
             </figure>
             <div class="control-card-body">
               <h3>DoubleBufferedDataGridView</h3>
-              <p>많은 행을 표시할 때 깜빡임을 줄이도록 더블 버퍼링을 적용했습니다.</p>
+              <p>대량 행 표시 시 화면 깜빡임 완화를 위한 더블 버퍼링 적용</p>
             </div>
           </article>
           <article class="control-card">
@@ -714,7 +717,7 @@
             </figure>
             <div class="control-card-body">
               <h3>VerticalFlowLayoutPanel</h3>
-              <p>세로 방향 배치와 스크롤 사용에 맞춘 FlowLayoutPanel입니다.</p>
+              <p>세로 배치와 스크롤 사용 시나리오에 맞춘 FlowLayoutPanel 확장</p>
             </div>
           </article>
         </div>
@@ -722,10 +725,10 @@
 
       <section class="section" id="usage" aria-labelledby="usage-title">
         <div class="section-heading">
-          <p class="section-kicker">Usage Flow</p>
+          <p class="section-kicker">Integration Flow</p>
           <h2 id="usage-title">라이브러리 사용 흐름</h2>
           <p>
-            Release 빌드 후 DLL 또는 프로젝트 참조로 연결해 사용합니다.
+            Release 빌드 산출물 또는 프로젝트 참조 방식으로 WinForms 애플리케이션에 연결합니다.
           </p>
         </div>
 
@@ -764,7 +767,7 @@
               <tr>
                 <th>프로젝트 참조</th>
                 <td>
-                  같은 솔루션에서는 <code>WinFormsCustomControls.csproj</code> 연결
+                  동일 솔루션 구성 시 <code>WinFormsCustomControls.csproj</code> 연결
                 </td>
               </tr>
               <tr>

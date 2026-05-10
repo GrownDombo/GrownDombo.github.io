@@ -293,10 +293,10 @@ const integrationSkillItems = [
 ];
 
 const navItems = [
-  { label: '성과', href: '#metrics' },
-  { label: '업무 사례', href: '#work-cases' },
+  { label: '정량 성과', href: '#metrics' },
+  { label: '업무 개선', href: '#work-cases' },
   { label: 'GitHub', href: '#projects' },
-  { label: '경험', href: '#experience' },
+  { label: '경력', href: '#experience' },
   { label: '기술', href: '#skills' },
 ];
 
@@ -928,14 +928,12 @@ function PortfolioHome({
                   {profile.availability}
                 </p>
                 <h1 id="hero-title">{profile.headline}</h1>
-                <p className="hero-summary">
-                  제조라인 장비 소프트웨어를 개발하며, 복잡한 운영 흐름을 읽기 쉬운 구조와 안정적인 동작으로 정리합니다.
-                </p>
+                <p className="hero-summary">{profile.summary}</p>
                 <div className="hero-focus-list" aria-label="핵심 작업 영역">
-                  <span>Windows App</span>
+                  <span>Windows Application</span>
                   <span>공정 자동화</span>
                   <span>생산 시스템 연동</span>
-                  <span>성능 개선</span>
+                  <span>성능 최적화</span>
                 </div>
               </div>
             </section>
@@ -944,10 +942,10 @@ function PortfolioHome({
           <div className="section-heading">
             <div>
               <p className="section-kicker">Performance</p>
-              <h2 id="metrics-title">숫자로 남긴 개선</h2>
+              <h2 id="metrics-title">정량 성과</h2>
             </div>
           </div>
-          <div className="impact-meter-grid" aria-label="숫자로 남긴 개선 도식">
+          <div className="impact-meter-grid" aria-label="정량 성과 도식">
             {impactChartCards.map((card) => {
               const cardContent = (
                 <>
@@ -1006,7 +1004,8 @@ function PortfolioHome({
           <div className="section-heading">
             <div>
               <p className="section-kicker">Work Cases</p>
-              <h2 id="work-cases-title">업무 사례</h2>
+              <h2 id="work-cases-title">업무 개선 사례</h2>
+              <p className="section-heading-copy">실무 환경에서 성능, 생산 연동 안정성, 운영 추적성을 개선한 대표 사례</p>
             </div>
           </div>
 
@@ -1057,7 +1056,8 @@ function PortfolioHome({
           <div className="section-heading projects-heading">
             <div>
               <p className="section-kicker">GitHub Projects</p>
-              <h2 id="projects-title">GitHub 프로젝트</h2>
+              <h2 id="projects-title">개인 GitHub 프로젝트</h2>
+              <p className="section-heading-copy">직접 설계·구현하고 공개한 Windows 도구 및 알고리즘 기반 프로젝트</p>
             </div>
           </div>
 
@@ -1101,7 +1101,7 @@ function PortfolioHome({
             <div>
               <p className="section-kicker">Experience</p>
               <h2 id="experience-title">핵심 경력</h2>
-              <p className="section-heading-copy">대표 작업의 업무 맥락과 담당 역할을 함께 정리한 경력 요약</p>
+              <p className="section-heading-copy">제조 장비 소프트웨어 개발과 생산 시스템 연동 개선 중심의 경력 요약</p>
             </div>
           </div>
           <ol className="experience-timeline">
@@ -1136,7 +1136,7 @@ function PortfolioHome({
             <div>
               <p className="section-kicker">Skills</p>
               <h2 id="skills-title">기술 스택</h2>
-              <p className="section-heading-copy">앞선 작업에서 반복적으로 사용한 기술을 영역별로 묶었습니다.</p>
+              <p className="section-heading-copy">실무 개선 사례와 개인 프로젝트에서 활용한 기술의 영역별 분류</p>
             </div>
           </div>
           <div className="skill-grid">
@@ -2286,11 +2286,11 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
   const downloadDescriptions: Record<string, { title: string; description: string }> = {
     'Sample Data': {
       title: 'Sample Data',
-      description: '가이드 화면과 같은 흐름으로 테스트해볼 수 있는 주문 데이터 샘플 파일입니다.',
+      description: '조건 설정과 Export 흐름 검증에 사용하는 주문 데이터 샘플 파일',
     },
     'Release Download': {
       title: 'Setup',
-      description: 'GitHub Releases에서 Windows 실행 파일 또는 설치 패키지를 받을 수 있습니다.',
+      description: 'Windows 실행 파일 또는 설치 패키지 확인용 GitHub Releases 페이지',
     },
   };
 
@@ -2298,14 +2298,15 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
     <div className="site-shell" data-theme={themeMode}>
       <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
-      <main className="project-detail-page" id="top">
+      <main className="project-detail-page excel-condition-page" id="top">
         <section className="project-detail-hero" aria-labelledby="excel-condition-painter-title">
           <div className="project-detail-hero-copy">
-            <p className="section-kicker">Project Guide</p>
+            <p className="section-kicker">Business Automation</p>
             <h1 id="excel-condition-painter-title">{project?.title ?? 'ExcelConditionPainter'}</h1>
             <p className="project-detail-lead">
-              Excel 주문 데이터를 열고, 조건에 맞는 행과 셀을 색상으로 표시한 뒤 결과 파일로 저장하는
-              Windows Forms 보조 도구입니다.
+              판매사 이벤트 이후 주문 통계 산출과 조건별 Excel 강조 표시를 자동화한 Windows Forms 업무 보조 도구.
+              <br />
+              수동 집계와 반복 색상 표시 작업을 줄이고, 조건 기준과 결과 Export 흐름을 표준화.
             </p>
             <div className="tech-list project-detail-tech-list" aria-label="ExcelConditionPainter 기술 스택">
               {(project?.tech ?? ['C#', 'WinForms', 'ClosedXML']).map((tech) => (
@@ -2321,7 +2322,7 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
               </div>
             ) : null}
           </div>
-          <figure className="project-detail-hero-media">
+          <figure className="project-detail-hero-media excel-condition-hero-media">
             <img src={`${assetPath}/main-image.png`} alt="ExcelConditionPainter 대표 화면" />
           </figure>
         </section>
@@ -2330,14 +2331,14 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
           <section className="project-download-section" aria-labelledby="excel-download-title">
             <div className="project-download-copy">
               <p className="section-kicker">Downloads</p>
-              <h2 id="excel-download-title">샘플 데이터와 실행 파일</h2>
-              <p>가이드 내용을 직접 따라 해볼 수 있는 샘플 파일과 배포 버전을 함께 확인할 수 있습니다.</p>
+              <h2 id="excel-download-title">샘플 데이터 및 실행 파일</h2>
+              <p>업무 자동화 흐름 검증을 위한 샘플 주문 데이터와 배포 버전 정보</p>
             </div>
             <div className="project-download-grid">
               {downloadLinks.map((link) => {
                 const detail = downloadDescriptions[link.label] ?? {
                   title: link.label,
-                  description: '프로젝트에서 제공하는 관련 파일입니다.',
+                  description: '프로젝트 관련 배포 파일',
                 };
 
                 return (
@@ -2355,54 +2356,59 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
           </section>
         ) : null}
 
-        <article className="project-guide" aria-labelledby="excel-guide-title">
+        <article className="project-guide excel-condition-guide" aria-labelledby="excel-guide-title">
           <header className="project-guide-header">
-            <p className="section-kicker">Usage Flow</p>
-            <h2 id="excel-guide-title">ExcelConditionPainter 사용 가이드</h2>
+            <p className="section-kicker">Automation Flow</p>
+            <h2 id="excel-guide-title">ExcelConditionPainter 업무 자동화 흐름</h2>
             <p>
-              예시는 위 <b>Sample Data</b>에서 받을 수 있는 <code>DummyData_400Rows_Shuffled.xlsx</code> 기준입니다.
+              예시는 위 <b>Sample Data</b>에서 제공하는 <code>DummyData_400Rows_Shuffled.xlsx</code> 기준입니다.
               <br />
-              파일을 열고 조건을 설정한 뒤 검색과 Export까지 이어지는 흐름을 정리했습니다.
+              주문 데이터 로드, 조건 설정, 검색, Export까지 이어지는 반복 업무 처리 흐름을 기준으로 구성.
             </p>
+            <div className="guide-note">
+              <b>업무 배경:</b> 판매사 이벤트 운영 후 주문자, 옵션, 수량, 주소 기준 통계를 수동 산출하고
+              <br />
+              Excel에 조건별 색상을 표시하던 반복 작업을 자동화하기 위해 제작.
+            </div>
           </header>
 
           <ol className="guide-flow" aria-label="ExcelConditionPainter 사용 흐름">
             <li>
               <strong>1. Open</strong>
-              <span>Excel 파일 열기</span>
+              <span>주문 데이터 로드</span>
             </li>
             <li>
               <strong>2. Set Conditions</strong>
-              <span>컬럼/조건 지정</span>
+              <span>컬럼 및 조건 기준 지정</span>
             </li>
             <li>
               <strong>3. Set</strong>
-              <span>조건 색상 적용</span>
+              <span>조건 결과 시각화</span>
             </li>
             <li>
               <strong>4. Ctrl+F</strong>
-              <span>결과 검색</span>
+              <span>결과 위치 검색</span>
             </li>
             <li>
               <strong>5. Options</strong>
-              <span>Export 방식 설정</span>
+              <span>Export 정책 설정</span>
             </li>
             <li>
               <strong>6. Export</strong>
-              <span>결과 저장</span>
+              <span>결과 파일 생성</span>
             </li>
           </ol>
 
           <section className="guide-section" aria-labelledby="open-excel-title">
-            <h3 id="open-excel-title">1. Excel 파일 열기</h3>
+            <h3 id="open-excel-title">1. 주문 데이터 로드</h3>
             <div className="guide-image-pair">
               <figure>
                 <img src={`${assetPath}/main-window-before-set-cropped.png`} alt="조건 적용 전 메인 화면" />
-                <figcaption>적용 전: 파일만 연 상태</figcaption>
+                <figcaption>적용 전: 주문 데이터 로드 상태</figcaption>
               </figure>
               <figure>
                 <img src={`${assetPath}/main-window-cropped.png`} alt="조건 적용 후 메인 화면" />
-                <figcaption>적용 후: 조건 색상 표시</figcaption>
+                <figcaption>적용 후: 조건 결과 시각화 상태</figcaption>
               </figure>
             </div>
             <div className="guide-table-wrap">
@@ -2417,13 +2423,13 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
                   <tr>
                     <th>확인</th>
                     <td>
-                      <b>Current file</b>에 파일명이 표시되고, <b>Excel Viewer</b>에 데이터가 표시됩니다.
+                      <b>Current file</b> 영역에 파일명 표시, <b>Excel Viewer</b> 영역에 주문 데이터 표시
                     </td>
                   </tr>
                   <tr>
                     <th>차이</th>
                     <td>
-                      처음에는 색상이 없고, <b>Set</b> 적용 후 조건 결과가 색상으로 표시됩니다.
+                      <b>Set</b> 적용 후 조건 결과를 색상 기준으로 구분
                     </td>
                   </tr>
                 </tbody>
@@ -2432,10 +2438,10 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
           </section>
 
           <section className="guide-section" aria-labelledby="conditions-title">
-            <h3 id="conditions-title">2. 조건 설정</h3>
+            <h3 id="conditions-title">2. 조건 기준 설정</h3>
             <figure className="guide-figure guide-figure--medium">
               <img src={`${assetPath}/set-conditions-window.png`} alt="Set Conditions 창" />
-              <figcaption>Set Conditions: 컬럼 매핑, 옵션 수량, 조건 목록 설정</figcaption>
+              <figcaption>Set Conditions: 컬럼 매핑, 옵션 수량, 조건 목록 정의</figcaption>
             </figure>
             <div className="guide-table-wrap">
               <table>
@@ -2487,14 +2493,16 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
             </div>
             <ul className="guide-checklist">
               <li>
-                옵션명 옆 숫자는 실제 상품 수량입니다. 예: <code>멀티비타민 -30병</code> → <code>30</code>
+                옵션명 옆 숫자: 실제 상품 수량.
+                <br />
+                예: <code>멀티비타민 -30병</code> → <code>30</code>
               </li>
-              <li>컬럼 선택이 맞으면 하단 조건 목록을 조정합니다.</li>
+              <li>컬럼 매핑 확인 후 하단 조건 목록 기준 조정</li>
             </ul>
           </section>
 
           <section className="guide-section" aria-labelledby="priority-title">
-            <h3 id="priority-title">3. 조건 추가, 삭제, 우선순위</h3>
+            <h3 id="priority-title">3. 조건 추가, 삭제, 우선순위 관리</h3>
             <div className="guide-table-wrap">
               <table>
                 <thead>
@@ -2511,7 +2519,7 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
                     </td>
                     <td>새 조건 행 추가</td>
                     <td>
-                      필요한 조건만 추가하고, 불필요하면 <b>-</b>로 삭제
+                      필요 조건 추가, 불필요 조건은 <b>-</b>로 삭제
                     </td>
                   </tr>
                   <tr>
@@ -2526,21 +2534,25 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
                       <b>AND</b>
                     </td>
                     <td>선택 컬럼을 하나의 묶음으로 계산</td>
-                    <td>정확히 좁혀 찾을 때 사용</td>
+                    <td>정확한 조건 범위 산출</td>
                   </tr>
                   <tr>
                     <td>
                       <b>OR</b>
                     </td>
                     <td>선택 컬럼 중 하나라도 맞으면 포함</td>
-                    <td>넓게 훑어볼 때 사용</td>
+                    <td>확장 조건 탐색</td>
                   </tr>
                   <tr>
                     <td>
                       <b>Lv</b>
                     </td>
                     <td>조건 우선순위</td>
-                    <td>중요 조건은 낮은 숫자, 보조 조건은 높은 숫자</td>
+                    <td>
+                      <code>0</code>은 항상 실행되는 기본 조건
+                      <br />
+                      중요 조건은 낮은 숫자, 보조 조건은 높은 숫자
+                    </td>
                   </tr>
                   <tr>
                     <td>
@@ -2585,7 +2597,7 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
           </section>
 
           <section className="guide-section" aria-labelledby="search-title">
-            <h3 id="search-title">4. 검색</h3>
+            <h3 id="search-title">4. 결과 검색</h3>
             <figure className="guide-figure guide-figure--compact">
               <img src={`${assetPath}/search-window.png`} alt="Search 창" />
               <figcaption>
@@ -2594,7 +2606,7 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
             </figure>
             <ol className="guide-checklist">
               <li>
-                메인 화면에서 <b>Ctrl+F</b>
+                메인 화면 <b>Ctrl+F</b>
               </li>
               <li>
                 검색어 입력: <code>멀티비타민</code>
@@ -2607,7 +2619,7 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
           </section>
 
           <section className="guide-section" aria-labelledby="options-title">
-            <h3 id="options-title">5. Options</h3>
+            <h3 id="options-title">5. Export 옵션 설정</h3>
             <figure className="guide-figure guide-figure--small">
               <img src={`${assetPath}/options-window.png`} alt="Options 창" />
               <figcaption>Export 분리 저장 및 조건별 기본 검색 방식</figcaption>
@@ -2617,17 +2629,17 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
                 <tbody>
                   <tr>
                     <th>Export Split By Conditions</th>
-                    <td>조건별 결과 파일을 따로 저장합니다.</td>
+                    <td>조건별 결과 파일 분리 저장</td>
                   </tr>
                   <tr>
                     <th>조건별 기본 검색 방식</th>
                     <td>
-                      새 조건의 기본 <code>AND</code>/<code>OR</code> 값을 정합니다.
+                      신규 조건의 기본 <code>AND</code>/<code>OR</code> 값 정의
                     </td>
                   </tr>
                   <tr>
                     <th>Save</th>
-                    <td>변경한 옵션을 저장합니다.</td>
+                    <td>옵션 변경사항 저장</td>
                   </tr>
                 </tbody>
               </table>
@@ -2635,7 +2647,7 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
           </section>
 
           <section className="guide-section" aria-labelledby="export-title">
-            <h3 id="export-title">6. Export</h3>
+            <h3 id="export-title">6. 결과 파일 Export</h3>
             <div className="guide-table-wrap">
               <table>
                 <tbody>
@@ -2654,7 +2666,7 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
                   <tr>
                     <th>조건별 파일</th>
                     <td>
-                      <b>Export Split By Conditions</b>가 켜져 있을 때 추가 생성
+                      <b>Export Split By Conditions</b> 활성화 시 추가 생성
                     </td>
                   </tr>
                 </tbody>
@@ -2662,7 +2674,8 @@ function ExcelConditionPainterProjectPage({ onNavigate, themeMode, onThemeToggle
             </div>
             <div className="guide-note">
               <b>핵심:</b> 컬럼 매핑을 먼저 확인하고, <b>AND/OR</b>로 검색 범위를 정한 뒤, <b>Lv</b>와
-              색상으로 중요도를 구분하면 결과를 빠르게 읽을 수 있습니다.
+              <br />
+              색상 기준으로 중요도를 구분해 이벤트 주문 결과 확인 시간을 단축.
             </div>
           </section>
         </article>
@@ -2681,12 +2694,12 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
   const downloadDescriptions: Record<string, { title: string; description: string; buttonText: string }> = {
     'Release Download': {
       title: 'Release v1.0.0',
-      description: '배포 버전과 파일 확인',
+      description: '배포 버전 및 변경 이력 확인',
       buttonText: 'Release',
     },
     'Windows x64 ZIP': {
       title: 'Windows x64 ZIP',
-      description: '실행 파일 압축본',
+      description: 'Windows x64 실행 파일 압축본',
       buttonText: 'ZIP Download',
     },
   };
@@ -2695,19 +2708,19 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
       title: 'User 대화형',
       command: 'CPUMemoryStressTestCpp.exe',
       image: 'interactive-mode.png',
-      description: '질문에 답하면서 전체 테스트를 순서대로 실행합니다.',
+      description: '질문 기반 입력으로 전체 테스트 순차 실행',
     },
     {
       title: 'Shell',
       command: 'CPUMemoryStressTestCpp.exe shell',
       image: 'shell-mode.png',
-      description: 'stress> 프롬프트에서 여러 명령을 이어서 실행합니다.',
+      description: '전용 프롬프트에서 여러 테스트 명령 반복 실행',
     },
     {
       title: 'CLI',
       command: 'CPUMemoryStressTestCpp.exe run memory --preset quick',
       image: 'cli-mode.png',
-      description: '한 줄 명령으로 실행하고 JSON과 exit code를 반환합니다.',
+      description: '단일 명령으로 실행하고 JSON 결과와 exit code 반환',
     },
   ];
   const commandExamples = [
@@ -2741,32 +2754,32 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
     {
       name: 'Shell',
       command: 'list / run memory --preset quick / exit',
-      description: 'stress> 프롬프트에서 실행 파일명 없이 명령만 입력합니다.',
+      description: '전용 프롬프트에서 실행 파일명 없이 명령 입력',
     },
     {
       name: 'CLI',
       command: 'CPUMemoryStressTestCpp.exe run memory --preset quick',
-      description: '실행 파일 뒤에 명령을 붙여 JSON과 exit code를 받습니다.',
+      description: '실행 파일 뒤에 명령을 전달해 JSON 결과와 exit code 수집',
     },
     {
       name: 'list',
       command: 'CPUMemoryStressTestCpp.exe list',
-      description: '사용 가능한 테스트 ID를 확인합니다.',
+      description: '등록된 테스트 ID 확인',
     },
     {
       name: '--preset',
       command: '--preset quick | normal | heavy | extreme',
-      description: '테스트 부하 크기를 선택합니다.',
+      description: '테스트 부하 수준 선택',
     },
     {
       name: '--repeat',
       command: '--repeat 3',
-      description: '같은 검사를 지정한 횟수만큼 반복합니다.',
+      description: '동일 테스트 반복 실행 횟수 지정',
     },
     {
       name: '--save-csv',
       command: '--save-csv [--csv-dir C:\\Csv]',
-      description: '--csv-dir이 없으면 바탕화면의 StressTestResult 폴더에 자동 저장합니다.',
+      description: 'CSV 저장 활성화 및 저장 경로 지정',
     },
   ];
   const savedResultExamples = [
@@ -2832,13 +2845,15 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
     <div className="site-shell" data-theme={themeMode}>
       <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
-      <main className="project-detail-page" id="top">
+      <main className="project-detail-page github-project-page cpu-memory-page" id="top">
         <section className="project-detail-hero" aria-labelledby="cpu-memory-stress-test-title">
           <div className="project-detail-hero-copy">
-            <p className="section-kicker">Project Guide</p>
+            <p className="section-kicker">Test Automation</p>
             <h1 id="cpu-memory-stress-test-title">{project?.title ?? 'CPUMemoryStressTest'}</h1>
             <p className="project-detail-lead">
-              CPU/Memory 부하 테스트를 세 가지 방식으로 실행하고 JSON/CSV로 기록하는 C++20 콘솔 도구입니다.
+              CPU/Memory 부하 테스트 실행 방식을 대화형, Shell, CLI로 표준화하고 JSON/CSV 결과 수집을 지원하는 C++20 콘솔 기반 검증 도구.
+              <br />
+              테스트 Registry와 Writer 계층을 분리해 자동화 실행, 반복 측정, 결과 저장 흐름을 구조화.
             </p>
             <div className="tech-list project-detail-tech-list" aria-label="CPUMemoryStressTest 기술 스택">
               {(project?.tech ?? ['C++20', 'WinAPI', 'STL', 'JSON CLI']).map((tech) => (
@@ -2854,7 +2869,7 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
               </div>
             ) : null}
           </div>
-          <figure className="project-detail-hero-media project-detail-hero-media--console">
+          <figure className="project-detail-hero-media project-detail-hero-media--console github-project-hero-media cpu-memory-hero-media">
             <img src={`${assetPath}/main-console.png`} alt="CPUMemoryStressTest CLI 실행 화면" />
           </figure>
         </section>
@@ -2863,16 +2878,16 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
           <section className="project-download-section" aria-labelledby="cpu-download-title">
             <div className="project-download-copy">
               <p className="section-kicker">Downloads</p>
-              <h2 id="cpu-download-title">Release 다운로드</h2>
+              <h2 id="cpu-download-title">실행 파일 및 배포 정보</h2>
               <p>
-                <b>v1.0.0</b> Windows x64 실행 ZIP을 제공합니다.
+                Windows x64 환경에서 실행 가능한 배포 파일과 릴리즈 정보
               </p>
             </div>
             <div className="project-download-grid">
               {downloadLinks.map((link) => {
                 const detail = downloadDescriptions[link.label] ?? {
                   title: link.label,
-                  description: '관련 배포 파일',
+                  description: '관련 배포 파일 확인',
                   buttonText: 'Open',
                 };
 
@@ -2891,29 +2906,28 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
           </section>
         ) : null}
 
-        <article className="project-guide" aria-labelledby="cpu-guide-title">
+        <article className="project-guide github-project-guide cpu-project-guide" aria-labelledby="cpu-guide-title">
           <header className="project-guide-header">
-            <p className="section-kicker">Run Modes</p>
-            <h2 id="cpu-guide-title">상황에 맞게 고르는 3가지 실행 방식</h2>
+            <p className="section-kicker">Execution Design</p>
+            <h2 id="cpu-guide-title">실행 모드와 결과 수집 구조</h2>
             <p>
-              캡처 이미지는 모두 실제 CMD 창만 다시 캡처한 화면입니다.
-              <br />
-              핵심 사용 방식과 출력 흐름만 간단히 정리했습니다.
+              대화형 실행, Shell 반복 실행, CLI 자동화 실행을 동일 테스트 Registry 기준으로 구성.
+              실제 CMD 캡처를 기준으로 입력 방식과 출력 흐름을 정리.
             </p>
           </header>
 
           <ol className="guide-flow cpu-guide-flow" aria-label="CPUMemoryStressTest 실행 방식">
             <li>
               <strong>1. User</strong>
-              <span>질문에 답하며 실행</span>
+              <span>대화형 입력 실행</span>
             </li>
             <li>
               <strong>2. Shell</strong>
-              <span>반복 명령 실행</span>
+              <span>반복 테스트 실행</span>
             </li>
             <li>
               <strong>3. CLI</strong>
-              <span>자동화와 JSON 출력</span>
+              <span>자동화 결과 수집</span>
             </li>
           </ol>
 
@@ -2993,11 +3007,11 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
               ))}
             </div>
             <div className="guide-note">
-              <code>run all --preset quick --repeat 3 --save-csv --csv-dir C:\Csv</code> 결과를 검사별 TXT 파일로 열어 확인했습니다.
+              <code>run all --preset quick --repeat 3 --save-csv --csv-dir C:\Csv</code> 실행 결과를 검사별 TXT/CSV 파일로 분리 저장.
               <br />
-              <code>--repeat</code> 값을 주면 같은 검사를 지정한 횟수만큼 실행해 결과를 여러 줄로 저장합니다.
+              <code>--repeat</code> 값으로 동일 테스트를 지정 횟수만큼 실행하고 결과를 누적 저장.
               <br />
-              <code>--csv-dir</code>을 생략하면 <code>바탕화면\StressTestResult\yyyyMMdd_HHmmss</code> 폴더가 자동 생성됩니다.
+              <code>--csv-dir</code> 생략 시 <code>바탕화면\StressTestResult\yyyyMMdd_HHmmss</code> 폴더 자동 생성.
             </div>
           </section>
 
@@ -3045,7 +3059,7 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
               </table>
             </div>
             <div className="guide-note">
-              <b>핵심:</b> <code>extreme</code>은 실수로 실행되지 않도록 shell 또는 대화형 모드에서 확인 입력을 거칩니다.
+              <b>안전장치:</b> <code>extreme</code>은 의도치 않은 고부하 실행 방지를 위해 shell 또는 대화형 모드에서 확인 입력 후 실행.
             </div>
           </section>
 
@@ -3060,8 +3074,8 @@ function CPUMemoryStressTestProjectPage({ onNavigate, themeMode, onThemeToggle }
               <span>JsonResultWriter</span>
             </div>
             <div className="guide-note">
-              테스트는 <code>IStressTest</code> 전략으로 분리하고, <code>TestRegistry</code>에서 ID 기반으로 찾아 실행합니다.
-              출력은 JSON/CSV Writer로 나눠 실행 로직과 저장 형식을 분리했습니다.
+              <code>IStressTest</code> 전략과 <code>TestRegistry</code> ID 매핑으로 실행 대상을 분리.
+              JSON/CSV Writer를 별도 계층으로 구성해 테스트 실행 로직과 저장 형식을 분리.
             </div>
           </section>
         </article>
@@ -3081,22 +3095,22 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
 
     'Windows x64 EXE': {
       title: 'Windows x64 EXE',
-      description: '',
+      description: 'RFID 충돌 탐색 시뮬레이션 실행 파일',
       buttonText: 'Download',
     },
   };
   const searchStates = [
     {
       state: 'Empty',
-      description: '현재 Prefix와 일치하는 TAG가 없어 해당 분기를 종료합니다.',
+      description: '현재 Prefix와 일치하는 TAG가 없는 종료 상태',
     },
     {
       state: 'Success',
-      description: 'TAG가 1개만 응답해 식별에 성공하고 발견 목록에 추가합니다.',
+      description: '단일 TAG 응답으로 식별에 성공한 상태',
     },
     {
       state: 'Collision',
-      description: '2개 이상의 TAG가 응답하면 Prefix에 0과 1을 붙여 하위 분기를 탐색합니다.',
+      description: '복수 TAG 응답으로 하위 Prefix 탐색이 필요한 상태',
     },
   ];
   const comparisonRows = [
@@ -3111,17 +3125,15 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
     <div className="site-shell" data-theme={themeMode}>
       <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
-      <main className="project-detail-page" id="top">
+      <main className="project-detail-page github-project-page rfid-project-page" id="top">
         <section className="project-detail-hero" aria-labelledby="rfid-collision-search-simulator-title">
           <div className="project-detail-hero-copy">
-            <p className="section-kicker">Project Guide</p>
+            <p className="section-kicker">Algorithm Simulation</p>
             <h1 id="rfid-collision-search-simulator-title">{project?.title ?? 'RFID Collision Search Simulator'}</h1>
             <p className="project-detail-lead">
-              Prefix 질의로 RFID TAG 충돌을 탐색하고,
+              RFID TAG 충돌 탐색 문제를 Prefix 질의 모델로 추상화하고 동일 입력을 재귀 방식과 반복 방식으로 비교한 C++ 콘솔 시뮬레이터.
               <br />
-              같은 문제를 재귀 방식과 반복 방식으로 풀어
-              <br />
-              결과를 비교하는 C++ 콘솔 시뮬레이터입니다.
+              탐색 상태, 질의 횟수, 충돌 횟수, 실행 시간을 동일 기준으로 출력해 알고리즘 동작을 검증.
             </p>
             <div className="tech-list project-detail-tech-list" aria-label="RFID Collision Search Simulator 기술 스택">
               {(project?.tech ?? ['C++', 'STL', 'Visual Studio 2022']).map((tech) => (
@@ -3137,7 +3149,7 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
               </div>
             ) : null}
           </div>
-          <figure className="project-detail-hero-media project-detail-hero-media--console project-detail-hero-media--rfid">
+          <figure className="project-detail-hero-media project-detail-hero-media--console project-detail-hero-media--rfid github-project-hero-media rfid-hero-media">
             <img src={`${assetPath}/main-image.png`} alt="RFID Collision Search Simulator preset 실행 화면" />
           </figure>
         </section>
@@ -3146,16 +3158,16 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
           <section className="project-download-section" aria-labelledby="rfid-download-title">
             <div className="project-download-copy">
               <p className="section-kicker">Downloads</p>
-              <h2 id="rfid-download-title">실행 파일 다운로드</h2>
+              <h2 id="rfid-download-title">Windows 실행 파일</h2>
               <p>
-                Windows x64 콘솔 실행 파일입니다.
+                RFID 충돌 탐색 시뮬레이션을 실행할 수 있는 Windows x64 콘솔 실행 파일
               </p>
             </div>
             <div className="project-download-grid rfid-download-grid">
               {downloadLinks.map((link) => {
                 const detail = downloadDescriptions[link.label] ?? {
                   title: link.label,
-                  description: '프로젝트에서 제공하는 관련 배포 파일입니다.',
+                  description: '관련 배포 파일',
                   buttonText: 'Open',
                 };
 
@@ -3176,29 +3188,26 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
 
         <article className="project-guide rfid-project-guide" aria-labelledby="rfid-guide-title">
           <header className="project-guide-header">
-            <p className="section-kicker">Usage Flow</p>
-            <h2 id="rfid-guide-title">Prefix 충돌 탐색 흐름 확인</h2>
+            <p className="section-kicker">Algorithm Flow</p>
+            <h2 id="rfid-guide-title">Prefix 기반 충돌 탐색 검증 흐름</h2>
             <p>
-              캡처 이미지는 실제 Release 실행 파일을
-              <br />
-              <code>1</code>번 preset 데이터로 실행한 출력입니다.
-              <br />
-              입력 방식, 탐색 로그, 최종 비교 결과를 정리했습니다.
+              Release 실행 파일을 preset 데이터로 실행한 실제 출력 기준.
+              입력 데이터 선택, 탐색 로그, 재귀/반복 결과 비교 흐름으로 구성.
             </p>
           </header>
 
           <ol className="guide-flow rfid-guide-flow" aria-label="RFID Collision Search Simulator 실행 흐름">
             <li>
               <strong>1. Preset</strong>
-              <span>정해진 TAG 데이터 선택</span>
+              <span>Preset TAG 데이터 선택</span>
             </li>
             <li>
               <strong>2. Search Log</strong>
-              <span>재귀/반복 로그와 전위 우선 흐름</span>
+              <span>재귀/반복 탐색 로그</span>
             </li>
             <li>
               <strong>3. Compare</strong>
-              <span>결과와 탐색 지표 비교</span>
+              <span>탐색 결과 및 지표 비교</span>
             </li>
           </ol>
 
@@ -3207,7 +3216,7 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
             <figure className="guide-figure guide-figure--console rfid-console-figure">
               <img src={`${assetPath}/preset-tags.png`} alt="정해진 TAG 데이터 선택과 TAG 목록 출력" />
               <figcaption>
-                1. 정해진 데이터를 선택하면 4bit TAG 5개로 충돌 탐색을 시작합니다.
+                4bit TAG 5개로 Prefix 충돌 탐색 시작
               </figcaption>
             </figure>
           </section>
@@ -3218,25 +3227,25 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
               <figure>
                 <img src={`${assetPath}/recursive-search.png`} alt="재귀 방식 Prefix 탐색 로그" />
                 <figcaption>
-                  재귀 방식: 함수 호출로 하위 Prefix를 깊게 탐색합니다.
+                  재귀 방식: 함수 호출 기반 하위 Prefix 깊이 탐색
                 </figcaption>
               </figure>
               <figure>
                 <img src={`${assetPath}/iterative-search.png`} alt="반복 방식 Prefix 탐색 로그" />
                 <figcaption>
-                  반복 방식: Stack으로 같은 Prefix 탐색 순서를 재현합니다.
+                  반복 방식: Stack 기반 탐색 대상 Prefix 관리
                 </figcaption>
               </figure>
             </div>
             <figure className="guide-figure guide-figure--tree rfid-preorder-figure">
               <img src={`${assetPath}/preorder-tree.svg`} alt="RFID Prefix 트리의 전위 우선 탐색 방문 순서" />
               <figcaption>
-                두 구현 방식 모두 현재 Prefix를 먼저 평가한 뒤 0 분기와 1 분기로 내려가는 전위 우선 순서를 따릅니다.
+                두 구현 모두 현재 Prefix 평가 후 0/1 하위 분기로 이동하는 전위 우선 순서 적용
               </figcaption>
             </figure>
             <div className="guide-note rfid-preorder-note">
-              <b>핵심:</b> 로그의 Cycle 순서는 Prefix 트리를 전위 우선으로 방문한 결과입니다.
-              충돌이 발생한 Prefix에서만 <code>prefix + "0"</code>, <code>prefix + "1"</code> 하위 질의를 이어갑니다.
+              <b>탐색 기준:</b> 로그의 Cycle 순서는 Prefix 트리 전위 우선 방문 결과.
+              충돌 Prefix에서만 <code>prefix + "0"</code>, <code>prefix + "1"</code> 하위 질의 확장.
             </div>
           </section>
 
@@ -3245,7 +3254,7 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
             <figure className="guide-figure guide-figure--console rfid-console-figure">
               <img src={`${assetPath}/comparison-summary.png`} alt="반복 방식 탐색 로그와 재귀 반복 비교 결과" />
               <figcaption>
-                두 방식 모두 같은 TAG를 발견하고, 질의 횟수, 충돌 횟수, 실행 시간을 함께 비교합니다.
+                동일 TAG 발견 여부, 질의 횟수, 충돌 횟수, 실행 시간 비교
               </figcaption>
             </figure>
             <div className="guide-table-wrap">
@@ -3281,8 +3290,8 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
               ))}
             </div>
             <div className="guide-note">
-              Prefix는 <code>ROOT</code>에서 시작해 충돌이 발생한 분기만 <code>0</code>, <code>1</code>로 확장합니다.
-              이 과정을 통해 불필요한 TAG 분기를 건너뛰면서 식별 가능한 TAG를 수집합니다.
+              <code>ROOT</code>에서 시작해 충돌 분기만 <code>0</code>, <code>1</code>로 확장.
+              불필요한 TAG 분기를 제외하면서 식별 가능한 TAG 수집.
             </div>
           </section>
 
@@ -3297,8 +3306,8 @@ function RFIDCollisionSearchSimulatorProjectPage({ onNavigate, themeMode, onThem
               <span>Comparison</span>
             </div>
             <div className="guide-note">
-              TAG 생성 방식은 <code>ITagProvider</code>로, 탐색 알고리즘은 <code>ITagSearcher</code>로 분리했습니다.
-              그래서 preset, 직접 입력, 랜덤 TAG 생성과 재귀/반복 탐색을 서로 독립적으로 교체할 수 있습니다.
+              TAG 생성은 <code>ITagProvider</code>, 탐색 알고리즘은 <code>ITagSearcher</code>로 분리.
+              preset, 직접 입력, 랜덤 TAG 생성과 재귀/반복 탐색 방식을 독립적으로 교체 가능한 구조.
             </div>
           </section>
         </article>
