@@ -8,8 +8,31 @@
       content="WinFormsCustomControls는 .NET Framework 4.8 기반 WinForms 프로젝트에서 반복되는 UI 패턴을 DLL 기반 커스텀 컨트롤로 표준화한 재사용 라이브러리입니다."
     />
     <title>WinFormsCustomControls | GrownDombo Portfolio</title>
+    <script>
+      (() => {
+        const themeStorageKey = 'growndombo-theme';
+        const isThemeMode = (value) => value === 'light' || value === 'dark';
+
+        try {
+          const storedTheme = window.localStorage.getItem(themeStorageKey);
+
+          if (isThemeMode(storedTheme)) {
+            document.documentElement.dataset.theme = storedTheme;
+            return;
+          }
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+          return;
+        }
+
+        document.documentElement.dataset.theme = window.matchMedia?.('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
+      })();
+    </script>
     <style>
       :root {
+        color-scheme: light;
         color: #172033;
         background: #ffffff;
         font-family:
@@ -28,6 +51,62 @@
         --accent: #38bdf8;
         --green: #0f766e;
         --shadow: 0 22px 62px rgb(37 99 235 / 11%);
+        --body-bg: linear-gradient(180deg, #ffffff 0%, #f7f9fc 52%, #ffffff 100%);
+        --brand-mark-text: #ffffff;
+        --nav-hover-bg: #e8f1ff;
+        --chip-color: #1e3a5f;
+        --chip-bg: #eaf3ff;
+        --button-primary-text: #ffffff;
+        --button-primary-bg: var(--ink);
+        --button-secondary-text: var(--ink);
+        --button-secondary-bg: #ffffff;
+        --media-bg: #ffffff;
+        --preview-bg: #f8fbff;
+        --card-shadow: 0 16px 42px rgb(37 99 235 / 8%);
+        --code-bg: #ecfdf5;
+        --flow-text: #334155;
+        --table-border: #d7dee8;
+        --table-th-text: #16324f;
+        --table-th-bg: #f1f6fb;
+        --table-td-text: #334155;
+        --notice: #8a94a6;
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        color: #edf6ff;
+        background: #07111f;
+        --ink: #edf6ff;
+        --muted: #aab8ca;
+        --line: #26364c;
+        --paper: #101b2c;
+        --soft: #0b1422;
+        --blue: #7dd3fc;
+        --sky: #38bdf8;
+        --accent: #a5f3fc;
+        --green: #6ee7b7;
+        --shadow: 0 22px 62px rgb(0 0 0 / 28%);
+        --body-bg:
+          radial-gradient(circle at 18% 0%, rgb(37 99 235 / 16%), transparent 34%),
+          linear-gradient(180deg, #08111f 0%, #0c1727 52%, #07111f 100%);
+        --brand-mark-text: #06202f;
+        --nav-hover-bg: rgb(125 211 252 / 14%);
+        --chip-color: #b9ecff;
+        --chip-bg: rgb(56 189 248 / 14%);
+        --button-primary-text: #07111f;
+        --button-primary-bg: #edf6ff;
+        --button-secondary-text: #edf6ff;
+        --button-secondary-bg: #101b2c;
+        --media-bg: #0b1220;
+        --preview-bg: #0b1422;
+        --card-shadow: 0 18px 48px rgb(0 0 0 / 24%);
+        --code-bg: rgb(16 185 129 / 13%);
+        --flow-text: #d6e2f1;
+        --table-border: #2b3b52;
+        --table-th-text: #b9ecff;
+        --table-th-bg: #132238;
+        --table-td-text: #d6e2f1;
+        --notice: #8796aa;
       }
 
       * {
@@ -42,7 +121,7 @@
         margin: 0;
         min-width: 320px;
         color: var(--ink);
-        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 52%, #ffffff 100%);
+        background: var(--body-bg);
       }
 
       a {
@@ -78,6 +157,14 @@
         padding: 18px 0;
       }
 
+      .header-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        min-width: 0;
+      }
+
       .brand {
         display: inline-flex;
         align-items: center;
@@ -92,7 +179,7 @@
         width: 38px;
         height: 38px;
         border-radius: 8px;
-        color: #ffffff;
+        color: var(--brand-mark-text);
         background: var(--blue);
         box-shadow: 0 10px 28px rgb(37 99 235 / 24%);
       }
@@ -101,7 +188,9 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        flex: 1 1 auto;
         gap: 6px;
+        min-width: 0;
         overflow-x: auto;
       }
 
@@ -118,8 +207,47 @@
       .nav-links a:hover,
       .nav-links a:focus-visible {
         color: var(--ink);
-        background: #e8f1ff;
+        background: var(--nav-hover-bg);
         outline: none;
+      }
+
+      .theme-toggle {
+        display: inline-grid;
+        place-items: center;
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: var(--ink);
+        background: var(--paper);
+        cursor: pointer;
+        box-shadow: 0 10px 28px rgb(15 23 42 / 8%);
+      }
+
+      .theme-toggle:hover,
+      .theme-toggle:focus-visible {
+        color: var(--blue);
+        border-color: color-mix(in srgb, var(--blue) 42%, var(--line));
+        outline: none;
+        transform: translateY(-1px);
+      }
+
+      .theme-toggle svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .theme-icon-light {
+        display: none;
+      }
+
+      :root[data-theme="dark"] .theme-icon-light {
+        display: block;
+      }
+
+      :root[data-theme="dark"] .theme-icon-dark {
+        display: none;
       }
 
       main {
@@ -177,8 +305,8 @@
       .tech-list span {
         padding: 7px 10px;
         border-radius: 8px;
-        color: #1e3a5f;
-        background: #eaf3ff;
+        color: var(--chip-color);
+        background: var(--chip-bg);
         font-size: 0.9rem;
         font-weight: 800;
       }
@@ -200,13 +328,13 @@
       }
 
       .button.primary {
-        color: #ffffff;
-        background: var(--ink);
+        color: var(--button-primary-text);
+        background: var(--button-primary-bg);
       }
 
       .button.secondary {
-        color: var(--ink);
-        background: #ffffff;
+        color: var(--button-secondary-text);
+        background: var(--button-secondary-bg);
         border-color: var(--line);
       }
 
@@ -235,7 +363,7 @@
         height: auto;
         border: 1px solid var(--line);
         border-radius: 4px;
-        background: #ffffff;
+        background: var(--media-bg);
         box-shadow: var(--shadow);
       }
 
@@ -309,7 +437,7 @@
         border: 1px solid var(--line);
         border-radius: 8px;
         background: var(--paper);
-        box-shadow: 0 16px 42px rgb(37 99 235 / 8%);
+        box-shadow: var(--card-shadow);
       }
 
       .why-card strong {
@@ -347,7 +475,7 @@
         border: 1px solid var(--line);
         border-radius: 8px;
         background: var(--paper);
-        box-shadow: 0 16px 42px rgb(37 99 235 / 8%);
+        box-shadow: var(--card-shadow);
       }
 
       .control-card-preview {
@@ -357,7 +485,7 @@
         margin: 0;
         padding: 10px;
         border-bottom: 1px solid var(--line);
-        background: #f8fbff;
+        background: var(--preview-bg);
       }
 
       .control-card-preview img {
@@ -365,7 +493,7 @@
         height: 168px;
         border-radius: 6px;
         object-fit: contain;
-        background: #ffffff;
+        background: var(--media-bg);
       }
 
       .control-card-body {
@@ -388,7 +516,7 @@
         padding: 2px 5px;
         border-radius: 5px;
         color: var(--green);
-        background: #ecfdf5;
+        background: var(--code-bg);
         font-size: 0.93em;
         font-weight: 800;
         line-height: 1.45;
@@ -410,8 +538,8 @@
         padding: 14px;
         border: 1px solid var(--line);
         border-radius: 8px;
-        background: #ffffff;
-        box-shadow: 0 12px 34px rgb(37 99 235 / 7%);
+        background: var(--paper);
+        box-shadow: var(--card-shadow);
       }
 
       .flow-list strong {
@@ -420,7 +548,7 @@
       }
 
       .flow-list span {
-        color: #334155;
+        color: var(--flow-text);
         font-size: 0.92rem;
         font-weight: 800;
         line-height: 1.35;
@@ -441,21 +569,21 @@
       .usage-table th,
       .usage-table td {
         padding: 12px 14px;
-        border: 1px solid #d7dee8;
+        border: 1px solid var(--table-border);
         text-align: left;
         vertical-align: top;
       }
 
       .usage-table th {
         width: 22%;
-        color: #16324f;
-        background: #f1f6fb;
+        color: var(--table-th-text);
+        background: var(--table-th-bg);
         font-weight: 900;
       }
 
       .usage-table td {
-        color: #334155;
-        background: #ffffff;
+        color: var(--table-td-text);
+        background: var(--paper);
       }
 
       .download-grid {
@@ -469,7 +597,7 @@
 
       .analytics-notice {
         margin: 42px 0 28px;
-        color: #8a94a6;
+        color: var(--notice);
         font-size: 0.76rem;
         line-height: 1.5;
         text-align: center;
@@ -482,8 +610,14 @@
           gap: 12px;
         }
 
-        .nav-links {
+        .header-actions {
           width: 100%;
+          justify-content: space-between;
+        }
+
+        .nav-links {
+          width: auto;
+          flex: 1 1 auto;
           justify-content: flex-start;
           padding-bottom: 2px;
         }
@@ -578,13 +712,37 @@
         <span class="brand-mark">GD</span>
         <span>최준영 / GrownDombo</span>
       </a>
-      <nav class="nav-links" aria-label="주요 섹션">
-        <a href="/#metrics">정량 성과</a>
-        <a href="/#work-cases">업무 개선</a>
-        <a href="/#projects">GitHub</a>
-        <a href="/#experience">경력</a>
-        <a href="/#skills">기술</a>
-      </nav>
+      <div class="header-actions">
+        <nav class="nav-links" aria-label="주요 섹션">
+          <a href="/#metrics">정량 성과</a>
+          <a href="/#work-cases">업무 개선</a>
+          <a href="/#projects">GitHub</a>
+          <a href="/#experience">경력</a>
+          <a href="/#skills">기술</a>
+        </nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="다크 모드로 보기">
+          <svg class="theme-icon-dark" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M21 12.8A8.4 8.4 0 0 1 11.2 3a7 7 0 1 0 9.8 9.8Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            />
+          </svg>
+          <svg class="theme-icon-light" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+            <path
+              d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="2"
+            />
+          </svg>
+        </button>
+      </div>
     </header>
 
     <main id="top">
@@ -789,5 +947,40 @@
 
       <p class="analytics-notice">이 사이트는 방문 통계 분석을 위해 Google Analytics를 사용합니다.</p>
     </main>
+    <script>
+      (() => {
+        const themeStorageKey = 'growndombo-theme';
+        const root = document.documentElement;
+        const toggleButton = document.getElementById('theme-toggle');
+        const isThemeMode = (value) => value === 'light' || value === 'dark';
+
+        const syncToggleLabel = (theme) => {
+          if (!toggleButton) {
+            return;
+          }
+
+          toggleButton.setAttribute('aria-label', theme === 'dark' ? '라이트 모드로 보기' : '다크 모드로 보기');
+        };
+
+        const setThemeMode = (theme) => {
+          root.dataset.theme = theme;
+          syncToggleLabel(theme);
+
+          try {
+            window.localStorage.setItem(themeStorageKey, theme);
+          } catch {
+            // Theme persistence is optional; visual switching still works without storage access.
+          }
+        };
+
+        const currentTheme = isThemeMode(root.dataset.theme) ? root.dataset.theme : 'light';
+        syncToggleLabel(currentTheme);
+
+        toggleButton?.addEventListener('click', () => {
+          const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+          setThemeMode(nextTheme);
+        });
+      })();
+    </script>
   </body>
 </html>
