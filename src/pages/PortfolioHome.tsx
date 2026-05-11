@@ -40,8 +40,8 @@ export function PortfolioHome({
       category: '시간',
       resultLabel: '개선율',
       graphLabel: '99%',
-      before: '6분 20초',
-      after: '3초',
+      before: '6분 22초',
+      after: '3.5초',
       fill: 99,
     },
     {
@@ -161,10 +161,10 @@ export function PortfolioHome({
                 <h1 id="hero-title">{profile.headline}</h1>
                 <p className="hero-summary">{profile.summary}</p>
                 <div className="hero-focus-list" aria-label="핵심 작업 영역">
-                  <span>Windows Application</span>
-                  <span>공정 자동화</span>
-                  <span>생산 시스템 연동</span>
-                  <span>성능 최적화</span>
+                  <span>C#/.NET</span>
+                  <span>AOI 성능 최적화</span>
+                  <span>MES·SECS-GEM</span>
+                  <span>WinForms/C++ 유지보수</span>
                 </div>
               </div>
             </section>
@@ -252,7 +252,7 @@ export function PortfolioHome({
             <div>
               <p className="section-kicker">GitHub Projects</p>
               <h2 id="projects-title">개인 GitHub 프로젝트</h2>
-              <p className="section-heading-copy">직접 설계·구현하고 공개한 Windows 도구 및 알고리즘 기반 프로젝트</p>
+              <p className="section-heading-copy">공개 코드, 설계 구조, 완성도를 확인할 수 있는 개인 프로젝트</p>
             </div>
           </div>
 

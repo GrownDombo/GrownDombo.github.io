@@ -21,7 +21,7 @@ export const gerberPartMatchingMockups = [
 ];
 
 export const gerberPartPerformanceSummary = {
-  before: '~6m 20s',
+  before: '~6m 22s',
   after: '~3.5s',
   reduction: '99%+',
 };
@@ -33,9 +33,7 @@ export const gerberPartPerformanceScale = [
 ];
 
 export const gerberPartMeasurementNotes = [
-  '동일 검사 데이터에서 Start/End 로그 타임스탬프 기준으로 처리 시간 산출',
-  '개선 전/후 각각 2회 실행 후 평균값으로 비교',
-  '평균 처리 시간 6분 22.711초에서 3.5155초로 단축',
+  '동일 검사 데이터에서 Start/End 로그 기준 개선 전후 2회 평균 비교',
 ];
 
 export const gerberPartReportTech = [
@@ -50,17 +48,17 @@ export const gerberPartOptimizationSteps = [
   {
     icon: Target,
     title: 'Module 후보군 선별',
-    description: 'Module 영역 기준으로 Gerber 후보군을 먼저 좁혀 전체 순회 범위를 제한',
+    description: 'Module 영역 기준으로 비교 대상 Gerber ROI를 먼저 축소',
   },
   {
     icon: Box,
     title: '변환 결과 캐싱',
-    description: 'Gerber ROI 변환 결과를 재사용해 동일 좌표 계산의 반복 수행을 감소',
+    description: 'Gerber ROI 변환 결과를 재사용해 반복 계산 감소',
   },
   {
     icon: CheckCircle,
     title: '기존 흐름 호환',
-    description: '기존 매칭 결과 형식을 유지해 후속 검사 흐름 영향 없이 적용',
+    description: '기존 매칭 결과 형식을 유지해 후속 영향 최소화',
   },
 ];
 
@@ -108,11 +106,10 @@ export const structurePartGerberLinks = [
 ];
 
 export const gerberPartRoleItems = [
-  '대용량 ROI 매칭 병목 구간 분석 및 개선 방향 수립',
-  'Module 단위 Gerber 후보군 선별 로직 설계 및 구현',
-  'Gerber ROI 변환 결과 캐싱 구조 적용',
-  '실행 로그 기반 처리 시간 측정 및 개선 효과 검증',
-  '기존 검사 결과 포맷과 후속 처리 흐름의 호환성 검증',
+  'Start/End 로그 기반 병목 확인',
+  'Module 후보군 선별 로직 구현',
+  'Gerber ROI 변환 캐싱 적용',
+  '기존 결과 포맷 호환성 검증',
 ];
 
 export const gerberPartKeywordItems = [
@@ -147,22 +144,22 @@ export const integrationDirectionSteps = [
   {
     icon: Database,
     title: '생산 이벤트 표준화',
-    description: 'Job, Barcode, Result, Alarm을 공통 생산 이벤트 기준으로 정리',
+    description: 'Job, Barcode, Result, Alarm 기준을 공통화',
   },
   {
     icon: Layers,
     title: '생성·전송·응답 책임 분리',
-    description: '요청 데이터 생성, 전송 분기, 응답 반영을 역할별로 정리',
+    description: '요청 생성, 전송 분기, 응답 반영 역할 분리',
   },
   {
     icon: CheckCircle,
     title: 'SECS/GEM 확장 계층',
-    description: '공통 처리 계약과 고객사별 Override 지점을 분리',
+    description: '공통 계약과 고객사별 Override 지점 분리',
   },
   {
     icon: Gauge,
     title: 'TCP/IP 메시지 안정화',
-    description: 'Header/Length 기반 Packet Framing으로 메시지 경계 처리 안정화',
+    description: 'Header/Length 기반으로 메시지 경계 안정화',
   },
 ];
 
@@ -203,37 +200,29 @@ export const integrationResultItems = [
   {
     title: '연동 이슈 메일',
     metric: '약 70% 감소',
-    description: '반복 장애 유형을 공통 처리 기준으로 정리하여 운영 이슈 감소',
-  },
-  {
-    title: '장애 대응 시간',
-    metric: '약 40% 단축',
-    description: '이벤트-전송-응답 흐름 기준으로 원인 추적 범위 축소',
+    description: '반복 장애 유형을 공통 처리 기준으로 정리',
   },
   {
     title: '신규 고객사 연동',
     metric: '10개 이상',
-    description: '공통 계약과 확장 지점 분리로 고객사별 시나리오 대응성 강화',
+    description: '공통 계약과 확장 지점 분리로 대응',
   },
   {
     title: '운영 추적성',
     metric: '추적 체계화',
-    description: '생산 이벤트, 전송, 응답, 로그를 연결한 추적 구조 확보',
+    description: '이벤트, 전송, 응답, 로그 기준 정리',
   },
 ];
 
 export const integrationMeasurementNotes = [
-  '사내 이슈 관리 시스템에 등록된 연동 이슈를 개선 전후 각 6개월 단위로 비교',
-  '이슈 발생 건수와 처리 완료까지의 소요 시간을 기준으로 산정',
+  '사내 이슈 관리 시스템의 개선 전후 6개월 연동 이슈 내역 비교',
 ];
 
 export const integrationRoleItems = [
-  '생산 연동 요구사항 및 기존 분기 구조 분석',
-  'Job, Barcode, Result, Alarm 기준 공통 생산 이벤트 기준 정리',
-  '요청 데이터 생성, 전송 분기, 응답 반영 책임 분리',
-  'SECS/GEM 공통 계약 및 고객사별 Override 구조 분리',
-  'TCP/IP 패킷 구성, 응답 처리, 예외 케이스 검증',
-  '이벤트-전송-응답 기준 로그 추적 체계 정리',
+  '기존 분기 구조와 장애 유형 분석',
+  '공통 생산 이벤트 기준 정리',
+  '생성·전송·응답 책임 분리',
+  'SECS/GEM Override 구조 정리',
 ];
 
 export const integrationKeywordItems = [
