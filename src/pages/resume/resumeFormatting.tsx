@@ -16,10 +16,6 @@ export function splitMetricText(metric: string, highlightTitle: string) {
         label: '장애 이슈 관련 메일 발생량 감소',
         result: '전분기 대비 약 70% 감소',
       },
-      '운영 구조 표준화로 장애 대응 시간 약 40% 단축': {
-        label: '운영 구조 표준화 후 장애 대응 시간 단축',
-        result: '약 40% 단축',
-      },
       '10개 이상 신규 고객사 생산 시스템 연동 시나리오 개발': {
         label: '신규 고객사 유치 및 생산 시스템 연동',
         result: '시나리오 10개 이상 개발',
