@@ -1,0 +1,790 @@
+@media (max-width: 980px) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .site-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: flex-start;
+    padding-bottom: 2px;
+  }
+
+  .hero-section,
+  .portfolio-hero,
+  .portfolio-home-layout,
+  .two-column,
+  .contact-section {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-home-layout {
+    padding-top: 18px;
+  }
+
+  .portfolio-home-content {
+    padding: 28px;
+  }
+
+  .portfolio-profile-card {
+    width: min(100%, 430px);
+    margin-inline: auto;
+  }
+
+  .portfolio-section-rail {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    width: 100%;
+    max-width: none;
+    order: -1;
+  }
+
+  .portfolio-section-rail a {
+    min-height: 48px;
+  }
+
+  .portfolio-visual-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-section {
+    min-height: auto;
+    padding-top: 38px;
+  }
+
+  .hero-copy h1,
+  .compact-hero .hero-copy h1,
+  .resume-hero h1 {
+    font-size: var(--display-title-tablet);
+  }
+
+  .metrics-section h2,
+  .section h2 {
+    font-size: var(--section-title-tablet);
+  }
+
+  .compact-hero .hero-copy h1 {
+    white-space: normal;
+  }
+
+  .skill-grid,
+  .project-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .project-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-page .project-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .excel-condition-page .project-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .excel-condition-page .project-detail-hero-media {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .github-project-page .project-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .github-project-page .project-detail-hero-media {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .industrial-aoi-page .project-detail-hero-media {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .project-detail-hero h1 {
+    font-size: var(--display-title-tablet);
+  }
+
+  .project-download-section {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cpu-guide-flow,
+  .rfid-guide-flow,
+  .run-mode-grid,
+  .search-state-grid,
+  .architecture-flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .industrial-aoi-detail-grid,
+  .industrial-aoi-direction-grid,
+  .industrial-aoi-focus-grid,
+  .industrial-aoi-matching-grid,
+  .industrial-aoi-improvement-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .industrial-aoi-report-grid,
+  .industrial-aoi-result-layout,
+  .industrial-aoi-structure-grid,
+  .industrial-aoi-report-bottom-grid,
+  .industrial-aoi-step-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-structure-titlebar {
+    display: grid;
+    align-items: start;
+  }
+
+  .industrial-aoi-structure-titlebar p {
+    max-width: none;
+    text-align: left;
+  }
+
+  .industrial-aoi-integration-section .industrial-aoi-structure-titlebar p {
+    white-space: normal;
+  }
+
+  .industrial-aoi-structure-card-header div {
+    display: grid;
+    gap: 4px;
+    white-space: normal;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header {
+    height: auto;
+    min-height: 54px;
+    padding: 10px 14px;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header strong,
+  .industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header span {
+    line-height: 1.2;
+  }
+
+  .industrial-aoi-report-stat-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .industrial-aoi-step-arrow {
+    display: none;
+  }
+
+  .industrial-aoi-integration-map-flow,
+  .industrial-aoi-integration-structure-layout,
+  .industrial-aoi-implementation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-integration-structure-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-flow,
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-after-map {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle {
+    justify-self: center;
+    width: 92px;
+    height: 82px;
+    min-height: 82px;
+    margin: -4px 0;
+    transform: none;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle::before,
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle::after,
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    width: 0;
+    height: auto;
+    border-top: 0;
+    border-left: 2px dashed color-mix(in srgb, #ef4444 62%, transparent);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle::before {
+    transform: translateX(-20px) rotate(-9deg);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle::after {
+    transform: translateX(20px) rotate(9deg);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(1) {
+    transform: translateX(-7px) rotate(4deg);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(2) {
+    transform: translateX(7px) rotate(-4deg);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(3) {
+    display: block;
+    transform: translateX(-30px) rotate(12deg);
+    opacity: 0.52;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(4) {
+    display: block;
+    transform: translateX(30px) rotate(-12deg);
+    opacity: 0.52;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(5) {
+    display: block;
+    transform: translateX(-14px) rotate(15deg);
+    opacity: 0.42;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(6) {
+    display: block;
+    transform: translateX(14px) rotate(-15deg);
+    opacity: 0.42;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(n + 7) {
+    display: none;
+  }
+
+  .industrial-aoi-code-flow-main {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-code-flow-arrow {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .industrial-aoi-integration-channel-group {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-map-flow > svg,
+  .industrial-aoi-integration-structure-layout > svg {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .industrial-aoi-integration-flow-list,
+  .industrial-aoi-integration-result-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .industrial-aoi-refactor-flow,
+  .industrial-aoi-refactor-after-map {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-refactor-after-map .industrial-aoi-refactor-node,
+  .industrial-aoi-refactor-contract {
+    min-height: auto;
+  }
+
+  .industrial-aoi-refactor-tangle {
+    justify-self: center;
+    width: 96px;
+    min-height: 64px;
+    transform: rotate(90deg);
+  }
+
+  .industrial-aoi-refactor-arrow {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .industrial-aoi-refactor-event-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .industrial-aoi-refactor-implementation-grid,
+  .industrial-aoi-refactor-result-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .industrial-aoi-structure-funnel::before,
+  .industrial-aoi-structure-funnel::after,
+  .industrial-aoi-structure-funnel li:last-child::after {
+    display: none;
+  }
+
+  .industrial-aoi-performance-main {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-performance-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .impact-meter-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .impact-item:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .impact-item:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+
+  .experience-timeline-item {
+    grid-template-columns: minmax(116px, 145px) 30px minmax(0, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (max-width: 700px) {
+  main,
+  .site-header,
+  .resume-page {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .site-shell[data-theme] main,
+  .site-shell[data-theme] .site-header {
+    width: min(100% - 28px, 1600px);
+  }
+
+  .resume-page {
+    padding: 20px 0 56px;
+  }
+
+  .resume-document {
+    min-height: auto;
+    padding: 42px 24px 48px;
+  }
+
+  .resume-updated {
+    top: 16px;
+    right: 24px;
+  }
+
+  .resume-document-header {
+    grid-template-columns: minmax(0, 1fr) 64px;
+    gap: 18px;
+  }
+
+  .resume-profile-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 18px;
+    margin-top: 32px;
+  }
+
+  .resume-document-section {
+    margin-top: 34px;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-section {
+    gap: 30px;
+    padding-bottom: 24px;
+  }
+
+  .hero-summary,
+  .section-body p,
+  .project-content p,
+  .timeline-item span,
+  .timeline-content p,
+  .impact-item p {
+    font-size: 0.98rem;
+  }
+
+  .hero-actions,
+  .hero-meta,
+  .hero-channel-links {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .button,
+  .hero-meta span,
+  .hero-channel-links a {
+    width: 100%;
+  }
+
+  .resume-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual-caption {
+    position: static;
+    border-radius: 0;
+  }
+
+  .intro-strip,
+  .skill-grid,
+  .project-grid,
+  .impact-strip,
+  .impact-meter-grid,
+  .portfolio-visual-grid,
+  .industrial-aoi-refactor-event-row,
+  .industrial-aoi-refactor-implementation-grid,
+  .industrial-aoi-refactor-result-row {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-refactor-flow,
+  .industrial-aoi-refactor-after-map {
+    padding: 14px;
+  }
+
+  .industrial-aoi-refactor-node {
+    min-height: auto;
+    padding: 15px;
+  }
+
+  .industrial-aoi-refactor-contract {
+    padding: 18px;
+  }
+
+  .impact-meter-card {
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .portfolio-profile-card {
+    padding: 24px 18px;
+  }
+
+  .portfolio-profile-photo {
+    width: min(100%, 160px);
+  }
+
+  .portfolio-profile-detail-list {
+    padding: 8px 14px;
+  }
+
+  .portfolio-home-content {
+    padding: 22px 16px;
+  }
+
+  .portfolio-section-rail {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .impact-item {
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .impact-item + .impact-item {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .intro-strip {
+    margin-bottom: 64px;
+  }
+
+  .section {
+    padding: 62px 0;
+  }
+
+  .metrics-section {
+    padding: 26px 0 62px;
+  }
+
+  .section-heading {
+    display: grid;
+    gap: 16px;
+  }
+
+  .project-image-wrap {
+    min-height: 170px;
+  }
+
+  .project-detail-page {
+    width: auto;
+    max-width: none;
+    margin-right: 24px;
+    margin-left: 24px;
+    padding-bottom: 56px;
+  }
+
+  .project-detail-hero {
+    gap: 28px;
+    padding: 34px 0 48px;
+  }
+
+  .project-detail-back-link {
+    width: 100%;
+  }
+
+  .project-detail-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-hero-media img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .project-detail-hero-media--console img {
+    aspect-ratio: auto;
+  }
+
+  .industrial-aoi-hero-media-pair > div {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-hero-kpi {
+    top: 10px;
+    right: 10px;
+    min-width: 116px;
+    padding: 10px 11px;
+  }
+
+  .industrial-aoi-hero-kpi strong {
+    font-size: 1.45rem;
+  }
+
+  .project-detail-lead,
+  .project-guide-header p {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .project-download-section {
+    padding: 34px 0 40px;
+  }
+
+  .project-download-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-download-card .button {
+    width: 100%;
+  }
+
+  .project-guide {
+    padding-top: 42px;
+  }
+
+  .project-guide-header h2 {
+    font-size: 1.85rem;
+  }
+
+  .guide-flow,
+  .guide-image-pair,
+  .run-mode-grid,
+  .search-state-grid,
+  .console-capture-grid,
+  .cli-output-grid,
+  .csv-file-grid,
+  .architecture-flow,
+  .industrial-aoi-detail-grid,
+  .industrial-aoi-direction-grid,
+  .industrial-aoi-focus-grid,
+  .industrial-aoi-matching-grid,
+  .industrial-aoi-improvement-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-report-stat-row,
+  .industrial-aoi-skill-icon-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-flow-list,
+  .industrial-aoi-integration-result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-comparison-table {
+    gap: 12px;
+  }
+
+  .industrial-aoi-integration-comparison-head {
+    display: none;
+  }
+
+  .industrial-aoi-integration-comparison-row {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-comparison-row > span,
+  .industrial-aoi-integration-comparison-row > strong {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .industrial-aoi-integration-comparison-row > :first-child {
+    border-top: 0;
+  }
+
+  .industrial-aoi-integration-diagram-badge {
+    justify-self: start;
+  }
+
+  .industrial-aoi-structure-diagram {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-structure-lines {
+    justify-self: center;
+    width: min(180px, 70vw);
+    min-width: 0;
+    height: 80px;
+    transform: rotate(90deg);
+    transform-origin: center;
+  }
+
+  .industrial-aoi-structure-lines line:nth-of-type(n + 7) {
+    display: none;
+  }
+
+  .industrial-aoi-result-table {
+    overflow-x: auto;
+  }
+
+  .industrial-aoi-result-table > div {
+    min-width: 520px;
+  }
+
+  .industrial-aoi-direction-header {
+    display: grid;
+  }
+
+  .guide-flow li {
+    min-height: auto;
+  }
+
+  .guide-section {
+    padding: 34px 0;
+  }
+
+  .guide-section h3 {
+    font-size: 1.32rem;
+  }
+
+  .project-guide table {
+    min-width: 620px;
+  }
+
+  .timeline-item,
+  .experience-timeline-item,
+  .resume-overview,
+  .resume-impact-list article,
+  .resume-experience-list article,
+  .resume-skill-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-hero {
+    padding: 42px 0 36px;
+  }
+
+  .resume-section {
+    padding: 40px 0;
+  }
+
+  .resume-info-list div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .resume-section-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .resume-section-title-row span {
+    white-space: normal;
+  }
+
+  .resume-information-layout,
+  .resume-fact-table > div,
+  .resume-job-card,
+  .resume-skill-lines div,
+  .resume-metric-list--performance .resume-metric-split,
+  .resume-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-metric-result {
+    white-space: normal;
+  }
+
+  .resume-photo-frame {
+    width: 64px;
+    height: 85px;
+    margin: 0;
+  }
+
+  .resume-channel-list a {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .resume-job-header h3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .timeline-period {
+    padding-top: 0;
+  }
+
+  .timeline-marker {
+    display: none;
+  }
+
+  .timeline-content {
+    padding: 0 0 28px 18px;
+    border-left: 2px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  .contact-section {
+    padding: 30px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

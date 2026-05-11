@@ -1,0 +1,424 @@
+import { useRef } from 'react';
+import { ArrowRight, ArrowUpRight, FileText, Github, Mail, Sparkles } from 'lucide-react';
+import { Link } from 'react-router';
+import { AnalyticsNotice } from '../components/AnalyticsNotice';
+import { SiteHeader } from '../components/SiteHeader';
+import { experiences, metrics, profile, projects, skillGroups, workCaseStudies } from '../data/portfolio';
+import { resumeInfo } from '../data/resume';
+import { portfolioRailItems } from '../data/navigation';
+import { trackAnalyticsEvent } from '../analytics/google';
+import { useScrollSpy } from '../hooks/useScrollSpy';
+import { gerberPartPerformanceSummary } from './projects/industrialAoiData';
+import {
+  industrialAoiInspectionAutomationPath,
+  industrialAoiProductionIntegrationPath,
+  resumePath,
+} from '../routes/paths';
+import type { InternalNavigate, ThemeMode } from '../types/navigation';
+
+const portfolioSectionIds = portfolioRailItems.map((item) => item.id);
+
+export function PortfolioHome({
+  onNavigate,
+  themeMode,
+  onThemeToggle,
+}: {
+  onNavigate: InternalNavigate;
+  themeMode: ThemeMode;
+  onThemeToggle: () => void;
+}) {
+  const prioritizedWorkCaseStudies = [...workCaseStudies].sort((left, right) => {
+    return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
+  });
+  const prioritizedProjects = [...projects].sort((left, right) => {
+    return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
+  });
+  const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
+  const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 속도 개선');
+  const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
+  const customerMetric = metrics.find((metric) => metric.label === '신규 고객사 연동 시나리오');
+  const impactChartCards = [
+    {
+      metric: roiSpeedMetric,
+      category: '시간',
+      resultLabel: '개선율',
+      graphLabel: '99%',
+      before: '6분 20초',
+      after: '3초',
+      fill: 99,
+    },
+    {
+      metric: shortcutSpeedMetric,
+      category: '시간',
+      resultLabel: '개선율',
+      graphLabel: '85%',
+      before: '2초',
+      after: '0.3초',
+      fill: 85,
+    },
+    {
+      metric: issueMetric,
+      category: '이슈',
+      resultLabel: '감소율',
+      graphLabel: '70%',
+      before: '전분기',
+      after: '70% 감소',
+      fill: 70,
+    },
+    {
+      metric: customerMetric,
+      category: '신규 고객',
+      resultLabel: '연동 수',
+      graphLabel: '10+',
+      before: '요구 대응',
+      after: '10개 이상',
+      fill: 100,
+    },
+  ];
+  const [activeSection, setActiveSection] = useScrollSpy(portfolioSectionIds);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const profileCardDetails = [
+    {
+      label: 'Email',
+      value: resumeInfo.contact,
+      href: `mailto:${resumeInfo.contact}`,
+      icon: Mail,
+      eventName: 'email_click' as const,
+    },
+    {
+      label: 'GitHub',
+      value: 'GrownDombo',
+      href: 'https://github.com/GrownDombo',
+      icon: Github,
+      eventName: 'github_click' as const,
+    },
+    {
+      label: 'Tech Blog',
+      value: 'Tech Blog',
+      href: 'https://growndombo.tistory.com',
+      icon: FileText,
+      eventName: 'tech_blog_click' as const,
+    },
+  ];
+
+  return (
+    <div className="site-shell" data-theme={themeMode}>
+      <SiteHeader
+        onNavigate={onNavigate}
+        themeMode={themeMode}
+        onThemeToggle={onThemeToggle}
+        isDashboardHeader
+      />
+
+      <main className="portfolio-home-main" id="top">
+        <div className="portfolio-home-layout">
+          <aside className="portfolio-profile-card" aria-label="프로필 요약 카드">
+              <div className="portfolio-profile-photo">
+                <img src={resumeInfo.photo} alt={`${resumeInfo.name} 프로필 사진`} />
+              </div>
+              <h2>
+                <span>{resumeInfo.name}</span>
+                <span>GrownDombo</span>
+              </h2>
+              <p>{profile.role}</p>
+              <dl className="portfolio-profile-detail-list">
+                {profileCardDetails.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <div key={item.label}>
+                      <dt>
+                        <Icon size={17} aria-hidden="true" strokeWidth={2.2} />
+                        <span>{item.label}</span>
+                      </dt>
+                      <dd>
+                        <a
+                          href={item.href}
+                          onClick={() => trackAnalyticsEvent(item.eventName, { link_location: 'hero' })}
+                        >
+                          {item.value}
+                        </a>
+                      </dd>
+                    </div>
+                  );
+                })}
+              </dl>
+              <Link
+                className="portfolio-profile-resume"
+                to={resumePath}
+                onClick={(event) => {
+                  trackAnalyticsEvent('resume_click', { link_location: 'hero' });
+                  onNavigate(event, resumePath);
+                }}
+              >
+                View Resume
+              </Link>
+            </aside>
+          <div className="portfolio-home-content" ref={contentRef}>
+            <section className="hero-section portfolio-hero" id="about" aria-labelledby="hero-title">
+              <div className="hero-copy">
+                <p className="eyebrow">
+                  <Sparkles size={16} aria-hidden="true" />
+                  {profile.availability}
+                </p>
+                <h1 id="hero-title">{profile.headline}</h1>
+                <p className="hero-summary">{profile.summary}</p>
+                <div className="hero-focus-list" aria-label="핵심 작업 영역">
+                  <span>Windows Application</span>
+                  <span>공정 자동화</span>
+                  <span>생산 시스템 연동</span>
+                  <span>성능 최적화</span>
+                </div>
+              </div>
+            </section>
+
+        <section className="metrics-section" id="metrics" aria-labelledby="metrics-title">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">Performance</p>
+              <h2 id="metrics-title">정량 성과</h2>
+            </div>
+          </div>
+          <div className="impact-meter-grid" aria-label="정량 성과 도식">
+            {impactChartCards.map((card) => {
+              const cardContent = (
+                <>
+                  <div className="impact-meter-copy">
+                    <span className="impact-meter-kicker">{card.category}</span>
+                    <h3>{card.metric?.label}</h3>
+                    <p>{card.metric?.description}</p>
+                  </div>
+                  <div
+                    className="impact-meter-visual"
+                    aria-label={`${card.metric?.label} ${card.resultLabel} ${card.graphLabel}`}
+                  >
+                    <div className="impact-meter-row">
+                      <span>{card.resultLabel}</span>
+                      <strong>{card.graphLabel}</strong>
+                    </div>
+                    <div className="impact-meter-track" aria-hidden="true">
+                      <span style={{ width: `${card.fill}%` }} />
+                    </div>
+                    <div className="impact-meter-labels">
+                      <span>
+                        <b>Before</b>
+                        {card.before}
+                      </span>
+                      <span>
+                        <b>After</b>
+                        {card.after}
+                      </span>
+                    </div>
+                  </div>
+                </>
+              );
+
+              return card.metric?.evidence ? (
+                <Link
+                  className="impact-meter-card impact-meter-card--link"
+                  to={card.metric.evidence.href}
+                  key={card.metric.label}
+                  onClick={(event) => onNavigate(event, card.metric!.evidence!.href)}
+                >
+                  {cardContent}
+                  <span className="impact-meter-link-icon" aria-hidden="true">
+                    <ArrowUpRight size={18} strokeWidth={2.2} />
+                  </span>
+                </Link>
+              ) : (
+                <article className="impact-meter-card" key={card.metric?.label ?? card.category}>
+                  {cardContent}
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="section" id="work-cases" aria-labelledby="work-cases-title">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">Work Cases</p>
+              <h2 id="work-cases-title">업무 개선 사례</h2>
+              <p className="section-heading-copy">실무 환경에서 성능, 생산 연동 안정성, 운영 추적성을 개선한 대표 사례</p>
+            </div>
+          </div>
+
+          <div className="project-grid compact-project-grid work-case-grid">
+            {prioritizedWorkCaseStudies.map((project) => {
+              const showGerberPerformanceBadge = project.detailPath === industrialAoiInspectionAutomationPath;
+              const showMesIssueBadge = project.detailPath === industrialAoiProductionIntegrationPath && issueMetric;
+
+              return (
+                <article className="project-card compact-project-card" key={project.title}>
+                  <Link
+                    className="project-image-wrap project-image-link"
+                    to={project.detailPath!}
+                    aria-label={`${project.title} 상세 페이지 보기`}
+                    onClick={(event) => onNavigate(event, project.detailPath!)}
+                  >
+                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
+                    <span>{project.status}</span>
+                    {showGerberPerformanceBadge ? (
+                      <aside className="work-case-performance-card" aria-label="Performance improvement summary">
+                        <span>Performance</span>
+                        <strong>{gerberPartPerformanceSummary.reduction}</strong>
+                        <p>{gerberPartPerformanceSummary.before} <ArrowRight aria-hidden="true" /> {gerberPartPerformanceSummary.after}</p>
+                      </aside>
+                    ) : null}
+                    {showMesIssueBadge ? (
+                      <aside className="work-case-performance-card work-case-performance-card--compact" aria-label="Issue mail reduction summary">
+                        <span>Improvement</span>
+                        <strong>{issueMetric.value}</strong>
+                        <p>장애 이슈 메일</p>
+                      </aside>
+                    ) : null}
+                  </Link>
+                  <div className="project-content">
+                    <div>
+                      <p className="project-role">{project.role}</p>
+                      <h3>{project.title}</h3>
+                      <p>{project.summary}</p>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="section" id="projects" aria-labelledby="projects-title">
+          <div className="section-heading projects-heading">
+            <div>
+              <p className="section-kicker">GitHub Projects</p>
+              <h2 id="projects-title">개인 GitHub 프로젝트</h2>
+              <p className="section-heading-copy">직접 설계·구현하고 공개한 Windows 도구 및 알고리즘 기반 프로젝트</p>
+            </div>
+          </div>
+
+          <div className="project-grid compact-project-grid">
+            {prioritizedProjects.map((project) => (
+              <article className="project-card compact-project-card" key={project.title}>
+                {project.detailPath && project.detailMode === 'document' ? (
+                  <a
+                    className="project-image-wrap project-image-link"
+                    href={project.detailPath}
+                    aria-label={`${project.title} 상세 페이지 보기`}
+                  >
+                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
+                    <span>{project.status}</span>
+                  </a>
+                ) : project.detailPath ? (
+                  <Link
+                    className="project-image-wrap project-image-link"
+                    to={project.detailPath}
+                    aria-label={`${project.title} 상세 페이지 보기`}
+                    onClick={(event) => onNavigate(event, project.detailPath!)}
+                  >
+                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
+                    <span>{project.status}</span>
+                  </Link>
+                ) : (
+                  <div className="project-image-wrap">
+                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
+                    <span>{project.status}</span>
+                  </div>
+                )}
+                <div className="project-content">
+                  <div>
+                    <p className="project-role">{project.role}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.summary}</p>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section" id="experience" aria-labelledby="experience-title">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">Experience</p>
+              <h2 id="experience-title">핵심 경력</h2>
+              <p className="section-heading-copy">제조 장비 소프트웨어 개발과 생산 시스템 연동 개선 중심의 경력 요약</p>
+            </div>
+          </div>
+          <ol className="experience-timeline">
+            {experiences.map((item) => (
+              <li className="experience-timeline-item" key={`${item.period}-${item.title}`}>
+                <div className="timeline-period">
+                  <time>{item.period}</time>
+                </div>
+                <span className="timeline-marker" aria-hidden="true" />
+                <article className="timeline-content">
+                  <span className="timeline-company">{item.organization}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                  <ul>
+                    {item.outcomes.map((outcome) => (
+                      <li key={outcome}>{outcome}</li>
+                    ))}
+                  </ul>
+                  <div className="tech-list" aria-label={`${item.title} 기술 키워드`}>
+                    {item.keywords.map((keyword) => (
+                      <span key={keyword}>{keyword}</span>
+                    ))}
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="section" id="skills" aria-labelledby="skills-title">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">Skills</p>
+              <h2 id="skills-title">기술 스택</h2>
+              <p className="section-heading-copy">실무 개선 사례와 개인 프로젝트에서 활용한 기술의 영역별 분류</p>
+            </div>
+          </div>
+          <div className="skill-grid">
+            {skillGroups.map((group) => (
+              <article className="skill-card" key={group.title}>
+                <h3>{group.title}</h3>
+                <p>{group.description}</p>
+                <ul>
+                  {group.skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+        <AnalyticsNotice />
+          </div>
+          <nav className="portfolio-section-rail" aria-label="포트폴리오 섹션 바로가기">
+            {portfolioRailItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeSection === item.id;
+
+              return (
+                <Link
+                  className={isActive ? 'is-active' : undefined}
+                  to={item.href.startsWith('#') ? `/${item.href}` : item.href}
+                  key={item.id}
+                  aria-label={item.label}
+                  aria-current={isActive ? 'true' : undefined}
+                  onClick={(event) => {
+                    setActiveSection(item.id);
+                    onNavigate(event, item.href);
+                  }}
+                >
+                  <Icon size={18} aria-hidden="true" strokeWidth={2.2} />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+      </main>
+    </div>
+  );
+}

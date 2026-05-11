@@ -2,39 +2,72 @@
 
 개인 프로젝트와 실무 경험을 정리한 GitHub Pages 기반 포트폴리오입니다.
 
-React, Vite, TypeScript로 구성했으며 홈, 프로젝트 상세, 문서형 이력서, 외부 링크를 한 곳에서 확인할 수 있도록 정리했습니다.
+React, TypeScript, Vite, React Router로 구성했으며 개발자 소개, 업무 개선 사례, GitHub 프로젝트 상세, 문서형 이력서, 외부 채널 링크를 한 곳에서 확인할 수 있도록 정리했습니다.
 
 ## 주요 내용
 
 - 개발자 소개 및 핵심 성과
 - 업무 사례와 개인 프로젝트 상세 페이지
-- 기술 스택과 경험 요약
+- 기술 스택과 경력 요약
 - 문서형 이력서 페이지
 - GitHub, Tech Blog, 이메일 연결
 - GitHub Pages 배포 및 Google Analytics 4 적용
 
 ## 기술 스택
 
-- React
+- React 19
+- React Router 7
 - TypeScript
 - Vite
 - GitHub Pages
 - GitHub Actions
 - Google Analytics 4
 
-## 디자인 참고
+## 프로젝트 구조
 
-이 사이트는 아래 Figma Community 템플릿의 구조와 톤을 참고하되, 현재 콘텐츠와 웹 사용성에 맞게 재구성했습니다.
+```text
+src/
+  analytics/     Google Analytics 이벤트 및 페이지뷰 처리
+  components/    공통 UI 컴포넌트
+  data/          포트폴리오, 이력서, 내비게이션 데이터
+  hooks/         테마, 라우팅, 스크롤, 분석 side effect
+  pages/         홈, 이력서, 프로젝트 상세 페이지
+  routes/        public URL과 legacy route 매핑
+  styles/        base/layout/home/projects/resume 등 CSS 분리
+  types/         라우팅과 페이지 공통 타입
+```
 
-- 이력서: [개발자 이력서 템플릿](https://www.figma.com/design/ruqRkzKlOhoko97nrMBb3O/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B4%EB%A0%A5%EC%84%9C-%ED%85%9C%ED%94%8C%EB%A6%BF--Community-?node-id=2-111)
-- 포트폴리오: [Website Developer Personal PortFolio Template](https://www.figma.com/design/zZW0XBbhuSu8wj1U3hYFAc/Website-Developer-Personal-PortFolio-Template--Community-?node-id=1-4)
-- 포트폴리오 템플릿 원작자: confident_coder
+`src/App.tsx`는 최상위 route composition만 담당하고, 화면과 데이터는 `pages`, `components`, `data`, `hooks`로 분리했습니다.
+
+## 라우팅
+
+React Router의 `BrowserRouter`, `Routes`, `Route`, `Navigate`, `Link/NavLink`를 사용합니다.
+
+주요 URL은 아래와 같습니다.
+
+- `/`
+- `/resume`
+- `/projects/excel-condition-painter`
+- `/projects/cpu-memory-stress-test`
+- `/projects/rfid-collision-search-simulator`
+- `/work/gerber-part-roi-matching-optimization`
+- `/work/mes-secs-gem-data-flow`
+- `/work/repair-ng-buffer-operations`
+
+기존 `/projects/industrial-aoi-platform/...` legacy URL은 동일 상세 페이지로 매핑합니다.
 
 ## 로컬 실행
 
 ```bash
 npm install
 npm run dev
+```
+
+Windows PowerShell 실행 정책 때문에 `npm`이 막히면 아래처럼 `.cmd` 실행 파일을 사용합니다.
+
+```powershell
+npm.cmd install
+npm.cmd run dev
 ```
 
 ## 빌드 확인
@@ -44,9 +77,20 @@ npm run build
 npm run preview
 ```
 
+Windows PowerShell에서는 다음 명령도 사용할 수 있습니다.
+
+```powershell
+npx.cmd tsc -b --pretty false
+npm.cmd run build
+```
+
 ## 콘텐츠 수정
 
-포트폴리오 문구, 프로젝트, 기술 스택, 연락처 정보는 `src/data/portfolio.ts`에서 수정할 수 있습니다.
+- 포트폴리오 기본 정보, 성과, 프로젝트: `src/data/portfolio.ts`
+- 이력서 정보: `src/data/resume.ts`
+- 내비게이션 항목: `src/data/navigation.ts`
+- 프로젝트 상세 페이지별 설정: `src/pages/projects/*Config.ts`, `src/pages/projects/industrialAoiData.ts`
+- URL 경로와 legacy 매핑: `src/routes/paths.ts`
 
 ## 배포
 
@@ -54,6 +98,18 @@ npm run preview
 
 GitHub 저장소의 Settings -> Pages -> Build and deployment에서 Source를 `GitHub Actions`로 선택하면, `main` 브랜치 push 시 `.github/workflows/deploy.yml`이 사이트를 빌드하고 Pages에 배포합니다.
 
+React Router의 Browser History를 사용하므로 GitHub Pages 직접 접근을 위해 `public/404.html` fallback을 유지합니다. `/resume` 또는 `/projects/...`로 직접 접속하면 GitHub Pages가 `404.html`을 반환하고, 해당 스크립트가 `/?redirect=...`로 이동한 뒤 `index.html`이 원래 경로로 복원합니다.
+
+현재 구조는 `https://growndombo.github.io/` 같은 루트 사용자 페이지에 맞춰져 있습니다. `https://사용자.github.io/레포명/` 형태의 하위 경로 배포로 바꾸는 경우에는 Vite `base`, React Router `basename`, 404 redirect 경로를 함께 조정해야 합니다.
+
 ## 방문자 분석
 
 Google Analytics 4를 사용합니다. GitHub 저장소의 Settings -> Secrets and variables -> Actions -> Variables에 `GA_MEASUREMENT_ID`를 등록하면 배포 빌드에 자동으로 반영됩니다.
+
+## 디자인 참고
+
+이 사이트는 아래 Figma Community 템플릿의 구조와 톤을 참고하되, 현재 콘텐츠와 웹 사용성에 맞게 재구성했습니다.
+
+- 이력서: [개발자 이력서 템플릿](https://www.figma.com/design/ruqRkzKlOhoko97nrMBb3O/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B4%EB%A0%A5%EC%84%9C-%ED%85%9C%ED%94%8C%EB%A6%BF--Community-?node-id=2-111)
+- 포트폴리오: [Website Developer Personal PortFolio Template](https://www.figma.com/design/zZW0XBbhuSu8wj1U3hYFAc/Website-Developer-Personal-PortFolio-Template--Community-?node-id=1-4)
+- 포트폴리오 템플릿 원작자: confident_coder
