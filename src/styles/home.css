@@ -1055,7 +1055,7 @@
 
 .case-study-list {
   display: grid;
-  gap: 22px;
+  gap: 34px;
 }
 
 .case-study-card {
@@ -1070,7 +1070,9 @@
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 42%, transparent), transparent 42%),
     color-mix(in srgb, var(--card) 90%, var(--app-bg));
-  box-shadow: var(--shadow);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--accent) 24%, transparent),
+    var(--shadow);
   transition:
     transform 180ms ease,
     border-color 180ms ease,
