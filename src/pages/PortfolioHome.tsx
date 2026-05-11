@@ -1,19 +1,16 @@
 import { useRef } from 'react';
-import { ArrowRight, ArrowUpRight, FileText, Github, Mail, Sparkles } from 'lucide-react';
+import { ArrowUpRight, FileText, Github, Mail, Sparkles } from 'lucide-react';
 import { Link } from 'react-router';
 import { AnalyticsNotice } from '../components/AnalyticsNotice';
 import { SiteHeader } from '../components/SiteHeader';
-import { experiences, metrics, profile, projects, skillGroups, workCaseStudies } from '../data/portfolio';
+import { WorkCaseCard } from '../components/WorkCaseCard';
+import { experiences, metrics, profile, projects, skillGroups } from '../data/portfolio';
 import { resumeInfo } from '../data/resume';
 import { portfolioRailItems } from '../data/navigation';
+import { workCaseCards } from '../data/workCaseCards';
 import { trackAnalyticsEvent } from '../analytics/google';
 import { useScrollSpy } from '../hooks/useScrollSpy';
-import { gerberPartPerformanceSummary } from './projects/industrialAoiData';
-import {
-  industrialAoiInspectionAutomationPath,
-  industrialAoiProductionIntegrationPath,
-  resumePath,
-} from '../routes/paths';
+import { resumePath } from '../routes/paths';
 import type { InternalNavigate, ThemeMode } from '../types/navigation';
 
 const portfolioSectionIds = portfolioRailItems.map((item) => item.id);
@@ -27,7 +24,7 @@ export function PortfolioHome({
   themeMode: ThemeMode;
   onThemeToggle: () => void;
 }) {
-  const prioritizedWorkCaseStudies = [...workCaseStudies].sort((left, right) => {
+  const prioritizedWorkCaseCards = [...workCaseCards].sort((left, right) => {
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
   const prioritizedProjects = [...projects].sort((left, right) => {
@@ -243,46 +240,10 @@ export function PortfolioHome({
             </div>
           </div>
 
-          <div className="project-grid compact-project-grid work-case-grid">
-            {prioritizedWorkCaseStudies.map((project) => {
-              const showGerberPerformanceBadge = project.detailPath === industrialAoiInspectionAutomationPath;
-              const showMesIssueBadge = project.detailPath === industrialAoiProductionIntegrationPath && issueMetric;
-
-              return (
-                <article className="project-card compact-project-card" key={project.title}>
-                  <Link
-                    className="project-image-wrap project-image-link"
-                    to={project.detailPath!}
-                    aria-label={`${project.title} 상세 페이지 보기`}
-                    onClick={(event) => onNavigate(event, project.detailPath!)}
-                  >
-                    <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
-                    <span>{project.status}</span>
-                    {showGerberPerformanceBadge ? (
-                      <aside className="work-case-performance-card" aria-label="Performance improvement summary">
-                        <span>Performance</span>
-                        <strong>{gerberPartPerformanceSummary.reduction}</strong>
-                        <p>{gerberPartPerformanceSummary.before} <ArrowRight aria-hidden="true" /> {gerberPartPerformanceSummary.after}</p>
-                      </aside>
-                    ) : null}
-                    {showMesIssueBadge ? (
-                      <aside className="work-case-performance-card work-case-performance-card--compact" aria-label="Issue mail reduction summary">
-                        <span>Improvement</span>
-                        <strong>{issueMetric.value}</strong>
-                        <p>장애 이슈 메일</p>
-                      </aside>
-                    ) : null}
-                  </Link>
-                  <div className="project-content">
-                    <div>
-                      <p className="project-role">{project.role}</p>
-                      <h3>{project.title}</h3>
-                      <p>{project.summary}</p>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+          <div className="case-study-list">
+            {prioritizedWorkCaseCards.map((caseData) => (
+              <WorkCaseCard caseData={caseData} onNavigate={onNavigate} key={caseData.title} />
+            ))}
           </div>
         </section>
 

@@ -79,6 +79,15 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  .case-study-main {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-media {
+    justify-self: stretch;
+    max-width: none;
+  }
+
   .project-detail-hero {
     grid-template-columns: 1fr;
   }
@@ -453,11 +462,36 @@
   .project-grid,
   .impact-strip,
   .impact-meter-grid,
+  .case-study-flow,
+  .case-study-metrics,
   .portfolio-visual-grid,
   .industrial-aoi-refactor-event-row,
   .industrial-aoi-refactor-implementation-grid,
   .industrial-aoi-refactor-result-row {
     grid-template-columns: 1fr;
+  }
+
+  .case-study-card {
+    padding: 18px;
+  }
+
+  .case-study-card-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .case-study-metric,
+  .case-study-phase {
+    min-height: auto;
+  }
+
+  .case-study-metric strong {
+    white-space: normal;
+  }
+
+  .case-study-detail-link {
+    justify-content: flex-start;
   }
 
   .industrial-aoi-refactor-flow,

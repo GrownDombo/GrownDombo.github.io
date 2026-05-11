@@ -151,8 +151,8 @@ export const integrationDirectionSteps = [
   },
   {
     icon: Layers,
-    title: 'MES 전송 게이트웨이',
-    description: 'MES 요청 구성, 전송 분기, 응답 반영을 단일 흐름으로 통합',
+    title: '생성·전송·응답 책임 분리',
+    description: '요청 데이터 생성, 전송 분기, 응답 반영을 역할별로 정리',
   },
   {
     icon: CheckCircle,
@@ -176,8 +176,8 @@ export const integrationComparisonRows = [
   {
     target: 'MES 전송',
     before: '전처리, 전송, 응답 반영 분산',
-    after: 'MES Gateway 일원화',
-    method: '요청 객체 구성 + Facade / Dispatcher',
+    after: '생성·전송·응답 책임 분리',
+    method: '요청 데이터 구성 + 전송 Dispatcher',
   },
   {
     target: 'SECS/GEM',
@@ -230,7 +230,7 @@ export const integrationMeasurementNotes = [
 export const integrationRoleItems = [
   '생산 연동 요구사항 및 기존 분기 구조 분석',
   'Job, Barcode, Result, Alarm 기준 공통 생산 이벤트 기준 정리',
-  'MES Gateway 설계 및 요청/전송/응답 흐름 구현',
+  '요청 데이터 생성, 전송 분기, 응답 반영 책임 분리',
   'SECS/GEM 공통 계약 및 고객사별 Override 구조 분리',
   'TCP/IP 패킷 구성, 응답 처리, 예외 케이스 검증',
   '이벤트-전송-응답 기준 로그 추적 체계 정리',
