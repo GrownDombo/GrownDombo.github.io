@@ -1,0 +1,355 @@
+.timeline-period {
+  padding-top: 6px;
+  color: var(--coral);
+  font-size: 1.02rem;
+  font-weight: 900;
+}
+
+.timeline-marker {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.timeline-marker::before {
+  position: absolute;
+  top: 8px;
+  bottom: -36px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--forest), color-mix(in srgb, var(--accent) 16%, transparent));
+  content: "";
+}
+
+.experience-timeline-item:last-child .timeline-marker::before {
+  bottom: calc(100% - 24px);
+}
+
+.timeline-marker::after {
+  position: relative;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin-top: 6px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: var(--forest);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent);
+  content: "";
+}
+
+.timeline-content {
+  display: grid;
+  gap: 12px;
+  padding: 0 0 30px;
+  border-bottom: 1px solid var(--line);
+}
+
+.timeline-company {
+  color: var(--forest);
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.timeline-content h3 {
+  margin: 0;
+  font-size: 1.48rem;
+}
+
+.timeline-content ul {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  margin: 2px 0 0;
+  list-style: none;
+}
+
+.timeline-content li {
+  position: relative;
+  padding-left: 16px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.timeline-content li::before {
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  content: "";
+}
+
+.timeline {
+  display: grid;
+  gap: 14px;
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 18px;
+  padding: 22px;
+}
+
+.timeline-item time {
+  color: var(--coral);
+  font-weight: 900;
+}
+
+.timeline-item p {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.timeline-item span {
+  display: block;
+  margin-top: 10px;
+}
+
+.timeline-item ul {
+  margin-top: 14px;
+}
+
+.timeline-item li {
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.contact-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+  gap: clamp(28px, 6vw, 80px);
+  align-items: center;
+  margin: 30px 0 56px;
+  padding: 54px;
+  border-radius: 8px;
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-strong) 62%, #07111f), #07111f),
+    #07111f;
+}
+
+.contact-section .section-kicker {
+  color: var(--accent);
+}
+
+.contact-summary {
+  max-width: 720px;
+  margin: 18px 0 0;
+  color: rgb(255 255 255 / 78%);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.contact-links {
+  display: grid;
+  gap: 10px;
+}
+
+.contact-link {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: #ffffff;
+  font-weight: 850;
+  transition: transform 180ms ease;
+}
+
+.analytics-notice {
+  margin: 42px 0 28px;
+  color: #8a94a6;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.site-shell[data-theme] main,
+.site-shell[data-theme] .site-header {
+  width: min(1600px, calc(100% - 48px));
+}
+
+.site-shell[data-theme] .brand-mark {
+  color: var(--on-accent);
+  background: var(--accent);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.site-shell[data-theme="dark"] .brand-mark {
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.site-shell[data-theme] .hero-meta span,
+.site-shell[data-theme] .hero-channel-links a,
+.site-shell[data-theme] .intro-strip span {
+  color: var(--text);
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.site-shell[data-theme] .section,
+.site-shell[data-theme] .metrics-section,
+.site-shell[data-theme] .project-download-section,
+.site-shell[data-theme] .project-guide,
+.site-shell[data-theme] .guide-section,
+.site-shell[data-theme] .timeline-content {
+  border-color: var(--border);
+}
+
+.site-shell[data-theme] .impact-item,
+.site-shell[data-theme] .impact-meter-card,
+.site-shell[data-theme] .skill-card,
+.site-shell[data-theme] .project-card,
+.site-shell[data-theme] .project-download-card,
+.site-shell[data-theme] .guide-flow li,
+.site-shell[data-theme] .guide-figure,
+.site-shell[data-theme] .guide-image-pair figure,
+.site-shell[data-theme] .run-mode-card,
+.site-shell[data-theme] .cli-output-card,
+.site-shell[data-theme] .csv-file-card,
+.site-shell[data-theme] .console-capture-figure,
+.site-shell[data-theme] .search-state-card,
+.site-shell[data-theme] .industrial-aoi-summary-grid article,
+.site-shell[data-theme] .industrial-aoi-focus-card,
+.site-shell[data-theme] .industrial-aoi-draft-card,
+.site-shell[data-theme] .industrial-aoi-detail-card,
+.site-shell[data-theme] .industrial-aoi-direction-card,
+.site-shell[data-theme] .industrial-aoi-improvement-card,
+.site-shell[data-theme] .industrial-aoi-matching-figure {
+  color: var(--text);
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: var(--site-shadow);
+}
+
+.site-shell[data-theme] .project-image-wrap,
+.site-shell[data-theme] .project-detail-hero-media,
+.site-shell[data-theme] .industrial-aoi-hero-media,
+.site-shell[data-theme] .industrial-aoi-matching-figure,
+.site-shell[data-theme] .guide-figure--tree,
+.site-shell[data-theme] .csv-file-card figure {
+  background: var(--media-bg);
+}
+
+.site-shell[data-theme] .project-detail-hero-media img,
+.site-shell[data-theme] .project-detail-hero-media.industrial-aoi-hero-media img,
+.site-shell[data-theme] .industrial-aoi-matching-figure img,
+.site-shell[data-theme] .guide-figure img,
+.site-shell[data-theme] .guide-image-pair img,
+.site-shell[data-theme] .csv-file-card img,
+.site-shell[data-theme] .guide-figure--tree img {
+  background: var(--media-bg);
+}
+
+.site-shell[data-theme] .project-detail-hero-media--console,
+.site-shell[data-theme] .project-detail-hero-media--console img,
+.site-shell[data-theme] .guide-figure--console,
+.site-shell[data-theme] .guide-figure--console img,
+.site-shell[data-theme] .console-capture-figure img,
+.site-shell[data-theme] .run-mode-card figure,
+.site-shell[data-theme] .run-mode-card img,
+.site-shell[data-theme] .cli-output-card figure,
+.site-shell[data-theme] .cli-output-card img,
+.site-shell[data-theme] .rfid-search-pair img {
+  background: #080b0f;
+}
+
+.site-shell[data-theme] .skill-card li,
+.site-shell[data-theme] .tech-list span,
+.site-shell[data-theme] .mode-badge,
+.site-shell[data-theme] .architecture-flow span {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.site-shell[data-theme] .project-highlights li,
+.site-shell[data-theme] .timeline-content li,
+.site-shell[data-theme] .guide-flow span,
+.site-shell[data-theme] .guide-checklist,
+.site-shell[data-theme] .project-guide td,
+.site-shell[data-theme] .industrial-aoi-direction-card li,
+.site-shell[data-theme] .industrial-aoi-improvement-card li,
+.site-shell[data-theme] .industrial-aoi-matching-copy p:last-child,
+.site-shell[data-theme] .industrial-aoi-performance-scale li,
+.site-shell[data-theme] .industrial-aoi-performance-measurement li,
+.site-shell[data-theme] .industrial-aoi-performance-metric em,
+.site-shell[data-theme] .industrial-aoi-performance-methods li,
+.site-shell[data-theme] .industrial-aoi-matching-figure span {
+  color: var(--text-muted);
+}
+
+.site-shell[data-theme] .project-guide code {
+  color: var(--success);
+  background: var(--code-bg);
+}
+
+.site-shell[data-theme] .project-guide th,
+.site-shell[data-theme] .project-guide td {
+  border-color: var(--table-border);
+}
+
+.site-shell[data-theme] .project-guide th {
+  color: var(--text);
+  background: var(--table-head);
+}
+
+.site-shell[data-theme] .industrial-aoi-performance-scale li strong,
+.site-shell[data-theme] .industrial-aoi-performance-environment > strong,
+.site-shell[data-theme] .industrial-aoi-performance-measurement strong,
+.site-shell[data-theme] .industrial-aoi-performance-approach strong,
+.site-shell[data-theme] .project-guide td {
+  color: var(--text);
+}
+
+.site-shell[data-theme] .project-guide td {
+  background: var(--card);
+}
+
+.site-shell[data-theme] .guide-note,
+.site-shell[data-theme] .industrial-aoi-direction-card {
+  color: var(--text);
+  background: var(--success-soft);
+  border-color: var(--success);
+}
+
+.site-shell[data-theme] .industrial-aoi-direction-header span,
+.site-shell[data-theme] .industrial-aoi-direction-card span,
+.site-shell[data-theme] .industrial-aoi-improvement-card h5,
+.site-shell[data-theme] .industrial-aoi-performance-metric span,
+.site-shell[data-theme] .industrial-aoi-performance-methods span,
+.site-shell[data-theme] .industrial-aoi-matching-figure strong {
+  color: var(--accent);
+}
+
+.site-shell[data-theme] .contact-section {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-strong) 64%, #07111f), #07111f),
+    #07111f;
+}
+
+.site-shell[data-theme] .contact-link {
+  color: var(--text);
+  background: var(--card);
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
+}
+
+.site-shell[data-theme="dark"] .contact-link {
+  color: var(--text);
+  background: color-mix(in srgb, var(--card) 88%, #07111f);
+}
+
+.site-shell[data-theme] .analytics-notice {
+  color: var(--text-muted);
+}
+
