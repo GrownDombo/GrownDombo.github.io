@@ -31,7 +31,7 @@ export type WorkCaseCardData = {
 export const workCaseCards: WorkCaseCardData[] = [
   {
     title: 'Gerber-Part ROI 매칭 성능 개선',
-    subtitle: '업무 사례 · AOI 성능 최적화',
+    subtitle: 'AOI 성능 최적화',
     summary: '검사 준비 병목을 후보 선별과 캐시 구조로 줄인 대표 사례',
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
     imageAlt: 'Module and Part ROI matching mockup',
@@ -69,7 +69,7 @@ export const workCaseCards: WorkCaseCardData[] = [
   },
   {
     title: 'MES · SECS/GEM 생산 이벤트 구조 개선',
-    subtitle: '업무 사례 · 장비 연동 안정화',
+    subtitle: '장비 연동 안정화',
     summary: '고객사별 연동 차이를 공통 이벤트 흐름으로 흡수한 사례',
     image: '/assets/industrial-aoi-production-integration/main-image.png',
     imageAlt: 'MES SECS GEM production integration mockup',
@@ -106,40 +106,40 @@ export const workCaseCards: WorkCaseCardData[] = [
     ],
   },
   {
-    title: 'Repair & NG Buffer 운영 흐름 정리',
-    subtitle: '업무 사례 · 장비 운영 유지보수',
-    summary: '장비 상태와 화면 표시를 하나의 운영 흐름으로 맞춘 사례',
-    image: '/assets/project-industrial-aoi-platform.svg',
-    imageAlt: 'Repair and NG Buffer operation flow illustration',
+    title: '원격 공유 폴더 I/O 병목 구조 개선',
+    subtitle: '원격 I/O 병목 구조 개선',
+    summary: '공유 폴더 파일 처리를 로컬 실행 구조로 전환해 Confirm 전체 시간을 3초대로 단축',
+    image: '/assets/remote-shared-folder-file-move.svg',
+    imageAlt: 'Remote shared-folder file move bottleneck improvement illustration',
     detailPath: industrialAoiOperationFlowPath,
     priority: 2,
     metrics: [
       {
-        label: '상태 정합성',
-        value: '누락 완화',
-        description: '표시와 내부 상태 기준 정리',
+        label: 'Confirm 전체',
+        value: '약 90% 단축',
+        description: '약 32초 → 3초대',
       },
       {
-        label: '운영 추적',
-        value: '개선',
-        description: '신호 로그 기준 정리',
+        label: '측정 기준',
+        value: 'Start/End 로그',
+        description: '업체 실제 Confirm 로그 기준',
       },
     ],
     phases: [
       {
         label: 'Problem',
         title: '문제 상황',
-        details: ['Rack 상태 불일치', '현장 재현 어려움', '표시 기준 분산'],
+        details: ['원격 PC 직접 조작', 'SMB 왕복 비용', 'Confirm 전체 지연'],
       },
       {
         label: 'Before',
         title: '기존 방식',
-        details: ['신호 흐름 분산', '화면 표시 기준 혼재'],
+        details: ['공유 폴더 move/delete', '네트워크 경유 파일 처리'],
       },
       {
         label: 'After',
         title: '개선 방식',
-        details: ['NG Buffer 흐름 정리', 'Rack 표시 동기화', '로그 기준 보강'],
+        details: ['bat 생성', 'TCP/IP 실행 위임', '로컬 PC에서 이동'],
       },
     ],
   },

@@ -151,8 +151,27 @@
   .industrial-aoi-result-layout,
   .industrial-aoi-structure-grid,
   .industrial-aoi-report-bottom-grid,
-  .industrial-aoi-step-flow {
+  .industrial-aoi-step-flow,
+  .industrial-aoi-repair-flow-map {
     grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-repair-flow-item,
+  .industrial-aoi-repair-flow-item:last-child {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-repair-flow-step {
+    min-height: auto;
+  }
+
+  .industrial-aoi-repair-flow-arrow {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .industrial-aoi-repair-structure-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .industrial-aoi-structure-titlebar {
@@ -287,7 +306,16 @@
     grid-template-columns: 1fr;
   }
 
-  .industrial-aoi-code-flow-arrow {
+  .industrial-aoi-repair-bypass-visual {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-repair-hero-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-code-flow-arrow,
+  .industrial-aoi-repair-hero-arrow {
     justify-self: center;
     transform: rotate(90deg);
   }
@@ -590,6 +618,15 @@
     aspect-ratio: 4 / 3;
   }
 
+  .industrial-aoi-repair-hero {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .industrial-aoi-repair-hero-node {
+    min-height: auto;
+  }
+
   .project-detail-hero-media--console img {
     aspect-ratio: auto;
   }
@@ -643,12 +680,35 @@
   .cli-output-grid,
   .csv-file-grid,
   .architecture-flow,
+  .industrial-aoi-repair-bypass-impact,
   .industrial-aoi-detail-grid,
   .industrial-aoi-direction-grid,
   .industrial-aoi-focus-grid,
   .industrial-aoi-matching-grid,
+  .industrial-aoi-repair-structure-grid,
   .industrial-aoi-improvement-grid {
     grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-code-window figcaption {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .industrial-aoi-code-window figcaption em {
+    grid-column: 2;
+  }
+
+  .industrial-aoi-code-window pre {
+    padding: 14px;
+    font-size: 0.72rem;
+  }
+
+  .industrial-aoi-repair-bypass-route {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-repair-bypass-route > svg {
+    transform: rotate(90deg);
   }
 
   .industrial-aoi-report-stat-row,
@@ -809,6 +869,12 @@
 
   .contact-section {
     padding: 30px 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .industrial-aoi-pseudocode-grid {
+    grid-template-columns: 1fr;
   }
 }
 
