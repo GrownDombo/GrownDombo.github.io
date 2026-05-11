@@ -222,7 +222,7 @@ function ProductionIntegrationReport() {
                   <span>Separated Channels</span>
                   <strong>채널별 책임 분리</strong>
                   <div>
-                    <em>MES Gateway</em>
+                    <em>생성·전송·응답</em>
                     <em>SECS/GEM 계약</em>
                     <em>응답 / 예외 검증</em>
                   </div>
@@ -270,8 +270,8 @@ function ProductionIntegrationReport() {
               <article className="industrial-aoi-code-flow-channel">
                 <Layers aria-hidden="true" />
                 <div>
-                  <strong>MES Gateway</strong>
-                  <span>요청 객체 구성 · 전송 분기 · 응답 반영</span>
+                  <strong>생성·전송·응답 책임 분리</strong>
+                  <span>요청 데이터 생성 · 전송 분기 · 응답 반영</span>
                 </div>
               </article>
               <article className="industrial-aoi-code-flow-channel">
@@ -431,15 +431,15 @@ export function IndustrialAOIPlatformProjectPage({
       problem: '작업 정보, 바코드, 판정 결과, 장비 알림 처리 기준이 서비스별로 분산되어 변경 범위와 장애 추적 비용이 증가한 구조',
       actions: [
         'Job, Barcode, Result, Alarm 기준 공통 생산 이벤트 기준 정리',
-        'MES Gateway에서 요청 구성, 전송 분기, 응답 반영 흐름 일원화',
+        '요청 데이터 생성, 전송 분기, 응답 반영 책임 분리',
         'SECS/GEM 공통 계약과 고객사별 Override 구조 분리',
         'Header/Length 기반 Packet Framing으로 TCP/IP 대용량 메시지 안정화',
       ],
       directions: [
         {
           label: 'Track 01',
-          title: 'MES Gateway',
-          points: ['요청 객체 구성', '전송 분기', '응답 반영'],
+          title: '생성·전송·응답 책임 분리',
+          points: ['요청 데이터 생성', '전송 분기', '응답 반영'],
         },
         {
           label: 'Track 02',
@@ -460,9 +460,9 @@ export function IndustrialAOIPlatformProjectPage({
           details: ['이벤트 기준 정리', '변경 영향 범위 축소', '로그 추적 기준 확보'],
         },
         {
-          title: 'MES Gateway',
-          description: '요청 객체 구성, 전송 분기, 응답 반영을 단일 계층으로 구성',
-          details: ['요청 모델 구성', '전송 종류별 분기', '응답 반영'],
+          title: '생성·전송·응답 책임 분리',
+          description: '요청 데이터 생성, 전송 분기, 응답 반영을 역할별로 정리',
+          details: ['요청 데이터 생성', '전송 종류별 분기', '응답 반영'],
         },
         {
           title: 'SECS/GEM 확장 계층',
