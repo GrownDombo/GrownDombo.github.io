@@ -190,94 +190,118 @@ const gerberPartSkillItems = [
   { icon: Gauge, label: 'Profiling' },
 ];
 
-const integrationReportTech = ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM'];
+const integrationReportTech = [
+  'C#',
+  '.NET Framework',
+  'WinForms',
+  'TCP/IP',
+  'SECS/GEM',
+  'Request Builder',
+  'Facade / Dispatcher',
+  'Abstract / Override',
+  'Packet Framing',
+];
 
 const integrationDirectionSteps = [
   {
     icon: Database,
-    title: '연동 이벤트 표준화',
-    description: '작업 정보, 바코드, 판정 결과, 장비 알림을 공통 이벤트 기준으로 정리',
+    title: '생산 이벤트 표준화',
+    description: 'Job, Barcode, Result, Alarm을 공통 생산 이벤트 기준으로 정리',
   },
   {
     icon: Layers,
     title: 'MES 전송 게이트웨이',
-    description: '전처리, 전송 분기, 응답 반영을 단일 계층으로 집약',
+    description: 'MES 요청 구성, 전송 분기, 응답 반영을 단일 흐름으로 통합',
   },
   {
     icon: CheckCircle,
     title: 'SECS/GEM 확장 계층',
-    description: '공통 계약과 고객사별 구현 지점을 분리',
+    description: '공통 처리 계약과 고객사별 Override 지점을 분리',
   },
   {
     icon: Gauge,
-    title: '대용량 수신 안정화',
-    description: '헤더/길이 기반 패킷 조립으로 대용량 메시지 수신 안정화',
+    title: 'TCP/IP 메시지 안정화',
+    description: 'Header/Length 기반 Packet Framing으로 메시지 경계 처리 안정화',
   },
 ];
 
-const integrationImplementationItems = [
+const integrationComparisonRows = [
   {
-    title: '요청 모델 표준화',
-    pattern: 'Builder Pattern',
-    description: 'Lane, Job, 실행 모드, 전송 종류를 단일 요청 객체로 구성',
+    target: '이벤트 처리',
+    before: '서비스별 조건 분기 누적',
+    after: '공통 생산 이벤트 기준',
+    method: '이벤트 표준화',
   },
   {
-    title: 'MES 전송 게이트웨이',
-    pattern: 'Facade · Dispatcher',
-    description: '연결/구독 상태 검증, 전송 분기, 응답 반영을 일원화',
+    target: 'MES 전송',
+    before: '전처리, 전송, 응답 반영 분산',
+    after: 'MES Gateway 일원화',
+    method: '요청 객체 구성 + Facade / Dispatcher',
   },
   {
-    title: 'SECS/GEM 확장 계층',
-    pattern: 'Template Method · Override',
-    description: '공통 동작은 추상 계층에 두고 고객사별 차이만 재정의',
+    target: 'SECS/GEM',
+    before: '고객사별 예외가 공통 흐름에 혼재',
+    after: '공통 계약과 고객사별 Override 분리',
+    method: 'Abstract / Override',
   },
   {
-    title: '메시지 수신 안정화',
-    pattern: 'Packet Framing',
-    description: 'TCP/IP 메시지를 헤더/길이 기준으로 조립해 대용량 수신 안정화',
+    target: 'TCP/IP 메시지',
+    before: '대용량 메시지 경계 처리 취약',
+    after: 'Header/Length 기반 Packet Framing',
+    method: 'Packet Framing',
   },
-];
-
-const integrationFlowRows = [
-  { title: '장비 이벤트', description: '작업 정보, 바코드, 판정 결과, 장비 알림, ...' },
-  { title: 'MES 채널', description: '전처리, 전송 분기, 응답 반영' },
-  { title: 'SECS/GEM 채널', description: '공통 계약, 고객사별 확장' },
-  { title: '운영 추적', description: '응답, 예외, 로그 확인' },
+  {
+    target: '장애 추적',
+    before: '로그 위치와 응답 흐름 분산',
+    after: '이벤트-전송-응답 기준 추적',
+    method: '표준 로그 흐름',
+  },
 ];
 
 const integrationResultItems = [
   {
-    title: '운영 이슈 감소',
-    description: '리팩토링 후 연동 이슈 메일 약 70% 감소',
+    title: '연동 이슈 메일',
+    metric: '약 70% 감소',
+    description: '반복 장애 유형을 공통 처리 기준으로 정리하여 운영 이슈 감소',
   },
   {
-    title: '변경 범위 축소',
-    description: '채널별 책임 분리로 고객사 요구 반영 범위 축소',
+    title: '장애 대응 시간',
+    metric: '약 40% 단축',
+    description: '이벤트-전송-응답 흐름 기준으로 원인 추적 범위 축소',
   },
   {
-    title: '대용량 수신 안정화',
-    description: '헤더/길이 기반 패킷 조립으로 대용량 메시지 수신 보완',
+    title: '신규 고객사 연동',
+    metric: '10개 이상',
+    description: '공통 계약과 확장 지점 분리로 고객사별 시나리오 대응성 강화',
   },
   {
-    title: '추적성 강화',
-    description: '이벤트-전송-응답 로그 경로 명확화',
+    title: '운영 추적성',
+    metric: '추적 체계화',
+    description: '생산 이벤트, 전송, 응답, 로그를 연결한 추적 구조 확보',
   },
 ];
 
+const integrationMeasurementNotes = [
+  '사내 이슈 관리 시스템에 등록된 연동 이슈를 개선 전후 각 6개월 단위로 비교',
+  '이슈 발생 건수와 처리 완료까지의 소요 시간을 기준으로 산정',
+];
+
 const integrationRoleItems = [
-  '생산 연동 요구사항 분석 및 시나리오 정리',
-  'MES 전송 게이트웨이 설계 및 구현',
-  'SECS/GEM 추상 계약 및 고객사별 확장 구조 설계',
-  'TCP/IP 패킷 조립, 응답 처리, 예외 검증',
+  '생산 연동 요구사항 및 기존 분기 구조 분석',
+  'Job, Barcode, Result, Alarm 기준 공통 생산 이벤트 기준 정리',
+  'MES Gateway 설계 및 요청/전송/응답 흐름 구현',
+  'SECS/GEM 공통 계약 및 고객사별 Override 구조 분리',
+  'TCP/IP 패킷 구성, 응답 처리, 예외 케이스 검증',
+  '이벤트-전송-응답 기준 로그 추적 체계 정리',
 ];
 
 const integrationKeywordItems = [
   'MES',
   'SECS/GEM',
   'Production Integration',
-  'Builder Pattern',
+  'Request Builder',
   'Facade',
-  'Template Method',
+  'Abstract / Override',
   'Message Dispatcher',
   'Packet Framing',
   'TCP/IP',
@@ -290,6 +314,10 @@ const integrationSkillItems = [
   { icon: Layers, label: 'WinForms' },
   { icon: Gauge, label: 'TCP/IP' },
   { icon: CheckCircle, label: 'SECS/GEM' },
+  { icon: Box, label: 'Request Builder' },
+  { icon: Target, label: 'Facade / Dispatcher' },
+  { icon: FileText, label: 'Abstract / Override' },
+  { icon: Database, label: 'Packet Framing' },
 ];
 
 const navItems = [
@@ -1194,13 +1222,13 @@ function ProductionIntegrationReport() {
             <h5 id="integration-problem-title">문제 상황</h5>
           </div>
           <p>
-            MES와 SECS/GEM은 모두 생산 시스템 연동을 담당하지만 구현 방식이 달라
-            작업 정보, 바코드, 판정 결과, 장비 알림 처리 기준이 서비스별로 분산된 구조
+            작업 정보, 바코드, 판정 결과, 장비 알림 처리 기준이 서비스별로 분산되어
+            고객사 요구사항 추가 시 변경 범위와 장애 추적 비용이 증가
           </p>
           <div className="industrial-aoi-comparison-box">
             <span>핵심 병목</span>
-            <strong>서비스별 분기와 고객사 예외가 누적된 레거시 연동 로직</strong>
-            <p>공통 이벤트 기준이 없어 변경 영향 범위와 장애 추적 비용이 증가</p>
+            <strong>고객사별 예외와 서비스별 조건 분기가 누적된 생산 연동 로직</strong>
+            <p>생산 이벤트 처리 기준 표준화와 채널별 책임 경계 재정의 필요</p>
           </div>
         </section>
 
@@ -1210,13 +1238,13 @@ function ProductionIntegrationReport() {
             <h5 id="integration-cause-title">원인 분석</h5>
           </div>
           <p>
-            데이터 구성, 전송, 응답 반영 기준이 각 채널 구현에 직접 연결되어
-            동일 시나리오가 반복 구현되는 구조
+            생산 이벤트와 전송 계층의 책임 경계가 모호해 MES 전송, SECS/GEM 확장,
+            TCP/IP 메시지 안정화 변경이 동일 로직에 집중되는 구조
           </p>
           <div className="industrial-aoi-comparison-box">
             <span>원인</span>
-            <strong>공통 연동 이벤트와 서비스별 책임 경계의 부재</strong>
-            <p>MES는 전송·응답 관리, SECS/GEM은 고객사별 확장이 핵심이나 두 책임이 명확히 분리되지 않은 상태</p>
+            <strong>공통 생산 이벤트 기준과 채널별 처리 책임의 부재</strong>
+            <p>전송, 응답 반영, 고객사별 예외 처리, 로그 추적 기준 분산으로 운영 장애 분석 비용 증가</p>
           </div>
         </section>
       </div>
@@ -1244,60 +1272,28 @@ function ProductionIntegrationReport() {
             );
           })}
         </div>
-        <div className="industrial-aoi-implementation-block" aria-label="Integration implementation patterns">
-          <div className="industrial-aoi-implementation-title">
-            <strong>구현 방식</strong>
-            <span>장비 이벤트를 서비스별 전송 흐름으로 변환하는 구조</span>
-          </div>
-          <div className="industrial-aoi-implementation-grid">
-            {integrationImplementationItems.map((item) => (
-              <article className="industrial-aoi-implementation-card" key={item.title}>
-                <span>{item.pattern}</span>
-                <strong>{item.title}</strong>
-                <p>{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
       </section>
 
-      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-flow-title">
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-comparison-title">
         <div className="industrial-aoi-report-heading">
           <span>4</span>
-          <h5 id="integration-flow-title">생산 연동 채널 구조</h5>
+          <h5 id="integration-comparison-title">처리 기준 및 적용 구조</h5>
         </div>
-        <div className="industrial-aoi-integration-map">
-          <span className="industrial-aoi-integration-diagram-badge">재구성 다이어그램</span>
-          <div className="industrial-aoi-integration-map-flow" aria-label="AOI equipment to middleware to production system">
-            <div className="industrial-aoi-integration-system">
-              <strong>AOI 장비</strong>
-              <span>작업 정보 · 바코드 · 판정 결과 · 장비 알림 · ...</span>
-            </div>
-            <ArrowRight aria-hidden="true" />
-            <div className="industrial-aoi-integration-channel-group">
-              <div className="industrial-aoi-integration-system industrial-aoi-integration-system-focus">
-                <strong>MES 채널</strong>
-                <span>전송 전처리 · 전송 분기 · 응답 반영</span>
-              </div>
-              <div className="industrial-aoi-integration-system industrial-aoi-integration-system-focus industrial-aoi-integration-system-alt">
-                <strong>SECS/GEM 채널</strong>
-                <span>공통 계약 · 고객사별 확장 · 응답 검증</span>
-              </div>
-            </div>
-            <ArrowRight aria-hidden="true" />
-            <div className="industrial-aoi-integration-system">
-              <strong>생산 시스템</strong>
-              <span>추적 · 제어 · 결과 수집</span>
-            </div>
+        <div className="industrial-aoi-integration-comparison-table" role="table" aria-label="MES SECS GEM integration before and after comparison">
+          <div className="industrial-aoi-integration-comparison-row industrial-aoi-integration-comparison-head" role="row">
+            <span role="columnheader">항목</span>
+            <span role="columnheader">개선 전</span>
+            <span role="columnheader">개선 후</span>
+            <span role="columnheader">적용 구조</span>
           </div>
-          <div className="industrial-aoi-integration-flow-list">
-            {integrationFlowRows.map((row) => (
-              <span key={row.title}>
-                <strong>{row.title}</strong>
-                <em>{row.description}</em>
-              </span>
-            ))}
-          </div>
+          {integrationComparisonRows.map((row) => (
+            <div className="industrial-aoi-integration-comparison-row" role="row" key={row.target}>
+              <strong role="cell">{row.target}</strong>
+              <span role="cell">{row.before}</span>
+              <span role="cell">{row.after}</span>
+              <span role="cell">{row.method}</span>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -1305,143 +1301,200 @@ function ProductionIntegrationReport() {
         <div className="industrial-aoi-structure-titlebar">
           <div className="industrial-aoi-report-heading">
             <span>5</span>
-            <h5 id="integration-structure-title">개선 전후 구조</h5>
+            <h5 id="integration-structure-title">구조 다이어그램</h5>
           </div>
-          <p>장비 이벤트 기준으로 MES와 SECS/GEM 책임 분리, 정합성·추적성 개선</p>
+          <p>생산 이벤트 발생, 전송, 응답 반영, 로그 추적을 단일 처리 흐름으로 구성</p>
         </div>
 
-        <div className="industrial-aoi-structure-grid industrial-aoi-integration-structure-grid">
-          <article className="industrial-aoi-structure-card industrial-aoi-structure-before">
-            <header className="industrial-aoi-structure-card-header">
+        <div className="industrial-aoi-integration-structure-map">
+          <div className="industrial-aoi-structure-grid industrial-aoi-integration-structure-grid">
+            <article className="industrial-aoi-structure-card industrial-aoi-structure-before">
+              <header className="industrial-aoi-structure-card-header">
+                <div>
+                  <strong>Before</strong>
+                  <span>분산 처리 구조</span>
+                </div>
+              </header>
+              <div className="industrial-aoi-refactor-flow industrial-aoi-refactor-flow-before">
+                <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-source">
+                  <span>AOI Events</span>
+                  <strong>연동 이벤트</strong>
+                  <div>
+                    <em>작업 정보</em>
+                    <em>바코드</em>
+                    <em>판정 결과</em>
+                    <em>장비 알림</em>
+                    <em>...</em>
+                  </div>
+                </div>
+                <div className="industrial-aoi-refactor-tangle" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-risk">
+                  <span>Branch Logic</span>
+                  <strong>서비스별 조건 분기</strong>
+                  <div>
+                    <em>MES 조건</em>
+                    <em>SECS/GEM 조건</em>
+                    <em>고객사 예외</em>
+                  </div>
+                </div>
+                <div className="industrial-aoi-refactor-arrow industrial-aoi-refactor-arrow-danger" aria-hidden="true" />
+                <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-risk">
+                  <span>Risk</span>
+                  <strong>운영 리스크</strong>
+                  <div>
+                    <em>중복 구현</em>
+                    <em>변경 영향 확대</em>
+                    <em>장애 추적 분산</em>
+                  </div>
+                </div>
+              </div>
+              <div className="industrial-aoi-structure-caption">
+                <p>서비스별 분기와 고객사 예외 누적으로 변경 범위 및 장애 추적 비용 증가</p>
+              </div>
+            </article>
+
+            <article className="industrial-aoi-structure-card industrial-aoi-structure-after">
+              <header className="industrial-aoi-structure-card-header">
+                <div>
+                  <strong>After</strong>
+                  <span>채널 분리 구조</span>
+                </div>
+              </header>
+              <div className="industrial-aoi-refactor-after-map">
+                <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-source">
+                  <span>AOI Events</span>
+                  <strong>연동 이벤트</strong>
+                  <div>
+                    <em>작업 정보</em>
+                    <em>바코드</em>
+                    <em>판정 결과</em>
+                    <em>장비 알림</em>
+                    <em>...</em>
+                  </div>
+                </div>
+
+                <div className="industrial-aoi-refactor-arrow industrial-aoi-refactor-arrow-success" aria-hidden="true" />
+
+                <div className="industrial-aoi-refactor-contract">
+                  <span>Integration Event</span>
+                  <strong>공통 생산 연동 기준</strong>
+                  <p>서비스별 포맷 변환과 응답 처리 기준 공통화</p>
+                  <div>
+                    <em>전송 전처리</em>
+                    <em>응답 반영</em>
+                    <em>로그 추적</em>
+                  </div>
+                </div>
+
+                <div className="industrial-aoi-refactor-arrow industrial-aoi-refactor-arrow-success" aria-hidden="true" />
+
+                <div className="industrial-aoi-refactor-node industrial-aoi-refactor-channel-node">
+                  <span>Separated Channels</span>
+                  <strong>채널별 책임 분리</strong>
+                  <div>
+                    <em>MES Gateway</em>
+                    <em>SECS/GEM 계약</em>
+                    <em>응답 / 예외 검증</em>
+                  </div>
+                </div>
+
+                <div className="industrial-aoi-refactor-arrow industrial-aoi-refactor-arrow-success" aria-hidden="true" />
+
+                <div className="industrial-aoi-refactor-node industrial-aoi-refactor-result-node">
+                  <span>Result</span>
+                  <strong>운영 개선 효과</strong>
+                  <div>
+                    <em>변경 범위 축소</em>
+                    <em>데이터 정합성</em>
+                    <em>로그 기반 추적</em>
+                    <em>메시지 안정화</em>
+                  </div>
+                </div>
+              </div>
+              <div className="industrial-aoi-structure-caption">
+                <p>공통 이벤트 기준으로 MES 전송과 SECS/GEM 확장을 분리하여 운영 안정성 강화</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div className="industrial-aoi-code-flow-diagram" aria-label="코드 기준 생산 연동 처리 흐름">
+          <div className="industrial-aoi-code-flow-main">
+            <div className="industrial-aoi-code-flow-node industrial-aoi-code-flow-node-event">
+              <Database aria-hidden="true" />
               <div>
-                <strong>Before</strong>
-                <span>분산 처리 구조</span>
-              </div>
-            </header>
-            <div className="industrial-aoi-refactor-flow industrial-aoi-refactor-flow-before">
-              <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-source">
-                <span>AOI Events</span>
-                <strong>연동 이벤트</strong>
-                <div>
-                  <em>작업 정보</em>
-                  <em>바코드</em>
-                  <em>판정 결과</em>
-                  <em>장비 알림</em>
-                  <em>...</em>
-                </div>
-              </div>
-              <div className="industrial-aoi-refactor-tangle" aria-hidden="true">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-              <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-risk">
-                <span>Branch Logic</span>
-                <strong>서비스별 조건 분기</strong>
-                <div>
-                  <em>MES 조건</em>
-                  <em>SECS/GEM 조건</em>
-                  <em>고객사 예외</em>
-                </div>
-              </div>
-              <div className="industrial-aoi-refactor-arrow industrial-aoi-refactor-arrow-danger" aria-hidden="true" />
-              <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-risk">
-                <span>Risk</span>
-                <strong>운영 리스크</strong>
-                <div>
-                  <em>중복 구현</em>
-                  <em>변경 영향 확대</em>
-                  <em>장애 추적 분산</em>
-                </div>
+                <strong>생산 이벤트 발생</strong>
+                <span>Job · Barcode · Result · Alarm</span>
               </div>
             </div>
-            <div className="industrial-aoi-structure-caption">
-              <p>서비스별 분기와 고객사 예외가 누적되어 변경 범위와 장애 추적 비용이 증가</p>
-            </div>
-          </article>
-
-          <article className="industrial-aoi-structure-card industrial-aoi-structure-after">
-            <header className="industrial-aoi-structure-card-header">
+            <ArrowRight className="industrial-aoi-code-flow-arrow" aria-hidden="true" />
+            <div className="industrial-aoi-code-flow-node industrial-aoi-code-flow-node-model">
+              <Box aria-hidden="true" />
               <div>
-                <strong>After</strong>
-                <span>채널 분리 구조</span>
-              </div>
-            </header>
-            <div className="industrial-aoi-refactor-after-map">
-              <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-source industrial-aoi-refactor-node-success">
-                <span>AOI Events</span>
-                <strong>연동 이벤트</strong>
-                <div>
-                  <em>작업 정보</em>
-                  <em>바코드</em>
-                  <em>판정 결과</em>
-                  <em>장비 알림</em>
-                  <em>...</em>
-                </div>
-              </div>
-
-              <div className="industrial-aoi-refactor-arrow industrial-aoi-refactor-arrow-success" aria-hidden="true" />
-
-              <div className="industrial-aoi-refactor-contract">
-                <span>Integration Event</span>
-                <strong>공통 생산 연동 기준</strong>
-                <p>공통 이벤트를 서비스별 포맷과 응답 처리 흐름으로 변환</p>
-                <div>
-                  <em>전송 전처리</em>
-                  <em>응답 반영</em>
-                  <em>로그 추적</em>
-                </div>
-              </div>
-
-              <div className="industrial-aoi-refactor-arrow industrial-aoi-refactor-arrow-success" aria-hidden="true" />
-
-              <div className="industrial-aoi-refactor-node industrial-aoi-refactor-channel-node">
-                <span>Separated Channels</span>
-                <strong>채널별 책임 분리</strong>
-                <div>
-                  <em>MES 전송 게이트웨이</em>
-                  <em>SECS/GEM 공통 계약</em>
-                  <em>패킷 조립 · 수신 보완</em>
-                </div>
-              </div>
-
-              <div className="industrial-aoi-refactor-arrow industrial-aoi-refactor-arrow-success" aria-hidden="true" />
-
-              <div className="industrial-aoi-refactor-node industrial-aoi-refactor-result-node">
-                <span>Result</span>
-                <strong>운영 개선 효과</strong>
-                <div>
-                  <em>변경 범위 축소</em>
-                  <em>정합 데이터 전송</em>
-                  <em>로그 기반 추적</em>
-                  <em>메시지 수신 안정화</em>
-                </div>
+                <strong>공통 이벤트 기준</strong>
+                <span>서비스별 포맷 변환 전 기준 데이터 정리</span>
               </div>
             </div>
-            <div className="industrial-aoi-structure-caption">
-              <p>MES는 전송 게이트웨이로, SECS/GEM은 공통 계약과 구현체로 분리해 확장성과 유지보수성을 개선</p>
+            <ArrowRight className="industrial-aoi-code-flow-arrow" aria-hidden="true" />
+            <div className="industrial-aoi-code-flow-channel-group">
+              <article className="industrial-aoi-code-flow-channel">
+                <Layers aria-hidden="true" />
+                <div>
+                  <strong>MES Gateway</strong>
+                  <span>요청 객체 구성 · 전송 분기 · 응답 반영</span>
+                </div>
+              </article>
+              <article className="industrial-aoi-code-flow-channel">
+                <CheckCircle aria-hidden="true" />
+                <div>
+                  <strong>SECS/GEM 확장 계층</strong>
+                  <span>공통 처리 흐름 · 고객사별 Override</span>
+                  <em>미들웨어 TCP/IP 송수신 · Header/Length Packet</em>
+                </div>
+              </article>
             </div>
-          </article>
+            <ArrowRight className="industrial-aoi-code-flow-arrow" aria-hidden="true" />
+            <div className="industrial-aoi-code-flow-node industrial-aoi-code-flow-node-result">
+              <Gauge aria-hidden="true" />
+              <div>
+                <strong>응답 반영 / 로그 추적</strong>
+                <span>이벤트-전송-응답 흐름 추적</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-result-title">
         <div className="industrial-aoi-report-heading">
           <span>6</span>
-          <h5 id="integration-result-title">연동 개선 결과</h5>
+          <h5 id="integration-result-title">핵심 성과</h5>
         </div>
         <div className="industrial-aoi-integration-result-grid">
           {integrationResultItems.map((item) => (
             <article className="industrial-aoi-integration-result-card" key={item.title}>
-              <strong>{item.title}</strong>
+              <span>{item.title}</span>
+              <strong>{item.metric}</strong>
               <p>{item.description}</p>
             </article>
           ))}
+        </div>
+        <div className="industrial-aoi-performance-measurement">
+          <strong>측정 기준</strong>
+          <ul>
+            {integrationMeasurementNotes.map((note) => (
+              <li key={note}>{note}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -1491,8 +1544,7 @@ function ProductionIntegrationReport() {
       <div className="industrial-aoi-learning-note">
         <Sparkles aria-hidden="true" />
         <p>
-          핵심은 MES와 SECS/GEM을 동일 목적의 생산 연동 채널로 재정의하고 공통 이벤트 모델을 기준으로 분리한 구조다.
-          Builder, Facade/Dispatcher, Template Method, Packet Framing을 요청 구성, MES 전송, SECS/GEM 확장, TCP/IP 수신 안정화에 적용.
+          프로토콜 연결 구현을 넘어 반복 장애 감소를 목표로 생산 이벤트 처리 기준을 표준화하고 운영 안정성을 개선한 사례
         </p>
       </div>
     </article>
@@ -1553,48 +1605,53 @@ function IndustrialAOIPlatformProjectPage({
     {
       id: 'production-integration',
       step: '02',
-      title: 'MES · SECS/GEM 생산 연동 구조 개선',
-      summary: 'MES·SECS/GEM 채널 책임 분리와 대용량 메시지 수신 안정화',
-      problem: 'MES와 SECS/GEM의 구현 방식 차이와 고객사 예외 누적으로 작업 정보, 바코드, 판정 결과, 장비 알림 처리 기준이 분산된 구조',
+      title: 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조 개선',
+      summary: '생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 재설계',
+      problem: '작업 정보, 바코드, 판정 결과, 장비 알림 처리 기준이 서비스별로 분산되어 변경 범위와 장애 추적 비용이 증가한 구조',
       actions: [
-        '작업 정보, 바코드, 판정 결과, 장비 알림을 공통 이벤트 모델로 표준화',
-        'MES 전송 게이트웨이에서 전처리, 전송 분기, 응답 반영을 일원화',
-        'SECS/GEM 공통 계약과 고객사별 구현 지점을 분리',
-        '헤더/길이 기반 패킷 조립으로 대용량 메시지 수신 안정화',
+        'Job, Barcode, Result, Alarm 기준 공통 생산 이벤트 기준 정리',
+        'MES Gateway에서 요청 구성, 전송 분기, 응답 반영 흐름 일원화',
+        'SECS/GEM 공통 계약과 고객사별 Override 구조 분리',
+        'Header/Length 기반 Packet Framing으로 TCP/IP 대용량 메시지 안정화',
       ],
       directions: [
         {
           label: 'Track 01',
-          title: 'MES Channel',
-          points: ['전송 전처리', '전송 분기', '응답 반영'],
+          title: 'MES Gateway',
+          points: ['요청 객체 구성', '전송 분기', '응답 반영'],
         },
         {
           label: 'Track 02',
-          title: 'SECS/GEM Channel',
-          points: ['공통 계약', '고객사별 구현', '응답·예외 검증'],
+          title: 'SECS/GEM Extension',
+          points: ['공통 계약', '고객사별 Override', '응답·예외 검증'],
         },
       ],
       impact: [
         '연동 이슈 메일 약 70% 감소',
-        '채널 책임 분리로 고객사 요구 반영 범위 축소',
-        '대용량 메시지 수신 안정성 개선',
-        '작업 정보부터 판정 결과까지 추적 경로 명확화',
+        '장애 대응 시간 약 40% 단축',
+        '신규 고객사 연동 10개 이상 시나리오 대응',
+        '이벤트-전송-응답 기준 운영 추적성 강화',
       ],
       improvements: [
         {
-          title: 'MES 전송 게이트웨이',
-          description: '전처리, 전송 분기, 응답 반영을 단일 계층으로 구성',
-          details: ['연결·구독 검증', '전송 종류별 분기', '응답 반영'],
+          title: '공통 생산 이벤트 기준',
+          description: 'Job, Barcode, Result, Alarm을 서비스 조건에서 분리된 기준 데이터로 정리',
+          details: ['이벤트 기준 정리', '변경 영향 범위 축소', '로그 추적 기준 확보'],
+        },
+        {
+          title: 'MES Gateway',
+          description: '요청 객체 구성, 전송 분기, 응답 반영을 단일 계층으로 구성',
+          details: ['요청 모델 구성', '전송 종류별 분기', '응답 반영'],
         },
         {
           title: 'SECS/GEM 확장 계층',
-          description: '추상 클래스 기반 공통 계약과 고객사별 구현체 분리',
+          description: '추상 클래스 기반 공통 계약과 고객사별 구현 지점 분리',
           details: ['공통 호출 지점', '고객사별 재정의', '변경 범위 축소'],
         },
         {
-          title: '메시지 수신 안정화',
-          description: 'TCP/IP 패킷 수신과 대용량 메시지 처리 안정성 개선',
-          details: ['헤더/길이 기반 조립', '문자 인코딩 보완', '대용량 수신 보완'],
+          title: 'TCP/IP 메시지 안정화',
+          description: 'Header/Length 기반 Packet Framing으로 대용량 메시지 처리 안정성 개선',
+          details: ['헤더/길이 기반 패킷 구성', '문자 인코딩 보완', '대용량 메시지 보완'],
         },
       ],
     },
@@ -1643,13 +1700,13 @@ function IndustrialAOIPlatformProjectPage({
     selectedArea?.id === 'inspection-automation'
       ? 'Gerber-Part ROI 매칭 성능 최적화'
       : selectedArea?.id === 'production-integration'
-        ? 'MES · SECS/GEM 생산 연동 구조 개선'
+        ? 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조 개선'
       : selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
   const pageLead =
     selectedArea?.id === 'inspection-automation'
       ? '대용량 Gerber-Part ROI 매칭 병목을 Module 후보 선별과 변환 결과 캐싱으로 개선한 성능 최적화 작업'
       : selectedArea?.id === 'production-integration'
-        ? '생산 연동 이벤트를 공통 모델로 표준화하고 MES·SECS/GEM 채널 책임을 분리한 구조 개선 작업'
+        ? '서비스별로 분산된 생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 재설계하여 운영 안정성과 확장성을 개선한 사례'
       : selectedArea?.summary ??
         '3D AOI 장비 소프트웨어 개선 내역을 AOI, MES·SECS/GEM·AI 연동, Repair/NG Buffer 운영 기준으로 구성';
   const pageTech =
@@ -1681,7 +1738,7 @@ function IndustrialAOIPlatformProjectPage({
       : null;
   const guideTitle = selectedArea ? 'Key Contributions' : '3 Work Areas';
   const guideDescription = selectedArea
-    ? '실제 변경 단위와 검증 근거 중심 구성'
+    ? '주요 변경 단위와 검증 근거 중심 구성'
     : 'Company and customer-specific details are omitted, and the work is grouped by AOI workflow, MES·SECS/GEM·AI integration, and Repair operations.';
 
   return (

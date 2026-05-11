@@ -3999,6 +3999,324 @@ main {
   line-height: 1.55;
 }
 
+.industrial-aoi-integration-result-card > span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.industrial-aoi-integration-result-card > strong {
+  color: var(--accent);
+  font-size: 1.45rem;
+  line-height: 1.1;
+}
+
+.industrial-aoi-integration-comparison-table {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.industrial-aoi-integration-comparison-row {
+  display: grid;
+  grid-template-columns: minmax(96px, 0.58fr) minmax(0, 1fr) minmax(0, 1.08fr) minmax(150px, 0.92fr);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.industrial-aoi-integration-comparison-row > span,
+.industrial-aoi-integration-comparison-row > strong {
+  display: grid;
+  align-items: center;
+  min-width: 0;
+  padding: 13px 14px;
+  border-left: 1px solid var(--border);
+  color: var(--ink);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.industrial-aoi-integration-comparison-row > :first-child {
+  border-left: 0;
+}
+
+.industrial-aoi-integration-comparison-row > strong {
+  color: var(--accent);
+  font-weight: 950;
+  background: color-mix(in srgb, var(--accent-soft) 42%, var(--card));
+}
+
+.industrial-aoi-integration-comparison-head {
+  background: var(--card-strong);
+}
+
+.industrial-aoi-integration-comparison-head > span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.industrial-aoi-integration-structure-map {
+  padding: 0;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-integration-structure-grid {
+  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.12fr);
+  gap: 16px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-structure-card {
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--shadow) 10%, transparent);
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header {
+  display: grid;
+  align-items: center;
+  box-sizing: border-box;
+  height: 62px;
+  min-height: 62px;
+  padding: 11px 14px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  height: 100%;
+  white-space: nowrap;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header strong {
+  font-size: 0.96rem;
+  line-height: 1.15;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-flow,
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-after-map {
+  padding: 18px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-flow {
+  grid-template-columns: minmax(112px, 1fr) minmax(28px, 0.24fr) minmax(112px, 1fr) 24px minmax(112px, 1fr);
+  gap: 8px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-after-map {
+  grid-template-columns: minmax(108px, 0.92fr) 24px minmax(136px, 1.12fr) 24px minmax(112px, 1fr) 24px minmax(112px, 1fr);
+  gap: 8px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-node,
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-contract {
+  min-height: 176px;
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-after-map .industrial-aoi-refactor-node {
+  min-height: 176px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-node > span,
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-contract > span {
+  font-size: 0.66rem;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-node strong,
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-contract strong {
+  font-size: 0.88rem;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-node div {
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-node em,
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-contract em {
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-contract {
+  gap: 8px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-contract p {
+  display: block;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-contract div {
+  gap: 6px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle {
+  min-height: 176px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-arrow {
+  min-width: 24px;
+  width: 24px;
+  height: 28px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-refactor-arrow::before {
+  height: 12px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-structure-caption {
+  padding: 0 16px 16px;
+}
+
+.industrial-aoi-integration-structure-map .industrial-aoi-structure-caption p {
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.industrial-aoi-code-flow-diagram {
+  margin-top: 16px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--shadow) 8%, transparent);
+}
+
+.industrial-aoi-code-flow-main {
+  display: grid;
+  grid-template-columns: minmax(132px, 0.9fr) 28px minmax(152px, 1fr) 28px minmax(230px, 1.45fr) 28px minmax(154px, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.industrial-aoi-code-flow-node,
+.industrial-aoi-code-flow-channel {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--shadow) 7%, transparent);
+}
+
+.industrial-aoi-code-flow-node svg,
+.industrial-aoi-code-flow-channel svg {
+  width: 26px;
+  height: 26px;
+  color: var(--accent);
+}
+
+.industrial-aoi-code-flow-node strong,
+.industrial-aoi-code-flow-channel strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.industrial-aoi-code-flow-node span,
+.industrial-aoi-code-flow-channel span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 780;
+  line-height: 1.35;
+}
+
+.industrial-aoi-code-flow-node-event {
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+}
+
+.industrial-aoi-code-flow-node-model {
+  border-color: color-mix(in srgb, #2dd4bf 30%, var(--border));
+}
+
+.industrial-aoi-code-flow-node-model svg {
+  color: #0f766e;
+}
+
+.industrial-aoi-code-flow-node-result {
+  border-color: color-mix(in srgb, #64748b 32%, var(--border));
+}
+
+.industrial-aoi-code-flow-node-result svg {
+  color: #475569;
+}
+
+.industrial-aoi-code-flow-arrow {
+  justify-self: center;
+  width: 21px;
+  height: 21px;
+  color: color-mix(in srgb, var(--accent) 72%, var(--muted));
+  stroke-width: 2.4;
+}
+
+.industrial-aoi-code-flow-channel-group {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--card-strong) 82%, transparent);
+}
+
+.industrial-aoi-code-flow-channel {
+  min-height: 62px;
+  padding: 10px 11px;
+  background: var(--card);
+  box-shadow: none;
+}
+
+.industrial-aoi-code-flow-channel:first-child {
+  border-color: color-mix(in srgb, #2563eb 34%, var(--border));
+}
+
+.industrial-aoi-code-flow-channel:first-child svg {
+  color: #2563eb;
+}
+
+.industrial-aoi-code-flow-channel:last-child {
+  border-color: color-mix(in srgb, #7c3aed 32%, var(--border));
+}
+
+.industrial-aoi-code-flow-channel:last-child svg {
+  color: #7c3aed;
+}
+
+.industrial-aoi-code-flow-channel em {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 7px;
+  padding: 5px 7px;
+  border: 1px dashed color-mix(in srgb, #7c3aed 42%, var(--border));
+  border-radius: 7px;
+  color: #6d28d9;
+  background: color-mix(in srgb, #7c3aed 8%, transparent);
+  font-size: 0.64rem;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
 .industrial-aoi-result-table {
   display: grid;
   gap: 10px;
@@ -5580,6 +5898,25 @@ main {
     white-space: normal;
   }
 
+  .industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header {
+    height: auto;
+    min-height: 54px;
+    padding: 10px 14px;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header strong,
+  .industrial-aoi-integration-structure-map .industrial-aoi-structure-card-header span {
+    line-height: 1.2;
+  }
+
   .industrial-aoi-report-stat-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -5592,6 +5929,90 @@ main {
   .industrial-aoi-integration-structure-layout,
   .industrial-aoi-implementation-grid {
     grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-integration-structure-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-flow,
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-after-map {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle {
+    justify-self: center;
+    width: 92px;
+    height: 82px;
+    min-height: 82px;
+    margin: -4px 0;
+    transform: none;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle::before,
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle::after,
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span {
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    width: 0;
+    height: auto;
+    border-top: 0;
+    border-left: 2px dashed color-mix(in srgb, #ef4444 62%, transparent);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle::before {
+    transform: translateX(-20px) rotate(-9deg);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle::after {
+    transform: translateX(20px) rotate(9deg);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(1) {
+    transform: translateX(-7px) rotate(4deg);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(2) {
+    transform: translateX(7px) rotate(-4deg);
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(3) {
+    display: block;
+    transform: translateX(-30px) rotate(12deg);
+    opacity: 0.52;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(4) {
+    display: block;
+    transform: translateX(30px) rotate(-12deg);
+    opacity: 0.52;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(5) {
+    display: block;
+    transform: translateX(-14px) rotate(15deg);
+    opacity: 0.42;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(6) {
+    display: block;
+    transform: translateX(14px) rotate(-15deg);
+    opacity: 0.42;
+  }
+
+  .industrial-aoi-integration-structure-map .industrial-aoi-refactor-tangle span:nth-child(n + 7) {
+    display: none;
+  }
+
+  .industrial-aoi-code-flow-main {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-code-flow-arrow {
+    justify-self: center;
+    transform: rotate(90deg);
   }
 
   .industrial-aoi-integration-channel-group {
@@ -5936,6 +6357,28 @@ main {
   .industrial-aoi-integration-flow-list,
   .industrial-aoi-integration-result-grid {
     grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-comparison-table {
+    gap: 12px;
+  }
+
+  .industrial-aoi-integration-comparison-head {
+    display: none;
+  }
+
+  .industrial-aoi-integration-comparison-row {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-integration-comparison-row > span,
+  .industrial-aoi-integration-comparison-row > strong {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .industrial-aoi-integration-comparison-row > :first-child {
+    border-top: 0;
   }
 
   .industrial-aoi-integration-diagram-badge {
