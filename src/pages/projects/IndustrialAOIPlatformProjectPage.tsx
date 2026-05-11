@@ -117,34 +117,39 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     keywords: integrationKeywordItems.slice(0, 5),
   },
   'operation-flow': {
-    title: 'Repair & NG Buffer 운영 흐름 정리',
+    title: '원격 공유 폴더 I/O 병목 구조 개선',
     problem: {
-      body: 'Repair 화면, NG Buffer 신호, Rack 상태가 어긋날 때 현장 재현과 원인 추적이 어려웠습니다.',
+      body: '원격 PC의 공유 폴더 이미지/XML 직접 조작으로 Confirm 전체 시간이 최대 약 32초까지 증가',
     },
     before: {
-      body: '신호 처리, 화면 표시, Rack 상태 갱신 기준이 분산되어 같은 현상을 다시 확인하기 어려웠습니다.',
-      label: '기존 구조',
-      highlight: '상태 기준 분산',
-      note: 'Repair/NG Buffer/Rack 흐름을 함께 추적해야 했음',
+      body: '파일 이동·삭제를 원격 PC가 직접 수행하면서 네트워크 왕복 비용이 Confirm 흐름에 누적',
+      label: '기존 방식',
+      highlight: '원격 직접 조작',
+      note: '공유 폴더 접근 비용이 작업 시간에 반영',
     },
     improvement: {
-      body: 'NG Buffer In/Out 흐름, Rack 표시 동기화, 신호 로그 기준을 같은 운영 흐름에서 정리했습니다.',
+      body: '원격 PC 역할을 bat 생성·실행 요청으로 제한하고, 파일 보유 PC에서 로컬 실행하는 구조로 분리',
       steps: [
-        { icon: Layers, title: '신호 흐름 정리', description: 'NG Buffer In/Out 기준과 전달 흐름 정리' },
-        { icon: CheckCircle, title: 'Rack 상태 동기화', description: '화면 표시와 내부 상태 갱신 기준 보완' },
-        { icon: Gauge, title: '로그 기준 보강', description: '현장 재현을 위한 신호·상태 로그 정리' },
+        { icon: Box, title: 'bat 생성', description: 'Confirm 대상 파일 처리 명령을 묶음' },
+        { icon: Layers, title: '실행 요청', description: '파일 대신 bat 실행 정보만 전달' },
+        { icon: CheckCircle, title: '로컬 처리', description: '로컬 PC에서 경로 치환 후 실행' },
       ],
     },
     results: [
-      { title: '상태 정합성', metric: '누락 완화', description: '표시와 내부 상태 기준 정리' },
-      { title: '운영 추적', metric: '개선', description: '신호 로그 기준 정리' },
+      { title: 'Confirm 전체', metric: '약 32초 → 3초대', description: '업체 실제 Confirm 로그 기준' },
+      { title: '개선 방식', metric: 'SMB 우회', description: 'bat 실행 요청만 TCP/IP로 전달' },
+      { title: '운영 안전성', metric: 'Fallback 유지', description: '접속 실패 시 기존 흐름 사용' },
+    ],
+    measurementNotes: [
+      'Confirm 전체 시간: 업체 실제 Confirm 로그 기준',
+      '개선 방식: 파일 직접 이동 대신 실행 요청 위임 구조',
     ],
     roles: [
-      'NG Buffer In/Out 흐름 점검',
-      'Rack 표시 동기화 기준 정리',
-      '현장 추적 로그 보강',
+      '원격 공유 폴더 I/O 병목 분석',
+      'bat 생성 및 실행 위임 구조 설계',
+      '경로 치환과 cleanup 처리',
     ],
-    keywords: ['Repair', 'NG Buffer', 'Rack State', 'Logging'],
+    keywords: ['Confirm', 'SMB Bypass', 'Batch Process', 'File Move'],
   },
 };
 
@@ -717,6 +722,275 @@ function ProductionIntegrationDiagramSection() {
   );
 }
 
+function RepairConfirmHeroVisual() {
+  return (
+    <figure className="project-detail-hero-media industrial-aoi-hero-media industrial-aoi-repair-hero" aria-label="Remote shared-folder file move bottleneck visual">
+      <div className="industrial-aoi-repair-hero-title">
+        <span>Confirm Total Time</span>
+        <strong>약 32초 → 3초대</strong>
+      </div>
+      <div className="industrial-aoi-repair-hero-flow">
+        <article className="industrial-aoi-repair-hero-node">
+          <Database aria-hidden="true" />
+          <div>
+            <strong>원격 PC</strong>
+            <span>처리 대상 파일 수집</span>
+          </div>
+        </article>
+        <ArrowRight className="industrial-aoi-repair-hero-arrow" aria-hidden="true" />
+        <article className="industrial-aoi-repair-hero-node industrial-aoi-repair-hero-node-accent">
+          <Box aria-hidden="true" />
+          <div>
+            <strong>bat + TCP/IP</strong>
+            <span>실행 명령만 전달</span>
+          </div>
+        </article>
+        <ArrowRight className="industrial-aoi-repair-hero-arrow" aria-hidden="true" />
+        <article className="industrial-aoi-repair-hero-node industrial-aoi-repair-hero-node-success">
+          <CheckCircle aria-hidden="true" />
+          <div>
+            <strong>로컬 PC</strong>
+            <span>로컬 디스크에서 이동</span>
+          </div>
+        </article>
+      </div>
+      <div className="industrial-aoi-repair-hero-compare">
+        <span>Before: SMB 공유 폴더 직접 이동</span>
+        <strong>After: 로컬 PC 실행 위임</strong>
+      </div>
+      <figcaption>Process</figcaption>
+    </figure>
+  );
+}
+
+const repairConfirmFlowSteps = [
+  {
+    label: '1',
+    title: 'bat 생성',
+    description: 'Confirm 대상 이미지/XML 처리 명령을 하나의 bat로 묶음',
+  },
+  {
+    label: '2',
+    title: '실행 요청',
+    description: '파일 복사가 아니라 bat 실행 정보만 TCP/IP로 전달',
+  },
+  {
+    label: '3',
+    title: '로컬 실행',
+    description: '파일 보유 PC에서 로컬 루트로 경로 치환 후 실행',
+  },
+] as const;
+
+const repairConfirmStructureNodes = [
+  {
+    file: '원격 PC',
+    title: '명령 작성',
+    role: 'Confirm 대상 파일을 직접 이동하지 않고 bat 명령으로 정리.',
+  },
+  {
+    file: 'TCP/IP',
+    title: '실행 위임',
+    role: '이미지 파일 대신 bat 경로와 공유 루트 정보만 전달.',
+  },
+  {
+    file: '로컬 PC',
+    title: '로컬 처리',
+    role: '공유 경로를 로컬 경로로 치환한 뒤 hidden process로 실행.',
+  },
+] as const;
+
+const repairConfirmPseudoSnippets = [
+  {
+    file: '원격 요청 모듈',
+    title: 'bat 생성 / 실행 요청',
+    code: `private void HandleConfirmFileMove(confirmFiles, imagePath, result)
+{
+    // 원격 PC는 파일 이동 대신 bat 생성만 담당.
+
+    var batch = new BatchCommand();
+    batch.AppendMoveImages(confirmFiles, to: imagePath + "\\\\OKImage");
+    batch.AppendDeleteXmlWhenNeeded(confirmFiles);
+
+    var batPath = WriteBatFile(result.InspStart, batch);
+
+    if (TryGetLocalPcIp(imagePath, out var targetIp))
+    {
+        // 파일 대신 실행 요청만 전송.
+        if (RequestLocalBatchExec(targetIp, remoteRoot, batPath))
+            return;
+    }
+
+    RunBatchHereAsFallback(batPath);
+}
+
+public bool RequestLocalBatchExec(targetIp, remoteRoot, batPath)
+{
+    // 네트워크에는 bat 실행 정보만 싣는다.
+    var payload = JoinParams(remoteRoot, batPath);
+
+    var packet = new TwinPacket();
+    packet.InsertRequest(major: 5, minor: 1, data: payload);
+
+    return SendTcpRequest(targetIp, packet);
+}`,
+  },
+  {
+    file: '로컬 실행 모듈',
+    title: '요청 수신 / 로컬 실행',
+    code: `private Packet BatchExec(Packet packet)
+{
+    var request = ParseBatchExecRequest(packet);
+
+    // 로컬 PC 기준 경로로 치환.
+    var localRoot = Config.InspectResultFullRootFolder;
+    var localBatPath = request.BatPath.Replace(request.RemoteRoot, localRoot);
+
+    RewriteFile(localBatPath, text => text.Replace(request.RemoteRoot, localRoot));
+
+    RunHiddenBatch(localBatPath);
+    DeleteBatAfterExit(localBatPath);
+
+    return AckOk("local move");
+}`,
+  },
+] as const;
+
+function RepairConfirmImageMoveSection() {
+  return (
+    <article className="industrial-aoi-matching-section industrial-aoi-repair-section" aria-label="Remote shared-folder file move process">
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card industrial-aoi-repair-bypass-card" aria-labelledby="repair-structure-title">
+        <div className="industrial-aoi-report-heading">
+          <span>6</span>
+          <h5 id="repair-structure-title">SMB 우회 방식</h5>
+        </div>
+        <p>
+          파일 보유 PC의 로컬 실행 구조로 전환, 네트워크 전송은 bat 실행 요청으로 제한
+        </p>
+        <div className="industrial-aoi-repair-bypass-visual" aria-label="SMB bypass before and after structure">
+          <article className="industrial-aoi-repair-bypass-lane industrial-aoi-repair-bypass-lane-before">
+            <span className="industrial-aoi-repair-bypass-kicker">Before</span>
+            <h6>원격 PC가 공유 폴더를 직접 조작</h6>
+            <p>이미지/XML 이동·삭제가 SMB 경로를 반복 경유해 Confirm 전체 시간에 누적.</p>
+            <div className="industrial-aoi-repair-bypass-route" aria-label="Before path">
+              <span>원격 PC</span>
+              <ArrowRight aria-hidden="true" />
+              <span>SMB 공유 폴더</span>
+              <ArrowRight aria-hidden="true" />
+              <span>move/delete</span>
+            </div>
+          </article>
+
+          <div className="industrial-aoi-repair-bypass-switch">
+            <Box aria-hidden="true" />
+            <span>전환 포인트</span>
+            <strong>파일 대신 실행 요청</strong>
+            <p>bat 경로와 공유 루트만 TCP/IP로 전달</p>
+          </div>
+
+          <article className="industrial-aoi-repair-bypass-lane industrial-aoi-repair-bypass-lane-after">
+            <span className="industrial-aoi-repair-bypass-kicker">After</span>
+            <h6>파일이 있는 PC가 로컬 디스크에서 처리</h6>
+            <p>공유 경로를 로컬 경로로 치환한 뒤 hidden process로 bat 실행.</p>
+            <div className="industrial-aoi-repair-bypass-route" aria-label="After path">
+              <span>원격 PC</span>
+              <ArrowRight aria-hidden="true" />
+              <span>TCP/IP 요청</span>
+              <ArrowRight aria-hidden="true" />
+              <span>로컬 PC 실행</span>
+            </div>
+          </article>
+        </div>
+        <div className="industrial-aoi-repair-bypass-impact" aria-label="SMB bypass result summary">
+          <span>
+            <Gauge aria-hidden="true" />
+            <span>
+              <strong>약 32초 → 3초대</strong>
+              <em>업체 실제 Confirm 로그 기준</em>
+            </span>
+          </span>
+          <span>
+            <CheckCircle aria-hidden="true" />
+            <span>
+              <strong>SMB 우회</strong>
+              <em>bat 실행 요청만 TCP/IP로 전달</em>
+            </span>
+          </span>
+        </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-code-flow-title">
+        <div className="industrial-aoi-report-heading">
+          <span>7</span>
+          <h5 id="repair-code-flow-title">처리 흐름</h5>
+        </div>
+        <p>
+          bat 생성, TCP/IP 실행 요청, 로컬 실행의 3단계 구성
+        </p>
+        <div className="industrial-aoi-repair-flow-map" aria-label="Remote shared-folder code flow">
+          {repairConfirmFlowSteps.map((step, index) => (
+            <div className="industrial-aoi-repair-flow-item" key={step.title}>
+              <article className="industrial-aoi-repair-flow-step">
+                <span>{step.label}</span>
+                <strong>{step.title}</strong>
+                <p>{step.description}</p>
+              </article>
+              {index < repairConfirmFlowSteps.length - 1 ? (
+                <ArrowRight className="industrial-aoi-repair-flow-arrow" aria-hidden="true" />
+              ) : null}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-code-structure-title">
+        <div className="industrial-aoi-report-heading">
+          <span>8</span>
+          <h5 id="repair-code-structure-title">역할 분리</h5>
+        </div>
+        <div className="industrial-aoi-repair-structure-grid">
+          {repairConfirmStructureNodes.map((node) => (
+            <article className="industrial-aoi-repair-structure-card" key={`${node.file}-${node.title}`}>
+              <span>{node.file}</span>
+              <h6>{node.title}</h6>
+              <p>{node.role}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-pseudocode-title">
+        <div className="industrial-aoi-report-heading">
+          <span>9</span>
+          <h5 id="repair-pseudocode-title">의사코드</h5>
+        </div>
+        <p>
+          세부 분기와 내부 경로를 제외한 C# 스타일 핵심 의사코드
+        </p>
+        <div className="industrial-aoi-smb-bypass-note">
+          <strong>SMB 우회 핵심</strong>
+          <p>
+            원격 PC는 파일 이동을 수행하지 않고 TCP/IP로 bat 실행을 요청. 로컬 PC에서 경로 치환 후 실행.
+          </p>
+        </div>
+        <div className="industrial-aoi-pseudocode-grid">
+          {repairConfirmPseudoSnippets.map((snippet) => (
+            <figure className="industrial-aoi-code-window" key={snippet.title}>
+              <figcaption>
+                <span className="industrial-aoi-code-window-badge">C#</span>
+                <strong>{snippet.title}</strong>
+                <em>{snippet.file}</em>
+              </figcaption>
+              <pre>
+                <code>{snippet.code}</code>
+              </pre>
+            </figure>
+          ))}
+        </div>
+      </section>
+    </article>
+  );
+}
+
 export function IndustrialAOIPlatformProjectPage({
   onNavigate,
   themeMode,
@@ -823,35 +1097,36 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'operation-flow',
       step: '03',
-      title: 'Repair & NG Buffer 운영 흐름 정리',
-      summary: '장비 상태와 화면 표시 기준을 맞춰 현장 추적성을 개선한 사례',
-      problem: 'Repair, NG Buffer, Rack 상태 갱신이 겹칠 때 현장 재현과 원인 추적이 어려운 구조',
+      title: '원격 공유 폴더 I/O 병목 구조 개선',
+      summary: '공유 폴더 파일 처리를 로컬 실행 구조로 전환해 Confirm 전체 시간을 3초대로 단축',
+      problem: '원격 PC가 공유 폴더 파일을 직접 조작해 대기 시간이 길어지는 구조',
       actions: [
-        'NG Buffer In/Out 신호 처리와 Rack 상태 갱신 누락 가능성 점검',
-        'Repair 화면과 내부 Rack 데이터가 다르게 보이는 구간 정리',
-        '현장 장애 추적을 위해 신호/상태 로그와 데이터 처리 구조 개선',
+        '공유 폴더 직접 조작 구간 확인',
+        '이동·삭제 명령을 bat 파일로 구성',
+        '파일이 있는 PC에 실행을 위임해 로컬 경로에서 처리',
       ],
       directions: [],
       impact: [
-        'Repair와 NG Buffer 흐름의 상태 누락 가능성 완화',
-        '현장 장애 재현과 원인 추적에 필요한 로그 품질 개선',
-        '장비 운영 흐름 관련 코드의 읽기 쉬운 구조화',
+        '업체 실제 Confirm 로그 기준 전체 시간 약 32초 → 3초대 개선',
+        '파일 직접 이동 대신 bat 실행 요청 위임 구조로 전환',
+        '공유 폴더 직접 조작을 로컬 PC 실행으로 전환',
+        '접속 실패 시 기존 처리 흐름을 유지해 운영 리스크 완화',
       ],
       improvements: [
         {
-          title: 'NG Buffer Signal Flow',
-          description: 'NG Buffer In/Out 신호와 Rack 상태 갱신 흐름 점검. 상태 누락 가능성 완화.',
-          details: ['Bottom Rack 제거 누락 수정', 'Top/Bottom 신호 전달 확인', '연속 신호 처리 보완'],
+          title: 'SMB File Move Bottleneck',
+          description: 'Confirm 지연 원인을 원격 파일 조작 구조에서 확인',
+          details: ['공유 경로 직접 조작 확인', '로컬 실행 전환 방향 도출'],
         },
         {
-          title: 'Repair Rack State Sync',
-          description: 'Repair 화면과 내부 Rack 데이터 표시 차이를 줄이기 위한 상태 갱신 흐름 정리',
-          details: ['Rack 표시 데이터 정합성 개선', 'Barcode Rack Search 보완', 'Without Empty Rack 조건 처리'],
+          title: 'Batch Command Generation',
+          description: '이미지 이동과 XML 삭제를 하나의 실행 단위로 정리',
+          details: ['move·delete 명령 생성', 'bat 파일 저장'],
         },
         {
-          title: 'Logging / Data Cleanup',
-          description: '현장 재현이 어려운 장비 이슈 추적을 위한 로그 보강과 데이터 처리 코드 정리',
-          details: ['신호 관련 로그 강화', '과도한 반복 로그 완화', 'NGBufferListCtrl 구조 정리'],
+          title: 'Local Execution Delegation',
+          description: '파일 보유 PC에서 경로 치환 후 로컬 디스크 실행',
+          details: ['로컬 경로 치환', 'hidden process 실행'],
         },
       ],
     },
@@ -935,16 +1210,18 @@ export function IndustrialAOIPlatformProjectPage({
               </aside>
               <figcaption>Mockup</figcaption>
             </figure>
+          ) : selectedArea?.id === 'operation-flow' ? (
+            <RepairConfirmHeroVisual />
           ) : (
             <figure className="project-detail-hero-media industrial-aoi-hero-media">
               <img src={heroImage} alt={`${pageTitle} mock interface`} />
-              {showIntegrationIssueBadge ? (
-                <aside className="industrial-aoi-hero-kpi industrial-aoi-hero-kpi--compact" aria-label="Issue mail reduction summary">
-                  <span>Improvement</span>
-                  <strong>{issueReductionMetric.value}</strong>
-                  <p>장애 이슈 메일</p>
-                </aside>
-              ) : null}
+            {showIntegrationIssueBadge ? (
+              <aside className="industrial-aoi-hero-kpi industrial-aoi-hero-kpi--compact" aria-label="Issue mail reduction summary">
+                <span>Improvement</span>
+                <strong>{issueReductionMetric.value}</strong>
+                <p>장애 이슈 메일</p>
+              </aside>
+            ) : null}
               <figcaption>Mockup</figcaption>
             </figure>
           )}
@@ -1040,6 +1317,8 @@ export function IndustrialAOIPlatformProjectPage({
               {selectedArea && area.id === 'inspection-automation' ? <GerberPartDiagramSection /> : null}
 
               {selectedArea && area.id === 'production-integration' ? <ProductionIntegrationDiagramSection /> : null}
+
+              {selectedArea && area.id === 'operation-flow' ? <RepairConfirmImageMoveSection /> : null}
 
 
               {!selectedArea && area.directions.length === 0 ? (
