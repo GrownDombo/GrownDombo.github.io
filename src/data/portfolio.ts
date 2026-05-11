@@ -109,7 +109,7 @@ export const metrics: Metric[] = [
     label: '장애 이슈 메일 감소',
     description: '생산 연동 채널 책임 분리를 통한 반복 장애 알림 감소',
     evidence: {
-      label: 'MES · SECS/GEM 생산 연동 구조 개선',
+      label: 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조 개선',
       href: '/work/mes-secs-gem-data-flow',
     },
   },
@@ -188,10 +188,10 @@ export const workCaseStudies: Project[] = [
     status: 'Improvement',
   },
   {
-    title: 'MES · SECS/GEM 생산 연동 구조 개선',
-    summary: '생산 연동 채널 책임 분리 및 대용량 메시지 수신 안정성 강화',
-    role: 'Factory System Integration · Middleware Stability',
-    tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM'],
+    title: 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조 개선',
+    summary: '공통 이벤트 기준과 채널별 책임 분리로 운영 안정성과 확장성 개선',
+    role: 'Production Event · MES Gateway · SECS/GEM Extension',
+    tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM', 'Packet Framing'],
     links: [],
     image: '/assets/industrial-aoi-production-integration/main-image.png',
     priority: 1,
