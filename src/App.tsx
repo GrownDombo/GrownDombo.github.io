@@ -13,7 +13,10 @@ import { RFIDCollisionSearchSimulatorProjectPage } from './pages/projects/RFIDCo
 import {
   cpuMemoryStressTestPath,
   excelConditionPainterPath,
+  industrialAoiOperationFlowPath,
   industrialAoiRouteAreaIds,
+  legacyIndustrialAoiOperationFlowPath,
+  legacyIndustrialAoiOperationFlowProjectPath,
   legacyIndustrialAoiPlatformPath,
   resumePath,
   rfidCollisionSearchSimulatorPath,
@@ -43,6 +46,11 @@ function App() {
       <Route path={rfidCollisionSearchSimulatorPath} element={<RFIDCollisionSearchSimulatorProjectPage {...themedPageProps} />} />
       <Route path={workCaseRootPath} element={<Navigate to="/#work-cases" replace />} />
       <Route path={legacyIndustrialAoiPlatformPath} element={<Navigate to="/#work-cases" replace />} />
+      <Route path={legacyIndustrialAoiOperationFlowPath} element={<Navigate to={industrialAoiOperationFlowPath} replace />} />
+      <Route
+        path={legacyIndustrialAoiOperationFlowProjectPath}
+        element={<Navigate to={industrialAoiOperationFlowPath} replace />}
+      />
       {Object.entries(industrialAoiRouteAreaIds).map(([path, selectedAreaId]) => (
         <Route
           key={path}

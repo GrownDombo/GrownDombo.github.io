@@ -33,7 +33,7 @@ export function PortfolioHome({
   const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
   const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 속도 개선');
   const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
-  const customerMetric = metrics.find((metric) => metric.label === '신규 고객사 연동 시나리오');
+  const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 병목 개선');
   const impactChartCards = [
     {
       metric: roiSpeedMetric,
@@ -63,13 +63,13 @@ export function PortfolioHome({
       fill: 70,
     },
     {
-      metric: customerMetric,
-      category: '신규 고객',
-      resultLabel: '연동 수',
-      graphLabel: '10+',
-      before: '요구 대응',
-      after: '10개 이상',
-      fill: 100,
+      metric: remoteIoMetric,
+      category: 'Confirm',
+      resultLabel: '개선율',
+      graphLabel: '약 90%',
+      before: '약 32초',
+      after: '3초대',
+      fill: 90,
     },
   ];
   const [activeSection, setActiveSection] = useScrollSpy(portfolioSectionIds);

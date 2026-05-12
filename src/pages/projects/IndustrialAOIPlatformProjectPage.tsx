@@ -119,10 +119,10 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
   'operation-flow': {
     title: '원격 공유 폴더 I/O 병목 구조 개선',
     problem: {
-      body: '원격 PC의 공유 폴더 이미지/XML 직접 조작으로 Confirm 전체 시간이 최대 약 32초까지 증가',
+      body: 'Repair Confirm 시 AOI가 생성한 이미지/XML을 정리해야 했고, 원격 PC의 공유 폴더 직접 조작으로 Confirm 전체 시간이 최대 약 32초까지 증가',
     },
     before: {
-      body: '파일 이동·삭제를 원격 PC가 직접 수행하면서 네트워크 왕복 비용이 Confirm 흐름에 누적',
+      body: 'Repair가 AOI 산출 파일 이동·삭제를 원격 PC에서 직접 수행하면서 네트워크 왕복 비용이 Confirm 흐름에 누적',
       label: '기존 방식',
       highlight: '원격 직접 조작',
       note: '공유 폴더 접근 비용이 작업 시간에 반영',
@@ -136,12 +136,12 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       ],
     },
     results: [
-      { title: 'Confirm 전체', metric: '약 32초 → 3초대', description: '업체 실제 Confirm 로그 기준' },
+      { title: 'Confirm 전체', metric: '약 32초 → 3초대', description: '이슈 발생 PC Start/End 로그 기준' },
       { title: '개선 방식', metric: 'SMB 우회', description: 'bat 실행 요청만 TCP/IP로 전달' },
       { title: '운영 안전성', metric: 'Fallback 유지', description: '접속 실패 시 기존 흐름 사용' },
     ],
     measurementNotes: [
-      'Confirm 전체 시간: 업체 실제 Confirm 로그 기준',
+      '측정 기준: 이슈 발생 PC의 Start/End 로그',
       '개선 방식: 파일 직접 이동 대신 실행 요청 위임 구조',
     ],
     roles: [
@@ -725,6 +725,7 @@ function ProductionIntegrationDiagramSection() {
 function RepairConfirmHeroVisual() {
   return (
     <figure className="project-detail-hero-media industrial-aoi-hero-media industrial-aoi-repair-hero" aria-label="Remote shared-folder file move bottleneck visual">
+      <img src="/assets/shared-folder-bottleneck.png" alt="A PC와 B PC 사이 공유 폴더 I/O 병목 구조 다이어그램" />
       <div className="industrial-aoi-repair-hero-title">
         <span>Confirm Total Time</span>
         <strong>약 32초 → 3초대</strong>
@@ -758,7 +759,7 @@ function RepairConfirmHeroVisual() {
         <span>Before: SMB 공유 폴더 직접 이동</span>
         <strong>After: 로컬 PC 실행 위임</strong>
       </div>
-      <figcaption>Process</figcaption>
+      <figcaption>Mockup</figcaption>
     </figure>
   );
 }
@@ -905,7 +906,7 @@ function RepairConfirmImageMoveSection() {
             <Gauge aria-hidden="true" />
             <span>
               <strong>약 32초 → 3초대</strong>
-              <em>업체 실제 Confirm 로그 기준</em>
+              <em>이슈 발생 PC Start/End 로그</em>
             </span>
           </span>
           <span>
@@ -1107,8 +1108,8 @@ export function IndustrialAOIPlatformProjectPage({
       ],
       directions: [],
       impact: [
-        '업체 실제 Confirm 로그 기준 전체 시간 약 32초 → 3초대 개선',
-        '파일 직접 이동 대신 bat 실행 요청 위임 구조로 전환',
+        '이슈 발생 PC Start/End 로그 기준 약 32초 → 3초대 개선',
+        '파일 이동·삭제를 bat 실행 요청 위임 구조로 전환',
         '공유 폴더 직접 조작을 로컬 PC 실행으로 전환',
         '접속 실패 시 기존 처리 흐름을 유지해 운영 리스크 완화',
       ],

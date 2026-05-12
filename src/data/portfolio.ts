@@ -114,9 +114,13 @@ export const metrics: Metric[] = [
     },
   },
   {
-    value: '10개 이상',
-    label: '신규 고객사 연동 시나리오',
-    description: '고객사별 생산 연동 요구사항 대응',
+    value: '약 90% 단축',
+    label: '원격 공유 폴더 I/O 병목 개선',
+    description: 'SMB 직접 조작을 로컬 실행 위임 구조로 전환',
+    evidence: {
+      label: '이슈 발생 PC Start/End 로그 기준',
+      href: '/work/remote-shared-folder-io-bottleneck',
+    },
   },
 ];
 
@@ -204,9 +208,9 @@ export const workCaseStudies: Project[] = [
     role: '원격 I/O 병목 구조 개선',
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'Batch Process', 'File I/O'],
     links: [],
-    image: '/assets/remote-shared-folder-file-move.svg',
+    image: '/assets/shared-folder-bottleneck.png',
     priority: 2,
-    detailPath: '/work/repair-ng-buffer-operations',
+    detailPath: '/work/remote-shared-folder-io-bottleneck',
     status: 'Work Case',
   },
 ];

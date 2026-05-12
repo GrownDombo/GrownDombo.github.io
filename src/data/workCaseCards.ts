@@ -109,7 +109,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     title: '원격 공유 폴더 I/O 병목 구조 개선',
     subtitle: '원격 I/O 병목 구조 개선',
     summary: '공유 폴더 파일 처리를 로컬 실행 구조로 전환해 Confirm 전체 시간을 3초대로 단축',
-    image: '/assets/remote-shared-folder-file-move.svg',
+    image: '/assets/shared-folder-bottleneck.png',
     imageAlt: 'Remote shared-folder file move bottleneck improvement illustration',
     detailPath: industrialAoiOperationFlowPath,
     priority: 2,
@@ -122,7 +122,7 @@ export const workCaseCards: WorkCaseCardData[] = [
       {
         label: '측정 기준',
         value: 'Start/End 로그',
-        description: '업체 실제 Confirm 로그 기준',
+        description: '이슈 발생 PC 기준',
       },
     ],
     phases: [
