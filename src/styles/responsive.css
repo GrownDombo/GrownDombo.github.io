@@ -429,7 +429,7 @@
   }
 
   .resume-document-header {
-    grid-template-columns: minmax(0, 1fr) 64px;
+    grid-template-columns: minmax(0, 1fr) 72px;
     gap: 18px;
   }
 
@@ -855,8 +855,8 @@
   }
 
   .resume-photo-frame {
-    width: 64px;
-    height: 85px;
+    width: 72px;
+    height: 96px;
     margin: 0;
   }
 
