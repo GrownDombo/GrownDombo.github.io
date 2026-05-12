@@ -5,7 +5,33 @@
   --resume-muted: #6a6262;
   --resume-soft: #f8f8f8;
   --resume-rule: #ebe6e6;
+  --resume-paper: #ffffff;
+  --resume-chip: #fbfbfb;
   --resume-accent: var(--forest);
+  --resume-metric-text: #263a62;
+  --resume-primary-dot: rgb(37 99 235 / 58%);
+  --resume-approach-dot: rgb(106 98 98 / 58%);
+  --resume-statement-line: rgb(37 99 235 / 26%);
+  --resume-highlight-line: rgb(37 99 235 / 18%);
+  --resume-link-hover: rgb(37 99 235 / 8%);
+  --resume-shadow: 0 18px 50px rgb(48 44 44 / 8%);
+}
+
+.site-shell[data-theme="dark"] .resume-page {
+  --resume-text: #f8fafc;
+  --resume-muted: #cbd5e1;
+  --resume-soft: #1e293b;
+  --resume-rule: rgb(148 163 184 / 22%);
+  --resume-paper: #111827;
+  --resume-chip: rgb(30 41 59 / 72%);
+  --resume-accent: #60a5fa;
+  --resume-metric-text: #bfdbfe;
+  --resume-primary-dot: rgb(96 165 250 / 64%);
+  --resume-approach-dot: rgb(148 163 184 / 58%);
+  --resume-statement-line: rgb(96 165 250 / 34%);
+  --resume-highlight-line: rgb(96 165 250 / 26%);
+  --resume-link-hover: rgb(96 165 250 / 12%);
+  --resume-shadow: 0 24px 70px rgb(0 0 0 / 34%);
 }
 
 .resume-document {
@@ -16,8 +42,8 @@
   margin: 0 auto;
   border: 1px solid var(--resume-rule);
   color: var(--resume-text);
-  background: #ffffff;
-  box-shadow: 0 18px 50px rgb(48 44 44 / 8%);
+  background: var(--resume-paper);
+  box-shadow: var(--resume-shadow);
   font-family:
     Pretendard, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 0.84rem;
@@ -71,14 +97,14 @@
 
 .resume-icon-link:hover,
 .resume-icon-link:focus-visible {
-  color: var(--forest);
-  background: rgb(37 99 235 / 8%);
+  color: var(--resume-accent);
+  background: var(--resume-link-hover);
   outline: none;
 }
 
 .resume-document-header {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 72px;
+  grid-template-columns: minmax(0, 1fr) 84px;
   gap: 24px;
   align-items: start;
 }
@@ -99,7 +125,7 @@
   max-width: 360px;
   padding-left: 10px;
   margin-top: 18px;
-  border-left: 2px solid rgb(37 99 235 / 26%);
+  border-left: 2px solid var(--resume-statement-line);
 }
 
 .resume-statement p {
@@ -110,8 +136,8 @@
 }
 
 .resume-photo-frame {
-  width: 72px;
-  height: 96px;
+  width: 84px;
+  height: 112px;
   border: 1px solid var(--resume-rule);
   border-radius: 4px;
   overflow: hidden;
@@ -207,7 +233,7 @@
   border: 1px solid var(--resume-rule);
   border-radius: 4px;
   color: var(--resume-muted);
-  background: #fbfbfb;
+  background: var(--resume-chip);
   font-size: 0.68rem;
   font-style: normal;
   font-weight: 500;
@@ -300,12 +326,12 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgb(37 99 235 / 58%);
+  background: var(--resume-primary-dot);
   content: "";
 }
 
 .resume-highlight-approach .resume-detail-list li::before {
-  background: rgb(106 98 98 / 58%);
+  background: var(--resume-approach-dot);
 }
 
 .resume-highlight-list {
@@ -356,7 +382,7 @@
   display: grid;
   gap: 0;
   padding-left: 10px;
-  border-left: 2px solid rgb(37 99 235 / 18%);
+  border-left: 2px solid var(--resume-highlight-line);
 }
 
 .resume-highlight-card header {
@@ -396,7 +422,7 @@
 }
 
 .resume-metric-list li {
-  color: #263a62;
+  color: var(--resume-metric-text);
   font-weight: 600;
 }
 
@@ -462,7 +488,7 @@
   border: 1px solid var(--resume-rule);
   border-radius: 4px;
   color: var(--resume-muted);
-  background: #fbfbfb;
+  background: var(--resume-chip);
   font-size: 0.66rem;
   font-weight: 500;
   line-height: 1.5;

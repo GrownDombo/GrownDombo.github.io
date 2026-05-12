@@ -40,7 +40,7 @@ function App() {
   return (
     <Routes>
       <Route index element={<PortfolioHome {...themedPageProps} />} />
-      <Route path={resumePath} element={<ResumePage onNavigate={onNavigate} />} />
+      <Route path={resumePath} element={<ResumePage {...themedPageProps} />} />
       <Route path={excelConditionPainterPath} element={<ExcelConditionPainterProjectPage {...themedPageProps} />} />
       <Route path={cpuMemoryStressTestPath} element={<CPUMemoryStressTestProjectPage {...themedPageProps} />} />
       <Route path={rfidCollisionSearchSimulatorPath} element={<RFIDCollisionSearchSimulatorProjectPage {...themedPageProps} />} />

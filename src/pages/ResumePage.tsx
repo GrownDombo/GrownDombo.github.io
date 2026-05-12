@@ -2,13 +2,13 @@ import { AnalyticsNotice } from '../components/AnalyticsNotice';
 import { SiteHeader } from '../components/SiteHeader';
 import { trackAnalyticsEvent } from '../analytics/google';
 import { additionalDetails, resumeExperiences, resumeInfo, resumeIntroduction } from '../data/resume';
-import type { InternalNavigate } from '../types/navigation';
+import type { ThemedPageProps } from '../types/navigation';
 import { ResumeIconLink, renderMetricResult, splitMetricText } from './resume/resumeFormatting';
 
-export function ResumePage({ onNavigate }: { onNavigate: InternalNavigate }) {
+export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageProps) {
   return (
-    <div className="site-shell">
-      <SiteHeader isResumePage onNavigate={onNavigate} />
+    <div className="site-shell" data-theme={themeMode}>
+      <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
       <main className="resume-page" id="top">
         <article className="resume-document" aria-labelledby="resume-title">
