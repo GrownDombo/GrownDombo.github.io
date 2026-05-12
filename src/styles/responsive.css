@@ -488,6 +488,7 @@
   .intro-strip,
   .skill-grid,
   .project-grid,
+  .case-study-list,
   .impact-strip,
   .impact-meter-grid,
   .case-study-flow,
@@ -500,7 +501,7 @@
   }
 
   .case-study-card {
-    padding: 18px;
+    padding: 16px;
   }
 
   .case-study-card-top {
@@ -520,6 +521,10 @@
 
   .case-study-detail-link {
     justify-content: flex-start;
+  }
+
+  .section-disclosure-button {
+    width: 100%;
   }
 
   .industrial-aoi-refactor-flow,
