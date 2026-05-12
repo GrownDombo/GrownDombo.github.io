@@ -12,7 +12,11 @@ export function WorkCaseCard({ caseData, onNavigate }: WorkCaseCardProps) {
   return (
     <article className="case-study-card">
       <div className="case-study-card-top">
-        <p className="project-role case-study-kicker">{caseData.subtitle}</p>
+        <div className="case-study-heading">
+          <p className="project-role case-study-kicker">{caseData.subtitle}</p>
+          <h3>{caseData.title}</h3>
+          <p>{caseData.summary}</p>
+        </div>
         <Link
           className="case-study-detail-link"
           to={caseData.detailPath}
@@ -33,18 +37,14 @@ export function WorkCaseCard({ caseData, onNavigate }: WorkCaseCardProps) {
           <img src={caseData.image} alt={caseData.imageAlt} loading="lazy" />
         </Link>
 
-        <div className="case-study-copy">
-          <h3>{caseData.title}</h3>
-          <p>{caseData.summary}</p>
-          <div className="case-study-metrics" aria-label={`${caseData.title} 핵심 지표`}>
-            {caseData.metrics.map((metric) => (
-              <div className="case-study-metric" key={metric.label}>
-                <span>{metric.label}</span>
-                <strong>{metric.value}</strong>
-                <p>{metric.description}</p>
-              </div>
-            ))}
-          </div>
+        <div className="case-study-metrics" aria-label={`${caseData.title} 핵심 지표`}>
+          {caseData.metrics.map((metric) => (
+            <div className="case-study-metric" key={metric.label}>
+              <span>{metric.label}</span>
+              <strong>{metric.value}</strong>
+              <p>{metric.description}</p>
+            </div>
+          ))}
         </div>
       </div>
 

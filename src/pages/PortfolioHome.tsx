@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { ArrowUpRight, FileText, Github, Mail, Sparkles } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { ArrowUpRight, ChevronDown, ChevronUp, FileText, Github, Mail, Sparkles } from 'lucide-react';
 import { Link } from 'react-router';
 import { AnalyticsNotice } from '../components/AnalyticsNotice';
 import { SiteHeader } from '../components/SiteHeader';
@@ -34,6 +34,10 @@ export function PortfolioHome({
   const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 속도 개선');
   const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
   const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 병목 개선');
+  const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
+  const additionalWorkCaseCards = prioritizedWorkCaseCards.slice(2);
+  const visibleProjects = prioritizedProjects.slice(0, 3);
+  const additionalProjects = prioritizedProjects.slice(3);
   const impactChartCards = [
     {
       metric: roiSpeedMetric,
@@ -43,15 +47,6 @@ export function PortfolioHome({
       before: '6분 22초',
       after: '3.5초',
       fill: 99,
-    },
-    {
-      metric: shortcutSpeedMetric,
-      category: '시간',
-      resultLabel: '개선율',
-      graphLabel: '85%',
-      before: '2초',
-      after: '0.3초',
-      fill: 85,
     },
     {
       metric: issueMetric,
@@ -72,6 +67,22 @@ export function PortfolioHome({
       fill: 90,
     },
   ];
+  const additionalImpactChartCards = shortcutSpeedMetric
+    ? [
+        {
+          metric: shortcutSpeedMetric,
+          category: '시간',
+          resultLabel: '개선율',
+          graphLabel: '85%',
+          before: '2초',
+          after: '0.3초',
+          fill: 85,
+        },
+      ]
+    : [];
+  const [showAdditionalMetrics, setShowAdditionalMetrics] = useState(false);
+  const [showAdditionalWorkCases, setShowAdditionalWorkCases] = useState(false);
+  const [showAdditionalProjects, setShowAdditionalProjects] = useState(false);
   const [activeSection, setActiveSection] = useScrollSpy(portfolioSectionIds);
   const contentRef = useRef<HTMLDivElement>(null);
   const profileCardDetails = [
@@ -229,6 +240,61 @@ export function PortfolioHome({
               );
             })}
           </div>
+          {additionalImpactChartCards.length > 0 ? (
+            <>
+              {showAdditionalMetrics ? (
+                <div className="impact-meter-grid impact-meter-grid--extra" id="additional-metrics">
+                  {additionalImpactChartCards.map((card) => (
+                    <article className="impact-meter-card" key={card.metric.label}>
+                      <div className="impact-meter-copy">
+                        <span className="impact-meter-kicker">{card.category}</span>
+                        <h3>{card.metric.label}</h3>
+                        <p>{card.metric.description}</p>
+                      </div>
+                      <div
+                        className="impact-meter-visual"
+                        aria-label={`${card.metric.label} ${card.resultLabel} ${card.graphLabel}`}
+                      >
+                        <div className="impact-meter-row">
+                          <span>{card.resultLabel}</span>
+                          <strong>{card.graphLabel}</strong>
+                        </div>
+                        <div className="impact-meter-track" aria-hidden="true">
+                          <span style={{ width: `${card.fill}%` }} />
+                        </div>
+                        <div className="impact-meter-labels">
+                          <span>
+                            <b>Before</b>
+                            {card.before}
+                          </span>
+                          <span>
+                            <b>After</b>
+                            {card.after}
+                          </span>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : null}
+              <div className="section-disclosure">
+                <button
+                  className="section-disclosure-button"
+                  type="button"
+                  aria-expanded={showAdditionalMetrics}
+                  aria-controls="additional-metrics"
+                  onClick={() => setShowAdditionalMetrics((current) => !current)}
+                >
+                  {showAdditionalMetrics ? '추가 성과 접기' : '추가 성과 보기'}
+                  {showAdditionalMetrics ? (
+                    <ChevronUp size={16} aria-hidden="true" />
+                  ) : (
+                    <ChevronDown size={16} aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+            </>
+          ) : null}
         </section>
 
         <section className="section" id="work-cases" aria-labelledby="work-cases-title">
@@ -241,10 +307,28 @@ export function PortfolioHome({
           </div>
 
           <div className="case-study-list">
-            {prioritizedWorkCaseCards.map((caseData) => (
+            {(showAdditionalWorkCases ? prioritizedWorkCaseCards : visibleWorkCaseCards).map((caseData) => (
               <WorkCaseCard caseData={caseData} onNavigate={onNavigate} key={caseData.title} />
             ))}
           </div>
+          {additionalWorkCaseCards.length > 0 ? (
+            <div className="section-disclosure">
+              <button
+                className="section-disclosure-button"
+                type="button"
+                aria-expanded={showAdditionalWorkCases}
+                aria-controls="work-cases"
+                onClick={() => setShowAdditionalWorkCases((current) => !current)}
+              >
+                {showAdditionalWorkCases ? '추가 사례 접기' : '추가 사례 보기'}
+                {showAdditionalWorkCases ? (
+                  <ChevronUp size={16} aria-hidden="true" />
+                ) : (
+                  <ChevronDown size={16} aria-hidden="true" />
+                )}
+              </button>
+            </div>
+          ) : null}
         </section>
 
         <section className="section" id="projects" aria-labelledby="projects-title">
@@ -256,8 +340,8 @@ export function PortfolioHome({
             </div>
           </div>
 
-          <div className="project-grid compact-project-grid">
-            {prioritizedProjects.map((project) => (
+          <div className="project-grid compact-project-grid" id="project-list">
+            {(showAdditionalProjects ? prioritizedProjects : visibleProjects).map((project) => (
               <article className="project-card compact-project-card" key={project.title}>
                 {project.detailPath && project.detailMode === 'document' ? (
                   <a
@@ -294,6 +378,24 @@ export function PortfolioHome({
               </article>
             ))}
           </div>
+          {additionalProjects.length > 0 ? (
+            <div className="section-disclosure">
+              <button
+                className="section-disclosure-button"
+                type="button"
+                aria-expanded={showAdditionalProjects}
+                aria-controls="project-list"
+                onClick={() => setShowAdditionalProjects((current) => !current)}
+              >
+                {showAdditionalProjects ? '추가 프로젝트 접기' : '추가 프로젝트 보기'}
+                {showAdditionalProjects ? (
+                  <ChevronUp size={16} aria-hidden="true" />
+                ) : (
+                  <ChevronDown size={16} aria-hidden="true" />
+                )}
+              </button>
+            </div>
+          ) : null}
         </section>
 
         <section className="section" id="experience" aria-labelledby="experience-title">
