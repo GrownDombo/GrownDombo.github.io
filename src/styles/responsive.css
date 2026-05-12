@@ -620,7 +620,11 @@
 
   .industrial-aoi-repair-hero {
     min-height: auto;
-    padding: 18px;
+    padding: 0;
+  }
+
+  .project-detail-hero-media.industrial-aoi-repair-hero img {
+    aspect-ratio: auto;
   }
 
   .industrial-aoi-repair-hero-node {

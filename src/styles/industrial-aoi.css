@@ -292,6 +292,24 @@
   background: color-mix(in srgb, var(--success) 6%, var(--card));
 }
 
+.industrial-aoi-repair-hero {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  background: #ffffff;
+}
+
+.project-detail-hero-media.industrial-aoi-repair-hero img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  background: #ffffff;
+}
+
+.industrial-aoi-repair-hero > div {
+  display: none;
+}
+
 .industrial-aoi-flow {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
