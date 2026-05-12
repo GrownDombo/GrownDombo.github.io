@@ -695,16 +695,29 @@
   }
 
   .industrial-aoi-code-window figcaption {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
 
   .industrial-aoi-code-window figcaption em {
-    grid-column: 2;
+    grid-column: 2 / 4;
+  }
+
+  .industrial-aoi-code-window figcaption::after {
+    min-width: 56px;
+    font-size: 0.72rem;
   }
 
   .industrial-aoi-code-window pre {
-    padding: 14px;
-    font-size: 0.72rem;
+    padding: 14px 0;
+    font-size: 0.76rem;
+  }
+
+  .industrial-aoi-code-window .code-line {
+    padding-inline: 56px 14px;
+  }
+
+  .industrial-aoi-code-window .code-line::before {
+    left: 14px;
   }
 
   .industrial-aoi-repair-bypass-route {

@@ -8,6 +8,7 @@ React, TypeScript, Vite, React Router로 구성했으며 개발자 소개, 업�
 
 - 개발자 소개 및 핵심 성과
 - 업무 사례와 개인 프로젝트 상세 페이지
+- 코드 블록, CLI 실행 예시, 처리 흐름 시각화
 - 기술 스택과 경력 요약
 - 문서형 이력서 페이지
 - GitHub, Tech Blog, 이메일 연결
@@ -52,7 +53,7 @@ React Router의 `BrowserRouter`, `Routes`, `Route`, `Navigate`, `Link/NavLink`�
 - `/projects/rfid-collision-search-simulator`
 - `/work/gerber-part-roi-matching-optimization`
 - `/work/mes-secs-gem-data-flow`
-- `/work/repair-ng-buffer-operations`
+- `/work/remote-shared-folder-io-bottleneck`
 
 기존 `/projects/industrial-aoi-platform/...` legacy URL은 동일 상세 페이지로 매핑합니다.
 
@@ -112,4 +113,5 @@ Google Analytics 4를 사용합니다. GitHub 저장소의 Settings -> Secrets a
 
 - 이력서: [개발자 이력서 템플릿](https://www.figma.com/design/ruqRkzKlOhoko97nrMBb3O/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B4%EB%A0%A5%EC%84%9C-%ED%85%9C%ED%94%8C%EB%A6%BF--Community-?node-id=2-111)
 - 포트폴리오: [Website Developer Personal PortFolio Template](https://www.figma.com/design/zZW0XBbhuSu8wj1U3hYFAc/Website-Developer-Personal-PortFolio-Template--Community-?node-id=1-4)
+- 코드 블록: [Code block / Syntax highlighting](https://www.figma.com/design/SeFyUSh9fQGcf9hpKzOx0i/Code-block--Syntax-highlighting--Bloc-de-code--%E4%BB%A3%E7%A0%81%E5%9D%97--%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE--%E3%82%B3%E3%83%BC%E3%83%89%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF--Community-?node-id=0-1)
 - 포트폴리오 템플릿 원작자: confident_coder
