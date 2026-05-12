@@ -290,8 +290,15 @@
 }
 
 .site-shell[data-theme] .project-guide code {
-  color: var(--success);
+  color: var(--accent-strong);
   background: var(--code-bg);
+  border-color: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.site-shell[data-theme="dark"] .project-guide code {
+  color: #93c5fd;
+  background: rgb(96 165 250 / 11%);
+  border-color: rgb(96 165 250 / 24%);
 }
 
 .site-shell[data-theme] .project-guide th,

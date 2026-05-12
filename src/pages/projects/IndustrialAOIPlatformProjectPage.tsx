@@ -67,6 +67,99 @@ type CompactWorkCaseReport = {
   keywords?: string[];
 };
 
+const csharpKeywords = new Set([
+  'bool',
+  'class',
+  'else',
+  'false',
+  'if',
+  'new',
+  'null',
+  'out',
+  'private',
+  'public',
+  'return',
+  'true',
+  'var',
+  'void',
+]);
+
+function getCsharpTokenClass(token: string, afterToken: string) {
+  if (token.startsWith('//')) {
+    return 'code-token-comment';
+  }
+
+  if (token.startsWith('"')) {
+    return 'code-token-string';
+  }
+
+  if (/^\d/.test(token)) {
+    return 'code-token-number';
+  }
+
+  if (csharpKeywords.has(token)) {
+    return 'code-token-keyword';
+  }
+
+  if (/^[A-Z]/.test(token)) {
+    return 'code-token-type';
+  }
+
+  if (/^\s*\(/.test(afterToken)) {
+    return 'code-token-method';
+  }
+
+  if (/^[{}()[\].,;:]+$/.test(token)) {
+    return 'code-token-punctuation';
+  }
+
+  if (/^[+\-*/=<>!&|?]+$/.test(token)) {
+    return 'code-token-operator';
+  }
+
+  return 'code-token-identifier';
+}
+
+function renderCsharpCode(code: string) {
+  const tokenPattern = /\/\/.*|"(?:\\.|[^"\\])*"|\b\d+(?:\.\d+)?\b|\b[A-Za-z_][A-Za-z0-9_]*\b|[{}()[\].,;:+\-*/=<>!&|?]+/g;
+
+  return code.split('\n').map((line, lineIndex) => {
+    const fragments = [];
+    let cursor = 0;
+
+    for (const match of line.matchAll(tokenPattern)) {
+      const token = match[0];
+      const index = match.index ?? 0;
+
+      if (index > cursor) {
+        fragments.push(line.slice(cursor, index));
+      }
+
+      const afterToken = line.slice(index + token.length);
+      fragments.push(
+        <span className={getCsharpTokenClass(token, afterToken)} key={`${lineIndex}-${index}`}>
+          {token}
+        </span>,
+      );
+      cursor = index + token.length;
+
+      if (token.startsWith('//')) {
+        break;
+      }
+    }
+
+    if (cursor < line.length) {
+      fragments.push(line.slice(cursor));
+    }
+
+    return (
+      <span className="code-line" key={`line-${lineIndex}`}>
+        {fragments.length > 0 ? fragments : ' '}
+      </span>
+    );
+  });
+}
+
 const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport> = {
   'inspection-automation': {
     title: 'Gerber-Part ROI 매칭 성능 개선',
@@ -830,7 +923,7 @@ public bool RequestLocalBatchExec(targetIp, remoteRoot, batPath)
     var payload = JoinParams(remoteRoot, batPath);
 
     var packet = new TwinPacket();
-    packet.InsertRequest(major: 5, minor: 1, data: payload);
+    packet.InsertRequest(data: payload);
 
     return SendTcpRequest(targetIp, packet);
 }`,
@@ -982,7 +1075,7 @@ function RepairConfirmImageMoveSection() {
                 <em>{snippet.file}</em>
               </figcaption>
               <pre>
-                <code>{snippet.code}</code>
+                <code>{renderCsharpCode(snippet.code)}</code>
               </pre>
             </figure>
           ))}

@@ -200,12 +200,14 @@
 }
 
 .project-guide code {
-  padding: 2px 5px;
-  border-radius: 5px;
-  color: var(--success);
+  padding: 3px 6px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  border-radius: 6px;
+  color: var(--accent-strong);
   background: var(--code-bg);
-  font-size: 0.93em;
-  font-weight: 800;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.9em;
+  font-weight: 760;
 }
 
 .guide-flow {
@@ -504,10 +506,10 @@
 
 .cli-output-card {
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--line));
+  border-radius: 12px;
   background: var(--card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 18px 42px rgb(15 23 42 / 10%);
 }
 
 .cli-output-card figure {
@@ -525,13 +527,14 @@
 .cli-output-card > div {
   display: grid;
   gap: 8px;
-  padding: 14px 16px 16px;
+  padding: 15px 16px 17px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 36%, transparent), transparent);
 }
 
 .cli-output-card code {
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
+  width: fit-content;
+  max-width: 100%;
   overflow-wrap: anywhere;
 }
 
@@ -550,10 +553,10 @@
 
 .csv-file-card {
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  border-radius: 12px;
   background: var(--card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 18px 42px rgb(15 23 42 / 10%);
 }
 
 .csv-file-card figure {
@@ -571,13 +574,13 @@
 .csv-file-card > div {
   display: grid;
   gap: 8px;
-  padding: 14px 16px 16px;
+  padding: 15px 16px 17px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 14%, var(--line));
 }
 
 .csv-file-card code {
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
+  width: fit-content;
+  max-width: 100%;
   overflow-wrap: anywhere;
 }
 
@@ -639,9 +642,8 @@
 }
 
 .console-command-table code {
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
+  display: inline-flex;
+  max-width: 100%;
   overflow-wrap: anywhere;
 }
 
