@@ -121,7 +121,7 @@ export const resumeExperiences: ResumeExperience[] = [
         title: '병목 구간 분석 및 처리 성능 개선',
         metrics: [
           'Gerber-Part ROI 매칭 시간 단축: 6분 22초 → 3.5초, 약 99% 개선',
-          '사용자 정의 단축키 응답 속도 개선: 2초 → 0.3초, 약 85% 개선',
+          '단축키 응답 시간 개선: Debug 로그 기준 약 2초 → 0.3초, 처리 시간 약 85% 단축',
           '원격 PC의 파일 이동 처리 시간 단축: 14초 → 0.5초 이내, 약 96% 개선',
         ],
         details: [

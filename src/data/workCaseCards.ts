@@ -1,4 +1,5 @@
 import {
+  industrialAoiHotKeyOptimizationPath,
   industrialAoiInspectionAutomationPath,
   industrialAoiOperationFlowPath,
   industrialAoiProductionIntegrationPath,
@@ -68,6 +69,44 @@ export const workCaseCards: WorkCaseCardData[] = [
     ],
   },
   {
+    title: '단축키 UX/UI 및 입력 응답성 개선',
+    subtitle: 'WinForms UX/UI · 입력 성능 개선',
+    summary: '기존 단축키 처리 흐름을 2-Key Dictionary 기반 즉시 조회 구조로 개선해 입력 지연을 해소한 사례',
+    image: '/assets/hotkey-ux-performance.svg',
+    imageAlt: '단축키 2-Key Dictionary 응답 시간 개선 다이어그램',
+    detailPath: industrialAoiHotKeyOptimizationPath,
+    priority: 2,
+    metrics: [
+      {
+        label: '처리 시간 단축률',
+        value: '약 85%',
+        description: '약 2초 → 0.3초',
+      },
+      {
+        label: '측정 기준',
+        value: 'Debug 로그',
+        description: '2-Key Dictionary 즉시 조회',
+      },
+    ],
+    phases: [
+      {
+        label: 'Problem',
+        title: '문제 상황',
+        details: ['단축키 입력 처리 지연', '연속 조작 흐름 지연', '설정 UI 분산'],
+      },
+      {
+        label: 'Before',
+        title: '기존 방식',
+        details: ['입력 시 실행 대상 탐색', '항목 증가에 따른 처리 비용 증가'],
+      },
+      {
+        label: 'After',
+        title: '개선 방식',
+        details: ['단축키 설정·실행 통합', 'Modifier + Key 즉시 매칭', '안내 문구 자동 반영'],
+      },
+    ],
+  },
+  {
     title: 'MES · SECS/GEM 생산 이벤트 구조 개선',
     subtitle: '장비 연동 안정화',
     summary: '고객사별 연동 차이를 공통 이벤트 흐름으로 흡수한 사례',
@@ -112,7 +151,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     image: '/assets/shared-folder-bottleneck.png',
     imageAlt: 'Remote shared-folder file move bottleneck improvement illustration',
     detailPath: industrialAoiOperationFlowPath,
-    priority: 2,
+    priority: 3,
     metrics: [
       {
         label: 'Confirm 전체',

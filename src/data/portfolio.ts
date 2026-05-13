@@ -1,3 +1,5 @@
+import { industrialAoiHotKeyOptimizationPath } from '../routes/paths';
+
 export type ProfileLink = {
   label: string;
   href: string;
@@ -100,17 +102,22 @@ export const metrics: Metric[] = [
     },
   },
   {
-    value: '2초 → 0.3초',
-    label: '단축키 응답 속도 개선',
-    description: '복합키 자료구조로 입력 지연 최소화',
-  },
-  {
     value: '70% 감소',
     label: '장애 이슈 메일 감소',
     description: '생산 연동 책임 분리로 반복 장애 알림 감소',
     evidence: {
       label: 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조 개선',
       href: '/work/mes-secs-gem-data-flow',
+    },
+  },
+  {
+    value: '약 2초 → 0.3초',
+    label: '단축키 응답 시간 개선',
+    description: '2-Key Dictionary 기반 즉시 조회 구조로 입력 이벤트 처리 지연 해소',
+    evidence: {
+      label: 'Debug 모드 로그 기준 단축키 처리 시간 개선',
+      href: industrialAoiHotKeyOptimizationPath,
+      suffix: ' 약 85% 단축',
     },
   },
   {
@@ -192,6 +199,17 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
+    title: '단축키 UX/UI 및 입력 응답성 개선',
+    summary: '분산된 단축키 설정·실행 흐름을 2-Key Dictionary 기반 즉시 조회 구조로 전환해 Debug 로그 기준 약 2초 수준의 응답 시간을 0.3초 수준으로 단축',
+    role: 'WinForms UX/UI · 입력 성능 개선',
+    tech: ['C#', '.NET Framework', 'WinForms', 'Data Structure', 'Performance Optimization', 'UX/UI'],
+    links: [],
+    image: '/assets/hotkey-ux-performance.svg',
+    priority: 2,
+    detailPath: industrialAoiHotKeyOptimizationPath,
+    status: 'Work Case',
+  },
+  {
     title: 'MES · SECS/GEM 생산 연동 안정화',
     summary: '공통 이벤트 기준과 책임 분리로 반복 장애 알림을 줄인 사례',
     role: '장비 연동 안정화',
@@ -209,7 +227,7 @@ export const workCaseStudies: Project[] = [
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'Batch Process', 'File I/O'],
     links: [],
     image: '/assets/shared-folder-bottleneck.png',
-    priority: 2,
+    priority: 3,
     detailPath: '/work/remote-shared-folder-io-bottleneck',
     status: 'Work Case',
   },
