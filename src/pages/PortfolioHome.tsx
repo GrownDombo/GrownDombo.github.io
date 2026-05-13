@@ -31,7 +31,7 @@ export function PortfolioHome({
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
   const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
-  const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 속도 개선');
+  const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 시간 개선');
   const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
   const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 병목 개선');
   const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
@@ -58,25 +58,25 @@ export function PortfolioHome({
       fill: 70,
     },
     {
-      metric: remoteIoMetric,
-      category: 'Confirm',
-      resultLabel: '개선율',
-      graphLabel: '약 90%',
-      before: '약 32초',
-      after: '3초대',
-      fill: 90,
+      metric: shortcutSpeedMetric,
+      category: '단축키',
+      resultLabel: '단축률',
+      graphLabel: '약 85%',
+      before: '약 2초',
+      after: '0.3초',
+      fill: 85,
     },
   ];
-  const additionalImpactChartCards = shortcutSpeedMetric
+  const additionalImpactChartCards = remoteIoMetric
     ? [
         {
-          metric: shortcutSpeedMetric,
-          category: '시간',
-          resultLabel: '개선율',
-          graphLabel: '85%',
-          before: '2초',
-          after: '0.3초',
-          fill: 85,
+          metric: remoteIoMetric,
+          category: 'Confirm',
+          resultLabel: '단축률',
+          graphLabel: '약 90%',
+          before: '약 32초',
+          after: '3초대',
+          fill: 90,
         },
       ]
     : [];
@@ -244,37 +244,57 @@ export function PortfolioHome({
             <>
               {showAdditionalMetrics ? (
                 <div className="impact-meter-grid impact-meter-grid--extra" id="additional-metrics">
-                  {additionalImpactChartCards.map((card) => (
-                    <article className="impact-meter-card" key={card.metric.label}>
-                      <div className="impact-meter-copy">
-                        <span className="impact-meter-kicker">{card.category}</span>
-                        <h3>{card.metric.label}</h3>
-                        <p>{card.metric.description}</p>
-                      </div>
-                      <div
-                        className="impact-meter-visual"
-                        aria-label={`${card.metric.label} ${card.resultLabel} ${card.graphLabel}`}
+                  {additionalImpactChartCards.map((card) => {
+                    const cardContent = (
+                      <>
+                        <div className="impact-meter-copy">
+                          <span className="impact-meter-kicker">{card.category}</span>
+                          <h3>{card.metric.label}</h3>
+                          <p>{card.metric.description}</p>
+                        </div>
+                        <div
+                          className="impact-meter-visual"
+                          aria-label={`${card.metric.label} ${card.resultLabel} ${card.graphLabel}`}
+                        >
+                          <div className="impact-meter-row">
+                            <span>{card.resultLabel}</span>
+                            <strong>{card.graphLabel}</strong>
+                          </div>
+                          <div className="impact-meter-track" aria-hidden="true">
+                            <span style={{ width: `${card.fill}%` }} />
+                          </div>
+                          <div className="impact-meter-labels">
+                            <span>
+                              <b>Before</b>
+                              {card.before}
+                            </span>
+                            <span>
+                              <b>After</b>
+                              {card.after}
+                            </span>
+                          </div>
+                        </div>
+                      </>
+                    );
+
+                    return card.metric.evidence ? (
+                      <Link
+                        className="impact-meter-card impact-meter-card--link"
+                        to={card.metric.evidence.href}
+                        key={card.metric.label}
+                        onClick={(event) => onNavigate(event, card.metric.evidence!.href)}
                       >
-                        <div className="impact-meter-row">
-                          <span>{card.resultLabel}</span>
-                          <strong>{card.graphLabel}</strong>
-                        </div>
-                        <div className="impact-meter-track" aria-hidden="true">
-                          <span style={{ width: `${card.fill}%` }} />
-                        </div>
-                        <div className="impact-meter-labels">
-                          <span>
-                            <b>Before</b>
-                            {card.before}
-                          </span>
-                          <span>
-                            <b>After</b>
-                            {card.after}
-                          </span>
-                        </div>
-                      </div>
-                    </article>
-                  ))}
+                        {cardContent}
+                        <span className="impact-meter-link-icon" aria-hidden="true">
+                          <ArrowUpRight size={18} strokeWidth={2.2} />
+                        </span>
+                      </Link>
+                    ) : (
+                      <article className="impact-meter-card" key={card.metric.label}>
+                        {cardContent}
+                      </article>
+                    );
+                  })}
                 </div>
               ) : null}
               <div className="section-disclosure">
