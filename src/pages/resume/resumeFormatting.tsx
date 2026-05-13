@@ -10,7 +10,7 @@ export function splitMetricText(metric: string, highlightTitle: string) {
     };
   }
 
-  if (highlightTitle === '생산 시스템 연동 기능 개발·유지보수 및 구조 개선') {
+  if (highlightTitle === '생산 시스템 연동 기능 개발 및 운영 안정화') {
     const splitMap: Record<string, { label: string; result: string }> = {
       '장애 이슈 관련 메일 전분기 대비 약 70% 감소': {
         label: '장애 이슈 관련 메일 발생량 감소',

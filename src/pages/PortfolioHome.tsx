@@ -31,9 +31,9 @@ export function PortfolioHome({
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
   const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
-  const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 시간 개선');
+  const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 시간 단축');
   const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
-  const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 병목 개선');
+  const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 처리 시간 단축');
   const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
   const additionalWorkCaseCards = prioritizedWorkCaseCards.slice(2);
   const visibleProjects = prioritizedProjects.slice(0, 3);
@@ -320,9 +320,11 @@ export function PortfolioHome({
         <section className="section" id="work-cases" aria-labelledby="work-cases-title">
           <div className="section-heading">
             <div>
-              <p className="section-kicker">Work Cases</p>
-              <h2 id="work-cases-title">업무 개선 사례</h2>
-              <p className="section-heading-copy">실무 환경에서 성능, 생산 연동 안정성, 운영 추적성을 개선한 대표 사례</p>
+              <p className="section-kicker">Work Impact</p>
+              <h2 id="work-cases-title">핵심 업무 성과</h2>
+              <p className="section-heading-copy">
+                제조 장비 SW에서 성능 최적화, 생산 연동 안정화, 운영 응답성 고도화를 정량 지표로 검증한 프로젝트
+              </p>
             </div>
           </div>
 
@@ -340,7 +342,7 @@ export function PortfolioHome({
                 aria-controls="work-cases"
                 onClick={() => setShowAdditionalWorkCases((current) => !current)}
               >
-                {showAdditionalWorkCases ? '추가 사례 접기' : '추가 사례 보기'}
+                {showAdditionalWorkCases ? '추가 성과 접기' : '추가 성과 보기'}
                 {showAdditionalWorkCases ? (
                   <ChevronUp size={16} aria-hidden="true" />
                 ) : (

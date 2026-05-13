@@ -12,19 +12,21 @@ export function WorkCaseCard({ caseData, onNavigate }: WorkCaseCardProps) {
   return (
     <article className="case-study-card">
       <div className="case-study-card-top">
-        <div className="case-study-heading">
+        <div className="case-study-eyebrow-row">
           <p className="project-role case-study-kicker">{caseData.subtitle}</p>
+          <Link
+            className="case-study-detail-link"
+            to={caseData.detailPath}
+            onClick={(event) => onNavigate(event, caseData.detailPath)}
+          >
+            자세히 보기
+            <ArrowUpRight size={17} aria-hidden="true" />
+          </Link>
+        </div>
+        <div className="case-study-heading">
           <h3>{caseData.title}</h3>
           <p>{caseData.summary}</p>
         </div>
-        <Link
-          className="case-study-detail-link"
-          to={caseData.detailPath}
-          onClick={(event) => onNavigate(event, caseData.detailPath)}
-        >
-          자세히 보기
-          <ArrowUpRight size={17} aria-hidden="true" />
-        </Link>
       </div>
 
       <div className="case-study-main">

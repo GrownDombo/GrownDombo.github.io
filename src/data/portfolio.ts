@@ -64,7 +64,7 @@ export const profile: Profile = {
   role: 'C#/.NET 기반 제조 장비 소프트웨어 개발자',
   headline: 'AOI 성능 최적화와 MES·SECS-GEM 연동 안정화를 경험한 개발자',
   summary:
-    '반도체·SMT 제조라인의 3D 검사 장비 SW를 개발·유지보수하며 AOI 병목 개선, 생산 연동 안정화, WinForms 기반 장비 기능 개선을 담당했습니다.',
+    '반도체·SMT 제조라인의 3D 검사 장비 SW를 개발·유지보수하며 AOI 병목 해소, 생산 연동 안정화, WinForms 기반 장비 기능 고도화를 담당했습니다.',
   availability: 'C#/.NET · AOI 성능 최적화 · MES/SECS-GEM 안정화',
   links: [
     {
@@ -94,7 +94,7 @@ export const metrics: Metric[] = [
   {
     value: '6분 22초 → 3.5초',
     label: 'Gerber-Part ROI 매칭 시간 단축',
-    description: 'Module 후보 선별과 캐싱으로 대용량 ROI 매칭 병목 개선',
+    description: 'Module 후보 선별과 캐싱으로 대용량 ROI 매칭 병목 해소',
     evidence: {
       label: '동일 검사 데이터 · Start/End 로그 기준',
       href: '/work/gerber-part-roi-matching-optimization',
@@ -106,23 +106,23 @@ export const metrics: Metric[] = [
     label: '장애 이슈 메일 감소',
     description: '생산 연동 책임 분리로 반복 장애 알림 감소',
     evidence: {
-      label: 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조 개선',
+      label: 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조화',
       href: '/work/mes-secs-gem-data-flow',
     },
   },
   {
     value: '약 2초 → 0.3초',
-    label: '단축키 응답 시간 개선',
+    label: '단축키 응답 시간 단축',
     description: '2-Key Dictionary 기반 즉시 조회 구조로 입력 이벤트 처리 지연 해소',
     evidence: {
-      label: 'Debug 모드 로그 기준 단축키 처리 시간 개선',
+      label: 'Debug 모드 로그 기준 단축키 처리 시간 단축',
       href: industrialAoiHotKeyOptimizationPath,
       suffix: ' 약 85% 단축',
     },
   },
   {
     value: '약 90% 단축',
-    label: '원격 공유 폴더 I/O 병목 개선',
+    label: '원격 공유 폴더 I/O 처리 시간 단축',
     description: 'SMB 직접 조작을 로컬 실행 위임 구조로 전환',
     evidence: {
       label: '이슈 발생 PC Start/End 로그 기준',
@@ -166,9 +166,9 @@ export const experiences: Experience[] = [
     organization: '펨트론 (Pemtron)',
     description: 'C#/.NET 기반 광학 검사 장비 SW 개발·유지보수',
     outcomes: [
-      'AOI 데이터 처리 병목 분석 및 성능 개선',
+      'AOI 데이터 처리 병목 분석 및 성능 최적화',
       'MES·SECS-GEM 생산 연동 안정화',
-      'WinForms 장비 기능 유지보수 및 구조 개선',
+      'WinForms 장비 기능 유지보수 및 구조화',
     ],
     keywords: ['C#', 'C++', '.NET Framework', 'SECS/GEM', 'OpenCV', 'Refactoring'],
   },
@@ -199,9 +199,9 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
-    title: '단축키 UX/UI 및 입력 응답성 개선',
+    title: '단축키 처리 구조 재설계와 응답성 최적화',
     summary: '분산된 단축키 설정·실행 흐름을 2-Key Dictionary 기반 즉시 조회 구조로 전환해 Debug 로그 기준 약 2초 수준의 응답 시간을 0.3초 수준으로 단축',
-    role: 'WinForms UX/UI · 입력 성능 개선',
+    role: 'WinForms UX/UI · 입력 처리 구조화',
     tech: ['C#', '.NET Framework', 'WinForms', 'Data Structure', 'Performance Optimization', 'UX/UI'],
     links: [],
     image: '/assets/hotkey-ux-performance.svg',
@@ -211,7 +211,7 @@ export const workCaseStudies: Project[] = [
   },
   {
     title: 'MES · SECS/GEM 생산 연동 안정화',
-    summary: '공통 이벤트 기준과 책임 분리로 반복 장애 알림을 줄인 사례',
+    summary: '공통 이벤트 기준과 책임 분리로 반복 장애 알림을 감소',
     role: '장비 연동 안정화',
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM', 'Packet Framing'],
     links: [],
@@ -221,9 +221,9 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
-    title: '원격 공유 폴더 I/O 병목 구조 개선',
+    title: '원격 공유 폴더 I/O 병목 해소',
     summary: '공유 폴더 파일 처리를 bat + TCP/IP 기반 로컬 실행 구조로 전환해 Confirm 전체 시간을 약 32초에서 3초대로 단축',
-    role: '원격 I/O 병목 구조 개선',
+    role: '원격 I/O 처리 최적화',
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'Batch Process', 'File I/O'],
     links: [],
     image: '/assets/shared-folder-bottleneck.png',

@@ -31,9 +31,9 @@ export type WorkCaseCardData = {
 
 export const workCaseCards: WorkCaseCardData[] = [
   {
-    title: 'Gerber-Part ROI 매칭 성능 개선',
-    subtitle: 'AOI 성능 최적화',
-    summary: '검사 준비 병목을 후보 선별과 캐시 구조로 줄인 대표 사례',
+    title: 'Gerber-Part ROI 매칭 성능 최적화',
+    subtitle: 'AOI 알고리즘 최적화',
+    summary: '검사 준비 병목을 후보 선별과 캐시 구조로 줄여 대용량 ROI 매칭 시간을 단축',
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
     imageAlt: 'Module and Part ROI matching mockup',
     detailPath: industrialAoiInspectionAutomationPath,
@@ -63,17 +63,17 @@ export const workCaseCards: WorkCaseCardData[] = [
       },
       {
         label: 'After',
-        title: '개선 방식',
+        title: '적용 방식',
         details: ['Module 후보 선별', '변환 결과 캐싱', '기존 결과 유지'],
       },
     ],
   },
   {
-    title: '단축키 UX/UI 및 입력 응답성 개선',
-    subtitle: 'WinForms UX/UI · 입력 성능 개선',
-    summary: '기존 단축키 처리 흐름을 2-Key Dictionary 기반 즉시 조회 구조로 개선해 입력 지연을 해소한 사례',
+    title: '단축키 처리 구조 재설계와 응답성 최적화',
+    subtitle: 'WinForms UX/UI · 입력 처리 구조화',
+    summary: '2-Key Dictionary 기반 즉시 조회 구조를 적용해 입력 지연을 제거하고 설정 UX를 통합',
     image: '/assets/hotkey-ux-performance.svg',
-    imageAlt: '단축키 2-Key Dictionary 응답 시간 개선 다이어그램',
+    imageAlt: '단축키 2-Key Dictionary 응답성 최적화 다이어그램',
     detailPath: industrialAoiHotKeyOptimizationPath,
     priority: 2,
     metrics: [
@@ -101,15 +101,15 @@ export const workCaseCards: WorkCaseCardData[] = [
       },
       {
         label: 'After',
-        title: '개선 방식',
+        title: '적용 방식',
         details: ['단축키 설정·실행 통합', 'Modifier + Key 즉시 매칭', '안내 문구 자동 반영'],
       },
     ],
   },
   {
-    title: 'MES · SECS/GEM 생산 이벤트 구조 개선',
-    subtitle: '장비 연동 안정화',
-    summary: '고객사별 연동 차이를 공통 이벤트 흐름으로 흡수한 사례',
+    title: 'MES · SECS/GEM 생산 연동 안정화',
+    subtitle: '생산 시스템 연동 안정화',
+    summary: '고객사별 연동 차이를 공통 이벤트 기준으로 정리해 반복 장애 알림을 감소',
     image: '/assets/industrial-aoi-production-integration/main-image.png',
     imageAlt: 'MES SECS GEM production integration mockup',
     detailPath: industrialAoiProductionIntegrationPath,
@@ -139,14 +139,14 @@ export const workCaseCards: WorkCaseCardData[] = [
       },
       {
         label: 'After',
-        title: '개선 방식',
+        title: '적용 방식',
         details: ['공통 이벤트 기준', '채널 책임 분리', '패킷 경계 안정화'],
       },
     ],
   },
   {
-    title: '원격 공유 폴더 I/O 병목 구조 개선',
-    subtitle: '원격 I/O 병목 구조 개선',
+    title: '원격 공유 폴더 I/O 병목 해소',
+    subtitle: '원격 I/O 처리 최적화',
     summary: '공유 폴더 파일 처리를 로컬 실행 구조로 전환해 Confirm 전체 시간을 3초대로 단축',
     image: '/assets/shared-folder-bottleneck.png',
     imageAlt: 'Remote shared-folder file move bottleneck improvement illustration',
@@ -177,7 +177,7 @@ export const workCaseCards: WorkCaseCardData[] = [
       },
       {
         label: 'After',
-        title: '개선 방식',
+        title: '적용 방식',
         details: ['bat 생성', 'TCP/IP 실행 위임', '로컬 PC에서 이동'],
       },
     ],

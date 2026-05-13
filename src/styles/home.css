@@ -1129,17 +1129,25 @@
 }
 
 .case-study-card-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-items: flex-start;
-  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+}
+
+.case-study-eyebrow-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: flex-start;
   gap: 12px;
   min-width: 0;
 }
 
 .case-study-heading {
   display: grid;
-  flex: 1 1 auto;
   gap: 5px;
+  width: 100%;
   min-width: 0;
 }
 
@@ -1319,8 +1327,8 @@
 .case-study-detail-link {
   display: inline-flex;
   align-items: center;
+  justify-self: end;
   gap: 7px;
-  flex: 0 0 auto;
   min-height: 28px;
   color: var(--text);
   font-size: 0.82rem;
