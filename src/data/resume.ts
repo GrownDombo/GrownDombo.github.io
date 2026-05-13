@@ -46,7 +46,7 @@ export const resumeInfo = {
   photo: '/assets/resume/profile.jpg',
   statement: [
     'AOI 성능 최적화와 MES·SECS-GEM 연동 안정화를 경험했습니다.',
-    'WinForms/C++ 기반 장비 SW 유지보수와 구조 개선을 담당했습니다.',
+    'WinForms/C++ 기반 장비 SW 유지보수와 처리 구조화를 담당했습니다.',
   ],
   contact: 'yjc0455@naver.com',
   channels: [
@@ -86,8 +86,8 @@ export const resumeInfo = {
 };
 
 export const resumeIntroduction = [
-  '반도체/SMT 제조라인의 3D 검사 장비 소프트웨어를 개발·유지보수하며 AOI 검사 준비 병목, 생산 연동 장애, 장비 운영 흐름 문제를 개선했습니다.',
-  '대표 사례로 Gerber-Part ROI 매칭 시간을 6분 22초에서 3.5초로 줄였고, MES·SECS-GEM 연동 구조 정리로 반복 장애 알림을 약 70% 감소시켰습니다.',
+  '반도체/SMT 제조라인의 3D 검사 장비 소프트웨어를 개발·유지보수하며 AOI 검사 준비 병목, 생산 연동 장애, 장비 운영 흐름 문제를 해결했습니다.',
+  '주요 성과로 Gerber-Part ROI 매칭 시간을 6분 22초에서 3.5초로 줄였고, MES·SECS-GEM 연동 구조 정리로 반복 장애 알림을 약 70% 감소시켰습니다.',
   '개인 프로젝트는 WinForms 도구와 C++ 검증 프로그램 중심으로 공개하며, 코드 구조와 재사용 가능한 설계를 확인할 수 있게 정리하고 있습니다.',
 ];
 
@@ -99,13 +99,13 @@ export const resumeExperiences: ResumeExperience[] = [
     period: '2020.04 ~ 현재',
     responsibilities: [
       '광학 검사 장비 SW 개발·유지보수',
-      'MES·SECS-GEM 생산 연동 기능 개선',
+      'MES·SECS-GEM 생산 연동 기능 개발·안정화',
       'AOI 성능 최적화 및 운영 흐름 정리',
     ],
     highlights: [
       {
         category: '공정 자동화 및 생산 시스템',
-        title: '생산 시스템 연동 기능 개발·유지보수 및 구조 개선',
+        title: '생산 시스템 연동 기능 개발 및 운영 안정화',
         metrics: [
           '장애 이슈 관련 메일 전분기 대비 약 70% 감소',
           '10개 이상 신규 고객사 생산 시스템 연동 시나리오 개발',
@@ -117,12 +117,12 @@ export const resumeExperiences: ResumeExperience[] = [
         keywords: ['C#', '.NET Framework', 'SECS/GEM', 'TCP/IP', 'FTP', 'Refactoring', 'Design Pattern'],
       },
       {
-        category: '성능 최적화 및 처리 구조 개선',
-        title: '병목 구간 분석 및 처리 성능 개선',
+        category: '성능 최적화 및 처리 구조화',
+        title: '병목 구간 분석 및 처리 성능 최적화',
         metrics: [
-          'Gerber-Part ROI 매칭 시간 단축: 6분 22초 → 3.5초, 약 99% 개선',
-          '단축키 응답 시간 개선: Debug 로그 기준 약 2초 → 0.3초, 처리 시간 약 85% 단축',
-          '원격 PC의 파일 이동 처리 시간 단축: 14초 → 0.5초 이내, 약 96% 개선',
+          'Gerber-Part ROI 매칭 시간 단축: 6분 22초 → 3.5초, 처리 시간 약 99% 단축',
+          '단축키 응답 시간 단축: Debug 로그 기준 약 2초 → 0.3초, 처리 시간 약 85% 단축',
+          '원격 PC의 파일 이동 처리 시간 단축: 14초 → 0.5초 이내, 처리 시간 약 96% 단축',
         ],
         details: [
           'Module 후보군 선별과 변환 결과 캐싱으로 대용량 ROI 매칭 연산 축소',

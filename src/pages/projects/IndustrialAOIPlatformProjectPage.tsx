@@ -175,7 +175,7 @@ function renderCsharpCode(code: string) {
 
 const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport> = {
   'inspection-automation': {
-    title: 'Gerber-Part ROI 매칭 성능 개선',
+    title: 'Gerber-Part ROI 매칭 성능 최적화',
     problem: {
       body: '동일 검사 데이터에서 70,448개 Part Window ROI와 387,600개 Gerber ROI를 매칭하며 검사 준비 시간이 약 6분 22초까지 늘어났습니다.',
       stats: [
@@ -203,7 +203,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     keywords: gerberPartKeywordItems.slice(0, 5),
   },
   'hotkey-optimization': {
-    title: '단축키 처리 구조 분석을 통한 UX/UI 및 입력 응답성 개선',
+    title: '단축키 처리 구조 재설계와 응답성 최적화',
     problem: {
       body: '기존 단축키 기능은 업무 화면별로 설정과 실행 흐름이 분산되어 있었고, 키 입력 시 실행 대상을 반복 탐색하는 구조였습니다. Debug 모드 로그 기준 단축키 입력 후 실행까지 약 2초가 소요되어 연속 조작 흐름에 지연이 발생했습니다.',
       stats: [
@@ -219,7 +219,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       note: '입력 시점마다 실행 대상 검색',
     },
     improvement: {
-      body: '단축키 설정·로드·저장·매칭 책임을 통합하고, 설정 로드 및 저장 시 Modifier Key + Key Code 조합을 2-Key Dictionary로 사전 구성했습니다. 실제 입력 이벤트에서는 반복 탐색 없이 실행 대상을 즉시 조회하도록 처리 구조를 개선했습니다.',
+      body: '단축키 설정·로드·저장·매칭 책임을 통합하고, 설정 로드 및 저장 시 Modifier Key + Key Code 조합을 2-Key Dictionary로 사전 구성했습니다. 실제 입력 이벤트에서는 반복 탐색 없이 실행 대상을 즉시 조회하도록 처리 구조를 전환했습니다.',
       steps: [
         { icon: Database, title: '2-Key 매핑', description: 'Modifier Key와 Key Code 조합을 사전 구성' },
         { icon: Keyboard, title: '즉시 매칭', description: '입력 이벤트에서 실행 대상 즉시 조회' },
@@ -266,7 +266,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     keywords: integrationKeywordItems.slice(0, 5),
   },
   'operation-flow': {
-    title: '원격 공유 폴더 I/O 병목 구조 개선',
+    title: '원격 공유 폴더 I/O 병목 해소',
     problem: {
       body: 'Repair Confirm 시 AOI가 생성한 이미지/XML을 정리해야 했고, 원격 PC의 공유 폴더 직접 조작으로 Confirm 전체 시간이 최대 약 32초까지 증가',
     },
@@ -286,12 +286,12 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     },
     results: [
       { title: 'Confirm 전체', metric: '약 32초 → 3초대', description: '이슈 발생 PC Start/End 로그 기준' },
-      { title: '개선 방식', metric: 'SMB 우회', description: 'bat 실행 요청만 TCP/IP로 전달' },
+      { title: '처리 방식', metric: 'SMB 우회', description: 'bat 실행 요청만 TCP/IP로 전달' },
       { title: '운영 안전성', metric: 'Fallback 유지', description: '접속 실패 시 기존 흐름 사용' },
     ],
     measurementNotes: [
       '측정 기준: 이슈 발생 PC의 Start/End 로그',
-      '개선 방식: 파일 직접 이동 대신 실행 요청 위임 구조',
+      '처리 방식: 파일 직접 이동 대신 실행 요청 위임 구조',
     ],
     roles: [
       '원격 공유 폴더 I/O 병목 분석',
@@ -346,7 +346,7 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby={`${areaId}-improvement-title`}>
         <div className="industrial-aoi-report-heading">
           <span>3</span>
-          <h5 id={`${areaId}-improvement-title`}>개선 방식</h5>
+          <h5 id={`${areaId}-improvement-title`}>해결 방식</h5>
         </div>
         <p>{report.improvement.body}</p>
         <div className="industrial-aoi-step-flow">
@@ -1272,8 +1272,8 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'inspection-automation',
       step: '01',
-      title: 'Gerber-Part ROI 매칭 성능 개선',
-      summary: '대용량 ROI 매칭 병목을 후보 선별과 캐싱으로 줄인 대표 사례',
+      title: 'Gerber-Part ROI 매칭 성능 최적화',
+      summary: '대용량 ROI 매칭 병목을 후보 선별과 캐싱으로 줄여 검사 준비 시간을 단축',
       problem: '대용량 ROI 매칭으로 검사 준비 시간이 길어지고 원인 추적이 어려운 구조',
       actions: [
         'Gerber ROI와 Part Window ROI 매칭 기준 정리',
@@ -1289,7 +1289,7 @@ export function IndustrialAOIPlatformProjectPage({
         {
           label: 'Track 01',
           title: 'AOI Matching',
-          points: ['Gerber-Part ROI 매칭 병목 개선', 'Module 후보군 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
+          points: ['Gerber-Part ROI 매칭 병목 해소', 'Module 후보군 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
         },
         {
           label: 'Track 02',
@@ -1300,7 +1300,7 @@ export function IndustrialAOIPlatformProjectPage({
       improvements: [
         {
           title: 'Gerber / Part / Fiducial Matching',
-          description: 'Gerber 후보 선별과 변환 결과 재사용으로 대용량 ROI 매칭 비용을 줄인 개선 작업',
+          description: 'Gerber 후보 선별과 변환 결과 재사용으로 대용량 ROI 매칭 비용을 줄인 최적화 작업',
           details: ['Module candidate filtering', 'Gerber ROI caching', 'Compatibility validation'],
         },
         {
@@ -1314,7 +1314,7 @@ export function IndustrialAOIPlatformProjectPage({
       id: 'production-integration',
       step: '02',
       title: 'MES · SECS/GEM 생산 연동 안정화',
-      summary: '공통 이벤트 기준과 채널별 책임 분리로 반복 장애를 줄인 사례',
+      summary: '공통 이벤트 기준과 채널별 책임 분리로 반복 장애 알림을 감소',
       problem: '생산 이벤트 처리 기준이 서비스별로 분산되어 변경 범위와 장애 추적 비용이 증가한 구조',
       actions: [
         'Job, Barcode, Result, Alarm 기준 공통 생산 이벤트 기준 정리',
@@ -1365,7 +1365,7 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'hotkey-optimization',
       step: '03',
-      title: '단축키 처리 구조 분석을 통한 UX/UI 및 입력 응답성 개선',
+      title: '단축키 처리 구조 재설계와 응답성 최적화',
       summary: '단축키 설정 UI와 입력 처리 구조를 통합하고 Debug 로그 기준 약 2초 수준의 응답 시간을 0.3초 수준으로 단축',
       problem: '키 입력마다 실행 대상을 반복 탐색해 항목 증가 시 입력 응답성이 저하되고 설정 UI가 업무 영역별로 분산된 구조',
       actions: [
@@ -1387,7 +1387,7 @@ export function IndustrialAOIPlatformProjectPage({
         },
       ],
       impact: [
-        'Debug 모드 로그 기준 단축키 응답 시간 약 2초 → 0.3초 개선',
+        'Debug 모드 로그 기준 단축키 응답 시간 약 2초 → 0.3초 단축',
         '입력 이벤트 처리 시간 약 85% 단축',
         '반복 입력 작업에서 발생하던 응답 지연 해소',
         'Main, Inspection, Teaching, Algo, CAD/Gerber, Defect, Repair 등 업무 흐름 기준 단축키 설정 UI 재구성',
@@ -1419,7 +1419,7 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'operation-flow',
       step: '04',
-      title: '원격 공유 폴더 I/O 병목 구조 개선',
+      title: '원격 공유 폴더 I/O 병목 해소',
       summary: '공유 폴더 파일 처리를 로컬 실행 구조로 전환해 Confirm 전체 시간을 3초대로 단축',
       problem: '원격 PC가 공유 폴더 파일을 직접 조작해 대기 시간이 길어지는 구조',
       actions: [
@@ -1429,7 +1429,7 @@ export function IndustrialAOIPlatformProjectPage({
       ],
       directions: [],
       impact: [
-        '이슈 발생 PC Start/End 로그 기준 약 32초 → 3초대 개선',
+        '이슈 발생 PC Start/End 로그 기준 약 32초 → 3초대 단축',
         '파일 이동·삭제를 bat 실행 요청 위임 구조로 전환',
         '공유 폴더 직접 조작을 로컬 PC 실행으로 전환',
         '접속 실패 시 기존 처리 흐름을 유지해 운영 리스크 완화',
@@ -1460,21 +1460,21 @@ export function IndustrialAOIPlatformProjectPage({
   const displayedAreas = selectedArea ? [selectedArea] : highlightAreas;
   const pageTitle =
     selectedArea?.id === 'inspection-automation'
-      ? 'Gerber-Part ROI 매칭 성능 개선'
+      ? 'Gerber-Part ROI 매칭 성능 최적화'
       : selectedArea?.id === 'hotkey-optimization'
-        ? '단축키 처리 구조 분석을 통한 UX/UI 및 입력 응답성 개선'
+        ? '단축키 처리 구조 재설계와 응답성 최적화'
       : selectedArea?.id === 'production-integration'
         ? 'MES · SECS/GEM 생산 연동 안정화'
       : selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
   const pageLead =
     selectedArea?.id === 'inspection-automation'
-      ? '6분 22초 걸리던 대용량 ROI 매칭을 Module 후보 선별과 캐싱으로 3.5초 수준까지 줄인 업무 사례'
+      ? '6분 22초 걸리던 대용량 ROI 매칭을 Module 후보 선별과 캐싱으로 3.5초 수준까지 단축'
       : selectedArea?.id === 'hotkey-optimization'
-        ? '기존 단축키의 순차 탐색 구조를 2-Key Dictionary 즉시 조회 구조로 개선해 응답 시간을 0.3초 수준으로 단축한 업무 사례'
+        ? '기존 단축키의 순차 탐색 구조를 2-Key Dictionary 즉시 조회 구조로 전환해 응답 시간을 0.3초 수준으로 단축'
       : selectedArea?.id === 'production-integration'
-        ? '서비스별로 분산된 생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 정리한 업무 사례'
+        ? '서비스별로 분산된 생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 정리'
       : selectedArea?.summary ??
-        '3D AOI 장비 소프트웨어 개선 내역을 성능 개선, 생산 연동, 운영 유지보수 기준으로 구성';
+        '3D AOI 장비 소프트웨어 업무 성과를 성능 최적화, 생산 연동, 운영 안정화 기준으로 구성';
   const pageTech =
     selectedArea?.id === 'inspection-automation'
       ? gerberPartReportTech
@@ -1506,8 +1506,8 @@ export function IndustrialAOIPlatformProjectPage({
       : null;
   const guideTitle = selectedArea ? 'Key Contributions' : `${highlightAreas.length} Work Areas`;
   const guideDescription = selectedArea
-    ? '문제, 기존 방식, 개선 방식, 결과, 담당 역할 중심 구성'
-    : '회사·고객사 세부 정보는 제외하고 성능 개선, UX/UI 응답성, 생산 연동, 운영 유지보수 기준으로 정리했습니다.';
+    ? '문제, 기존 방식, 해결 방식, 결과, 담당 역할 중심 구성'
+    : '회사·고객사 세부 정보는 제외하고 성능 최적화, UX/UI 응답성, 생산 연동, 운영 유지보수 기준으로 정리했습니다.';
 
   return (
     <div className="site-shell" data-theme={themeMode}>
@@ -1570,7 +1570,7 @@ export function IndustrialAOIPlatformProjectPage({
 
           {selectedArea ? null : (
             <>
-              <ol className="guide-flow industrial-aoi-flow" aria-label="Industrial AOI Platform 업무 사례 구성">
+              <ol className="guide-flow industrial-aoi-flow" aria-label="Industrial AOI Platform 업무 성과 구성">
                 {highlightAreas.map((area) => (
                   <li key={area.id}>
                     <strong>{area.step}. {area.title.split(' ')[0]}</strong>

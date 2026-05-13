@@ -3,7 +3,7 @@ import type { NavItem, RoutePath } from '../types/navigation';
 
 export const navItems: NavItem[] = [
   { label: '정량 성과', href: '#metrics' },
-  { label: '업무 개선', href: '#work-cases' },
+  { label: '업무 성과', href: '#work-cases' },
   { label: 'GitHub', href: '#projects' },
   { label: '경력', href: '#experience' },
   { label: '기술', href: '#skills' },

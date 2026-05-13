@@ -145,8 +145,8 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
                         <div className="resume-highlight-block">
                           <ul
                             className={`resume-metric-list${
-                              highlight.title === '병목 구간 분석 및 처리 성능 개선' ||
-                              highlight.title === '생산 시스템 연동 기능 개발·유지보수 및 구조 개선' ||
+                              highlight.title === '병목 구간 분석 및 처리 성능 최적화' ||
+                              highlight.title === '생산 시스템 연동 기능 개발 및 운영 안정화' ||
                               highlight.title === 'MSSQL 기반 검사 이력 관리 시스템 개발' ||
                               highlight.title === '검출 영역 기반 외곽 폴리곤 추출 기능 개발' ||
                               highlight.title === '지도 API 연동 및 지도·검색 기능 개발'

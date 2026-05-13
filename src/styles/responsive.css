@@ -506,7 +506,6 @@
 
   .case-study-card-top {
     align-items: flex-start;
-    flex-direction: column;
     gap: 8px;
   }
 
@@ -520,6 +519,7 @@
   }
 
   .case-study-detail-link {
+    justify-self: end;
     justify-content: flex-start;
   }
 
