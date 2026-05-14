@@ -15,6 +15,27 @@ import type { InternalNavigate, ThemeMode } from '../types/navigation';
 
 const portfolioSectionIds = portfolioRailItems.map((item) => item.id);
 
+type PortfolioMetric = (typeof metrics)[number];
+
+type ImpactBaseCard = {
+  metric: PortfolioMetric | undefined;
+  resultLabel: string;
+  graphLabel: string;
+  before: string;
+  after: string;
+};
+
+type ImpactMeterCard = ImpactBaseCard & {
+  variant?: 'meter';
+  fill: number;
+};
+
+type ImpactRangeCard = ImpactBaseCard & {
+  variant: 'range';
+};
+
+type ImpactChartCard = ImpactMeterCard | ImpactRangeCard;
+
 export function PortfolioHome({
   onNavigate,
   themeMode,
@@ -31,47 +52,43 @@ export function PortfolioHome({
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
   const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
-  const shortcutSpeedMetric = metrics.find((metric) => metric.label === '단축키 응답 시간 단축');
+  const shortcutScopeMetric = metrics.find((metric) => metric.label === '단축키 지원 범위 확장');
   const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
   const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 처리 시간 단축');
   const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
   const additionalWorkCaseCards = prioritizedWorkCaseCards.slice(2);
   const visibleProjects = prioritizedProjects.slice(0, 3);
   const additionalProjects = prioritizedProjects.slice(3);
-  const impactChartCards = [
+  const impactChartCards: ImpactChartCard[] = [
     {
       metric: roiSpeedMetric,
-      category: '시간',
       resultLabel: '개선율',
-      graphLabel: '99%',
+      graphLabel: '약 99%',
       before: '6분 22초',
       after: '3.5초',
       fill: 99,
     },
     {
       metric: issueMetric,
-      category: '이슈',
       resultLabel: '감소율',
-      graphLabel: '70%',
+      graphLabel: '약 70%',
       before: '전분기',
-      after: '70% 감소',
+      after: '약 70% 감소',
       fill: 70,
     },
     {
-      metric: shortcutSpeedMetric,
-      category: '단축키',
-      resultLabel: '단축률',
-      graphLabel: '약 85%',
-      before: '약 2초',
-      after: '0.3초',
-      fill: 85,
+      metric: shortcutScopeMetric,
+      resultLabel: '지원 범위',
+      graphLabel: 'UX/UI 개선',
+      before: '28개 단일키',
+      after: '전체 키 + 조합키',
+      variant: 'range',
     },
   ];
-  const additionalImpactChartCards = remoteIoMetric
+  const additionalImpactChartCards: ImpactChartCard[] = remoteIoMetric
     ? [
         {
           metric: remoteIoMetric,
-          category: 'Confirm',
           resultLabel: '단축률',
           graphLabel: '약 90%',
           before: '약 32초',
@@ -192,31 +209,51 @@ export function PortfolioHome({
               const cardContent = (
                 <>
                   <div className="impact-meter-copy">
-                    <span className="impact-meter-kicker">{card.category}</span>
                     <h3>{card.metric?.label}</h3>
-                    <p>{card.metric?.description}</p>
                   </div>
                   <div
                     className="impact-meter-visual"
                     aria-label={`${card.metric?.label} ${card.resultLabel} ${card.graphLabel}`}
                   >
-                    <div className="impact-meter-row">
-                      <span>{card.resultLabel}</span>
-                      <strong>{card.graphLabel}</strong>
-                    </div>
-                    <div className="impact-meter-track" aria-hidden="true">
-                      <span style={{ width: `${card.fill}%` }} />
-                    </div>
-                    <div className="impact-meter-labels">
-                      <span>
-                        <b>Before</b>
-                        {card.before}
-                      </span>
-                      <span>
-                        <b>After</b>
-                        {card.after}
-                      </span>
-                    </div>
+                    {card.variant === 'range' ? (
+                      <>
+                        <div className="impact-meter-row impact-meter-row--range">
+                          <span>{card.resultLabel}</span>
+                          <strong>{card.graphLabel}</strong>
+                        </div>
+                        <div className="impact-range-flow" aria-hidden="true">
+                          <span className="impact-range-node impact-range-node--before">
+                            <em>Before</em>
+                            <b>{card.before}</b>
+                          </span>
+                          <i>→</i>
+                          <span className="impact-range-node impact-range-node--after">
+                            <em>After</em>
+                            <b>{card.after}</b>
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="impact-meter-row">
+                          <span>{card.resultLabel}</span>
+                          <strong>{card.graphLabel}</strong>
+                        </div>
+                        <div className="impact-meter-track" aria-hidden="true">
+                          <span style={{ width: `${card.fill}%` }} />
+                        </div>
+                        <div className="impact-meter-labels">
+                          <span>
+                            <b>Before</b>
+                            {card.before}
+                          </span>
+                          <span>
+                            <b>After</b>
+                            {card.after}
+                          </span>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </>
               );
@@ -234,7 +271,7 @@ export function PortfolioHome({
                   </span>
                 </Link>
               ) : (
-                <article className="impact-meter-card" key={card.metric?.label ?? card.category}>
+                <article className="impact-meter-card" key={card.metric?.label ?? card.resultLabel}>
                   {cardContent}
                 </article>
               );
@@ -245,44 +282,70 @@ export function PortfolioHome({
               {showAdditionalMetrics ? (
                 <div className="impact-meter-grid impact-meter-grid--extra" id="additional-metrics">
                   {additionalImpactChartCards.map((card) => {
+                    const metric = card.metric;
+
+                    if (!metric) {
+                      return null;
+                    }
+
                     const cardContent = (
                       <>
                         <div className="impact-meter-copy">
-                          <span className="impact-meter-kicker">{card.category}</span>
-                          <h3>{card.metric.label}</h3>
-                          <p>{card.metric.description}</p>
+                          <h3>{metric.label}</h3>
                         </div>
                         <div
                           className="impact-meter-visual"
-                          aria-label={`${card.metric.label} ${card.resultLabel} ${card.graphLabel}`}
+                          aria-label={`${metric.label} ${card.resultLabel} ${card.graphLabel}`}
                         >
-                          <div className="impact-meter-row">
-                            <span>{card.resultLabel}</span>
-                            <strong>{card.graphLabel}</strong>
-                          </div>
-                          <div className="impact-meter-track" aria-hidden="true">
-                            <span style={{ width: `${card.fill}%` }} />
-                          </div>
-                          <div className="impact-meter-labels">
-                            <span>
-                              <b>Before</b>
-                              {card.before}
-                            </span>
-                            <span>
-                              <b>After</b>
-                              {card.after}
-                            </span>
-                          </div>
+                          {card.variant === 'range' ? (
+                            <>
+                              <div className="impact-meter-row impact-meter-row--range">
+                                <span>{card.resultLabel}</span>
+                                <strong>{card.graphLabel}</strong>
+                              </div>
+                              <div className="impact-range-flow" aria-hidden="true">
+                                <span className="impact-range-node impact-range-node--before">
+                                  <em>Before</em>
+                                  <b>{card.before}</b>
+                                </span>
+                                <i>→</i>
+                                <span className="impact-range-node impact-range-node--after">
+                                  <em>After</em>
+                                  <b>{card.after}</b>
+                                </span>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="impact-meter-row">
+                                <span>{card.resultLabel}</span>
+                                <strong>{card.graphLabel}</strong>
+                              </div>
+                              <div className="impact-meter-track" aria-hidden="true">
+                                <span style={{ width: `${card.fill}%` }} />
+                              </div>
+                              <div className="impact-meter-labels">
+                                <span>
+                                  <b>Before</b>
+                                  {card.before}
+                                </span>
+                                <span>
+                                  <b>After</b>
+                                  {card.after}
+                                </span>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </>
                     );
 
-                    return card.metric.evidence ? (
+                    return metric.evidence ? (
                       <Link
                         className="impact-meter-card impact-meter-card--link"
-                        to={card.metric.evidence.href}
-                        key={card.metric.label}
-                        onClick={(event) => onNavigate(event, card.metric.evidence!.href)}
+                        to={metric.evidence.href}
+                        key={metric.label}
+                        onClick={(event) => onNavigate(event, metric.evidence!.href)}
                       >
                         {cardContent}
                         <span className="impact-meter-link-icon" aria-hidden="true">
@@ -290,7 +353,7 @@ export function PortfolioHome({
                         </span>
                       </Link>
                     ) : (
-                      <article className="impact-meter-card" key={card.metric.label}>
+                      <article className="impact-meter-card" key={metric.label}>
                         {cardContent}
                       </article>
                     );
@@ -318,7 +381,7 @@ export function PortfolioHome({
         </section>
 
         <section className="section" id="work-cases" aria-labelledby="work-cases-title">
-          <div className="section-heading">
+          <div className="section-heading work-cases-heading">
             <div>
               <p className="section-kicker">Work Impact</p>
               <h2 id="work-cases-title">핵심 업무 성과</h2>

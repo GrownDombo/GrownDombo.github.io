@@ -313,7 +313,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         },
       ],
       stats: [
-        { label: '설정 범위', value: '전체 키·조합키 지원' },
+        { label: '설정 범위', value: '조합키 지원' },
         { label: '지원 키', value: '전체 키보드 키' },
         { label: '입력 매칭', value: '2-Key Dictionary' },
         { label: '응답 시간', value: '0.3초' },
@@ -325,7 +325,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       ],
     },
     results: [
-      { title: '단축키 적용 범위 확대', metric: '28개 단일 키 → 전체 키 + 조합키', description: '주요 고객사 데모에서 요구한 즉시 조작 범위를 제품 기능으로 반영' },
+      { title: '단축키 적용 범위 확대', metric: '28개 단일 키 → 전체 + 조합 키', description: '주요 고객사 데모에서 요구한 즉시 조작 범위를 제품 기능으로 반영' },
       { title: '입력 응답성 확보', metric: '약 2초 → 0.3초', description: 'Debug 로그 기준 처리 시간 약 85% 단축 및 입력 지연 해소' },
       { title: '이벤트 처리 비용 절감', metric: '순차 탐색 → 즉시 조회', description: '2-Key Dictionary 매핑으로 KeyDown 이벤트의 반복 탐색 제거' },
       { title: '설정 운영성 강화', metric: '검증·저장·안내 통합', description: '중복 검증, XML 백업, 안내 문구 동기화로 설정 신뢰성 확보' },
@@ -828,7 +828,6 @@ function GerberPartDiagramSection() {
             <figure className="industrial-aoi-matching-figure" key={mockup.title}>
               <div className="industrial-aoi-matching-media">
                 <img src={mockup.image} alt={`${mockup.title} mockup`} />
-                <span className="industrial-aoi-matching-mockup-tag">Mockup</span>
               </div>
               <figcaption>
                 <strong>{mockup.title}</strong>
@@ -1412,44 +1411,25 @@ function RepairConfirmHeroVisual() {
         <span>Before: SMB 공유 폴더 직접 이동</span>
         <strong>After: 로컬 PC 실행 위임</strong>
       </div>
-      <figcaption>Mockup</figcaption>
     </figure>
   );
 }
 
 const repairConfirmFlowSteps = [
   {
-    label: '1',
-    title: 'bat 생성',
-    description: 'Confirm 대상 이미지/XML 처리 명령을 하나의 bat로 묶음',
+    label: '원격 PC',
+    title: 'bat 명령 작성',
+    description: 'Confirm 대상 파일을 직접 이동하지 않고 처리 명령을 bat로 정리',
   },
   {
-    label: '2',
-    title: '실행 요청',
-    description: '파일 복사가 아니라 bat 실행 정보만 TCP/IP로 전달',
-  },
-  {
-    label: '3',
-    title: '로컬 실행',
-    description: '파일 보유 PC에서 로컬 루트로 경로 치환 후 실행',
-  },
-] as const;
-
-const repairConfirmStructureNodes = [
-  {
-    file: '원격 PC',
-    title: '명령 작성',
-    role: 'Confirm 대상 파일을 직접 이동하지 않고 bat 명령으로 정리.',
-  },
-  {
-    file: 'TCP/IP',
+    label: 'TCP/IP',
     title: '실행 위임',
-    role: '이미지 파일 대신 bat 경로와 공유 루트 정보만 전달.',
+    description: '이미지 파일 대신 bat 경로와 공유 루트 정보만 전달',
   },
   {
-    file: '로컬 PC',
+    label: '로컬 PC',
     title: '로컬 처리',
-    role: '공유 경로를 로컬 경로로 치환한 뒤 hidden process로 실행.',
+    description: '공유 경로를 로컬 경로로 치환한 뒤 hidden process로 실행',
   },
 ] as const;
 
@@ -1620,10 +1600,10 @@ function RepairConfirmImageMoveSection() {
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-code-flow-title">
         <div className="industrial-aoi-report-heading">
           <span>6</span>
-          <h5 id="repair-code-flow-title">처리 흐름</h5>
+          <h5 id="repair-code-flow-title">처리 흐름과 역할 분리</h5>
         </div>
         <p>
-          bat 생성, TCP/IP 실행 요청, 로컬 실행의 3단계 구성
+          파일 조작은 로컬 PC가 맡고, 원격 PC는 실행 요청 흐름만 담당하도록 책임을 분리
         </p>
         <div className="industrial-aoi-repair-flow-map" aria-label="Remote shared-folder code flow">
           {repairConfirmFlowSteps.map((step, index) => (
@@ -1641,25 +1621,9 @@ function RepairConfirmImageMoveSection() {
         </div>
       </section>
 
-      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-code-structure-title">
-        <div className="industrial-aoi-report-heading">
-          <span>7</span>
-          <h5 id="repair-code-structure-title">역할 분리</h5>
-        </div>
-        <div className="industrial-aoi-repair-structure-grid">
-          {repairConfirmStructureNodes.map((node) => (
-            <article className="industrial-aoi-repair-structure-card" key={`${node.file}-${node.title}`}>
-              <span>{node.file}</span>
-              <h6>{node.title}</h6>
-              <p>{node.role}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-pseudocode-title">
         <div className="industrial-aoi-report-heading">
-          <span>8</span>
+          <span>7</span>
           <h5 id="repair-pseudocode-title">의사코드</h5>
         </div>
         <p>
@@ -1951,6 +1915,7 @@ export function IndustrialAOIPlatformProjectPage({
             <h1 id="industrial-aoi-title">{pageTitle}</h1>
             <p className="project-detail-lead">{pageLead}</p>
             <TechList className="tech-list project-detail-tech-list" ariaLabel={`${pageTitle} 기술 스택`} items={pageTech} />
+            <p className="industrial-aoi-visual-note">이미지는 민감 정보 제거 후 재구성했습니다.</p>
           </div>
           {heroImages ? (
             <figure className="project-detail-hero-media industrial-aoi-hero-media industrial-aoi-hero-media-pair">
@@ -1967,7 +1932,6 @@ export function IndustrialAOIPlatformProjectPage({
                 <strong>{gerberPartPerformanceSummary.reduction}</strong>
                 <p>{gerberPartPerformanceSummary.before} <ArrowRight aria-hidden="true" /> {gerberPartPerformanceSummary.after}</p>
               </aside>
-              <figcaption>Mockup</figcaption>
             </figure>
           ) : selectedArea?.id === 'operation-flow' ? (
             <RepairConfirmHeroVisual />
@@ -1981,7 +1945,6 @@ export function IndustrialAOIPlatformProjectPage({
                 <p>장애 이슈 메일</p>
               </aside>
             ) : null}
-              <figcaption>Mockup</figcaption>
             </figure>
           )}
         </section>
