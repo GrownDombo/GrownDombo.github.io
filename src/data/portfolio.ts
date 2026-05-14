@@ -204,7 +204,7 @@ export const workCaseStudies: Project[] = [
     role: 'WinForms UX/UI · 입력 처리 구조화',
     tech: ['C#', '.NET Framework', 'WinForms', 'Data Structure', 'Performance Optimization', 'UX/UI'],
     links: [],
-    image: '/assets/hotkey-ux-performance.svg',
+    image: '/assets/shortcut-key-redesign-mockup.png',
     priority: 2,
     detailPath: industrialAoiHotKeyOptimizationPath,
     status: 'Work Case',

@@ -72,8 +72,8 @@ export const workCaseCards: WorkCaseCardData[] = [
     title: '단축키 처리 구조 재설계와 응답성 최적화',
     subtitle: 'WinForms UX/UI · 입력 처리 구조화',
     summary: '2-Key Dictionary 기반 즉시 조회 구조를 적용해 입력 지연을 제거하고 설정 UX를 통합',
-    image: '/assets/hotkey-ux-performance.svg',
-    imageAlt: '단축키 2-Key Dictionary 응답성 최적화 다이어그램',
+    image: '/assets/shortcut-key-redesign-mockup.png',
+    imageAlt: '단축키 설정 화면 Before After 익명화 목업',
     detailPath: industrialAoiHotKeyOptimizationPath,
     priority: 2,
     metrics: [
