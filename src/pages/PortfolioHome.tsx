@@ -53,7 +53,7 @@ export function PortfolioHome({
   });
   const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
   const shortcutScopeMetric = metrics.find((metric) => metric.label === '단축키 기능 확장 및 리팩터링');
-  const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
+  const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 등록 건수 감소');
   const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 처리 시간 단축');
   const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
   const additionalWorkCaseCards = prioritizedWorkCaseCards.slice(2);
@@ -72,8 +72,8 @@ export function PortfolioHome({
       metric: issueMetric,
       resultLabel: '감소율',
       graphLabel: '약 70%',
-      before: '전분기',
-      after: '약 70% 감소',
+      before: '수정 전 6개월',
+      after: '수정 후 6개월',
       fill: 70,
     },
     {
