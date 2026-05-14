@@ -63,6 +63,10 @@ type CompactWorkCaseReport = {
       value: string;
       tone?: 'danger';
     }[];
+    points?: {
+      label: string;
+      detail: string;
+    }[];
   };
   before: {
     body: string;
@@ -72,6 +76,14 @@ type CompactWorkCaseReport = {
   };
   improvement: {
     body: string;
+    points?: {
+      label: string;
+      detail: string;
+    }[];
+    stats?: {
+      label: string;
+      value: string;
+    }[];
     steps: CompactReportStep[];
   };
   results: CompactReportResult[];
@@ -203,45 +215,90 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     keywords: gerberPartKeywordItems.slice(0, 5),
   },
   'hotkey-optimization': {
-    title: '단축키 처리 구조 재설계와 응답성 최적화',
+    title: '단축키 설정 범위 확장 및 입력 응답성 최적화',
     problem: {
-      body: '기존 단축키 기능은 업무 화면별로 설정과 실행 흐름이 분산되어 있었고, 키 입력 시 실행 대상을 반복 탐색하는 구조였습니다. Debug 모드 로그 기준 단축키 입력 후 실행까지 약 2초가 소요되어 연속 조작 흐름에 지연이 발생했습니다.',
+      body: '고객사 데모 요구 대비 기존 단축키 기능의 지원 범위, 입력 처리 방식, 설정 흐름에 한계.',
+      points: [
+        {
+          label: '요구 수준',
+          detail: '전체 키보드 키와 조합키까지 활용 가능한 단축키 설정 필요',
+        },
+        {
+          label: '기존 지원',
+          detail: '28개 단일 키 중심으로 구성되어 확장성과 조합키 활용이 제한',
+        },
+        {
+          label: '기존 처리',
+          detail: 'KeyDown 이벤트마다 실행 대상을 순차 탐색하여 입력 지연 발생',
+        },
+        {
+          label: 'UI 제약',
+          detail: '고객사 데모 요구를 설명하고 검증하기에는 설정 흐름의 안내성이 부족',
+        },
+      ],
       stats: [
-        { label: '개선 전', value: '약 2초', tone: 'danger' },
-        { label: '개선 후', value: '0.3초' },
-        { label: '측정 기준', value: 'Debug 로그' },
+        { label: '기존 제약', value: '조합키 미지원', tone: 'danger' },
+        { label: '기존 지원', value: '28개 단일 키', tone: 'danger' },
+        { label: '기존 처리', value: '순차 탐색', tone: 'danger' },
+        { label: '관찰 지연', value: '약 2초', tone: 'danger' },
       ],
     },
     before: {
-      body: '기존 구조는 키 입력이 발생할 때마다 사용자, 화면, 키 조합을 기준으로 실행 대상을 순차 탐색했습니다. 단축키 항목 증가에 따라 입력 이벤트 처리 비용이 커지고, 화면 안내 문구와 실제 설정값을 일관되게 관리하기 어려운 구조였습니다.',
-      label: '기존 처리 구조',
-      highlight: '순차 탐색',
-      note: '입력 시점마다 실행 대상 검색',
+      body: '단일 키 중심 설정 구조와 KeyDown 이벤트별 실행 대상 반복 탐색 방식.',
+      label: '기존 단축키 기능',
+      highlight: '28개 단일 키',
+      note: '조합키 미지원',
     },
     improvement: {
-      body: '단축키 설정·로드·저장·매칭 책임을 통합하고, 설정 로드 및 저장 시 Modifier Key + Key Code 조합을 2-Key Dictionary로 사전 구성했습니다. 실제 입력 이벤트에서는 반복 탐색 없이 실행 대상을 즉시 조회하도록 처리 구조를 전환했습니다.',
+      body: '기존 단축키 기능을 기준으로 설정 범위, 입력 매칭부, 저장·검증 흐름을 재설계.',
+      points: [
+        {
+          label: '설정 범위 확장',
+          detail: '28개 단일 키 중심에서 전체 키보드 키와 Modifier 조합키를 지정할 수 있도록 재구성',
+        },
+        {
+          label: '입력 매칭부 개선',
+          detail: 'KeyDown 입력 시 Modifier Key + Key Code 조합을 2-Key Dictionary로 즉시 조회',
+        },
+        {
+          label: '설정 안정성 확보',
+          detail: '중복 단축키 검증, XML 저장·백업, 사용자·장비 기준 설정 반영',
+        },
+        {
+          label: '데모 대응 흐름 정비',
+          detail: '주요 고객사 데모에서 즉시 조작 흐름을 설명·검증할 수 있도록 설정 화면과 안내 문구 정리',
+        },
+      ],
+      stats: [
+        { label: '설정 범위', value: '전체 키·조합키 지원' },
+        { label: '지원 키', value: '전체 키보드 키' },
+        { label: '입력 매칭', value: '2-Key Dictionary' },
+        { label: '응답 시간', value: '0.3초' },
+      ],
       steps: [
-        { icon: Database, title: '2-Key 매핑', description: 'Modifier Key와 Key Code 조합을 사전 구성' },
-        { icon: Keyboard, title: '즉시 매칭', description: '입력 이벤트에서 실행 대상 즉시 조회' },
-        { icon: ShieldCheck, title: '설정 안정화', description: '중복 검증, XML 백업, 안내 문구 자동 갱신 반영' },
+        { icon: Keyboard, title: '설정 UI 확장', description: '전체 키보드 키와 Modifier 조합키 선택 지원' },
+        { icon: Database, title: '입력 매칭부 개선', description: 'KeyDown 이벤트에서 2-Key Dictionary 조회' },
+        { icon: ShieldCheck, title: '설정 운영성 강화', description: '중복 검증, XML 백업, 안내 문구 동기화' },
       ],
     },
     results: [
-      { title: '단축키 응답 시간', metric: '약 2초 → 0.3초', description: 'Debug 모드 로그 기준' },
-      { title: '처리 시간 단축률', metric: '약 85%', description: '개선 전 약 2초 기준' },
-      { title: '설정 UI 범위', metric: '9개 업무 탭', description: '업무 흐름 기준 단축키 설정 재구성' },
+      { title: '단축키 적용 범위 확대', metric: '28개 단일 키 → 전체 키 + 조합키', description: '주요 고객사 데모에서 요구한 즉시 조작 범위를 제품 기능으로 반영' },
+      { title: '입력 응답성 확보', metric: '약 2초 → 0.3초', description: 'Debug 로그 기준 처리 시간 약 85% 단축 및 입력 지연 해소' },
+      { title: '이벤트 처리 비용 절감', metric: '순차 탐색 → 즉시 조회', description: '2-Key Dictionary 매핑으로 KeyDown 이벤트의 반복 탐색 제거' },
+      { title: '설정 운영성 강화', metric: '검증·저장·안내 통합', description: '중복 검증, XML 백업, 안내 문구 동기화로 설정 신뢰성 확보' },
     ],
     measurementNotes: [
-      '측정 기준: Debug 모드 로그 기준 단축키 처리 시간',
-      '개선율 산정: 개선 전 약 2초 기준 약 85% 단축',
-      '핵심 변경: 리스트 기반 반복 탐색을 2-Key Dictionary 기반 즉시 조회로 전환',
-      '운영 효과: 반복 입력 작업에서 발생하던 응답 지연 해소',
+      '기능 범위: 28개 단일 키 중심 → 전체 키보드 키 + Modifier 조합키 지정 가능',
+      '응답성: Debug 로그 기준 약 2초 → 0.3초, 처리 시간 약 85% 단축',
+      '처리 구조: 입력 시 리스트 순차 탐색 → Modifier Key + Key Code 기반 즉시 조회',
+      '데모 효과: 주요 고객사 데모 요구 기능을 반영해 단축키 기반 즉시 조작 흐름 확보',
     ],
     roles: [
-      '기존 단축키 입력 이벤트와 실행 대상 탐색 구조 분석',
-      '단축키 설정·저장·매칭 흐름 통합',
-      '2-Key Dictionary 자료구조 설계 및 즉시 조회 방식 적용',
-      '기능별 탭 UI, 중복 검증, XML 저장·백업, 안내 문구 자동 반영 구성',
+      '주요 고객사 데모 요구 기반 단축키 설정 범위 정의',
+      '기존 단축키 기능의 지원 범위와 입력 처리 구조 분석',
+      '단축키 설정 UI의 전체 키보드 키와 Modifier 조합키 선택 구조 설계',
+      '2-Key Dictionary 조회 구조 설계 및 적용',
+      '중복 검증, XML 저장·백업, 안내 문구 동기화 반영',
     ],
     keywords: ['단축키', 'TwoKeysDictionary', 'WinForms UX/UI', 'Input Response', 'Debug Log'],
   },
@@ -304,16 +361,25 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
 
 function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
   const report = compactWorkCaseReports[areaId];
+  const mergeProblemAndBefore = areaId === 'hotkey-optimization' && report.problem.points;
 
   return (
     <article className="industrial-aoi-matching-section" aria-label={`${report.title} detail summary`}>
-      <div className="industrial-aoi-report-grid industrial-aoi-problem-grid">
+      {mergeProblemAndBefore ? (
         <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby={`${areaId}-problem-title`}>
           <div className="industrial-aoi-report-heading">
             <span>1</span>
-            <h5 id={`${areaId}-problem-title`}>문제 상황</h5>
+            <h5 id={`${areaId}-problem-title`}>문제 상황 및 기존 방식</h5>
           </div>
           <p>{report.problem.body}</p>
+          <ul className="industrial-aoi-report-bullet-list">
+            {report.problem.points?.map((point) => (
+              <li key={point.label}>
+                <strong>{point.label}</strong>
+                <span>{point.detail}</span>
+              </li>
+            ))}
+          </ul>
           {report.problem.stats ? (
             <div className="industrial-aoi-report-stat-row">
               {report.problem.stats.map((item) => (
@@ -328,50 +394,94 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
             </div>
           ) : null}
         </section>
+      ) : (
+        <div className="industrial-aoi-report-grid industrial-aoi-problem-grid">
+          <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby={`${areaId}-problem-title`}>
+            <div className="industrial-aoi-report-heading">
+              <span>1</span>
+              <h5 id={`${areaId}-problem-title`}>문제 상황</h5>
+            </div>
+            <p>{report.problem.body}</p>
+            {report.problem.stats ? (
+              <div className="industrial-aoi-report-stat-row">
+                {report.problem.stats.map((item) => (
+                  <div
+                    className={`industrial-aoi-report-stat${item.tone === 'danger' ? ' industrial-aoi-report-stat-danger' : ''}`}
+                    key={item.label}
+                  >
+                    <span>{item.label}</span>
+                    <strong>{item.value}</strong>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </section>
 
-        <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby={`${areaId}-before-title`}>
-          <div className="industrial-aoi-report-heading">
-            <span>2</span>
-            <h5 id={`${areaId}-before-title`}>기존 방식</h5>
-          </div>
-          <p>{report.before.body}</p>
-          <div className="industrial-aoi-comparison-box">
-            <span>{report.before.label}</span>
-            <strong>{report.before.highlight}</strong>
-            <p>{report.before.note}</p>
-          </div>
-        </section>
-      </div>
+          <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby={`${areaId}-before-title`}>
+            <div className="industrial-aoi-report-heading">
+              <span>2</span>
+              <h5 id={`${areaId}-before-title`}>기존 방식</h5>
+            </div>
+            <p>{report.before.body}</p>
+            <div className="industrial-aoi-comparison-box">
+              <span>{report.before.label}</span>
+              <strong>{report.before.highlight}</strong>
+              <p>{report.before.note}</p>
+            </div>
+          </section>
+        </div>
+      )}
 
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby={`${areaId}-improvement-title`}>
         <div className="industrial-aoi-report-heading">
-          <span>3</span>
+          <span>{mergeProblemAndBefore ? 2 : 3}</span>
           <h5 id={`${areaId}-improvement-title`}>해결 방식</h5>
         </div>
         <p>{report.improvement.body}</p>
-        <div className="industrial-aoi-step-flow">
-          {report.improvement.steps.map((step, index) => {
-            const StepIcon = step.icon;
+        {report.improvement.points ? (
+          <ul className="industrial-aoi-report-bullet-list">
+            {report.improvement.points.map((point) => (
+              <li key={point.label}>
+                <strong>{point.label}</strong>
+                <span>{point.detail}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="industrial-aoi-step-flow">
+            {report.improvement.steps.map((step, index) => {
+              const StepIcon = step.icon;
 
-            return (
-              <article className="industrial-aoi-step-card" key={step.title}>
-                <div className="industrial-aoi-step-icon">
-                  <StepIcon aria-hidden="true" />
-                </div>
-                <div>
-                  <strong>{step.title}</strong>
-                  <p>{step.description}</p>
-                </div>
-                {index < report.improvement.steps.length - 1 ? <ArrowRight className="industrial-aoi-step-arrow" aria-hidden="true" /> : null}
-              </article>
-            );
-          })}
-        </div>
+              return (
+                <article className="industrial-aoi-step-card" key={step.title}>
+                  <div className="industrial-aoi-step-icon">
+                    <StepIcon aria-hidden="true" />
+                  </div>
+                  <div>
+                    <strong>{step.title}</strong>
+                    <p>{step.description}</p>
+                  </div>
+                  {index < report.improvement.steps.length - 1 ? <ArrowRight className="industrial-aoi-step-arrow" aria-hidden="true" /> : null}
+                </article>
+              );
+            })}
+          </div>
+        )}
+        {report.improvement.stats ? (
+          <div className="industrial-aoi-report-stat-row">
+            {report.improvement.stats.map((item) => (
+              <div className="industrial-aoi-report-stat industrial-aoi-report-stat-resolved" key={item.label}>
+                <span>{item.label}</span>
+                <strong>{item.value}</strong>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </section>
 
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby={`${areaId}-result-title`}>
         <div className="industrial-aoi-report-heading">
-          <span>4</span>
+          <span>{mergeProblemAndBefore ? 3 : 4}</span>
           <h5 id={`${areaId}-result-title`}>결과</h5>
         </div>
         {areaId === 'inspection-automation' ? (
@@ -452,7 +562,7 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
 
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby={`${areaId}-role-title`}>
         <div className="industrial-aoi-report-heading">
-          <span>5</span>
+          <span>{mergeProblemAndBefore ? 4 : 5}</span>
           <h5 id={`${areaId}-role-title`}>담당 역할</h5>
         </div>
         <ul className="industrial-aoi-role-list">
@@ -666,53 +776,58 @@ function GerberPartDiagramSection() {
 }
 
 function HotKeyOptimizationDiagramSection() {
-  const tabItems = ['Main', 'Inspection', 'Teaching', 'WndTeaching', 'Algo', 'CAD/Gerber', 'Defect', 'Repair', 'ComposeKey'];
   const stabilityItems = [
-    { icon: ShieldCheck, title: '중복 키 검증', detail: '동일 범위 내 충돌 키를 저장 전에 확인' },
-    { icon: Database, title: 'XML 저장/백업', detail: '버전 확인과 로컬/원격 경로 처리를 함께 구성' },
-    { icon: MousePointerClick, title: '사용자 지정 버튼', detail: '키보드 단축키와 마우스 버튼 사용자 설정을 보조 기능으로 확장' },
+    { icon: ShieldCheck, title: '중복 키 검증', detail: '동일 키 조합 등록 방지' },
+    { icon: Database, title: 'XML 저장/백업', detail: '사용자·장비별 설정 보존' },
+    { icon: CheckCircle, title: '안내 문구 동기화', detail: '설정값과 화면 안내 일치' },
+    { icon: MousePointerClick, title: '사용자 지정 버튼', detail: '키보드 단축키와 마우스 버튼 연계' },
   ];
 
   return (
-    <article className="industrial-aoi-matching-section industrial-aoi-hotkey-section" aria-label="Shortcut UX UI and performance improvement diagrams">
+    <article className="industrial-aoi-matching-section industrial-aoi-hotkey-section" aria-label="Shortcut configuration and response improvement diagrams">
       <section className="industrial-aoi-report-panel industrial-aoi-structure-panel" aria-labelledby="hotkey-structure-title">
         <div className="industrial-aoi-structure-titlebar">
           <div className="industrial-aoi-report-heading">
-            <span>6</span>
+            <span>5</span>
             <h5 id="hotkey-structure-title">단축키 처리 구조 비교</h5>
           </div>
-          <p>기존 순차 탐색 구조와 개선 후 2-Key Dictionary 즉시 조회 구조 비교</p>
+          <p>설정 범위, 입력 매칭, 저장·검증, 운영 적용을 함께 고려한 구조 비교</p>
         </div>
         <div className="industrial-aoi-hotkey-compare-grid">
           <article className="industrial-aoi-hotkey-compare-card industrial-aoi-hotkey-before">
             <div className="industrial-aoi-structure-card-header">
               <div>
                 <strong>Before</strong>
-                <p>입력 이벤트마다 실행 대상 조건 탐색</p>
+                <p>제한적 설정 범위와 입력 시점 탐색 구조</p>
               </div>
               <Timer aria-hidden="true" />
             </div>
             <ol className="industrial-aoi-hotkey-flow" aria-label="Before shortcut flow">
               <li>
                 <span>01</span>
-                <strong>키 입력 이벤트 수신</strong>
-                <p>현재 화면과 사용자 설정을 기준으로 단축키 처리 시작</p>
+                <strong>설정 범위</strong>
+                <p>28개 단일 키 중심으로 구성되어 조합키 활용 제한</p>
               </li>
               <li>
                 <span>02</span>
-                <strong>실행 대상 순차 탐색</strong>
-                <p>사용자, 화면, 키 조합 기준으로 실행 대상 반복 검색</p>
+                <strong>입력 처리</strong>
+                <p>KeyDown 이벤트마다 실행 대상을 순차 탐색</p>
               </li>
               <li>
                 <span>03</span>
-                <strong>기능 실행 연결</strong>
-                <p>식별된 기능을 실제 화면 동작으로 연결</p>
+                <strong>설정 관리</strong>
+                <p>중복 검증, 백업, 안내 문구 동기화 흐름이 분산</p>
+              </li>
+              <li>
+                <span>04</span>
+                <strong>운영 적용</strong>
+                <p>고객사 데모 요구를 설명하고 즉시 검증하기 어려운 구조</p>
               </li>
             </ol>
-            <div className="industrial-aoi-hotkey-metric">
-              <span>Debug 로그 기준</span>
-              <strong>약 2초</strong>
-              <p>입력 후 실행 대기 발생</p>
+            <div className="industrial-aoi-hotkey-summary industrial-aoi-hotkey-summary-before">
+              <span>종합 한계</span>
+              <strong>확장성·응답성·운영성 제약</strong>
+              <p>Debug 로그 기준 약 2초 입력 지연 포함</p>
             </div>
           </article>
 
@@ -720,47 +835,68 @@ function HotKeyOptimizationDiagramSection() {
             <div className="industrial-aoi-structure-card-header">
               <div>
                 <strong>After</strong>
-                <p>설정 로드 시점에 실행 대상 사전 매핑</p>
+                <p>설정 확장과 입력 매칭 구조 분리</p>
               </div>
               <Keyboard aria-hidden="true" />
             </div>
             <ol className="industrial-aoi-hotkey-flow" aria-label="After shortcut flow">
               <li>
                 <span>01</span>
-                <strong>단축키 관리 책임 통합</strong>
-                <p>설정 로드/저장, 매칭, 안내 문구 갱신 흐름 통합</p>
+                <strong>설정 범위</strong>
+                <p>전체 키보드 키와 Modifier 조합키 지정 지원</p>
               </li>
               <li>
                 <span>02</span>
-                <strong>2-Key Dictionary</strong>
-                <p>Modifier Key + Key Code 조합을 실행 대상으로 사전 매핑</p>
+                <strong>입력 처리</strong>
+                <p>Modifier + KeyCode 조합을 2-Key Dictionary로 즉시 조회</p>
               </li>
               <li>
                 <span>03</span>
-                <strong>즉시 실행 매칭</strong>
-                <p>입력 이벤트 발생 시 매핑된 기능을 즉시 실행</p>
+                <strong>설정 관리</strong>
+                <p>중복 검증, XML 저장·백업, 안내 문구 갱신 통합</p>
+              </li>
+              <li>
+                <span>04</span>
+                <strong>운영 적용</strong>
+                <p>고객사 데모 요구 기준의 즉시 조작 흐름과 사용자 지정 버튼 연계</p>
               </li>
             </ol>
-            <div className="industrial-aoi-hotkey-metric industrial-aoi-hotkey-metric-success">
-              <span>Debug 로그 기준</span>
-              <strong>0.3초</strong>
-              <p>응답 지연 해소</p>
+            <div className="industrial-aoi-hotkey-summary industrial-aoi-hotkey-summary-success">
+              <span>적용 결과</span>
+              <strong>기능 범위·응답성·설정 신뢰성 확보</strong>
+              <p>Debug 로그 기준 0.3초 응답 및 데모 요구 대응</p>
             </div>
           </article>
         </div>
       </section>
 
-      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="hotkey-ux-title">
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="hotkey-pseudocode-title">
         <div className="industrial-aoi-report-heading">
-          <span>7</span>
-          <h5 id="hotkey-ux-title">UX/UI 적용 범위</h5>
+          <span>6</span>
+          <h5 id="hotkey-pseudocode-title">의사코드</h5>
         </div>
-        <p className="industrial-aoi-hotkey-section-lead">업무 흐름 기준 9개 탭으로 단축키 설정 범위를 재구성했습니다.</p>
-        <div className="industrial-aoi-hotkey-tabs" aria-label="Shortcut setting tabs">
-          {tabItems.map((item) => (
-            <span key={item}>{item}</span>
+        <div className="industrial-aoi-pseudocode-grid">
+          {hotKeyPseudoSnippets.map((snippet) => (
+            <figure className="industrial-aoi-code-window" key={snippet.title}>
+              <figcaption>
+                <span className="industrial-aoi-code-window-badge">PS</span>
+                <strong>{snippet.title}</strong>
+                <em>{snippet.file}</em>
+              </figcaption>
+              <pre>
+                <code>{renderCsharpCode(snippet.code)}</code>
+              </pre>
+            </figure>
           ))}
         </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="hotkey-operation-title">
+        <div className="industrial-aoi-report-heading">
+          <span>7</span>
+          <h5 id="hotkey-operation-title">설정 운영성 강화</h5>
+        </div>
+        <p className="industrial-aoi-hotkey-section-lead">확장된 단축키 기능이 현장에서 안정적으로 적용되도록 검증, 저장, 안내, 사용자 지정 입력 경로를 함께 정리</p>
         <div className="industrial-aoi-hotkey-stability-grid">
           {stabilityItems.map((item) => {
             const ItemIcon = item.icon;
@@ -776,7 +912,7 @@ function HotKeyOptimizationDiagramSection() {
         </div>
         <div className="industrial-aoi-hotkey-statement">
           <CheckCircle aria-hidden="true" />
-          <p>기존 단축키의 순차 탐색 구조를 2-Key Dictionary 기반 즉시 조회 구조로 개선하여, Debug 모드 로그 기준 단축키 응답 시간을 약 2초에서 0.3초로 줄이고 입력 이벤트 처리 시간을 약 85% 단축했다.</p>
+          <p>단축키 설정 범위 확장 이후에도 중복 등록과 설정 유실을 방지하고, 실제 화면 안내와 입력 경로가 일관되게 동작하도록 운영 기준을 보완.</p>
         </div>
       </section>
     </article>
@@ -1123,6 +1259,51 @@ public bool RequestLocalBatchExec(targetIp, remoteRoot, batPath)
   },
 ] as const;
 
+const hotKeyPseudoSnippets = [
+  {
+    file: '설정 로드',
+    title: '2-Key Map 구성',
+    code: `LoadShortcutSettings()
+{
+    settings = ReadShortcutXml()
+    shortcutMap.Clear()
+
+    for each item in settings
+    {
+        if item.Key is empty
+            continue
+
+        modifier = item.ModifierKey
+        keyCode = item.KeyCode
+
+        if shortcutMap.Contains(modifier, keyCode)
+            MarkDuplicate(item)
+        else
+            shortcutMap.Add(modifier, keyCode, item.Action)
+    }
+
+    SyncShortcutTooltip(settings)
+}`,
+  },
+  {
+    file: '입력 이벤트',
+    title: '즉시 조회 실행',
+    code: `OnShortcutKeyDown(event)
+{
+    modifier = event.ModifierKey
+    keyCode = event.KeyCode
+
+    if shortcutMap.TryGet(modifier, keyCode, out action) == false
+        return
+
+    if action.IsAvailable(CurrentScreen) == false
+        return
+
+    Execute(action)
+}`,
+  },
+] as const;
+
 function RepairConfirmImageMoveSection() {
   return (
     <article className="industrial-aoi-matching-section industrial-aoi-repair-section" aria-label="Remote shared-folder file move process">
@@ -1365,53 +1546,53 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'hotkey-optimization',
       step: '03',
-      title: '단축키 처리 구조 재설계와 응답성 최적화',
-      summary: '단축키 설정 UI와 입력 처리 구조를 통합하고 Debug 로그 기준 약 2초 수준의 응답 시간을 0.3초 수준으로 단축',
-      problem: '키 입력마다 실행 대상을 반복 탐색해 항목 증가 시 입력 응답성이 저하되고 설정 UI가 업무 영역별로 분산된 구조',
+      title: '단축키 설정 범위 확장 및 입력 응답성 최적화',
+      summary: '단축키 설정 UI와 KeyDown 입력 매칭부를 각각 재구성해 기능 확장과 응답성 개선을 분리 구현',
+      problem: '28개 단일 키 중심 설정은 기능 확장성에, 입력 시 실행 대상 반복 탐색은 응답성에 한계',
       actions: [
-        '기존 단축키 입력 처리 흐름과 실행 대상 탐색 비용 분석',
-        '단축키 설정 로드, 저장, 매칭, 안내 문구 갱신 흐름 통합',
-        'Modifier Key + Key Code 조합을 2-Key Dictionary로 사전 매핑',
-        '기능별 탭 UI, 사용자별/장비별 설정, 중복 키 검증, XML 저장/백업 구성',
+        '고객사 데모 요구를 기준으로 단축키 설정 범위 정의',
+        '기존 단축키 기능의 지원 범위와 입력 처리 구조 분석',
+        '단축키 설정 UI에서 전체 키보드 키와 Modifier 조합키 선택 지원',
+        '설정 로드·저장·매칭·안내 문구 갱신 흐름 통합',
+        '2-Key Dictionary 기반 실행 대상 사전 매핑',
       ],
       directions: [
         {
           label: 'Track 01',
-          title: '단축키 처리 구조',
-          points: ['2-Key Dictionary 매핑', '입력 즉시 조회', 'Debug 로그 기반 응답성 검증'],
+          title: 'KeyDown 입력 매칭부',
+          points: ['2-Key Dictionary 매핑', '입력 즉시 조회', 'Debug 로그 검증'],
         },
         {
           label: 'Track 02',
-          title: '설정 UX/UI',
-          points: ['업무별 탭 UI', '중복 키 검증', '안내 문구 자동 반영'],
+          title: '단축키 설정 UI',
+          points: ['전체 키 + 조합키 설정', '중복 키 검증', '안내 문구 자동 반영'],
         },
       ],
       impact: [
-        'Debug 모드 로그 기준 단축키 응답 시간 약 2초 → 0.3초 단축',
-        '입력 이벤트 처리 시간 약 85% 단축',
-        '반복 입력 작업에서 발생하던 응답 지연 해소',
-        'Main, Inspection, Teaching, Algo, CAD/Gerber, Defect, Repair 등 업무 흐름 기준 단축키 설정 UI 재구성',
-        '키보드 단축키와 마우스 사용자 지정 버튼을 함께 제공해 작업자 맞춤 조작 환경 확장',
+        '단축키 설정 UI: 28개 단일 키 중심 설정을 전체 키보드 키와 조합키 구조로 확장',
+        'KeyDown 입력 매칭부: Debug 로그 기준 약 2초 → 0.3초 단축',
+        '설정 운영성: 중복 검증, XML 백업, 안내 문구 동기화 기준 정리',
+        '키보드 단축키와 마우스 사용자 지정 버튼 연계',
       ],
       improvements: [
         {
           title: '2-Key Dictionary 조회 구조',
-          description: '입력 시 리스트 검색을 반복하지 않고 Modifier + Key 조합으로 즉시 조회',
-          details: ['Modifier + KeyCode 사전 매핑', '실행 대상 즉시 조회', '반복 탐색 제거'],
+          description: 'KeyDown 입력 매칭부에서 Modifier + Key 조합으로 실행 대상 직접 조회',
+          details: ['KeyCode 사전 매핑', '실행 대상 즉시 조회', '반복 탐색 제거'],
         },
         {
-          title: '단축키 UX/UI 통합',
-          description: '업무 흐름 기준으로 단축키 설정 화면과 기능 분류를 재구성',
-          details: ['Main / Inspection / Teaching', 'Algo / CAD-GERBER / Defect', 'Repair / ComposeKey'],
+          title: '단축키 설정 운영성 강화',
+          description: '단축키 설정 흐름을 고객사 데모 요구와 현장 적용 기준으로 정리',
+          details: ['전체 키보드 키 지원', 'Modifier 조합키 지원', '안내 문구 동기화'],
         },
         {
           title: '설정 안정성 보완',
-          description: '현장 설정 변경 시 충돌과 복구 리스크를 줄이도록 저장 흐름 보강',
+          description: '중복 키와 설정 복구 리스크 완화',
           details: ['중복 키 검증', '사용자별·장비별 설정', 'XML 버전 확인·백업'],
         },
         {
           title: '사용자 지정 버튼 확장',
-          description: '단축키 중심 개선에 마우스 버튼 사용자 설정을 보조 기능으로 연결',
+          description: '마우스 사용자 버튼 설정 연계',
           details: ['키보드 단축키', '마우스 사용자 지정 버튼', '작업자 맞춤 조작'],
         },
       ],
@@ -1462,7 +1643,7 @@ export function IndustrialAOIPlatformProjectPage({
     selectedArea?.id === 'inspection-automation'
       ? 'Gerber-Part ROI 매칭 성능 최적화'
       : selectedArea?.id === 'hotkey-optimization'
-        ? '단축키 처리 구조 재설계와 응답성 최적화'
+        ? '단축키 설정 범위 확장 및 입력 응답성 최적화'
       : selectedArea?.id === 'production-integration'
         ? 'MES · SECS/GEM 생산 연동 안정화'
       : selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
@@ -1470,7 +1651,7 @@ export function IndustrialAOIPlatformProjectPage({
     selectedArea?.id === 'inspection-automation'
       ? '6분 22초 걸리던 대용량 ROI 매칭을 Module 후보 선별과 캐싱으로 3.5초 수준까지 단축'
       : selectedArea?.id === 'hotkey-optimization'
-        ? '기존 단축키의 순차 탐색 구조를 2-Key Dictionary 즉시 조회 구조로 전환해 응답 시간을 0.3초 수준으로 단축'
+        ? '단축키 설정 UI에서 키 지원 범위를 확장하고 KeyDown 입력 매칭부를 개선해 응답 시간 0.3초 달성'
       : selectedArea?.id === 'production-integration'
         ? '서비스별로 분산된 생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 정리'
       : selectedArea?.summary ??

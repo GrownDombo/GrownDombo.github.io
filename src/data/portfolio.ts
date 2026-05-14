@@ -199,9 +199,9 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
-    title: '단축키 처리 구조 재설계와 응답성 최적화',
-    summary: '분산된 단축키 설정·실행 흐름을 2-Key Dictionary 기반 즉시 조회 구조로 전환해 Debug 로그 기준 약 2초 수준의 응답 시간을 0.3초 수준으로 단축',
-    role: 'WinForms UX/UI · 입력 처리 구조화',
+    title: '단축키 설정 범위 확장 및 입력 응답성 최적화',
+    summary: '단축키 설정 UI와 KeyDown 입력 매칭부를 재구성해 전체 키보드 키·조합키 설정을 지원하고, 응답 시간을 0.3초 수준으로 단축',
+    role: 'WinForms UX/UI · 기능 확장 · 응답성 개선',
     tech: ['C#', '.NET Framework', 'WinForms', 'Data Structure', 'Performance Optimization', 'UX/UI'],
     links: [],
     image: '/assets/shortcut-key-redesign-mockup.png',
