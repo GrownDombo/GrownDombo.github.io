@@ -102,7 +102,7 @@ export const metrics: Metric[] = [
     },
   },
   {
-    value: '70% 감소',
+    value: '약 70% 감소',
     label: '장애 이슈 메일 감소',
     description: '생산 연동 책임 분리로 반복 장애 알림 감소',
     evidence: {
@@ -111,13 +111,13 @@ export const metrics: Metric[] = [
     },
   },
   {
-    value: '약 2초 → 0.3초',
-    label: '단축키 응답 시간 단축',
-    description: '2-Key Dictionary 기반 즉시 조회 구조로 입력 이벤트 처리 지연 해소',
+    value: '전체 키 + 조합키',
+    label: '단축키 지원 범위 확장',
+    description: '설정 UI와 입력 매칭 구조 개선으로 UX/UI와 응답성 개선',
     evidence: {
-      label: 'Debug 모드 로그 기준 단축키 처리 시간 단축',
+      label: '설정 UI 범위 확장 · 로그 기준 응답성 개선',
       href: industrialAoiHotKeyOptimizationPath,
-      suffix: ' 약 85% 단축',
+      suffix: ' 약 85% 개선',
     },
   },
   {
@@ -156,6 +156,11 @@ export const skillGroups: SkillGroup[] = [
     title: 'Domain Tech',
     description: '생산 연동과 영상처리 도메인',
     skills: ['SECS/GEM', 'OpenCV', 'TCP/IP', 'FTP'],
+  },
+  {
+    title: 'Tools / Workflow',
+    description: '형상관리와 개발 협업 흐름',
+    skills: ['Git', 'SVN'],
   },
 ];
 
