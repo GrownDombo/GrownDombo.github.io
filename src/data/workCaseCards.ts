@@ -39,7 +39,7 @@ export type WorkCaseCardData = {
 export const workCaseCards: WorkCaseCardData[] = [
   {
     title: 'Gerber-Part ROI 매칭 성능 최적화',
-    subtitle: 'AOI 알고리즘 최적화',
+    subtitle: 'ROI 매칭 병목 개선',
     summary: '좌표의 후보 선별과 캐시 구조로 ROI 매칭 병목 해소',
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
     imageAlt: 'Module and Part ROI matching mockup',

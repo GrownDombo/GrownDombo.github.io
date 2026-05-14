@@ -860,9 +860,9 @@
 
 .impact-range-flow {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) 30px minmax(0, 1.25fr);
+  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   min-width: 0;
   padding-top: 2px;
 }
@@ -871,6 +871,7 @@
   display: grid;
   align-content: center;
   gap: 4px;
+  justify-items: center;
   min-width: 0;
   min-height: 54px;
   padding: 9px 10px;
@@ -901,7 +902,7 @@
 .impact-range-node--after {
   border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
   background: color-mix(in srgb, var(--accent-soft) 48%, var(--surface));
-  text-align: right;
+  text-align: center;
 }
 
 .impact-range-node--after em,
