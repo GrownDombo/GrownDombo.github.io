@@ -26,7 +26,6 @@ import {
   gerberPartMatchingMockups,
   gerberPartMeasurementNotes,
   gerberPartOptimizationSteps,
-  gerberPartPerformanceScale,
   gerberPartPerformanceSummary,
   gerberPartReportTech,
   gerberPartRoleItems,
@@ -189,9 +188,29 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
   'inspection-automation': {
     title: 'Gerber-Part ROI 매칭 성능 최적화',
     problem: {
-      body: '동일 검사 데이터에서 70,448개 Part Window ROI와 387,600개 Gerber ROI를 매칭하며 검사 준비 시간이 약 6분 22초까지 늘어났습니다.',
+      body: '대용량 ROI 매칭에서 각 Part Window ROI가 전체 Gerber ROI를 반복 순회하는 기존 구조로 인해 검사 준비 시간이 증가.',
+      points: [
+        {
+          label: '데이터 규모',
+          detail: '동일 검사 데이터 기준 70,448개 Part Window ROI와 387,600개 Gerber ROI 매칭 필요',
+        },
+        {
+          label: '기존 방식',
+          detail: '각 Part Window ROI가 전체 Gerber ROI를 반복 순회해 데이터 규모 증가에 따라 비교 횟수 급증',
+        },
+        {
+          label: '처리 비용',
+          detail: '70,448 x 387,600 기준 약 273억 회 비교가 발생하는 구조',
+        },
+        {
+          label: '작업 영향',
+          detail: 'Start/End 로그 기준 검사 준비 시간이 약 6분 22초까지 증가',
+        },
+      ],
       stats: [
-        ...gerberPartPerformanceScale,
+        { label: 'Part Window ROI', value: '70,448개' },
+        { label: 'Gerber ROI', value: '387,600개' },
+        { label: '기존 비교 횟수', value: '약 273억 회', tone: 'danger' },
         { label: '처리 시간', value: '약 6분 22초', tone: 'danger' },
       ],
     },
@@ -202,13 +221,37 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       note: '70,448 x 387,600 기준',
     },
     improvement: {
-      body: 'Module 기준 후보군을 먼저 좁히고 Gerber ROI 변환 결과를 캐싱해 불필요한 비교와 반복 계산을 줄였습니다.',
+      body: '전체 Gerber ROI 반복 순회를 제거하고, Module 영역과 교차하는 Gerber ROI 후보를 먼저 구성한 뒤 매칭 루프에서 재사용하도록 처리 흐름을 재구성.',
+      points: [
+        {
+          label: 'Module 영역 후보 선별',
+          detail: 'Module 영역과 교차하는 Gerber ROI만 후보로 캐싱해 비교 대상을 먼저 축소',
+        },
+        {
+          label: '비교 범위 축소',
+          detail: '각 Part Window ROI가 전체 Gerber ROI를 반복 순회하지 않고 영역 후보 내에서만 비교',
+        },
+        {
+          label: '후보 목록 재사용',
+          detail: 'Module 영역 기준 Gerber 후보 목록을 먼저 만들고 Part·Window 매칭 루프에서 반복 사용',
+        },
+        {
+          label: '기존 결과 호환',
+          detail: '후속 검사 흐름에 영향이 없도록 기존 매칭 결과 포맷 유지',
+        },
+      ],
+      stats: [
+        { label: '비교 기준', value: '전체 순회 → 후보군' },
+        { label: '후보 단위', value: 'Module 영역 기준' },
+        { label: '계산 방식', value: '후보 목록 재사용' },
+        { label: '후속 영향', value: '결과 포맷 유지' },
+      ],
       steps: gerberPartOptimizationSteps,
     },
     results: [
       { title: '처리 시간', metric: '6분 22초 → 3.5초', description: '동일 검사 데이터 기준' },
       { title: '개선율', metric: '99%+', description: '개선 전후 평균 비교' },
-      { title: '비교 횟수', metric: '273억 → 1억', description: 'Module 후보군 기준 축소' },
+      { title: '비교 횟수', metric: '273억 → 1억', description: 'Module 영역 후보 기준 축소' },
     ],
     measurementNotes: gerberPartMeasurementNotes,
     roles: gerberPartRoleItems,
@@ -305,7 +348,31 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
   'production-integration': {
     title: 'MES · SECS/GEM 생산 연동 안정화',
     problem: {
-      body: '고객사별 생산 연동 예외가 누적되며 반복 장애 알림과 변경 영향 범위가 커졌습니다.',
+      body: '서비스별 조건 분기 안에 생산 이벤트 처리, 전송, 응답 반영, 고객사 예외가 함께 누적되어 변경 영향 범위와 장애 추적 비용이 증가.',
+      points: [
+        {
+          label: '이벤트 기준',
+          detail: 'Job, Barcode, Result, Alarm 처리 기준이 서비스별 분기 안에 분산',
+        },
+        {
+          label: '연동 채널',
+          detail: 'MES, SECS/GEM, TCP/IP 메시지 처리와 고객사별 예외가 같은 흐름에 혼재',
+        },
+        {
+          label: '변경 영향',
+          detail: '요청 생성, 전송 분기, 응답 반영, 로그 기준이 섞여 수정 범위 확대',
+        },
+        {
+          label: '운영 영향',
+          detail: '반복 장애 알림이 누적되고 이슈 원인 추적 비용 증가',
+        },
+      ],
+      stats: [
+        { label: '기존 구조', value: '조건 분기 누적', tone: 'danger' },
+        { label: '책임 경계', value: '생성·전송·응답 혼재', tone: 'danger' },
+        { label: '예외 처리', value: '고객사별 혼재', tone: 'danger' },
+        { label: '운영 영향', value: '반복 장애 알림', tone: 'danger' },
+      ],
     },
     before: {
       body: '서비스별 조건 분기 안에 전송, 응답 반영, 고객사 예외, 로그 기준이 함께 누적되었습니다.',
@@ -314,7 +381,31 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       note: 'MES/SECS-GEM/TCP-IP 변경이 같은 흐름에 집중',
     },
     improvement: {
-      body: '공통 생산 이벤트 기준을 세우고 생성·전송·응답 책임을 분리해 채널별 변경 지점을 정리했습니다.',
+      body: '공통 생산 이벤트 기준을 정의하고, 요청 생성·전송 분기·응답 반영·로그 추적 책임을 채널별로 분리.',
+      points: [
+        {
+          label: '생산 이벤트 표준화',
+          detail: 'Job, Barcode, Result, Alarm을 서비스별 조건에서 분리된 공통 기준으로 정리',
+        },
+        {
+          label: '생성·전송·응답 책임 분리',
+          detail: '요청 데이터 구성, 전송 Dispatcher, 응답 반영 지점을 역할별로 분리',
+        },
+        {
+          label: 'SECS/GEM 확장 계층',
+          detail: '공통 계약과 고객사별 Override 지점을 분리해 고객사별 변경 범위 축소',
+        },
+        {
+          label: 'TCP/IP 메시지 안정화',
+          detail: 'Header/Length 기반 Packet Framing으로 대용량 메시지 경계 처리 보완',
+        },
+      ],
+      stats: [
+        { label: '이벤트 기준', value: '공통화' },
+        { label: '전송 구조', value: 'Dispatcher' },
+        { label: '확장 방식', value: 'Abstract / Override' },
+        { label: '메시지 처리', value: 'Packet Framing' },
+      ],
       steps: integrationDirectionSteps,
     },
     results: integrationResultItems,
@@ -325,7 +416,31 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
   'operation-flow': {
     title: '원격 공유 폴더 I/O 병목 해소',
     problem: {
-      body: 'Repair Confirm 시 AOI가 생성한 이미지/XML을 정리해야 했고, 원격 PC의 공유 폴더 직접 조작으로 Confirm 전체 시간이 최대 약 32초까지 증가',
+      body: 'Repair Confirm 과정에서 원격 PC가 AOI 산출 파일을 공유 폴더 경로로 직접 이동·삭제하며 네트워크 I/O 대기 시간이 Confirm 흐름에 누적.',
+      points: [
+        {
+          label: '처리 대상',
+          detail: 'AOI가 생성한 이미지와 XML 파일을 Repair Confirm 시점에 이동·삭제해야 하는 구조',
+        },
+        {
+          label: '기존 방식',
+          detail: '원격 PC가 SMB 공유 폴더에 접근해 파일 move/delete를 직접 수행',
+        },
+        {
+          label: '병목 원인',
+          detail: '파일 단위 공유 경로 접근과 네트워크 왕복 비용이 Confirm 전체 시간에 누적',
+        },
+        {
+          label: '작업 영향',
+          detail: '이슈 발생 PC Start/End 로그 기준 Confirm 전체 시간이 최대 약 32초까지 증가',
+        },
+      ],
+      stats: [
+        { label: '기존 구조', value: '원격 직접 조작', tone: 'danger' },
+        { label: 'I/O 경로', value: 'SMB 공유 폴더', tone: 'danger' },
+        { label: '처리 단위', value: '파일별 move/delete', tone: 'danger' },
+        { label: '관찰 시간', value: '약 32초', tone: 'danger' },
+      ],
     },
     before: {
       body: 'Repair가 AOI 산출 파일 이동·삭제를 원격 PC에서 직접 수행하면서 네트워크 왕복 비용이 Confirm 흐름에 누적',
@@ -334,7 +449,31 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       note: '공유 폴더 접근 비용이 작업 시간에 반영',
     },
     improvement: {
-      body: '원격 PC 역할을 bat 생성·실행 요청으로 제한하고, 파일 보유 PC에서 로컬 실행하는 구조로 분리',
+      body: '원격 PC는 처리 명령을 bat로 구성하고, 파일을 보유한 PC가 로컬 경로에서 실행하도록 역할을 분리.',
+      points: [
+        {
+          label: 'bat 명령 생성',
+          detail: '이미지 이동과 XML 삭제 명령을 하나의 실행 단위로 구성',
+        },
+        {
+          label: 'TCP/IP 실행 요청',
+          detail: '파일 자체를 원격 조작하지 않고 bat 경로와 공유 루트 정보만 전달',
+        },
+        {
+          label: '로컬 경로 실행',
+          detail: '파일 보유 PC에서 공유 경로를 로컬 경로로 치환한 뒤 hidden process로 실행',
+        },
+        {
+          label: 'Fallback 유지',
+          detail: '대상 PC 접속 실패 시 기존 처리 흐름을 유지해 운영 리스크 완화',
+        },
+      ],
+      stats: [
+        { label: '처리 구조', value: '로컬 실행 위임' },
+        { label: '전송 방식', value: 'bat 실행 요청' },
+        { label: 'I/O 경로', value: 'SMB 우회' },
+        { label: '안전장치', value: 'Fallback 유지' },
+      ],
       steps: [
         { icon: Box, title: 'bat 생성', description: 'Confirm 대상 파일 처리 명령을 묶음' },
         { icon: Layers, title: '실행 요청', description: '파일 대신 bat 실행 정보만 전달' },
@@ -361,7 +500,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
 
 function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
   const report = compactWorkCaseReports[areaId];
-  const mergeProblemAndBefore = areaId === 'hotkey-optimization' && report.problem.points;
+  const mergeProblemAndBefore = Boolean(report.problem.points);
 
   return (
     <article className="industrial-aoi-matching-section" aria-label={`${report.title} detail summary`}>
@@ -537,6 +676,42 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
               </ul>
             </div>
           </>
+        ) : areaId === 'operation-flow' ? (
+          <>
+            <div className="industrial-aoi-result-layout industrial-aoi-result-layout-repair">
+              <div className="industrial-aoi-result-table">
+                <div><span>항목</span><span>개선 전</span><span>개선 후</span><span>개선율</span></div>
+                <div><strong>Confirm 전체</strong><span>약 32초</span><span>3초대</span><strong>90%+</strong></div>
+                <div><strong>처리 경로</strong><span>SMB 직접 조작</span><span>로컬 실행 위임</span><strong>SMB 우회</strong></div>
+                <div><strong>전송 단위</strong><span>파일 move/delete</span><span>bat 실행 요청</span><strong>I/O 축소</strong></div>
+              </div>
+              <div className="industrial-aoi-result-bars industrial-aoi-result-bars-repair" aria-label="Repair confirm time comparison">
+                <span className="industrial-aoi-result-kicker">Measured Result</span>
+                <strong>Confirm 전체 시간</strong>
+                <div className="industrial-aoi-result-bar-row">
+                  <span>개선 전</span>
+                  <div><em style={{ width: '100%' }} /></div>
+                  <strong>32s</strong>
+                </div>
+                <div className="industrial-aoi-result-bar-row industrial-aoi-result-bar-row-after">
+                  <span>개선 후</span>
+                  <div><em style={{ width: '10%' }} /></div>
+                  <strong>3s대</strong>
+                </div>
+                <p>파일 직접 조작을 로컬 실행 위임 구조로 전환해 Confirm 대기 시간을 90% 이상 단축.</p>
+              </div>
+            </div>
+            {report.measurementNotes ? (
+              <div className="industrial-aoi-performance-measurement">
+                <strong>처리 시간 측정 기준</strong>
+                <ul>
+                  {report.measurementNotes.map((note) => (
+                    <li key={note}>{note}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </>
         ) : (
           <div className="industrial-aoi-integration-result-grid">
             {report.results.map((item) => (
@@ -548,7 +723,7 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
             ))}
           </div>
         )}
-        {report.measurementNotes && areaId !== 'inspection-automation' ? (
+        {report.measurementNotes && areaId !== 'inspection-automation' && areaId !== 'operation-flow' ? (
           <div className="industrial-aoi-performance-measurement">
             <strong>측정 기준</strong>
             <ul>
@@ -582,12 +757,70 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
   );
 }
 
+const gerberPartPseudoSnippet = {
+  file: '공개용 의사코드',
+  title: 'Module 후보 기반 매칭 흐름',
+  code: `RunGerberRoiMatching() // Module별 후보 구성 후 Part/Window 매칭 실행
+{
+    modules = BuildModuleAreas()
+    moduleGerberCandidates = BuildModuleGerberCandidates(modules)
+
+    for each module in modules
+    {
+        gerberCandidates = moduleGerberCandidates[module]
+
+        for each part in module.Parts
+            CheckWindowGerberMatches(part, gerberCandidates)
+    }
+}
+
+BuildModuleGerberCandidates(modules) // Module 영역과 겹치는 Gerber ROI 후보만 구성
+{
+    // 1. Module 영역과 교차하는 Gerber ROI 후보 구성
+    moduleGerberCandidates = CreateCandidateMap(modules)
+
+    for each gerberRoi in GerberRoiList
+    {
+        gerberArea = BuildGerberArea(gerberRoi)
+
+        for each module in modules
+        {
+            if IsOverlapped(module.Area, gerberArea)
+            {
+                moduleGerberCandidates[module].Add(gerberArea)
+                // 다른 Module 영역과도 겹칠 수 있어 다음 Module도 계속 확인
+            }
+        }
+    }
+
+    return moduleGerberCandidates
+}
+
+CheckWindowGerberMatches(part, gerberCandidates) // 축소된 후보 안에서 Window와 Gerber ROI의 교차 여부 확인
+{
+    // 2. 축소된 후보 안에서 Window와 Gerber ROI의 매칭 여부 확인
+
+    for each window in part.Windows
+    {
+        windowArea = BuildWindowArea(part, window)
+
+        for each gerberArea in gerberCandidates
+        {
+            isMatched = IsOverlapped(windowArea, gerberArea)
+
+            if isMatched
+                RecordMatch(part, window, gerberArea)
+        }
+    }
+}`,
+} as const;
+
 function GerberPartDiagramSection() {
   return (
     <article className="industrial-aoi-matching-section" aria-label="Gerber Part ROI structure diagrams">
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-view-title">
         <div className="industrial-aoi-report-heading">
-          <span>6</span>
+          <span>5</span>
           <h5 id="gerber-view-title">ROI 기준 화면</h5>
         </div>
         <div className="industrial-aoi-matching-grid">
@@ -619,10 +852,10 @@ function GerberPartDiagramSection() {
       <section className="industrial-aoi-report-panel industrial-aoi-structure-panel" aria-labelledby="gerber-structure-title">
         <div className="industrial-aoi-structure-titlebar">
           <div className="industrial-aoi-report-heading">
-            <span>7</span>
+            <span>6</span>
             <h5 id="gerber-structure-title">개선 전후 구조</h5>
           </div>
-          <p>전체 Gerber 순회 방식과 Module 후보 선별 방식을 동일한 ROI 기준으로 비교</p>
+          <p>전체 Gerber 순회 방식과 Module 영역 후보 캐시 방식을 동일한 ROI 기준으로 비교</p>
         </div>
         <div className="industrial-aoi-structure-grid">
           <article className="industrial-aoi-structure-card industrial-aoi-structure-before">
@@ -694,12 +927,12 @@ function GerberPartDiagramSection() {
             <div className="industrial-aoi-structure-card-header">
               <div>
                 <strong>After (개선 구조)</strong>
-                <p>Module 후보군 내부에서 필요한 Gerber ROI만 비교</p>
+                <p>Module 영역과 교차하는 Gerber ROI 후보만 비교</p>
               </div>
             </div>
             <div className="industrial-aoi-structure-diagram industrial-aoi-structure-diagram-after">
               <div className="industrial-aoi-structure-node industrial-aoi-structure-tag-column industrial-aoi-structure-module-column">
-                <strong>Module 후보</strong>
+                <strong>Module 영역 후보</strong>
                 <ul>
                   <li>Module 1 후보</li>
                   <li>Module 2 후보</li>
@@ -763,12 +996,30 @@ function GerberPartDiagramSection() {
                 <b>x</b>
                 <span>
                   <strong>1,425</strong>
-                  <em>Module당 Gerber ROI</em>
+                  <em>Module 교차 Gerber ROI</em>
                 </span>
               </div>
-              <strong>Module 후보군 기준 비교</strong>
+              <strong>Module 영역 후보 기준 비교</strong>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="gerber-pseudocode-title">
+        <div className="industrial-aoi-report-heading">
+          <span>7</span>
+          <h5 id="gerber-pseudocode-title">의사코드</h5>
+        </div>
+        <div className="industrial-aoi-pseudocode-grid industrial-aoi-pseudocode-grid-single">
+          <figure className="industrial-aoi-code-window industrial-aoi-code-window-large">
+            <figcaption>
+              <strong>{gerberPartPseudoSnippet.title}</strong>
+              <em>{gerberPartPseudoSnippet.file}</em>
+            </figcaption>
+            <pre>
+              <code>{renderCsharpCode(gerberPartPseudoSnippet.code)}</code>
+            </pre>
+          </figure>
         </div>
       </section>
     </article>
@@ -879,7 +1130,6 @@ function HotKeyOptimizationDiagramSection() {
           {hotKeyPseudoSnippets.map((snippet) => (
             <figure className="industrial-aoi-code-window" key={snippet.title}>
               <figcaption>
-                <span className="industrial-aoi-code-window-badge">PS</span>
                 <strong>{snippet.title}</strong>
                 <em>{snippet.file}</em>
               </figcaption>
@@ -924,7 +1174,7 @@ function ProductionIntegrationDiagramSection() {
     <article className="industrial-aoi-matching-section industrial-aoi-integration-section" aria-label="MES SECS GEM production integration diagrams">
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="integration-comparison-title">
         <div className="industrial-aoi-report-heading">
-          <span>6</span>
+          <span>5</span>
           <h5 id="integration-comparison-title">처리 기준 및 적용 구조</h5>
         </div>
         <div className="industrial-aoi-integration-comparison-table" role="table" aria-label="MES SECS GEM integration before and after comparison">
@@ -948,7 +1198,7 @@ function ProductionIntegrationDiagramSection() {
       <section className="industrial-aoi-structure-panel industrial-aoi-report-card" aria-labelledby="integration-structure-title">
         <div className="industrial-aoi-structure-titlebar">
           <div className="industrial-aoi-report-heading">
-            <span>7</span>
+            <span>6</span>
             <h5 id="integration-structure-title">구조 다이어그램</h5>
           </div>
           <p>생산 이벤트 발생, 전송, 응답 반영, 로그 추적을 단일 처리 흐름으로 구성</p>
@@ -1309,7 +1559,7 @@ function RepairConfirmImageMoveSection() {
     <article className="industrial-aoi-matching-section industrial-aoi-repair-section" aria-label="Remote shared-folder file move process">
       <section className="industrial-aoi-report-panel industrial-aoi-report-card industrial-aoi-repair-bypass-card" aria-labelledby="repair-structure-title">
         <div className="industrial-aoi-report-heading">
-          <span>6</span>
+          <span>5</span>
           <h5 id="repair-structure-title">SMB 우회 방식</h5>
         </div>
         <p>
@@ -1369,7 +1619,7 @@ function RepairConfirmImageMoveSection() {
 
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-code-flow-title">
         <div className="industrial-aoi-report-heading">
-          <span>7</span>
+          <span>6</span>
           <h5 id="repair-code-flow-title">처리 흐름</h5>
         </div>
         <p>
@@ -1393,7 +1643,7 @@ function RepairConfirmImageMoveSection() {
 
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-code-structure-title">
         <div className="industrial-aoi-report-heading">
-          <span>8</span>
+          <span>7</span>
           <h5 id="repair-code-structure-title">역할 분리</h5>
         </div>
         <div className="industrial-aoi-repair-structure-grid">
@@ -1409,7 +1659,7 @@ function RepairConfirmImageMoveSection() {
 
       <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="repair-pseudocode-title">
         <div className="industrial-aoi-report-heading">
-          <span>9</span>
+          <span>8</span>
           <h5 id="repair-pseudocode-title">의사코드</h5>
         </div>
         <p>
@@ -1458,7 +1708,7 @@ export function IndustrialAOIPlatformProjectPage({
       problem: '대용량 ROI 매칭으로 검사 준비 시간이 길어지고 원인 추적이 어려운 구조',
       actions: [
         'Gerber ROI와 Part Window ROI 매칭 기준 정리',
-        'Module 후보군 기반 탐색 범위 축소 로직 적용',
+        'Module 영역 교차 기준의 Gerber ROI 후보 캐시 적용',
         '기존 검사 결과를 유지하면서 미매칭 항목 보정 흐름 정리',
       ],
       impact: [
@@ -1470,7 +1720,7 @@ export function IndustrialAOIPlatformProjectPage({
         {
           label: 'Track 01',
           title: 'AOI Matching',
-          points: ['Gerber-Part ROI 매칭 병목 해소', 'Module 후보군 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
+          points: ['Gerber-Part ROI 매칭 병목 해소', 'Module 영역 후보 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
         },
         {
           label: 'Track 02',
@@ -1481,8 +1731,8 @@ export function IndustrialAOIPlatformProjectPage({
       improvements: [
         {
           title: 'Gerber / Part / Fiducial Matching',
-          description: 'Gerber 후보 선별과 변환 결과 재사용으로 대용량 ROI 매칭 비용을 줄인 최적화 작업',
-          details: ['Module candidate filtering', 'Gerber ROI caching', 'Compatibility validation'],
+          description: 'Module 영역과 교차하는 Gerber 후보 목록을 구성해 대용량 ROI 매칭 비용을 줄인 최적화 작업',
+          details: ['Module-area candidate filtering', 'Gerber candidate reuse', 'Compatibility validation'],
         },
         {
           title: 'Teaching Screen Flow',
@@ -1649,7 +1899,7 @@ export function IndustrialAOIPlatformProjectPage({
       : selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
   const pageLead =
     selectedArea?.id === 'inspection-automation'
-      ? '6분 22초 걸리던 대용량 ROI 매칭을 Module 후보 선별과 캐싱으로 3.5초 수준까지 단축'
+      ? '6분 22초 걸리던 대용량 ROI 매칭을 Module 영역 후보 캐시와 매칭 대상 선별로 3.5초 수준까지 단축'
       : selectedArea?.id === 'hotkey-optimization'
         ? '단축키 설정 UI에서 키 지원 범위를 확장하고 KeyDown 입력 매칭부를 개선해 응답 시간 0.3초 달성'
       : selectedArea?.id === 'production-integration'
