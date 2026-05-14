@@ -616,6 +616,57 @@
   line-height: 1.7;
 }
 
+.industrial-aoi-report-bullet-list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.industrial-aoi-report-bullet-list li {
+  position: relative;
+  min-width: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 720;
+  line-height: 1.62;
+}
+
+.industrial-aoi-report-bullet-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.72em;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.industrial-aoi-report-bullet-list strong {
+  display: inline;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 930;
+  line-height: inherit;
+}
+
+.industrial-aoi-report-bullet-list span {
+  display: inline;
+  color: var(--muted);
+  font-size: inherit;
+  font-weight: 720;
+  line-height: inherit;
+}
+
+.industrial-aoi-report-bullet-list strong::after {
+  content: " - ";
+  color: var(--muted);
+  font-weight: 700;
+}
+
 .industrial-aoi-report-heading {
   display: flex;
   align-items: center;
@@ -681,6 +732,16 @@
 .industrial-aoi-report-stat-danger span,
 .industrial-aoi-report-stat-danger strong {
   color: #b91c1c;
+}
+
+.industrial-aoi-report-stat-resolved {
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+  background: color-mix(in srgb, var(--accent-soft) 70%, var(--card));
+}
+
+.industrial-aoi-report-stat-resolved span,
+.industrial-aoi-report-stat-resolved strong {
+  color: var(--accent);
 }
 
 .industrial-aoi-comparison-box p {
@@ -1613,6 +1674,47 @@
   font-size: 0.9rem;
   font-weight: 800;
   line-height: 1.45;
+}
+
+.industrial-aoi-hotkey-summary {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, #df3d3d 22%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, #df3d3d 7%, var(--card));
+}
+
+.industrial-aoi-hotkey-summary-success {
+  border-color: color-mix(in srgb, var(--success) 28%, var(--border));
+  background: color-mix(in srgb, var(--success-soft) 46%, var(--card));
+}
+
+.industrial-aoi-hotkey-summary span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.industrial-aoi-hotkey-summary strong {
+  color: #b91c1c;
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  font-weight: 930;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.industrial-aoi-hotkey-summary-success strong {
+  color: color-mix(in srgb, var(--success) 76%, var(--accent));
+}
+
+.industrial-aoi-hotkey-summary p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 780;
+  line-height: 1.5;
 }
 
 .industrial-aoi-hotkey-tabs {
