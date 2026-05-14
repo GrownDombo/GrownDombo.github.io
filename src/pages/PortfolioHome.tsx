@@ -52,7 +52,7 @@ export function PortfolioHome({
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
   const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
-  const shortcutScopeMetric = metrics.find((metric) => metric.label === '단축키 지원 범위 확장');
+  const shortcutScopeMetric = metrics.find((metric) => metric.label === '단축키 기능 확장 및 리팩터링');
   const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
   const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 처리 시간 단축');
   const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
@@ -79,7 +79,7 @@ export function PortfolioHome({
     {
       metric: shortcutScopeMetric,
       resultLabel: '지원 범위',
-      graphLabel: 'UX/UI 개선',
+      graphLabel: '',
       before: '28개 단일키',
       after: '전체 키 + 조합키',
       variant: 'range',
@@ -219,7 +219,7 @@ export function PortfolioHome({
                       <>
                         <div className="impact-meter-row impact-meter-row--range">
                           <span>{card.resultLabel}</span>
-                          <strong>{card.graphLabel}</strong>
+                          {card.graphLabel ? <strong>{card.graphLabel}</strong> : null}
                         </div>
                         <div className="impact-range-flow" aria-hidden="true">
                           <span className="impact-range-node impact-range-node--before">
@@ -301,7 +301,7 @@ export function PortfolioHome({
                             <>
                               <div className="impact-meter-row impact-meter-row--range">
                                 <span>{card.resultLabel}</span>
-                                <strong>{card.graphLabel}</strong>
+                                {card.graphLabel ? <strong>{card.graphLabel}</strong> : null}
                               </div>
                               <div className="impact-range-flow" aria-hidden="true">
                                 <span className="impact-range-node impact-range-node--before">

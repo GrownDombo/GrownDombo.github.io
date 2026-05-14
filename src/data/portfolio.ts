@@ -112,8 +112,8 @@ export const metrics: Metric[] = [
   },
   {
     value: '전체 키 + 조합키',
-    label: '단축키 지원 범위 확장',
-    description: '설정 UI와 입력 매칭 구조 개선으로 UX/UI와 응답성 개선',
+    label: '단축키 기능 확장 및 리팩터링',
+    description: '설정 UI와 입력 매칭 구조를 정리해 지원 범위와 응답성을 개선',
     evidence: {
       label: '설정 UI 범위 확장 · 로그 기준 응답성 개선',
       href: industrialAoiHotKeyOptimizationPath,
