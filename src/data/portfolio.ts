@@ -103,8 +103,8 @@ export const metrics: Metric[] = [
   },
   {
     value: '약 70% 감소',
-    label: '장애 이슈 메일 감소',
-    description: '생산 연동 책임 분리로 반복 장애 알림 감소',
+    label: '장애 이슈 등록 건수 감소',
+    description: '생산 연동 책임 분리로 장애 이슈 등록 건수 감소',
     evidence: {
       label: 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조화',
       href: '/work/mes-secs-gem-data-flow',

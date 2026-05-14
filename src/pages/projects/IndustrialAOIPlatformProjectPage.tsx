@@ -1878,7 +1878,7 @@ export function IndustrialAOIPlatformProjectPage({
       : selectedArea?.id === 'production-integration'
         ? integrationReportTech
       : selectedProject?.tech ?? ['C#', 'C++', '.NET Framework', 'WinForms', 'SECS/GEM', 'OpenCV'];
-  const issueReductionMetric = metrics.find((metric) => metric.label === '장애 이슈 메일 감소');
+  const issueReductionMetric = metrics.find((metric) => metric.label === '장애 이슈 등록 건수 감소');
   const showIntegrationIssueBadge = selectedArea?.id === 'production-integration' && issueReductionMetric;
   const heroImage =
     selectedArea?.id === 'inspection-automation'
