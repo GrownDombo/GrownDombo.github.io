@@ -8,6 +8,12 @@ export const industrialAoiInspectionAutomationPath = '/work/gerber-part-roi-matc
 export const industrialAoiHotKeyOptimizationPath = '/work/hotkey-ux-ui-response-optimization';
 export const industrialAoiProductionIntegrationPath = '/work/mes-secs-gem-data-flow';
 export const industrialAoiOperationFlowPath = '/work/remote-shared-folder-io-bottleneck';
+export const industrialAoiBridgePolygonVisualizationPath = '/work/defect-polygon-visualization-standardization';
+export const legacyIndustrialAoiBridgePolygonVisualizationPath = '/work/bridge-defect-polygon-visualization';
+export const legacyIndustrialAoiBridgePolygonVisualizationProjectPath =
+  '/projects/industrial-aoi-platform/bridge-defect-polygon-visualization';
+export const legacyIndustrialAoiBridgePolygonAreaProjectPath =
+  '/projects/industrial-aoi-platform/bridge-polygon-visualization';
 export const legacyIndustrialAoiOperationFlowPath = '/work/repair-ng-buffer-operations';
 export const legacyIndustrialAoiOperationFlowProjectPath =
   '/projects/industrial-aoi-platform/repair-ng-buffer-operations';
@@ -16,13 +22,15 @@ export type IndustrialAoiAreaId =
   | 'inspection-automation'
   | 'hotkey-optimization'
   | 'production-integration'
-  | 'operation-flow';
+  | 'operation-flow'
+  | 'bridge-polygon-visualization';
 
 export const industrialAoiAreaRoutes: Record<IndustrialAoiAreaId, string> = {
   'inspection-automation': industrialAoiInspectionAutomationPath,
   'hotkey-optimization': industrialAoiHotKeyOptimizationPath,
   'production-integration': industrialAoiProductionIntegrationPath,
   'operation-flow': industrialAoiOperationFlowPath,
+  'bridge-polygon-visualization': industrialAoiBridgePolygonVisualizationPath,
 };
 
 export const industrialAoiRouteAreaIds: Record<string, IndustrialAoiAreaId> = {
@@ -30,9 +38,11 @@ export const industrialAoiRouteAreaIds: Record<string, IndustrialAoiAreaId> = {
   [industrialAoiHotKeyOptimizationPath]: 'hotkey-optimization',
   [industrialAoiProductionIntegrationPath]: 'production-integration',
   [industrialAoiOperationFlowPath]: 'operation-flow',
+  [industrialAoiBridgePolygonVisualizationPath]: 'bridge-polygon-visualization',
   '/projects/industrial-aoi-platform/gerber-part-roi-matching-optimization': 'inspection-automation',
   '/projects/industrial-aoi-platform/hotkey-ux-ui-response-optimization': 'hotkey-optimization',
   '/projects/industrial-aoi-platform/mes-secs-gem-data-flow': 'production-integration',
+  '/projects/industrial-aoi-platform/defect-polygon-visualization-standardization': 'bridge-polygon-visualization',
   '/projects/industrial-aoi-platform/inspection-automation': 'inspection-automation',
   '/projects/industrial-aoi-platform/hotkey-optimization': 'hotkey-optimization',
   '/projects/industrial-aoi-platform/production-integration': 'production-integration',

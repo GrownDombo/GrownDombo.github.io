@@ -24,7 +24,9 @@ function getMetricSummary(metric: WorkCaseCardData['metrics'][number]) {
     return metric.label ? `[${metric.label}] ${range}` : range;
   }
 
-  return [metric.label, metric.value, metric.description].filter(Boolean).join(' ');
+  const detail = [metric.value, metric.description].filter(Boolean).join(' ');
+
+  return metric.label && detail ? `[${metric.label}] ${detail}` : [metric.label, detail].filter(Boolean).join(' ');
 }
 
 function renderSummary(summary: string) {
