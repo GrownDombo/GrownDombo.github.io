@@ -496,6 +496,88 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     ],
     keywords: ['Confirm', 'SMB Bypass', 'Batch Process', 'File Move'],
   },
+  'bridge-polygon-visualization': {
+    title: '검출 영역 Polygon 가시화 체계 구축',
+    problem: {
+      body: '기존 이진화 검사 결과는 좌상/우하 좌표로 계산한 Bounding Box 중심으로 표시되어, 실제 Blob 외곽 형상을 검사 결과 확인 UI에서 확인하기 어려운 구조.',
+      points: [
+        {
+          label: 'Bounding Box 한계',
+          detail: '좌상/우하 2점 기반 사각형 표시는 실제 Blob 외곽의 굴곡과 형상을 표현하기 어려움',
+        },
+        {
+          label: '표현 표준 부재',
+          detail: '검사 엔진에서 산출한 다각형 결과를 화면과 공유할 수 있는 표준화된 표현 구조가 필요',
+        },
+        {
+          label: '좌표 보정',
+          detail: '검사 엔진 좌표와 C# 화면 좌표 사이의 Part/Window 기준 복원이 필요',
+        },
+      ],
+      stats: [
+        { label: '기존 표시', value: 'Bounding Box', tone: 'danger' },
+        { label: '대상 검사', value: '이진화 검사' },
+        { label: '개발 범위', value: 'N-point Polygon' },
+      ],
+    },
+    before: {
+      body: '검사 결과를 좌상/우하 2점 기반 Bounding Box로만 확인해 실제 검출 영역 외곽을 화면에서 바로 추적하기 어려웠음',
+      label: '기존 방식',
+      highlight: 'Bounding Box 표시',
+      note: '실제 Blob 형상을 작업자가 시각적으로 확인하는 흐름이 제한',
+    },
+    improvement: {
+      body: 'OpenCV 기반으로 Blob 외곽을 Polygon으로 추출하고, 유관 부서 협의를 통해 공통 Polygon 바이너리 구조를 표준화해 C++ 검사 엔진과 C# UI가 동일한 다각형 표현을 사용하도록 구현.',
+      points: [
+        {
+          label: '검출 영역 가시화',
+          detail: 'OpenCV 기반으로 Blob 외곽선을 추출하고 N-point Polygon 데이터로 구성',
+        },
+        {
+          label: 'Polygon 표현 표준화',
+          detail: '표준화되지 않았던 다각형 결과 표현을 공통 Polygon 바이너리 구조로 정의하고 Defect ID와 좌표 데이터를 저장·복원',
+        },
+        {
+          label: '좌표계 연결',
+          detail: 'Part Image 기준 좌표와 검사 화면 보정값을 반영해 화면 좌표로 변환',
+        },
+        {
+          label: '화면 가시화',
+          detail: '검사 결과 확인 UI에서 검출 Polygon을 동일한 방식으로 표시',
+        },
+      ],
+      stats: [
+        { label: '기존 표시', value: 'Bounding Box' },
+        { label: '신규 표현', value: 'N-point Polygon' },
+        { label: '표준 구조', value: '공통 Polygon 바이너리' },
+      ],
+      steps: [
+        { icon: Box, title: 'Blob 외곽 추출', description: '이진화 검사 결과에서 OpenCV 기반 외곽 추출' },
+        { icon: Database, title: '표준 구조 설계', description: 'Polygon과 Defect ID를 공통 바이너리 구조로 저장' },
+        { icon: Layers, title: 'UI 가시화', description: 'C# 화면 좌표로 복원 후 표시' },
+      ],
+    },
+    results: [
+      { title: '가시화', metric: 'Bounding Box → N-point Polygon', description: '사각형 대신 실제 Blob 외곽을 기준으로 판정 근거 확인' },
+      { title: '가시화 적용', metric: '검사 UI 적용', description: '검사 결과 확인 흐름에 동일한 Polygon 가시화 적용' },
+      { title: '표준화', metric: '공통 Polygon 구조', description: '유관 부서 협의를 통해 Polygon 바이너리 표현 구조 정의 및 구현' },
+      { title: '호환성', metric: '기존 결과 유지', description: '기존 검사 판정 흐름을 유지하면서 표시 정보 추가' },
+    ],
+    measurementNotes: [
+      '기존 한계: 좌상/우하 2점 기반 Bounding Box 표시',
+      '기능 범위: 이진화 검사에서 검출된 Blob 실제 외곽 Polygon 저장·복원',
+      '표준화 구조: 유관 부서 협의를 통해 정의한 공통 Polygon 바이너리 구조',
+      '가시화 범위: 검사 결과 확인 UI',
+      '필터 기준: Part ID, Window ID, Algorithm ID, ROI ID 기반 조회',
+    ],
+    roles: [
+      'Bounding Box 표시 한계 분석 및 실제 검출 외곽 표현 방식 설계',
+      '유관 부서 협의를 통한 공통 Polygon 바이너리 구조 표준화',
+      'C++ writer와 C# reader 간 Polygon 바이너리 포맷 동기화',
+      '검사 UI 좌표 변환 및 Polygon 가시화 연결',
+    ],
+    keywords: ['C++', 'C#', 'OpenCV', 'WinForms', 'Binary File', 'Image Processing'],
+  },
 };
 
 function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
@@ -725,7 +807,7 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
         )}
         {report.measurementNotes && areaId !== 'inspection-automation' && areaId !== 'operation-flow' ? (
           <div className="industrial-aoi-performance-measurement">
-            <strong>측정 기준</strong>
+            <strong>{areaId === 'bridge-polygon-visualization' ? '구현 기준' : '측정 기준'}</strong>
             <ul>
               {report.measurementNotes.map((note) => (
                 <li key={note}>{note}</li>
@@ -752,6 +834,138 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
             ))}
           </div>
         ) : null}
+      </section>
+    </article>
+  );
+}
+
+const bridgePolygonPseudoSnippets = [
+  {
+    file: 'C++ 검사 엔진',
+    title: 'OpenCV 기반 Blob 외곽 Polygon 추출',
+    code: `cv::Mat binaryMask = detectedBlob.ToBinaryMask();
+auto polygonPoints = OpenCVBoundaryExtractor.ExtractPolygon(binaryMask);
+
+commonPolygonBinaryWriter.Write(partId, windowId, algoId, roiId, defectId, polygonPoints);`,
+  },
+  {
+    file: 'C# 검사 결과 UI',
+    title: '공통 Polygon 바이너리 읽기 및 화면 가시화',
+    code: `var polygons = commonPolygonBinaryFile.Read(partId, windowId, algoId, roiId);
+foreach (var polygon in polygons)
+{
+    var screenPoints = polygon.Select(ImageToScreen);
+    graphics.DrawLines(resultPen, screenPoints);
+}`,
+  },
+] as const;
+
+const bridgePolygonFlowSteps = [
+  {
+    marker: 'Before',
+    title: '좌상/우하 2점',
+    subtitle: 'Bounding Box 사각형',
+    tone: 'bounds',
+    details: ['실제 Blob 굴곡 표현 불가', '검출 근거 확인 제한'],
+  },
+  {
+    marker: 'Extract',
+    title: 'OpenCV 기반 추출',
+    subtitle: '실제 Blob 외곽 Polygon 추출',
+    tone: 'extract',
+    details: ['Blob 외곽 추출', 'N-point 구성'],
+  },
+  {
+    marker: 'Define',
+    title: 'Polygon 표현 표준화',
+    subtitle: '유관 부서 협의 기반 공통 바이너리 구조',
+    tone: 'contract',
+    details: ['Defect ID 매핑', 'Part/Window/Algo/ROI 기준'],
+  },
+  {
+    marker: 'Visualize',
+    title: '검사 결과 UI',
+    subtitle: '동일 Polygon 근거 가시화',
+    tone: 'overlay',
+    details: ['C# reader 좌표 복원', '화면 좌표 변환 표시'],
+  },
+] as const;
+
+function BridgePolygonDiagramSection() {
+  return (
+    <article className="industrial-aoi-matching-section industrial-aoi-bridge-polygon-section" aria-label="polygon visualization standardization flow">
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="bridge-polygon-flow-title">
+        <div className="industrial-aoi-report-heading">
+          <span>6</span>
+          <h5 id="bridge-polygon-flow-title">가시화 및 표준화 흐름</h5>
+        </div>
+        <p>
+          좌상/우하 2점 기반 Bounding Box로 표시되던 검사 결과를 실제 Blob 외곽 Polygon으로 가시화하고, 유관 부서 협의로 표준화한 공통 Polygon 바이너리 구조를 통해 검사 결과 확인 UI에서 같은 형상으로 확인하는 구조.
+        </p>
+        <div className="industrial-aoi-polygon-structure-diagram" role="img" aria-label="Bounding Box to OpenCV polygon extraction to shared polygon binary structure to inspection UI visualization flow">
+          <ol className="industrial-aoi-polygon-structure-flow">
+            {bridgePolygonFlowSteps.map((step) => (
+              <li className={`industrial-aoi-polygon-structure-node industrial-aoi-polygon-structure-node-${step.tone}`} key={step.title}>
+                <span className="industrial-aoi-polygon-structure-marker">{step.marker}</span>
+                <div className="industrial-aoi-polygon-structure-visual" aria-hidden="true">
+                  <span />
+                </div>
+                <strong>{step.title}</strong>
+                <em>{step.subtitle}</em>
+                <ul>
+                  {step.details.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+
+          <div className="industrial-aoi-polygon-structure-contract">
+            <strong>공통 Polygon 바이너리 구조</strong>
+            <div className="industrial-aoi-polygon-structure-contract-grid">
+              <span>
+                기준 정보
+                <em>Version · Polygon Count</em>
+              </span>
+              <span>
+                조회 기준
+                <em>Part · Window · Algo · ROI</em>
+              </span>
+              <span>
+                결과 연결
+                <em>Defect ID Mapping</em>
+              </span>
+              <span>
+                좌표 데이터
+                <em>X/Y Polygon Coordinates</em>
+              </span>
+            </div>
+          </div>
+          <p className="industrial-aoi-polygon-structure-caption">
+            Bounding Box → OpenCV 기반 Polygon 추출 → 공통 Polygon 구조 표준화 → 검사 UI 가시화
+          </p>
+        </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="bridge-polygon-pseudocode-title">
+        <div className="industrial-aoi-report-heading">
+          <span>7</span>
+          <h5 id="bridge-polygon-pseudocode-title">핵심 의사코드</h5>
+        </div>
+        <div className="industrial-aoi-pseudocode-grid">
+          {bridgePolygonPseudoSnippets.map((snippet) => (
+            <figure className="industrial-aoi-code-window" key={snippet.title}>
+              <figcaption>
+                <strong>{snippet.title}</strong>
+                <em>{snippet.file}</em>
+              </figcaption>
+              <pre>
+                <code>{renderCsharpCode(snippet.code)}</code>
+              </pre>
+            </figure>
+          ))}
+        </div>
       </section>
     </article>
   );
@@ -1847,6 +2061,54 @@ export function IndustrialAOIPlatformProjectPage({
         },
       ],
     },
+    {
+      id: 'bridge-polygon-visualization',
+      step: '05',
+      title: '검출 영역 Polygon 가시화 체계 구축',
+      summary: 'Bounding Box 표시 한계를 개선하고 실제 검출 영역을 N-point Polygon으로 가시화·표준화',
+      problem: '기존 알고리즘이 좌상/우하 2점 기반 Bounding Box만 제시해 실제 Blob 외곽 형상을 확인하기 어려운 구조',
+      actions: [
+        'OpenCV 기반 Blob 외곽 Polygon 추출',
+        '유관 부서 협의를 통한 공통 Polygon 바이너리 구조 표준화',
+        '공통 Polygon 바이너리 구조에 Polygon 데이터와 Defect ID 저장',
+        'C# UI에서 Part/Window/Algo/ROI 기준으로 공통 바이너리 데이터를 읽고 좌표 복원',
+        '검사 결과 확인 UI에 검출 Polygon 가시화 연결',
+      ],
+      directions: [
+        {
+          label: 'Track 01',
+          title: 'C++ 실제 외곽 추출',
+          points: ['Bounding Box 표시 한계 분석', 'OpenCV 기반 Blob 외곽 추출', 'Defect ID 매핑'],
+        },
+        {
+          label: 'Track 02',
+          title: 'Polygon 표현 표준화',
+          points: ['공통 바이너리 writer/reader 구현', 'Part Image 좌표 복원', '검사 UI 가시화'],
+        },
+      ],
+      impact: [
+        '좌상/우하 Bounding Box 대신 실제 검출 영역을 N-point Polygon으로 시각 확인',
+        '공통 Polygon 바이너리 구조 기반으로 C++ 검사 엔진과 C# UI 표현 방식 표준화',
+        '검사 결과 확인 UI에서 동일한 Polygon 근거 제공',
+      ],
+      improvements: [
+        {
+          title: 'Bounding Box to Polygon',
+          description: '좌상/우하 2점 기반 Bounding Box 표시에서 벗어나 Blob의 실제 외곽을 표시 가능한 Polygon 데이터로 변환',
+          details: ['OpenCV 기반 추출', 'Blob 외곽 추출', 'N-point Polygon 구성'],
+        },
+        {
+          title: 'Polygon 표현 표준화',
+          description: '유관 부서 협의를 통해 공통 Polygon 바이너리 구조를 정의하고 C++ 검사 엔진과 C# UI가 같은 표현을 사용하도록 구성',
+          details: ['공통 표현 구조', 'Defect ID 매핑', 'Part/Window/Algo/ROI 필터', '좌표 기준 동기화'],
+        },
+        {
+          title: '검사 UI 가시화',
+          description: '검사 결과 확인 UI에서 검출 Polygon을 이미지 좌표에서 화면 좌표로 변환해 표시',
+          details: ['좌표 변환', '검사 화면 보정', '화면 가시화'],
+        },
+      ],
+    },
   ] as const;
   const selectedArea = selectedAreaId ? highlightAreas.find((area) => area.id === selectedAreaId) : undefined;
   const selectedProject = selectedAreaId
@@ -1869,7 +2131,7 @@ export function IndustrialAOIPlatformProjectPage({
       : selectedArea?.id === 'production-integration'
         ? '서비스별로 분산된 생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 정리'
       : selectedArea?.summary ??
-        '3D AOI 장비 소프트웨어 업무 성과를 성능 최적화, 생산 연동, 운영 안정화 기준으로 구성';
+        '3D AOI 장비 소프트웨어 업무 성과를 성능 최적화, 생산 연동, 기능 개발, 운영 안정화 기준으로 구성';
   const pageTech =
     selectedArea?.id === 'inspection-automation'
       ? gerberPartReportTech
@@ -1902,7 +2164,7 @@ export function IndustrialAOIPlatformProjectPage({
   const guideTitle = selectedArea ? 'Key Contributions' : `${highlightAreas.length} Work Areas`;
   const guideDescription = selectedArea
     ? '문제, 기존 방식, 해결 방식, 결과, 담당 역할 중심 구성'
-    : '회사·고객사 세부 정보는 제외하고 성능 최적화, UX/UI 응답성, 생산 연동, 운영 유지보수 기준으로 정리했습니다.';
+    : '회사·고객사 세부 정보는 제외하고 성능 최적화, UX/UI 응답성, 생산 연동, 검사 결과 가시화 기능 개발 기준으로 정리했습니다.';
 
   return (
     <div className="site-shell" data-theme={themeMode}>
@@ -2043,6 +2305,8 @@ export function IndustrialAOIPlatformProjectPage({
               {selectedArea && area.id === 'production-integration' ? <ProductionIntegrationDiagramSection /> : null}
 
               {selectedArea && area.id === 'operation-flow' ? <RepairConfirmImageMoveSection /> : null}
+
+              {selectedArea && area.id === 'bridge-polygon-visualization' ? <BridgePolygonDiagramSection /> : null}
 
 
               {!selectedArea && area.directions.length === 0 ? (

@@ -145,13 +145,13 @@ export const resumeExperiences: ResumeExperience[] = [
       },
       {
         category: '영상처리',
-        title: '검출 영역 기반 외곽 폴리곤 추출 기능 개발',
-        metrics: ['고객사 장비 구입 조건으로 제시된 기능을 개발해 약 8억 원 매출에 기여'],
+        title: '검출 영역 Polygon 가시화 체계 구축',
+        metrics: ['좌상/우하 Bounding Box 표시 한계를 개선하고 실제 검출 외곽을 N-point Polygon으로 가시화하는 공통 Polygon 바이너리 구조 표준화'],
         details: [
-          '기존 검출 영역을 활용해 호환성을 유지하고 불필요한 다각형 연산 축소',
-          '바이너리 파일셋 저장 구조로 타 프로세스 시각화 기능 확장',
+          'OpenCV 기반 Blob 외곽 추출과 공통 Polygon 바이너리 구조 구현',
+          'C++ 검사 엔진과 C# 검사 결과 UI 간 Polygon 표현 표준화',
         ],
-        keywords: ['C++', 'OpenCV', 'Binary File', 'Image Processing'],
+        keywords: ['C++', 'C#', 'OpenCV', 'WinForms', 'Binary File', 'Image Processing'],
       },
     ],
   },

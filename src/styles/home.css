@@ -717,10 +717,6 @@
   gap: 16px;
 }
 
-.impact-meter-grid--extra {
-  margin-top: 14px;
-}
-
 .impact-meter-card {
   position: relative;
   display: grid;
@@ -858,29 +854,45 @@
   font-size: 1.1rem;
 }
 
+.impact-range-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: 8px;
+  min-width: 0;
+}
+
+.impact-range-layout--with-side {
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.9fr);
+}
+
 .impact-range-flow {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
   padding-top: 2px;
 }
 
 .impact-range-node {
-  display: grid;
-  align-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   gap: 4px;
-  justify-items: center;
   min-width: 0;
-  min-height: 54px;
+  min-height: 58px;
   padding: 9px 10px;
   border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--line));
   border-radius: 8px;
   background: color-mix(in srgb, var(--card) 88%, var(--accent-soft));
+  text-align: center;
 }
 
 .impact-range-node em {
+  display: block;
+  width: 100%;
   color: var(--text-muted);
   font-size: 0.66rem;
   font-style: normal;
@@ -891,11 +903,14 @@
 }
 
 .impact-range-node b {
+  display: block;
+  width: 100%;
   min-width: 0;
   color: var(--text-muted);
   font-size: 0.82rem;
   font-weight: 950;
   line-height: 1.2;
+  text-align: center;
   white-space: nowrap;
 }
 
@@ -905,9 +920,35 @@
   text-align: center;
 }
 
+.impact-range-node--before {
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 48%, var(--surface));
+}
+
+.impact-range-node--before em,
+.impact-range-node--before b {
+  color: var(--text-muted);
+}
+
 .impact-range-node--after em,
 .impact-range-node--after b {
   color: var(--accent);
+}
+
+.impact-range-node--side {
+  border-color: color-mix(in srgb, var(--accent-cool) 24%, var(--line));
+  background: color-mix(in srgb, var(--surface) 72%, var(--accent-cool) 12%);
+  text-align: center;
+}
+
+.impact-range-node--side em {
+  color: var(--accent-cool);
+}
+
+.impact-range-node--side b {
+  color: var(--text-strong);
+  font-size: 0.78rem;
+  white-space: normal;
 }
 
 .impact-range-flow i {

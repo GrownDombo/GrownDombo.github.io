@@ -150,10 +150,23 @@
   .industrial-aoi-report-grid,
   .industrial-aoi-result-layout,
   .industrial-aoi-structure-grid,
+  .industrial-aoi-polygon-structure-flow,
   .industrial-aoi-report-bottom-grid,
   .industrial-aoi-step-flow,
   .industrial-aoi-repair-flow-map {
     grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-polygon-structure-contract-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .industrial-aoi-polygon-structure-node {
+    min-height: 0;
+  }
+
+  .industrial-aoi-polygon-structure-node:not(:last-child)::after {
+    display: none;
   }
 
   .industrial-aoi-repair-flow-item,
@@ -546,6 +559,28 @@
     padding: 20px;
   }
 
+  .impact-range-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-range-layout--with-side {
+    grid-template-columns: minmax(0, 1.1fr) minmax(86px, 0.8fr);
+    gap: 6px;
+  }
+
+  .impact-range-layout--with-side .impact-range-flow {
+    grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .impact-range-layout--with-side .impact-range-node {
+    padding-inline: 7px;
+  }
+
+  .impact-range-layout--with-side .impact-range-node b {
+    font-size: 0.76rem;
+  }
+
   .portfolio-profile-card {
     padding: 24px 18px;
   }
@@ -895,6 +930,19 @@
 }
 
 @media (max-width: 560px) {
+  .industrial-aoi-polygon-structure-flow,
+  .industrial-aoi-polygon-structure-contract-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industrial-aoi-polygon-structure-node {
+    min-height: 0;
+  }
+
+  .industrial-aoi-polygon-structure-node:not(:last-child)::after {
+    display: none;
+  }
+
   .industrial-aoi-pseudocode-grid {
     grid-template-columns: 1fr;
   }

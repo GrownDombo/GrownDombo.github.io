@@ -148,7 +148,7 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
                               highlight.title === '병목 구간 분석 및 처리 성능 최적화' ||
                               highlight.title === '생산 시스템 연동 기능 개발 및 운영 안정화' ||
                               highlight.title === 'MSSQL 기반 검사 이력 관리 시스템 개발' ||
-                              highlight.title === '검출 영역 기반 외곽 폴리곤 추출 기능 개발' ||
+                              highlight.title === '검출 영역 Polygon 가시화 체계 구축' ||
                               highlight.title === '지도 API 연동 및 지도·검색 기능 개발'
                                 ? ' resume-metric-list--performance'
                                 : ''

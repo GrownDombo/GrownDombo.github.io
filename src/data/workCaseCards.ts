@@ -1,4 +1,5 @@
 import {
+  industrialAoiBridgePolygonVisualizationPath,
   industrialAoiHotKeyOptimizationPath,
   industrialAoiInspectionAutomationPath,
   industrialAoiOperationFlowPath,
@@ -80,7 +81,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     image: '/assets/shortcut-key-redesign-mockup.png',
     imageAlt: '단축키 설정 화면 Before After 익명화 목업',
     detailPath: industrialAoiHotKeyOptimizationPath,
-    priority: 2,
+    priority: 3,
     metrics: [
       {
         label: '지원 범위 확장',
@@ -156,7 +157,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     image: '/assets/shared-folder-bottleneck.png',
     imageAlt: 'Remote shared-folder file move bottleneck improvement illustration',
     detailPath: industrialAoiOperationFlowPath,
-    priority: 3,
+    priority: 4,
     metrics: [
       {
         label: '시간 단축',
@@ -182,6 +183,43 @@ export const workCaseCards: WorkCaseCardData[] = [
         label: 'After',
         title: '적용 방식',
         details: ['bat 생성', 'TCP/IP 실행 위임', '로컬 PC에서 이동'],
+      },
+    ],
+  },
+  {
+    title: '검출 영역 Polygon 가시화 체계 구축',
+    subtitle: '영상처리 기반 가시화 · Polygon 표현 표준 · 공통 바이너리 구조',
+    summary: 'Bounding Box 표시를 실제 Blob 외곽 Polygon 기반으로 표준화',
+    image: '/assets/defect-polygon-visualization-standardization.png',
+    imageAlt: 'Bounding Box display and Polygon visualization Before After inspection UI mockup',
+    detailPath: industrialAoiBridgePolygonVisualizationPath,
+    priority: 2,
+    metrics: [
+      {
+        label: '가시화',
+        value: '다각형 검출 알고리즘 및 표시 기능 개발',
+        tone: 'accent',
+      },
+      {
+        label: '표준화',
+        value: '유관 부서 협의 기반 Polygon 바이너리 파일 구성',
+      },
+    ],
+    phases: [
+      {
+        label: 'Problem',
+        title: '문제 상황',
+        details: ['Bounding Box 기반 표시', '실제 검출 외곽 미표현'],
+      },
+      {
+        label: 'Before',
+        title: '기존 방식',
+        details: ['좌상/우하 2점 기준', 'Blob 실제 형상 표현 부재'],
+      },
+      {
+        label: 'After',
+        title: '적용 방식',
+        details: ['N-point Polygon 가시화', '공통 Polygon 구조 표준화', '검사 UI 적용'],
       },
     ],
   },

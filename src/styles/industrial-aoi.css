@@ -3561,6 +3561,265 @@
   line-height: 1.55;
 }
 
+.industrial-aoi-polygon-structure-diagram {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 0;
+  overflow: visible;
+}
+
+.industrial-aoi-polygon-structure-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.industrial-aoi-polygon-structure-node {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  min-width: 0;
+  min-height: 254px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--border) 86%, var(--accent) 14%);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.industrial-aoi-polygon-structure-node:not(:last-child)::after {
+  content: ">";
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  z-index: 1;
+  display: grid;
+  width: 14px;
+  height: 28px;
+  place-items: center;
+  color: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 800;
+  transform: translateY(-50%);
+}
+
+.industrial-aoi-polygon-structure-marker {
+  justify-self: start;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  border-radius: 999px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.industrial-aoi-polygon-structure-node strong,
+.industrial-aoi-polygon-structure-node em {
+  min-width: 0;
+}
+
+.industrial-aoi-polygon-structure-node strong {
+  color: var(--text);
+  font-size: 0.96rem;
+  line-height: 1.35;
+}
+
+.industrial-aoi-polygon-structure-node em {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.industrial-aoi-polygon-structure-node ul {
+  display: grid;
+  gap: 5px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.industrial-aoi-polygon-structure-node li {
+  position: relative;
+  padding-left: 11px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.industrial-aoi-polygon-structure-node li::before {
+  content: "";
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.industrial-aoi-polygon-structure-visual {
+  position: relative;
+  display: grid;
+  min-height: 72px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 38%, transparent), transparent),
+    var(--media-bg);
+}
+
+.industrial-aoi-polygon-structure-visual span {
+  position: relative;
+  display: block;
+}
+
+.industrial-aoi-polygon-structure-node-bounds .industrial-aoi-polygon-structure-visual span {
+  width: 70px;
+  height: 42px;
+  border: 2px solid #f97316;
+  border-radius: 4px;
+}
+
+.industrial-aoi-polygon-structure-node-bounds .industrial-aoi-polygon-structure-visual span::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f97316;
+  box-shadow: 72px 44px 0 #f97316;
+}
+
+.industrial-aoi-polygon-structure-node-extract .industrial-aoi-polygon-structure-visual span {
+  width: 76px;
+  height: 48px;
+  clip-path: polygon(10% 50%, 27% 9%, 65% 15%, 91% 54%, 74% 92%, 31% 82%);
+  background:
+    linear-gradient(135deg, rgb(34 197 94 / 24%), rgb(20 184 166 / 24%)),
+    color-mix(in srgb, #22c55e 22%, transparent);
+  outline: 3px solid #22c55e;
+}
+
+.industrial-aoi-polygon-structure-node-extract .industrial-aoi-polygon-structure-visual span::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 2px dashed rgb(15 118 110 / 70%);
+  clip-path: inherit;
+}
+
+.industrial-aoi-polygon-structure-node-contract .industrial-aoi-polygon-structure-visual span {
+  width: 50px;
+  height: 62px;
+  border: 2px solid var(--accent);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+}
+
+.industrial-aoi-polygon-structure-node-contract .industrial-aoi-polygon-structure-visual span::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 18px;
+  height: 18px;
+  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  border-radius: 0 7px 0 5px;
+  background: var(--card);
+}
+
+.industrial-aoi-polygon-structure-node-contract .industrial-aoi-polygon-structure-visual span::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 30px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 12px 0 color-mix(in srgb, var(--accent) 54%, transparent);
+}
+
+.industrial-aoi-polygon-structure-node-overlay .industrial-aoi-polygon-structure-visual span {
+  width: 82px;
+  height: 52px;
+  border: 2px solid color-mix(in srgb, var(--text) 52%, transparent);
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 16%, transparent) 0 1px, transparent 1px 100%),
+    linear-gradient(color-mix(in srgb, var(--accent) 16%, transparent) 0 1px, transparent 1px 100%),
+    color-mix(in srgb, var(--media-bg) 78%, #0f172a);
+  background-size: 16px 16px;
+}
+
+.industrial-aoi-polygon-structure-node-overlay .industrial-aoi-polygon-structure-visual span::before {
+  content: "";
+  position: absolute;
+  inset: 9px 10px 8px;
+  clip-path: polygon(8% 54%, 30% 6%, 66% 15%, 90% 55%, 72% 94%, 32% 82%);
+  border: 3px solid #22c55e;
+  background: rgb(34 197 94 / 16%);
+}
+
+.industrial-aoi-polygon-structure-contract {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent-soft) 38%, transparent);
+}
+
+.industrial-aoi-polygon-structure-contract > strong {
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.industrial-aoi-polygon-structure-contract-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.industrial-aoi-polygon-structure-contract-grid span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
+  border-radius: 8px;
+  color: var(--text);
+  background: var(--card);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.industrial-aoi-polygon-structure-contract-grid em {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.industrial-aoi-polygon-structure-caption {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
 .industrial-aoi-matching-legend {
   display: flex;
   flex-wrap: wrap;

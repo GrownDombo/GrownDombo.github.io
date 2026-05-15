@@ -44,11 +44,11 @@ export function splitMetricText(metric: string, highlightTitle: string) {
     return splitMap[metric] ?? { label: metric, result: '' };
   }
 
-  if (highlightTitle === '검출 영역 기반 외곽 폴리곤 추출 기능 개발') {
+  if (highlightTitle === '검출 영역 Polygon 가시화 체계 구축') {
     const splitMap: Record<string, { label: string; result: string }> = {
-      '고객사 장비 구입 조건으로 제시된 기능을 개발해 약 8억 원 매출에 기여': {
-        label: '검출 영역 기반 외곽 폴리곤 추출 기능 개발',
-        result: '약 8억 원 규모 장비 수주에 기여',
+      '좌상/우하 Bounding Box 표시 한계를 개선하고 실제 검출 외곽을 N-point Polygon으로 가시화하는 공통 Polygon 바이너리 구조 표준화': {
+        label: '검출 외곽 Polygon 가시화',
+        result: '공통 Polygon 표현 표준화',
       },
     };
 

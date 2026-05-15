@@ -13,8 +13,12 @@ import { RFIDCollisionSearchSimulatorProjectPage } from './pages/projects/RFIDCo
 import {
   cpuMemoryStressTestPath,
   excelConditionPainterPath,
+  industrialAoiBridgePolygonVisualizationPath,
   industrialAoiOperationFlowPath,
   industrialAoiRouteAreaIds,
+  legacyIndustrialAoiBridgePolygonAreaProjectPath,
+  legacyIndustrialAoiBridgePolygonVisualizationPath,
+  legacyIndustrialAoiBridgePolygonVisualizationProjectPath,
   legacyIndustrialAoiOperationFlowPath,
   legacyIndustrialAoiOperationFlowProjectPath,
   legacyIndustrialAoiPlatformPath,
@@ -47,6 +51,18 @@ function App() {
       <Route path={workCaseRootPath} element={<Navigate to="/#work-cases" replace />} />
       <Route path={legacyIndustrialAoiPlatformPath} element={<Navigate to="/#work-cases" replace />} />
       <Route path={legacyIndustrialAoiOperationFlowPath} element={<Navigate to={industrialAoiOperationFlowPath} replace />} />
+      <Route
+        path={legacyIndustrialAoiBridgePolygonVisualizationPath}
+        element={<Navigate to={industrialAoiBridgePolygonVisualizationPath} replace />}
+      />
+      <Route
+        path={legacyIndustrialAoiBridgePolygonVisualizationProjectPath}
+        element={<Navigate to={industrialAoiBridgePolygonVisualizationPath} replace />}
+      />
+      <Route
+        path={legacyIndustrialAoiBridgePolygonAreaProjectPath}
+        element={<Navigate to={industrialAoiBridgePolygonVisualizationPath} replace />}
+      />
       <Route
         path={legacyIndustrialAoiOperationFlowProjectPath}
         element={<Navigate to={industrialAoiOperationFlowPath} replace />}

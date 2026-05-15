@@ -1,4 +1,4 @@
-import { industrialAoiHotKeyOptimizationPath } from '../routes/paths';
+import { industrialAoiBridgePolygonVisualizationPath, industrialAoiHotKeyOptimizationPath } from '../routes/paths';
 
 export type ProfileLink = {
   label: string;
@@ -129,6 +129,15 @@ export const metrics: Metric[] = [
       href: '/work/remote-shared-folder-io-bottleneck',
     },
   },
+  {
+    value: '사각형 → Polygon',
+    label: '검출 영역 Polygon 가시화 체계 구축',
+    description: 'Bounding Box 표시를 Polygon 기반 공통 가시화 구조로 표준화',
+    evidence: {
+      label: '공통 Polygon 바이너리 구조 표준화 · 검사 UI 가시화 적용',
+      href: industrialAoiBridgePolygonVisualizationPath,
+    },
+  },
 ];
 
 export const skillGroups: SkillGroup[] = [
@@ -210,7 +219,7 @@ export const workCaseStudies: Project[] = [
     tech: ['C#', '.NET Framework', 'WinForms', 'Data Structure', 'Performance Optimization', 'UX/UI'],
     links: [],
     image: '/assets/shortcut-key-redesign-mockup.png',
-    priority: 2,
+    priority: 3,
     detailPath: industrialAoiHotKeyOptimizationPath,
     status: 'Work Case',
   },
@@ -232,8 +241,19 @@ export const workCaseStudies: Project[] = [
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'Batch Process', 'File I/O'],
     links: [],
     image: '/assets/shared-folder-bottleneck.png',
-    priority: 3,
+    priority: 4,
     detailPath: '/work/remote-shared-folder-io-bottleneck',
+    status: 'Work Case',
+  },
+  {
+    title: '검출 영역 Polygon 가시화 체계 구축',
+    summary: 'Bounding Box 표시를 실제 Blob 외곽 Polygon 가시화 구조로 표준화',
+    role: '영상처리 기반 가시화 · Polygon 표현 표준 · 공통 바이너리 구조',
+    tech: ['C++', 'C#', '.NET Framework', 'WinForms', 'OpenCV', 'Binary File'],
+    links: [],
+    image: '/assets/defect-polygon-visualization-standardization.png',
+    priority: 2,
+    detailPath: industrialAoiBridgePolygonVisualizationPath,
     status: 'Work Case',
   },
 ];
