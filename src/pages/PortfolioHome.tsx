@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronDown, ChevronUp, FileText, Github, Mail, Sparkles } from 'lucide-react';
 import { Link } from 'react-router';
 import { AnalyticsNotice } from '../components/AnalyticsNotice';
@@ -38,6 +38,33 @@ type ImpactRangeCard = ImpactBaseCard & {
 };
 
 type ImpactChartCard = ImpactMeterCard | ImpactRangeCard;
+
+function readStoredBoolean(storageKey: string, fallback: boolean) {
+  if (typeof window === 'undefined') {
+    return fallback;
+  }
+
+  try {
+    const storedValue = window.localStorage.getItem(storageKey);
+    return storedValue === null ? fallback : storedValue === 'true';
+  } catch {
+    return fallback;
+  }
+}
+
+function usePersistentBoolean(storageKey: string, fallback: boolean) {
+  const [value, setValue] = useState(() => readStoredBoolean(storageKey, fallback));
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(storageKey, String(value));
+    } catch {
+      // Ignore storage failures so disclosure controls still work normally.
+    }
+  }, [storageKey, value]);
+
+  return [value, setValue] as const;
+}
 
 export function PortfolioHome({
   onNavigate,
@@ -117,9 +144,18 @@ export function PortfolioHome({
         ]
       : []),
   ];
-  const [showAdditionalMetrics, setShowAdditionalMetrics] = useState(false);
-  const [showAdditionalWorkCases, setShowAdditionalWorkCases] = useState(false);
-  const [showAdditionalProjects, setShowAdditionalProjects] = useState(false);
+  const [showAdditionalMetrics, setShowAdditionalMetrics] = usePersistentBoolean(
+    'portfolio:show-additional-metrics',
+    false,
+  );
+  const [showAdditionalWorkCases, setShowAdditionalWorkCases] = usePersistentBoolean(
+    'portfolio:show-additional-work-cases',
+    false,
+  );
+  const [showAdditionalProjects, setShowAdditionalProjects] = usePersistentBoolean(
+    'portfolio:show-additional-projects',
+    false,
+  );
   const displayedImpactChartCards = showAdditionalMetrics
     ? [...impactChartCards, ...additionalImpactChartCards]
     : impactChartCards;
