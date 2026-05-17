@@ -61,11 +61,11 @@ export type Experience = {
 
 export const profile: Profile = {
   name: '최준영 / GrownDombo',
-  role: 'C#/.NET 기반 제조 장비 소프트웨어 개발자',
-  headline: '제조 현장의 느린 처리와 반복 장애를 줄이는 Windows 장비 SW 개발자',
+  role: 'C#/.NET 기반 Windows 응용프로그램 개발자',
+  headline: '성능과 안정성을 설계하는 Windows 응용프로그램 개발자',
   summary:
-    '7년간 검사 장비 소프트웨어를 개발하며 성능 병목 분석, 생산 시스템 연동, 운영 편의성 개선을 맡았습니다. 처리 시간 단축, 장애 이슈 감소, 장비 기능 고도화처럼 실제 제조 현장에서 체감되는 문제를 코드와 구조 개선으로 해결해왔습니다.',
-  availability: 'C#/.NET · 성능 병목 개선 · 생산 시스템 연동',
+    '7년간 Windows 기반 응용프로그램을 개발하며 성능 병목 분석, 시스템 연동, 운영 편의성 개선을 맡았습니다. 처리 시간 단축, 장애 이슈 감소, 기능 고도화처럼 사용자가 체감하는 문제를 코드와 구조 개선으로 해결해왔습니다.',
+  availability: 'C#/.NET · 성능 설계 · 안정성 개선',
   links: [
     {
       label: 'GitHub',
@@ -131,7 +131,7 @@ export const metrics: Metric[] = [
   },
   {
     value: '사각형 → Polygon',
-    label: '검출 영역 Polygon 가시화 체계 구축',
+    label: '검출 영역 Polygon 표현 체계 구축',
     description: 'Bounding Box 표시를 Polygon 기반 공통 가시화 구조로 표준화',
     evidence: {
       label: '공통 Polygon 바이너리 구조 표준화 · 검사 UI 가시화 적용',
