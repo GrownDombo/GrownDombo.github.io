@@ -1026,13 +1026,14 @@
 }
 
 .industrial-aoi-structure-titlebar p {
-  max-width: 520px;
+  max-width: none;
   margin: 0;
   color: var(--muted);
   font-size: 0.9rem;
   font-weight: 750;
   line-height: 1.55;
   text-align: right;
+  white-space: nowrap;
 }
 
 .industrial-aoi-integration-section .industrial-aoi-structure-titlebar p {
@@ -1067,8 +1068,10 @@
 }
 
 .industrial-aoi-structure-card-header {
-  display: block;
-  min-height: 58px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 58px;
   padding: 12px 14px;
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
   background: linear-gradient(180deg, color-mix(in srgb, var(--accent-soft) 54%, var(--card)), var(--card));
@@ -1076,8 +1079,9 @@
 
 .industrial-aoi-structure-card-header div {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 9px;
+  width: 100%;
   min-width: 0;
   white-space: nowrap;
 }
@@ -1090,11 +1094,14 @@
 }
 
 .industrial-aoi-structure-card-header p {
+  min-width: 0;
   margin: 0;
   color: var(--muted);
   font-size: 0.78rem;
   font-weight: 750;
   line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .industrial-aoi-structure-before .industrial-aoi-structure-card-header {
@@ -1130,7 +1137,7 @@
 
 .industrial-aoi-structure-diagram-before {
   grid-template-columns: minmax(148px, 0.86fr) minmax(140px, 1fr) minmax(148px, 0.86fr);
-  gap: 3px;
+  gap: 0;
 }
 
 .industrial-aoi-structure-diagram-after {
@@ -1475,9 +1482,17 @@
   text-align: center;
 }
 
+.industrial-aoi-structure-caption-success .industrial-aoi-structure-formula {
+  flex-wrap: nowrap;
+  max-width: none;
+}
+
 .industrial-aoi-structure-caption-success .industrial-aoi-structure-formula span {
+  display: inline-grid;
+  min-width: 128px;
   border-color: color-mix(in srgb, var(--success) 22%, var(--border));
   background: color-mix(in srgb, var(--success-soft) 48%, var(--card));
+  white-space: nowrap;
 }
 
 .industrial-aoi-structure-caption-success .industrial-aoi-structure-formula strong,
@@ -1487,6 +1502,10 @@
 
 .industrial-aoi-structure-caption-success .industrial-aoi-structure-formula b {
   color: color-mix(in srgb, var(--success) 58%, var(--muted));
+}
+
+.industrial-aoi-structure-caption-success .industrial-aoi-structure-formula em {
+  white-space: nowrap;
 }
 
 .industrial-aoi-structure-caption > strong {
