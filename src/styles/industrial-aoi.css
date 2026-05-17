@@ -3691,13 +3691,25 @@
 .industrial-aoi-polygon-structure-node-bounds .industrial-aoi-polygon-structure-visual span::before {
   content: "";
   position: absolute;
-  top: -5px;
-  left: -5px;
+  top: 0;
+  left: 0;
   width: 8px;
   height: 8px;
   border-radius: 999px;
   background: #f97316;
-  box-shadow: 72px 44px 0 #f97316;
+  transform: translate(-50%, -50%);
+}
+
+.industrial-aoi-polygon-structure-node-bounds .industrial-aoi-polygon-structure-visual span::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f97316;
+  transform: translate(50%, 50%);
 }
 
 .industrial-aoi-polygon-structure-node-extract .industrial-aoi-polygon-structure-visual span {

@@ -188,7 +188,7 @@ export const workCaseCards: WorkCaseCardData[] = [
   },
   {
     title: '검출 영역 Polygon 가시화 체계 구축',
-    subtitle: '영상처리 기반 가시화 · Polygon 표현 표준 · 공통 바이너리 구조',
+    subtitle: 'Polygon 가시화 · 표현 표준화',
     summary: 'Bounding Box 표시를 실제 Blob 외곽 Polygon 기반으로 표준화',
     image: '/assets/defect-polygon-visualization-standardization.png',
     imageAlt: 'Bounding Box display and Polygon visualization Before After inspection UI mockup',
