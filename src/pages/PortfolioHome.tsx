@@ -249,8 +249,8 @@ export function PortfolioHome({
                 <p className="hero-summary">{profile.summary}</p>
                 <div className="hero-focus-list" aria-label="핵심 작업 영역">
                   <span>C#/.NET</span>
-                  <span>AOI 성능 최적화</span>
-                  <span>MES·SECS-GEM</span>
+                  <span>성능 병목 개선</span>
+                  <span>생산 시스템 연동</span>
                   <span>WinForms/C++ 유지보수</span>
                 </div>
               </div>
