@@ -62,10 +62,10 @@ export type Experience = {
 export const profile: Profile = {
   name: '최준영 / GrownDombo',
   role: 'C#/.NET 기반 제조 장비 소프트웨어 개발자',
-  headline: 'AOI 성능 최적화와 MES·SECS-GEM 연동 안정화를 경험한 개발자',
+  headline: '제조 현장의 느린 처리와 반복 장애를 줄이는 Windows 장비 SW 개발자',
   summary:
-    '반도체·SMT 제조라인의 3D 검사 장비 SW를 개발·유지보수하며 AOI 병목 해소, 생산 연동 안정화, WinForms 기반 장비 기능 고도화를 담당했습니다.',
-  availability: 'C#/.NET · AOI 성능 최적화 · MES/SECS-GEM 안정화',
+    '7년간 검사 장비 소프트웨어를 개발하며 성능 병목 분석, 생산 시스템 연동, 운영 편의성 개선을 맡았습니다. 처리 시간 단축, 장애 이슈 감소, 장비 기능 고도화처럼 실제 제조 현장에서 체감되는 문제를 코드와 구조 개선으로 해결해왔습니다.',
+  availability: 'C#/.NET · 성능 병목 개선 · 생산 시스템 연동',
   links: [
     {
       label: 'GitHub',
