@@ -35,11 +35,6 @@
   text-transform: uppercase;
 }
 
-.site-header--dashboard {
-  position: relative;
-  top: auto;
-}
-
 .brand {
   display: inline-flex;
   align-items: center;

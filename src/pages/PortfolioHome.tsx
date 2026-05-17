@@ -85,7 +85,7 @@ export function PortfolioHome({
   const shortcutScopeMetric = metrics.find((metric) => metric.label === '단축키 기능 확장 및 리팩터링');
   const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 등록 건수 감소');
   const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 처리 시간 단축');
-  const bridgePolygonMetric = metrics.find((metric) => metric.label === '검출 영역 Polygon 가시화 체계 구축');
+  const bridgePolygonMetric = metrics.find((metric) => metric.label === '검출 영역 Polygon 표현 체계 구축');
   const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
   const additionalWorkCaseCards = prioritizedWorkCaseCards.slice(2);
   const visibleProjects = prioritizedProjects.slice(0, 3);
@@ -249,9 +249,9 @@ export function PortfolioHome({
                 <p className="hero-summary">{profile.summary}</p>
                 <div className="hero-focus-list" aria-label="핵심 작업 영역">
                   <span>C#/.NET</span>
-                  <span>성능 병목 개선</span>
-                  <span>생산 시스템 연동</span>
-                  <span>WinForms/C++ 유지보수</span>
+                  <span>성능 설계</span>
+                  <span>안정성 개선</span>
+                  <span>WinForms/C++ 개발</span>
                 </div>
               </div>
             </section>
