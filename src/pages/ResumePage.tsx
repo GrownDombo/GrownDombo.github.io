@@ -1,3 +1,6 @@
+import { useRef } from 'react';
+import { FileDown } from 'lucide-react';
+import { useReactToPrint } from 'react-to-print';
 import { AnalyticsNotice } from '../components/AnalyticsNotice';
 import { SiteHeader } from '../components/SiteHeader';
 import { trackAnalyticsEvent } from '../analytics/google';
@@ -6,11 +9,29 @@ import type { ThemedPageProps } from '../types/navigation';
 import { ResumeIconLink, renderMetricResult, splitMetricText } from './resume/resumeFormatting';
 
 export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageProps) {
+  const resumePrintRef = useRef<HTMLElement>(null);
+  const printResume = useReactToPrint({
+    contentRef: resumePrintRef,
+    documentTitle: 'Choi-Junyoung-GrownDombo-resume',
+  });
+
+  const handleResumePrint = () => {
+    trackAnalyticsEvent('download_click', { link_location: 'resume_pdf' });
+    printResume();
+  };
+
   return (
     <div className="site-shell" data-theme={themeMode}>
       <SiteHeader isResumePage onNavigate={onNavigate} themeMode={themeMode} onThemeToggle={onThemeToggle} />
 
-      <main className="resume-page" id="top">
+      <main className="resume-page" id="top" ref={resumePrintRef}>
+        <div className="resume-print-actions no-print">
+          <button className="resume-print-button" type="button" onClick={handleResumePrint}>
+            <FileDown size={17} aria-hidden="true" strokeWidth={2.2} />
+            PDF로 저장
+          </button>
+        </div>
+
         <article className="resume-document" aria-labelledby="resume-title">
           <p className="resume-updated">Last Update : {resumeInfo.lastUpdated}</p>
 
@@ -36,7 +57,7 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
 
           <dl className="resume-profile-list" aria-label="이력서 기본 정보">
             <div>
-              <dt>이메일</dt>
+              <dt>Email</dt>
               <dd>
                 <a
                   className="resume-text-link"
@@ -48,7 +69,12 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
               </dd>
             </div>
             {resumeInfo.channels.map((channel) => {
-              const eventName = channel.label === 'GitHub' ? 'github_click' : 'tech_blog_click';
+              const eventName =
+                channel.label === 'GitHub'
+                  ? 'github_click'
+                  : channel.label === 'Tech Blog'
+                    ? 'tech_blog_click'
+                    : 'external_link_click';
 
               return (
                 <div key={channel.label}>
@@ -127,7 +153,12 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
 
             <div className="resume-highlight-list">
               {resumeExperiences.map((job) => (
-                <article className="resume-highlight-company" key={`${job.company}-${job.period}-highlights`}>
+                <article
+                  className={`resume-highlight-company${
+                    job.highlights.length === 1 ? ' resume-highlight-company--single' : ''
+                  }`}
+                  key={`${job.company}-${job.period}-highlights`}
+                >
                   <header className="resume-highlight-company-header">
                     <h3>{job.company}</h3>
                     <p>
@@ -139,7 +170,17 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
                     {job.highlights.map((highlight) => (
                       <article className="resume-highlight-card" key={highlight.title}>
                         <header>
-                          <h4>{highlight.title}</h4>
+                          <h4>
+                            <span>{highlight.title}</span>
+                            {highlight.detailHref ? (
+                              <ResumeIconLink
+                                href={highlight.detailHref}
+                                label={`${highlight.title} 상세 보기`}
+                                isExternal={false}
+                                onClick={(event) => onNavigate(event, highlight.detailHref!)}
+                              />
+                            ) : null}
+                          </h4>
                           <p>{highlight.category}</p>
                         </header>
                         <div className="resume-highlight-block">

@@ -1,3 +1,4 @@
+import type { MouseEventHandler } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
 export function splitMetricText(metric: string, highlightTitle: string) {
@@ -89,13 +90,13 @@ export function ResumeIconLink({
 }: {
   href: string;
   label: string;
-  onClick?: () => void;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
   isExternal?: boolean;
 }) {
   const externalProps = isExternal ? { target: '_blank', rel: 'noreferrer' } : {};
 
   return (
-    <a className="resume-icon-link" href={href} aria-label={label} onClick={onClick} {...externalProps}>
+    <a className="resume-icon-link" href={href} aria-label={label} title={label} onClick={onClick} {...externalProps}>
       <ArrowUpRight size={12} aria-hidden="true" strokeWidth={2.2} />
     </a>
   );
