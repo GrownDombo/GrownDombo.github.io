@@ -1,4 +1,8 @@
-import { industrialAoiBridgePolygonVisualizationPath, industrialAoiHotKeyOptimizationPath } from '../routes/paths';
+import {
+  industrialAoiBridgePolygonVisualizationPath,
+  industrialAoiDefectHistoryDataLayerPath,
+  industrialAoiHotKeyOptimizationPath,
+} from '../routes/paths';
 
 export type ProfileLink = {
   label: string;
@@ -138,6 +142,15 @@ export const metrics: Metric[] = [
       href: industrialAoiBridgePolygonVisualizationPath,
     },
   },
+  {
+    value: '파일/로그 → 계층형 DB',
+    label: '검사 이력 추적 범위 확장',
+    description: 'NG 검사 이력을 6단계 계층 모델로 저장·조회해 추적 범위를 확장',
+    evidence: {
+      label: 'Board → Module → Part → Window → Algorithm → ROI 6단계 추적',
+      href: industrialAoiDefectHistoryDataLayerPath,
+    },
+  },
 ];
 
 export const skillGroups: SkillGroup[] = [
@@ -158,7 +171,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: 'ORM',
-    description: '레거시 데이터 접근 계층 유지보수',
+    description: 'SQL Mapper 기반 데이터 접근 계층 설계·연동',
     skills: ['iBATIS.NET'],
   },
   {
@@ -254,6 +267,17 @@ export const workCaseStudies: Project[] = [
     image: '/assets/defect-polygon-visualization-standardization.png',
     priority: 2,
     detailPath: industrialAoiBridgePolygonVisualizationPath,
+    status: 'Work Case',
+  },
+  {
+    title: '검사 이력 데이터 계층 구축',
+    summary: 'NG 검사 결과를 계층형 데이터 모델로 저장·조회하고 공통 DLL과 이력 조회 UI로 검사 이력 추적 흐름을 구축',
+    role: 'MSSQL · SQL Mapper · DLL 기반 데이터 접근',
+    tech: ['C#', '.NET Framework', 'WinForms', 'MSSQL', 'iBATIS.NET', 'DLL'],
+    links: [],
+    image: '/assets/defect-history-data-layer.svg',
+    priority: 2.5,
+    detailPath: industrialAoiDefectHistoryDataLayerPath,
     status: 'Work Case',
   },
 ];

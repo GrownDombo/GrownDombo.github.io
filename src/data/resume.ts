@@ -134,14 +134,14 @@ export const resumeExperiences: ResumeExperience[] = [
         category: '데이터 관리 및 이력 시스템',
         title: 'MSSQL 기반 검사 이력 관리 시스템 개발',
         metrics: [
-          '로그 기반으로만 가능하던 검사 결과 분석을 UI 기반으로 전환',
-          '파일 시스템 기반 관리 방식에서 발생하던 접근 충돌 문제 완화',
+          'NG 검사 결과를 Board-Module-Part-Window-Algorithm-ROI 계층 모델로 저장·조회',
+          '공통 DLL과 SQL Mapper 기반 데이터 접근 구조로 검사 이력 조회 흐름 구축',
         ],
         details: [
-          '검사 이력 데이터의 저장·조회·필터링 기능을 DLL 형태로 구현',
-          'DB 생성·초기화·인덱스·트랜잭션 저장 구조로 데이터 관리 안정성 향상',
+          'MSSQL 테이블 생성·초기화·인덱스·트랜잭션 저장 구조 구현',
+          '기간/Group/Board/Slave 필터와 WinForms 이력 조회 UI 연동',
         ],
-        keywords: ['C#', 'MSSQL', 'iBATIS.NET', 'DLL', 'Data Modeling'],
+        keywords: ['C#', 'MSSQL', 'iBATIS.NET', 'SQL Mapper', 'DLL', 'Data Modeling'],
       },
       {
         category: '영상처리',

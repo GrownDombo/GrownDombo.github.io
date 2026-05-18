@@ -161,11 +161,23 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .industrial-aoi-data-layer-flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .industrial-aoi-polygon-structure-node {
     min-height: 0;
   }
 
+  .industrial-aoi-data-layer-node {
+    min-height: 0;
+  }
+
   .industrial-aoi-polygon-structure-node:not(:last-child)::after {
+    display: none;
+  }
+
+  .industrial-aoi-data-layer-node:not(:last-child)::after {
     display: none;
   }
 
@@ -931,15 +943,18 @@
 
 @media (max-width: 560px) {
   .industrial-aoi-polygon-structure-flow,
-  .industrial-aoi-polygon-structure-contract-grid {
+  .industrial-aoi-polygon-structure-contract-grid,
+  .industrial-aoi-data-layer-flow {
     grid-template-columns: 1fr;
   }
 
-  .industrial-aoi-polygon-structure-node {
+  .industrial-aoi-polygon-structure-node,
+  .industrial-aoi-data-layer-node {
     min-height: 0;
   }
 
-  .industrial-aoi-polygon-structure-node:not(:last-child)::after {
+  .industrial-aoi-polygon-structure-node:not(:last-child)::after,
+  .industrial-aoi-data-layer-node:not(:last-child)::after {
     display: none;
   }
 

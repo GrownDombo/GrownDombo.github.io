@@ -1,5 +1,6 @@
 import {
   industrialAoiBridgePolygonVisualizationPath,
+  industrialAoiDefectHistoryDataLayerPath,
   industrialAoiHotKeyOptimizationPath,
   industrialAoiInspectionAutomationPath,
   industrialAoiOperationFlowPath,
@@ -220,6 +221,47 @@ export const workCaseCards: WorkCaseCardData[] = [
         label: 'After',
         title: '적용 방식',
         details: ['N-point Polygon 가시화', '공통 Polygon 구조 표준화', '검사 UI 적용'],
+      },
+    ],
+  },
+  {
+    title: '검사 이력 데이터 계층 구축',
+    subtitle: 'MSSQL · SQL Mapper · DLL 기반 데이터 접근',
+    summary: 'NG 검사 결과를 계층형 데이터 모델로 저장·조회하고 공통 DLL과 이력 조회 UI로 추적 흐름을 구축',
+    image: '/assets/defect-history-data-layer.svg',
+    imageAlt: 'DefectHistory inspection history UI mockup with filled sample data',
+    detailPath: industrialAoiDefectHistoryDataLayerPath,
+    priority: 2.5,
+    metrics: [
+      {
+        label: '데이터 모델',
+        value: 'Board-Module-Part-Window-Algorithm-ROI 계층 모델',
+      },
+      {
+        label: '접근 구조',
+        value: 'DLL API + iBATIS.NET SQL Mapper',
+        tone: 'accent',
+      },
+      {
+        label: '조회 기준',
+        value: '기간/Group/Board/Slave 기준 이력 조회',
+      },
+    ],
+    phases: [
+      {
+        label: 'Problem',
+        title: '문제 상황',
+        details: ['로그/파일 중심 확인', '조건별 이력 추적 한계', '알고리즘/ROI 단위 복원 어려움'],
+      },
+      {
+        label: 'Before',
+        title: '기존 방식',
+        details: ['분산된 결과 확인', '수동 로그 추적'],
+      },
+      {
+        label: 'After',
+        title: '적용 방식',
+        details: ['공통 DLL API', 'SQL Mapper 기반 저장·조회', '이력 조회 UI 연동'],
       },
     ],
   },
