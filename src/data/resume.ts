@@ -1,6 +1,6 @@
 import {
   industrialAoiBridgePolygonVisualizationPath,
-  industrialAoiHotKeyOptimizationPath,
+  industrialAoiDefectHistoryDataLayerPath,
   industrialAoiInspectionAutomationPath,
   industrialAoiProductionIntegrationPath,
 } from '../routes/paths';
@@ -145,19 +145,18 @@ export const resumeExperiences: ResumeExperience[] = [
         detailHref: industrialAoiProductionIntegrationPath,
       },
       {
-        category: 'Windows 기능 확장 · 응답성 개선',
-        title: '단축키 기능 확장 및 원격 I/O 병목 해소',
+        category: '검사 데이터 · 이력 추적 · 데이터 계층',
+        title: '검사 이력 데이터 계층 구축',
         metrics: [
-          '키 지원 범위 확장: 28개 단일 키 → 전체 + 조합 키',
-          '입력 응답성 개선: 2초 → 0.3초, 약 85% 개선',
-          '원격 I/O 시간 단축: 32초 → 3초, 약 90% 단축',
+          '조회 구조 전환: 파일·로그 중심 확인 → 계층형 DB 조회',
+          '추적 범위 확장: 화면·부품·알고리즘·ROI 단위까지 조회 가능',
         ],
         details: [
-          '복합키 자료구조와 KeyDown 매핑 구조를 적용해 설정 범위와 응답성 개선',
-          '공유 폴더 직접 처리 대신 원격 PC 로컬 실행 및 TCP/IP 제어 흐름으로 파일 처리 비용 축소',
+          'NG 검사 결과를 계층형 데이터 모델로 저장·조회하는 공통 데이터 구조 설계',
+          'SQL Mapper 기반 데이터 접근 계층과 이력 조회 UI를 구현해 분석 흐름을 표준화',
         ],
-        keywords: ['C#', 'WinForms', 'Data Structure', 'TCP/IP', 'File I/O'],
-        detailHref: industrialAoiHotKeyOptimizationPath,
+        keywords: ['C#', '.NET Framework', 'MSSQL', 'iBATIS.NET', 'Data Modeling'],
+        detailHref: industrialAoiDefectHistoryDataLayerPath,
       },
       {
         category: '검사 데이터 · 이력 관리 · 가시화',

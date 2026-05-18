@@ -225,33 +225,29 @@ export const workCaseCards: WorkCaseCardData[] = [
     ],
   },
   {
-    title: '검사 이력 데이터 계층 구축',
-    subtitle: 'MSSQL · SQL Mapper · DLL 기반 데이터 접근',
-    summary: 'NG 검사 결과를 계층형 데이터 모델로 저장·조회하고 공통 DLL과 이력 조회 UI로 추적 흐름을 구축',
+    title: '검사 이력 조회 구조 구축',
+    subtitle: '검사 결과 추적 · 조건 검색 · 상세 복원',
+    summary: '검사 결과를 조건별로 조회하고 상세 화면까지 이어지는 이력 추적 흐름을 구축',
     image: '/assets/defect-history-data-layer.svg',
     imageAlt: 'DefectHistory inspection history UI mockup with filled sample data',
     detailPath: industrialAoiDefectHistoryDataLayerPath,
     priority: 2.5,
     metrics: [
       {
-        label: '데이터 모델',
-        value: 'Board-Module-Part-Window-Algorithm-ROI 계층 모델',
+        label: '추적 범위',
+        value: '화면·부품·알고리즘·ROI 단위',
       },
       {
-        label: '접근 구조',
-        value: 'DLL API + iBATIS.NET SQL Mapper',
+        label: '조회 흐름',
+        value: '기간·Job 기준 검색 → 상세 복원',
         tone: 'accent',
-      },
-      {
-        label: '조회 기준',
-        value: '기간/Group/Board/Slave 기준 이력 조회',
       },
     ],
     phases: [
       {
         label: 'Problem',
         title: '문제 상황',
-        details: ['로그/파일 중심 확인', '조건별 이력 추적 한계', '알고리즘/ROI 단위 복원 어려움'],
+        details: ['로그/파일 중심 확인', '조건별 이력 추적 한계', '상세 결과 복원 어려움'],
       },
       {
         label: 'Before',
@@ -261,7 +257,7 @@ export const workCaseCards: WorkCaseCardData[] = [
       {
         label: 'After',
         title: '적용 방식',
-        details: ['공통 DLL API', 'SQL Mapper 기반 저장·조회', '이력 조회 UI 연동'],
+        details: ['계층형 저장 구조', '조건 검색 흐름', '이력 조회 UI 연동'],
       },
     ],
   },

@@ -66,6 +66,34 @@ function usePersistentBoolean(storageKey: string, fallback: boolean) {
   return [value, setValue] as const;
 }
 
+function toggleDisclosureWithScroll(
+  isOpen: boolean,
+  setValue: (value: boolean) => void,
+  contentElement: HTMLElement | null,
+) {
+  if (!isOpen) {
+    setValue(true);
+    return;
+  }
+
+  const beforeHeight = contentElement?.getBoundingClientRect().height ?? 0;
+
+  setValue(false);
+
+  if (!contentElement || beforeHeight <= 0) {
+    return;
+  }
+
+  window.requestAnimationFrame(() => {
+    const afterHeight = contentElement.getBoundingClientRect().height;
+    const collapsedHeight = Math.max(0, beforeHeight - afterHeight);
+
+    if (collapsedHeight > 0) {
+      window.scrollBy({ top: -collapsedHeight, behavior: 'auto' });
+    }
+  });
+}
+
 export function PortfolioHome({
   onNavigate,
   themeMode,
@@ -169,6 +197,9 @@ export function PortfolioHome({
     'portfolio:show-additional-projects',
     false,
   );
+  const impactMetricsRef = useRef<HTMLDivElement>(null);
+  const workCaseListRef = useRef<HTMLDivElement>(null);
+  const projectListRef = useRef<HTMLDivElement>(null);
   const displayedImpactChartCards = showAdditionalMetrics
     ? [...impactChartCards, ...additionalImpactChartCards]
     : impactChartCards;
@@ -276,7 +307,7 @@ export function PortfolioHome({
               <h2 id="metrics-title">정량 성과</h2>
             </div>
           </div>
-          <div className="impact-meter-grid" id="impact-metrics" aria-label="정량 성과 도식">
+          <div className="impact-meter-grid" id="impact-metrics" aria-label="정량 성과 도식" ref={impactMetricsRef}>
             {displayedImpactChartCards.map((card) => {
               const cardContent = (
                 <>
@@ -368,7 +399,13 @@ export function PortfolioHome({
                   type="button"
                   aria-expanded={showAdditionalMetrics}
                   aria-controls="impact-metrics"
-                  onClick={() => setShowAdditionalMetrics((current) => !current)}
+                  onClick={() =>
+                    toggleDisclosureWithScroll(
+                      showAdditionalMetrics,
+                      setShowAdditionalMetrics,
+                      impactMetricsRef.current,
+                    )
+                  }
                 >
                   {showAdditionalMetrics ? '추가 성과 접기' : '추가 성과 보기'}
                   {showAdditionalMetrics ? (
@@ -393,7 +430,7 @@ export function PortfolioHome({
             </div>
           </div>
 
-          <div className="case-study-list">
+          <div className="case-study-list" ref={workCaseListRef}>
             {(showAdditionalWorkCases ? prioritizedWorkCaseCards : visibleWorkCaseCards).map((caseData) => (
               <WorkCaseCard caseData={caseData} onNavigate={onNavigate} key={caseData.title} />
             ))}
@@ -405,7 +442,13 @@ export function PortfolioHome({
                 type="button"
                 aria-expanded={showAdditionalWorkCases}
                 aria-controls="work-cases"
-                onClick={() => setShowAdditionalWorkCases((current) => !current)}
+                onClick={() =>
+                  toggleDisclosureWithScroll(
+                    showAdditionalWorkCases,
+                    setShowAdditionalWorkCases,
+                    workCaseListRef.current,
+                  )
+                }
               >
                 {showAdditionalWorkCases ? '추가 성과 접기' : '추가 성과 보기'}
                 {showAdditionalWorkCases ? (
@@ -427,7 +470,7 @@ export function PortfolioHome({
             </div>
           </div>
 
-          <div className="project-grid compact-project-grid" id="project-list">
+          <div className="project-grid compact-project-grid" id="project-list" ref={projectListRef}>
             {(showAdditionalProjects ? prioritizedProjects : visibleProjects).map((project) => (
               <article className="project-card compact-project-card" key={project.title}>
                 {project.detailPath && project.detailMode === 'document' ? (
@@ -472,7 +515,9 @@ export function PortfolioHome({
                 type="button"
                 aria-expanded={showAdditionalProjects}
                 aria-controls="project-list"
-                onClick={() => setShowAdditionalProjects((current) => !current)}
+                onClick={() =>
+                  toggleDisclosureWithScroll(showAdditionalProjects, setShowAdditionalProjects, projectListRef.current)
+                }
               >
                 {showAdditionalProjects ? '추가 프로젝트 접기' : '추가 프로젝트 보기'}
                 {showAdditionalProjects ? (
