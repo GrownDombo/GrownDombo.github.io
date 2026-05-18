@@ -86,6 +86,7 @@ export function PortfolioHome({
   const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 등록 건수 감소');
   const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 처리 시간 단축');
   const bridgePolygonMetric = metrics.find((metric) => metric.label === '검출 영역 Polygon 표현 체계 구축');
+  const defectHistoryMetric = metrics.find((metric) => metric.label === '검사 이력 추적 범위 확장');
   const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
   const additionalWorkCaseCards = prioritizedWorkCaseCards.slice(2);
   const visibleProjects = prioritizedProjects.slice(0, 3);
@@ -119,6 +120,18 @@ export function PortfolioHome({
     },
   ];
   const additionalImpactChartCards: ImpactChartCard[] = [
+    ...(defectHistoryMetric
+      ? [
+          {
+            metric: defectHistoryMetric,
+            resultLabel: '추적 범위',
+            graphLabel: '',
+            before: '파일/로그',
+            after: '계층형 DB',
+            variant: 'range',
+          } satisfies ImpactChartCard,
+        ]
+      : []),
     ...(shortcutScopeMetric
       ? [
           {

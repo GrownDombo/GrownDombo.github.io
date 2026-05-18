@@ -96,6 +96,7 @@ const csharpKeywords = new Set([
   'class',
   'else',
   'false',
+  'foreach',
   'if',
   'new',
   'null',
@@ -104,6 +105,8 @@ const csharpKeywords = new Set([
   'public',
   'return',
   'true',
+  'try',
+  'using',
   'var',
   'void',
 ]);
@@ -575,6 +578,94 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     ],
     keywords: ['C++', 'C#', 'OpenCV', 'WinForms', 'Binary File', 'Image Processing'],
   },
+  'defect-history-data-layer': {
+    title: '검사 이력 데이터 계층 구축',
+    problem: {
+      body: 'NG 검사 결과 확인이 로그와 파일 중심으로 분산되어, 기간별 검색과 제품·장비 조건 필터링, 알고리즘/ROI 단위 상세 추적이 어려운 구조.',
+      points: [
+        {
+          label: '이력 추적 한계',
+          detail: '검사 결과를 시간, 제품, 장비 조건으로 빠르게 좁혀 확인하기 어려움',
+        },
+        {
+          label: '데이터 구조 분산',
+          detail: 'Board부터 Algorithm/ROI까지 이어지는 검사 결과 관계를 공통 모델로 복원할 필요',
+        },
+        {
+          label: '접근 로직 중복',
+          detail: 'DB 초기화, 저장, 조회, 필터링 흐름을 화면별로 직접 처리하면 유지보수 비용이 증가',
+        },
+        {
+          label: '조회 UI 연결 필요',
+          detail: '저장된 검사 이력을 WinForms 화면에서 계층형 GridView와 2D/3D 이미지 조회 흐름으로 연결해야 함',
+        },
+      ],
+      stats: [
+        { label: '기존 확인', value: '로그/파일 중심', tone: 'danger' },
+        { label: '추적 단위', value: '알고리즘/ROI까지 필요' },
+        { label: '주요 조건', value: '기간/Group/Board/Slave' },
+      ],
+    },
+    before: {
+      body: '검사 결과 확인이 로그와 파일에 의존해 특정 NG 이력의 조건 검색, 상세 복원, 이미지 확인 흐름이 분산되어 있었습니다.',
+      label: '기존 방식',
+      highlight: '분산 조회',
+      note: '조건별 검색과 계층형 상세 확인이 제한',
+    },
+    improvement: {
+      body: 'NG 검사 결과를 Board-Module-Part-Window-Algorithm-ROI 계층 모델로 구성하고, 공통 DLL API와 iBATIS.NET SQL Mapper를 통해 저장·조회·복원 흐름을 분리. WinForms 이력 조회 UI에서는 기간/Job 조건 필터와 계층형 GridView, 2D/3D 이미지 확인 흐름을 연결.',
+      points: [
+        {
+          label: '계층형 데이터 모델링',
+          detail: 'Board, Module, Part, Window, Algorithm, ROI 관계를 MSSQL 테이블과 데이터 클래스로 분리',
+        },
+        {
+          label: '공통 DLL API 설계',
+          detail: 'DB 연결·초기화, 검사 결과 저장, 필터 조회, 검사 시간 기준 상세 복원을 IDefectHistory 인터페이스로 제공',
+        },
+        {
+          label: 'SQL Mapper 기반 접근',
+          detail: 'iBATIS.NET 매핑으로 SQL과 C# 데이터 클래스를 연결하고 트랜잭션 기반 저장 흐름 구성',
+        },
+        {
+          label: '이력 조회 UI 연동',
+          detail: '기간/Group/Board/Slave 필터, 페이지 선택, 계층형 GridView, 2D/3D ROI 표시 흐름 연결',
+        },
+      ],
+      stats: [
+        { label: '데이터 계층', value: '공통 DLL API' },
+        { label: 'DB 접근', value: 'SQL Mapper' },
+        { label: '저장 방식', value: 'Transaction' },
+        { label: '조회 기준', value: '기간/Job 조건' },
+      ],
+      steps: [
+        { icon: Database, title: 'MSSQL 모델링', description: '검사 결과 계층을 테이블과 키 관계로 구성' },
+        { icon: Layers, title: 'DLL API 분리', description: '저장·조회·필터링 진입점을 공통 인터페이스로 제공' },
+        { icon: ShieldCheck, title: '조회 UI 연동', description: '조건 필터와 상세 복원 데이터를 화면 흐름에 연결' },
+      ],
+    },
+    results: [
+      { title: '이력 조회', metric: '조건 기반 검색', description: '기간/Group/Board/Slave 기준으로 검사 이력 목록 조회' },
+      { title: '상세 복원', metric: 'Board → ROI', description: '검사 시간 기준으로 계층형 검사 결과 복원' },
+      { title: '데이터 접근', metric: '공통 DLL API', description: 'DB 초기화, 저장, 조회 책임을 화면에서 분리' },
+      { title: '운영 확인', metric: 'WinForms UI 연동', description: 'GridView와 2D/3D 이미지 조회 흐름으로 연결' },
+    ],
+    measurementNotes: [
+      '저장 대상: GOOD/AIOK를 제외한 NG 검사 결과',
+      '데이터 모델: Board-Module-Part-Window-Algorithm-ROI 계층',
+      'DB 접근: MSSQL + iBATIS.NET SQL Mapper',
+      '저장 안정성: 테이블 생성, 인덱스 구성, 트랜잭션 저장',
+      '조회 기준: 기간, Group, Board, Slave, 검사 시간',
+    ],
+    roles: [
+      '검사 결과 계층 구조 분석 및 MSSQL 테이블 모델링',
+      '공통 DLL API와 IDefectHistory 인터페이스 설계',
+      'iBATIS.NET SQL Mapper 기반 저장·조회 매핑 구성',
+      '트랜잭션 기반 Board-Module-Part-Window-Algorithm-ROI 일괄 저장 흐름 구현',
+      'WinForms 이력 조회 UI의 필터, GridView, 2D/3D 이미지 확인 흐름 연동',
+    ],
+    keywords: ['C#', 'MSSQL', 'iBATIS.NET', 'SQL Mapper', 'WinForms', 'DLL', 'Data Modeling'],
+  },
 };
 
 function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
@@ -814,7 +905,7 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
         )}
         {report.measurementNotes && areaId !== 'inspection-automation' && areaId !== 'operation-flow' ? (
           <div className="industrial-aoi-performance-measurement">
-            <strong>{areaId === 'bridge-polygon-visualization' ? '구현 기준' : '측정 기준'}</strong>
+            <strong>{areaId === 'bridge-polygon-visualization' || areaId === 'defect-history-data-layer' ? '구현 기준' : '측정 기준'}</strong>
             <ul>
               {report.measurementNotes.map((note) => (
                 <li key={note}>{note}</li>
@@ -966,6 +1057,182 @@ function BridgePolygonDiagramSection() {
           {bridgePolygonPseudoSnippets.map((snippet) => (
             <figure className="industrial-aoi-code-window" key={snippet.title}>
               <figcaption>
+                <strong>{snippet.title}</strong>
+                <em>{snippet.file}</em>
+              </figcaption>
+              <pre>
+                <code>{renderCsharpCode(snippet.code)}</code>
+              </pre>
+            </figure>
+          ))}
+        </div>
+      </section>
+    </article>
+  );
+}
+
+const defectHistoryFlowSteps: {
+  icon: LucideIcon;
+  marker: string;
+  title: string;
+  subtitle: string;
+  details: string[];
+}[] = [
+  {
+    icon: Box,
+    marker: '01',
+    title: 'AOI NG Result',
+    subtitle: '검사 결과 수집',
+    details: ['GOOD/AIOK 제외', 'Board 기준 시작'],
+  },
+  {
+    icon: Layers,
+    marker: '02',
+    title: 'DefHistory Adapter',
+    subtitle: '제품 데이터 변환',
+    details: ['계층 모델 구성', 'Algo/ROI 데이터 정리'],
+  },
+  {
+    icon: ShieldCheck,
+    marker: '03',
+    title: 'Common DLL API',
+    subtitle: '저장·조회 진입점',
+    details: ['IDefectHistory', '초기화/조회 API'],
+  },
+  {
+    icon: Database,
+    marker: '04',
+    title: 'SQL Mapper',
+    subtitle: 'C# 객체와 SQL 매핑',
+    details: ['iBATIS.NET', 'Insert/Select 분리'],
+  },
+  {
+    icon: Database,
+    marker: '05',
+    title: 'MSSQL DB',
+    subtitle: '검사 이력 저장소',
+    details: ['테이블 자동 생성', '트랜잭션 저장'],
+  },
+  {
+    icon: CheckCircle,
+    marker: '06',
+    title: 'History Viewer',
+    subtitle: '이력 조회 UI',
+    details: ['조건 필터', '상세 복원'],
+  },
+];
+
+const defectHistoryPseudoSnippets = [
+  {
+    file: 'C# 제품 연동부',
+    title: 'NG 검사 결과 계층 모델 구성',
+    code: `void SaveDefectHistory(InspectionResult result, JobData job)
+{
+    if (result.Board.IsGoodOrAiOk())
+        return;
+
+    var board = BoardHistory.Create(result.Board, job);
+
+    foreach (var module in result.Modules.Where(IsNgTarget))
+        foreach (var part in module.Parts.Where(IsNgTarget))
+            foreach (var window in part.Windows.Where(IsNgTarget))
+                foreach (var algo in window.Algorithms.Where(IsNgTarget))
+                    board.AddAlgoRoi(module, part, window, algo);
+
+    DefectHistoryProvider.Instance.InsertData(out msg, board);
+}`,
+  },
+  {
+    file: '공통 DLL',
+    title: 'SQL Mapper 기반 트랜잭션 저장',
+    code: `void InsertData(BoardHistory board)
+{
+    mapper.BeginTransaction();
+    try
+    {
+        InsertBoard(board);
+        InsertModulesPartsWindowsAlgosAndRois(board);
+        mapper.CommitTransaction();
+    }
+    catch
+    {
+        mapper.RollBackTransaction();
+        throw;
+    }
+}`,
+  },
+  {
+    file: 'WinForms 이력 조회 UI',
+    title: '조건 조회와 상세 복원',
+    code: `var filters = history.GetFilterData(out msg);
+var boards = history.GetBoardTBSimpleDatas(out msg, latest, oldest, group, board, slave);
+
+var selected = boards[pager.SelectedIndex];
+var detail = history.GetDataByInspTime(out msg, selected.InspTime);
+
+BindBoardModulePartWindowAlgoGrid(detail);
+DrawResultImageAndRoi(detail);`,
+  },
+] as const;
+
+function DefectHistoryDataLayerDiagramSection() {
+  return (
+    <article className="industrial-aoi-matching-section industrial-aoi-defect-history-section" aria-label="defect history data layer flow">
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="defect-history-flow-title">
+        <div className="industrial-aoi-report-heading">
+          <span>6</span>
+          <h5 id="defect-history-flow-title">데이터 계층 흐름</h5>
+        </div>
+        <p>
+          제품 검사 결과에서 NG 대상만 계층형 데이터로 구성하고, 공통 DLL의 SQL Mapper 매핑을 통해 MSSQL에 저장한 뒤 이력 조회 UI에서 조건 검색과 상세 복원을 수행하는 구조.
+        </p>
+        <ol className="industrial-aoi-data-layer-flow" aria-label="AOI NG result to history viewer data flow">
+          {defectHistoryFlowSteps.map((step) => {
+            const Icon = step.icon;
+
+            return (
+              <li className="industrial-aoi-data-layer-node" key={step.title}>
+                <span>{step.marker}</span>
+                <Icon size={24} aria-hidden="true" strokeWidth={2.2} />
+                <strong>{step.title}</strong>
+                <em>{step.subtitle}</em>
+                <ul>
+                  {step.details.map((detail) => (
+                    <li key={detail}>{detail}</li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ol>
+        <div className="industrial-aoi-data-layer-model">
+          <strong>계층형 검사 이력 모델</strong>
+          <div>
+            <span>Board</span>
+            <ArrowRight size={16} aria-hidden="true" />
+            <span>Module</span>
+            <ArrowRight size={16} aria-hidden="true" />
+            <span>Part</span>
+            <ArrowRight size={16} aria-hidden="true" />
+            <span>Window</span>
+            <ArrowRight size={16} aria-hidden="true" />
+            <span>Algorithm</span>
+            <ArrowRight size={16} aria-hidden="true" />
+            <span>ROI</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="industrial-aoi-report-panel industrial-aoi-report-card" aria-labelledby="defect-history-pseudocode-title">
+        <div className="industrial-aoi-report-heading">
+          <span>7</span>
+          <h5 id="defect-history-pseudocode-title">핵심 구현 흐름</h5>
+        </div>
+        <div className="industrial-aoi-pseudocode-grid">
+          {defectHistoryPseudoSnippets.map((snippet) => (
+            <figure className="industrial-aoi-code-window" key={snippet.title}>
+              <figcaption>
+                <span className="industrial-aoi-code-window-badge">C#</span>
                 <strong>{snippet.title}</strong>
                 <em>{snippet.file}</em>
               </figcaption>
@@ -2118,6 +2385,54 @@ export function IndustrialAOIPlatformProjectPage({
         },
       ],
     },
+    {
+      id: 'defect-history-data-layer',
+      step: '06',
+      title: '검사 이력 데이터 계층 구축',
+      summary: 'NG 검사 결과를 계층형 데이터 모델과 공통 DLL 기반 조회 흐름으로 구축',
+      problem: '로그/파일 중심 확인만으로는 NG 이력의 조건 검색과 알고리즘/ROI 단위 상세 추적이 어려운 구조',
+      actions: [
+        'Board-Module-Part-Window-Algorithm-ROI 계층 데이터 모델 정의',
+        'MSSQL 테이블 생성·초기화·인덱스 구성 흐름 구현',
+        'iBATIS.NET SQL Mapper 기반 Insert/Select 매핑 구성',
+        '공통 DLL API로 DB 초기화, 저장, 필터 조회, 상세 복원 기능 분리',
+        'WinForms 이력 조회 UI에 기간/Job 조건 필터와 계층형 GridView 연결',
+      ],
+      directions: [
+        {
+          label: 'Track 01',
+          title: 'Data Access Layer',
+          points: ['공통 DLL API', 'SQL Mapper 매핑', '트랜잭션 저장'],
+        },
+        {
+          label: 'Track 02',
+          title: 'History Viewer',
+          points: ['기간/Job 조건 필터', '계층형 GridView', '2D/3D 이미지 확인'],
+        },
+      ],
+      impact: [
+        '검사 이력 저장·조회 흐름을 공통 데이터 접근 계층으로 분리',
+        'Board부터 ROI까지 이어지는 NG 검사 결과 상세 복원 기준 확보',
+        '기간/Group/Board/Slave 기준 이력 조회 UI 제공',
+      ],
+      improvements: [
+        {
+          title: 'Hierarchical Data Model',
+          description: '검사 결과 관계를 Board부터 ROI까지 이어지는 계층 구조로 모델링',
+          details: ['Board/Module/Part/Window', 'Algorithm/ROI', 'Foreign key 기준 복원'],
+        },
+        {
+          title: 'SQL Mapper DLL',
+          description: 'DB 접근 책임을 제품 화면에서 분리한 공통 DLL 구조',
+          details: ['IDefectHistory API', 'iBATIS.NET 매핑', '트랜잭션 저장'],
+        },
+        {
+          title: 'History Search UI',
+          description: '저장된 검사 이력을 조건 검색과 상세 확인 화면에 연결',
+          details: ['기간 필터', 'Group/Board/Slave 필터', '2D/3D 확인 흐름'],
+        },
+      ],
+    },
   ] as const;
   const selectedArea = selectedAreaId ? highlightAreas.find((area) => area.id === selectedAreaId) : undefined;
   const selectedProject = selectedAreaId
@@ -2141,6 +2456,8 @@ export function IndustrialAOIPlatformProjectPage({
         ? '서비스별로 분산된 생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 정리'
       : selectedArea?.id === 'bridge-polygon-visualization'
         ? 'Blob 좌표 기준 crop 영역에서 실제 외곽 Polygon을 추출하고, offset 복원 좌표를 C# 검사 결과 UI까지 전달하는 가시화 구조로 표준화'
+      : selectedArea?.id === 'defect-history-data-layer'
+        ? 'NG 검사 결과를 계층형 데이터 모델로 저장하고 공통 DLL/SQL Mapper를 통해 이력 조회 UI에서 복원하는 데이터 접근 구조 구축'
       : selectedArea?.summary ??
         '3D AOI 장비 소프트웨어 업무 성과를 성능 최적화, 생산 연동, 기능 개발, 운영 안정화 기준으로 구성';
   const pageTech =
@@ -2175,7 +2492,7 @@ export function IndustrialAOIPlatformProjectPage({
   const guideTitle = selectedArea ? 'Key Contributions' : `${highlightAreas.length} Work Areas`;
   const guideDescription = selectedArea
     ? '문제, 기존 방식, 해결 방식, 결과, 담당 역할 중심 구성'
-    : '회사·고객사 세부 정보는 제외하고 성능 최적화, UX/UI 응답성, 생산 연동, 검사 결과 가시화 기능 개발 기준으로 정리했습니다.';
+    : '회사·고객사 세부 정보는 제외하고 성능 최적화, 생산 연동, 검사 결과 가시화, 데이터 계층 구축, UX/UI 응답성 기준으로 정리했습니다.';
 
   return (
     <div className="site-shell" data-theme={themeMode}>
@@ -2318,6 +2635,8 @@ export function IndustrialAOIPlatformProjectPage({
               {selectedArea && area.id === 'operation-flow' ? <RepairConfirmImageMoveSection /> : null}
 
               {selectedArea && area.id === 'bridge-polygon-visualization' ? <BridgePolygonDiagramSection /> : null}
+
+              {selectedArea && area.id === 'defect-history-data-layer' ? <DefectHistoryDataLayerDiagramSection /> : null}
 
 
               {!selectedArea && area.directions.length === 0 ? (

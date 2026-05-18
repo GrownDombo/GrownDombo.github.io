@@ -27,6 +27,14 @@ export function splitMetricText(metric: string, highlightTitle: string) {
 
   if (highlightTitle === 'MSSQL 기반 검사 이력 관리 시스템 개발') {
     const splitMap: Record<string, { label: string; result: string }> = {
+      'NG 검사 결과를 Board-Module-Part-Window-Algorithm-ROI 계층 모델로 저장·조회': {
+        label: '검사 이력 데이터 모델링',
+        result: 'Board-Module-Part-Window-Algorithm-ROI 계층화',
+      },
+      '공통 DLL과 SQL Mapper 기반 데이터 접근 구조로 검사 이력 조회 흐름 구축': {
+        label: '데이터 접근 계층 구축',
+        result: '공통 DLL + SQL Mapper 기반 조회 흐름',
+      },
       '로그 기반으로만 가능하던 검사 결과 분석을 UI 기반으로 전환': {
         label: '검사 결과 분석 환경 개선',
         result: 'UI 기반 분석으로 전환',
