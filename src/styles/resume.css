@@ -34,6 +34,46 @@
   --resume-shadow: 0 24px 70px rgb(0 0 0 / 34%);
 }
 
+.resume-print-actions {
+  display: flex;
+  justify-content: flex-end;
+  width: min(744px, 100%);
+  margin: 0 auto 14px;
+}
+
+.resume-print-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--resume-rule);
+  border-radius: 8px;
+  color: var(--resume-text);
+  background: var(--resume-paper);
+  box-shadow: var(--resume-shadow);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.resume-print-button:hover,
+.resume-print-button:focus-visible {
+  color: var(--resume-accent);
+  border-color: color-mix(in srgb, var(--resume-accent) 46%, var(--resume-rule));
+  outline: none;
+  transform: translateY(-2px);
+}
+
 .resume-document {
   position: relative;
   width: min(595px, 100%);
@@ -152,10 +192,10 @@
 
 .resume-profile-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px 24px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px 16px;
   padding: 0;
-  margin: 42px 0 0;
+  margin: 28px 0 0;
 }
 
 .resume-profile-list div {
@@ -197,6 +237,18 @@
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.06em;
+}
+
+@media screen {
+  .resume-document-section + .resume-document-section {
+    padding-top: 24px;
+    margin-top: 38px;
+    border-top: 1px solid var(--resume-rule);
+  }
+
+  .resume-document-section[aria-labelledby="resume-additional-title"] {
+    margin-top: 48px;
+  }
 }
 
 .resume-skill-lines {
@@ -254,18 +306,13 @@
 
 .resume-job-list {
   display: grid;
-  gap: 16px;
+  gap: 28px;
 }
 
 .resume-job-card {
   display: grid;
   grid-template-columns: 136px minmax(0, 1fr);
   gap: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--resume-rule);
-}
-
-.resume-job-card:first-child {
   padding-top: 0;
   border-top: 0;
 }
@@ -336,17 +383,12 @@
 
 .resume-highlight-list {
   display: grid;
-  gap: 44px;
+  gap: 54px;
 }
 
 .resume-highlight-company {
   display: grid;
   gap: 14px;
-  padding-top: 30px;
-  border-top: 1px solid var(--resume-rule);
-}
-
-.resume-highlight-company:first-child {
   padding-top: 0;
   border-top: 0;
 }
@@ -391,12 +433,19 @@
 }
 
 .resume-highlight-card h4 {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
   margin: 0;
   color: var(--resume-text);
   font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.06em;
+}
+
+.resume-highlight-card h4 span {
+  min-width: 0;
 }
 
 .resume-highlight-card header p {
@@ -547,5 +596,184 @@
 .resume-detail-meta {
   font-weight: 500;
   white-space: nowrap;
+}
+
+@page {
+  size: A4;
+  margin: 14mm 13mm 15mm;
+}
+
+@media print {
+  html,
+  body,
+  #root {
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    color: #302c2c !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    transition: none !important;
+  }
+
+  .site-header,
+  .resume-print-actions,
+  .no-print,
+  .analytics-notice {
+    display: none !important;
+  }
+
+  .site-shell,
+  .site-shell[data-theme],
+  .resume-page {
+    width: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #302c2c !important;
+    background: #ffffff !important;
+  }
+
+  .resume-page {
+    --resume-text: #171414;
+    --resume-muted: #423b3b;
+    --resume-soft: #f8f8f8;
+    --resume-rule: #d9d2d2;
+    --resume-paper: #ffffff;
+    --resume-chip: #ffffff;
+    --resume-accent: #1d4ed8;
+    --resume-metric-text: #1f3154;
+    --resume-primary-dot: rgb(29 78 216 / 72%);
+    --resume-approach-dot: rgb(66 59 59 / 72%);
+    --resume-statement-line: rgb(29 78 216 / 38%);
+    --resume-highlight-line: rgb(29 78 216 / 28%);
+    --resume-link-hover: transparent;
+    --resume-shadow: none;
+  }
+
+  .resume-document {
+    width: auto !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    color: var(--resume-text) !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    zoom: 1 !important;
+  }
+
+  .resume-statement p,
+  .resume-profile-list dd,
+  .resume-job-header p,
+  .resume-job-header time,
+  .resume-highlight-company-header p,
+  .resume-highlight-card header p,
+  .resume-detail-list li,
+  .resume-detail-meta,
+  .resume-detail-item time,
+  .resume-detail-item p,
+  .resume-metric-result,
+  .resume-metric-result-neutral,
+  .resume-metric-result-separator,
+  .resume-tech-list span,
+  .resume-skill-lines em {
+    color: var(--resume-muted) !important;
+  }
+
+  .resume-paragraph-stack p,
+  .resume-responsibility-list li,
+  .resume-metric-list li,
+  .resume-document-section h2,
+  .resume-highlight-card h4,
+  .resume-job-header h3,
+  .resume-detail-item h4 {
+    color: var(--resume-text) !important;
+  }
+
+  .resume-updated {
+    display: none !important;
+  }
+
+  .resume-document-section {
+    margin-top: 9mm !important;
+    padding-bottom: 6mm !important;
+    border-bottom: 1px solid var(--resume-rule) !important;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .resume-document-section + .resume-document-section {
+    padding-top: 0 !important;
+    margin-top: 6mm !important;
+    border-top: 0 !important;
+  }
+
+  .resume-document-section:last-of-type {
+    padding-bottom: 0 !important;
+    border-bottom: 0 !important;
+  }
+
+  .resume-document-section[aria-labelledby="resume-additional-title"] {
+    margin-top: 8mm !important;
+  }
+
+  .resume-document-section h2,
+  .resume-highlight-company-header,
+  .resume-highlight-card header,
+  .resume-detail-group h3,
+  .resume-detail-item h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .resume-job-card,
+  .resume-highlight-card,
+  .resume-highlight-company-header,
+  .resume-detail-item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .resume-highlight-company {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .resume-highlight-company--single {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .resume-highlight-list {
+    gap: 9mm !important;
+  }
+
+  .resume-document a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .resume-document .resume-text-link {
+    color: var(--resume-accent) !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 3px !important;
+  }
+
+  .resume-icon-link {
+    display: inline-flex !important;
+    color: var(--resume-accent) !important;
+    background: transparent !important;
+  }
 }
 

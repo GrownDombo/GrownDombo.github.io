@@ -1,3 +1,10 @@
+import {
+  industrialAoiBridgePolygonVisualizationPath,
+  industrialAoiHotKeyOptimizationPath,
+  industrialAoiInspectionAutomationPath,
+  industrialAoiProductionIntegrationPath,
+} from '../routes/paths';
+
 export type ResumeChannel = {
   label: string;
   value: string;
@@ -15,6 +22,7 @@ export type ResumeHighlight = {
   metrics: string[];
   details: string[];
   keywords: string[];
+  detailHref?: string;
 };
 
 export type ResumeExperience = {
@@ -51,6 +59,11 @@ export const resumeInfo = {
   contact: 'yjc0455@naver.com',
   channels: [
     {
+      label: 'Portfolio',
+      value: 'growndombo.github.io',
+      href: 'https://growndombo.github.io/',
+    },
+    {
       label: 'GitHub',
       value: 'GrownDombo',
       href: 'https://github.com/GrownDombo',
@@ -76,11 +89,11 @@ export const resumeInfo = {
     },
     {
       title: 'Domain Tech',
-      skills: ['SECS/GEM', 'TCP/IP', 'OpenCV'],
+      skills: ['SECS/GEM', 'OpenCV'],
     },
     {
       title: 'Tools',
-      skills: ['Git', 'SVN', 'Visual Studio'],
+      skills: ['Git', 'SVN'],
     },
   ] satisfies ResumeSkillGroup[],
 };
@@ -115,6 +128,7 @@ export const resumeExperiences: ResumeExperience[] = [
           '기존 검사 결과 포맷을 유지해 후속 검사 흐름 영향 없이 성능 개선을 적용',
         ],
         keywords: ['C#', '.NET Framework', 'WinForms', 'Algorithm', 'Performance Optimization'],
+        detailHref: industrialAoiInspectionAutomationPath,
       },
       {
         category: '생산 시스템 연동 · 운영 안정화',
@@ -128,6 +142,7 @@ export const resumeExperiences: ResumeExperience[] = [
           '고객사별 분기와 예외 흐름을 공통 이벤트 및 채널 책임 분리 구조로 정리',
         ],
         keywords: ['C#', '.NET Framework', 'SECS/GEM', 'TCP/IP', 'FTP', 'Refactoring'],
+        detailHref: industrialAoiProductionIntegrationPath,
       },
       {
         category: 'Windows 기능 확장 · 응답성 개선',
@@ -142,6 +157,7 @@ export const resumeExperiences: ResumeExperience[] = [
           '공유 폴더 직접 처리 대신 원격 PC 로컬 실행 및 TCP/IP 제어 흐름으로 파일 처리 비용 축소',
         ],
         keywords: ['C#', 'WinForms', 'Data Structure', 'TCP/IP', 'File I/O'],
+        detailHref: industrialAoiHotKeyOptimizationPath,
       },
       {
         category: '검사 데이터 · 이력 관리 · 가시화',
@@ -155,6 +171,7 @@ export const resumeExperiences: ResumeExperience[] = [
           '공통 데이터 접근 계층과 SQL Mapper 기반 검사 이력 조회 흐름 구현',
         ],
         keywords: ['C++', 'C#', 'OpenCV', 'MSSQL', 'Data Modeling'],
+        detailHref: industrialAoiBridgePolygonVisualizationPath,
       },
     ],
   },
@@ -195,7 +212,7 @@ export const additionalDetails: ResumeDetailGroup[] = [
         details: ['4.07 / 4.5, 수석 졸업'],
       },
       {
-        title: '신천고등학교',
+        title: '순천고등학교',
         meta: '자연계열',
         period: '2009.03.02 ~ 2012.02.08',
       },
@@ -222,7 +239,7 @@ export const additionalDetails: ResumeDetailGroup[] = [
         title: '주차구역 단속 시스템 설계 및 구현',
         meta: '대전대학교 산업기술연구소 Vol.30 No.1',
         href: 'https://www.riss.kr/search/detail/DetailView.do?p_mat_type=1a0202e37d52c72d&control_no=a5a7a98742e78d74b7998d826d417196',
-        details: ['Raspberry Pi/Ubuntu 기반 영상처리·I/O 연동'],
+        details: ['Raspberry Pi/Ubuntu 기반 영상처리 I/O 연동'],
       },
     ],
   },

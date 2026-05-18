@@ -2,7 +2,7 @@
 
 개인 프로젝트와 실무 경험을 정리한 GitHub Pages 기반 포트폴리오입니다.
 
-React, TypeScript, Vite, React Router로 구성했으며 개발자 소개, 업무 개선 사례, GitHub 프로젝트 상세, 문서형 이력서, 외부 채널 링크를 한 곳에서 확인할 수 있도록 정리했습니다.
+React, TypeScript, Vite, React Router로 구성했으며 개발자 소개, 업무 개선 사례, GitHub 프로젝트 상세, 문서형 이력서, PDF 저장, 외부 채널 링크를 한 곳에서 확인할 수 있도록 정리했습니다.
 
 ## 주요 내용
 
@@ -10,7 +10,8 @@ React, TypeScript, Vite, React Router로 구성했으며 개발자 소개, 업�
 - 업무 사례와 개인 프로젝트 상세 페이지
 - 코드 블록, CLI 실행 예시, 처리 흐름 시각화
 - 기술 스택과 경력 요약
-- 문서형 이력서 페이지
+- 문서형 이력서 페이지 및 PDF 저장
+- 이력서 주요 성과에서 포트폴리오 상세 페이지로 이동하는 링크
 - GitHub, Tech Blog, 이메일 연결
 - GitHub Pages 배포 및 Google Analytics 4 적용
 
@@ -18,6 +19,7 @@ React, TypeScript, Vite, React Router로 구성했으며 개발자 소개, 업�
 
 - React 19
 - React Router 7
+- React To Print
 - TypeScript
 - Vite
 - GitHub Pages
@@ -52,8 +54,11 @@ React Router의 `BrowserRouter`, `Routes`, `Route`, `Navigate`, `Link/NavLink`�
 - `/projects/cpu-memory-stress-test`
 - `/projects/rfid-collision-search-simulator`
 - `/work/gerber-part-roi-matching-optimization`
+- `/work/hotkey-ux-ui-response-optimization`
 - `/work/mes-secs-gem-data-flow`
 - `/work/remote-shared-folder-io-bottleneck`
+- `/work/defect-polygon-visualization-standardization`
+- `/work/defect-history-data-layer`
 
 기존 `/projects/industrial-aoi-platform/...` legacy URL은 동일 상세 페이지로 매핑합니다.
 
@@ -85,10 +90,24 @@ npx.cmd tsc -b --pretty false
 npm.cmd run build
 ```
 
+## 이력서 PDF 저장
+
+`/resume` 페이지에는 `react-to-print` 기반의 `PDF로 저장` 버튼을 제공합니다.
+
+- 출력 대상은 이력서 본문 영역으로 제한합니다.
+- PDF/인쇄 시 사이트 헤더, 저장 버튼, 분석 안내 문구는 숨깁니다.
+- 다크모드 상태에서도 PDF는 흰 배경 기준으로 출력합니다.
+- 섹션 구분선, 여백, 페이지 분리 규칙을 인쇄 전용 CSS에서 별도로 조정합니다.
+- 주요 성과 제목 옆 상세 링크 아이콘은 PDF에서도 보이도록 유지합니다.
+
+브라우저 인쇄창에서 대상 프린터를 `PDF로 저장` 또는 `Save as PDF`로 선택해 파일로 저장합니다.
+
 ## 콘텐츠 수정
 
 - 포트폴리오 기본 정보, 성과, 프로젝트: `src/data/portfolio.ts`
 - 이력서 정보: `src/data/resume.ts`
+- 이력서 화면과 PDF 저장 버튼: `src/pages/ResumePage.tsx`
+- 이력서 웹/인쇄 전용 스타일: `src/styles/resume.css`
 - 내비게이션 항목: `src/data/navigation.ts`
 - 프로젝트 상세 페이지별 설정: `src/pages/projects/*Config.ts`, `src/pages/projects/industrialAoiData.ts`
 - URL 경로와 legacy 매핑: `src/routes/paths.ts`
