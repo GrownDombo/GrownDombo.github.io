@@ -40,13 +40,13 @@ export type ResumeDetailGroup = {
 };
 
 export const resumeInfo = {
-  lastUpdated: '2026-05-01',
+  lastUpdated: '2026-05-18',
   name: '최준영',
-  title: '7년 차 - C#/.NET 제조 장비 SW 개발자',
+  title: '7년 차 C#/.NET Windows 응용프로그램 개발자',
   photo: '/assets/resume/profile.jpg',
   statement: [
-    'AOI 성능 최적화와 MES·SECS-GEM 연동 안정화를 경험했습니다.',
-    'WinForms/C++ 기반 장비 SW 유지보수와 처리 구조화를 담당했습니다.',
+    '6분대 처리 시간을 3.5초로 줄이고, 이슈 등록 건수를 약 70% 낮춘 Windows 응용프로그램 개발자입니다.',
+    '성능 병목 분석, 시스템 연동, 데이터 가시화, 기능 확장을 코드 구조 개선으로 연결합니다.',
   ],
   contact: 'yjc0455@naver.com',
   channels: [
@@ -67,91 +67,94 @@ export const resumeInfo = {
       skills: ['C#', 'C++', 'Java', 'Python'],
     },
     {
-      title: 'Core Tech',
-      skills: ['.NET Framework', 'Android SDK'],
+      title: 'Windows App',
+      skills: ['.NET Framework', 'WinForms'],
     },
     {
       title: 'Database',
       skills: ['MSSQL', 'MariaDB', 'SQLite'],
     },
     {
-      title: 'ORM',
-      skills: ['iBATIS.NET'],
+      title: 'Domain Tech',
+      skills: ['SECS/GEM', 'TCP/IP', 'OpenCV'],
     },
     {
-      title: 'Domain Tech',
-      skills: ['SECS/GEM', 'OpenCV'],
+      title: 'Tools',
+      skills: ['Git', 'SVN', 'Visual Studio'],
     },
   ] satisfies ResumeSkillGroup[],
 };
 
 export const resumeIntroduction = [
-  '반도체/SMT 제조라인의 3D 검사 장비 소프트웨어를 개발·유지보수하며 AOI 검사 준비 병목, 생산 연동 장애, 장비 운영 흐름 문제를 해결했습니다.',
-  '주요 성과로 Gerber-Part ROI 매칭 시간을 6분 22초에서 3.5초로 줄였고, MES·SECS-GEM 연동 구조 정리로 반복 장애 알림을 약 70% 감소시켰습니다.',
-  '개인 프로젝트는 WinForms 도구와 C++ 검증 프로그램 중심으로 공개하며, 코드 구조와 재사용 가능한 설계를 확인할 수 있게 정리하고 있습니다.',
+  'C#/.NET 기반 Windows 응용프로그램을 중심으로 성능 최적화, 생산 시스템 연동, 검사 데이터 관리 기능을 개발해 왔습니다. 단순 유지보수보다 사용자가 겪는 지연, 반복 장애, 기능 제약을 코드 구조와 처리 흐름 개선으로 해결하는 데 강점이 있습니다.',
+  '대표적으로 대용량 ROI 매칭 시간을 6분 22초에서 3.5초로 단축했고, 생산 연동 구조 정리로 이슈 관리 시스템 등록 건수를 약 70% 줄였습니다. 단축키 지원 범위 확장, 원격 공유 폴더 I/O 병목 해소, 폴리곤 기반 검출 영역 가시화처럼 현장에서 바로 체감되는 개선도 함께 수행했습니다.',
+  '개인 프로젝트에서는 WinForms 커스텀 컨트롤, Excel 자동화 도구, C++ 검증 프로그램을 공개하며 재사용 가능한 구조와 명확한 사용자 흐름을 꾸준히 다듬고 있습니다.',
 ];
 
 export const resumeExperiences: ResumeExperience[] = [
   {
     company: '펨트론 (Pemtron)',
     companyHref: 'https://www.pemtron.com',
-    role: 'C#/.NET 제조 장비 소프트웨어 개발자',
+    role: 'C#/.NET Windows 응용프로그램 개발자',
     period: '2020.04 ~ 현재',
     responsibilities: [
-      '광학 검사 장비 SW 개발·유지보수',
-      'MES·SECS-GEM 생산 연동 기능 개발·안정화',
-      'AOI 성능 최적화 및 운영 흐름 정리',
+      'C#/.NET 기반 검사 및 운영용 Windows 응용프로그램 개발',
+      'SECS/GEM, TCP/IP, FTP 기반 생산 시스템 연동 기능 개발',
+      '대용량 검사 데이터 처리, 이력 관리, 가시화 UI 구조 개선',
     ],
     highlights: [
       {
-        category: '공정 자동화 및 생산 시스템',
-        title: '생산 시스템 연동 기능 개발 및 운영 안정화',
+        category: '대용량 데이터 처리 · 성능 최적화',
+        title: 'Gerber-Part ROI 매칭 성능 최적화',
         metrics: [
-          '장애 이슈 관련 메일 전분기 대비 약 70% 감소',
-          '10개 이상 신규 고객사 생산 시스템 연동 시나리오 개발',
+          '처리 시간 단축: 6분 22초 → 3.5초, 약 99% 단축',
+          '비교 범위 축소: 약 273억 회 → 약 1억 회 수준',
         ],
         details: [
-          'SECS/GEM·FTP·TCP/IP 기반 생산 연동 요구사항 구현',
-          '공통 이벤트 기준과 채널별 책임 분리로 운영 안정성 향상',
+          'Module 영역 후보 선별과 Gerber ROI 변환 결과 캐싱으로 반복 비교 비용을 축소',
+          '기존 검사 결과 포맷을 유지해 후속 검사 흐름 영향 없이 성능 개선을 적용',
         ],
-        keywords: ['C#', '.NET Framework', 'SECS/GEM', 'TCP/IP', 'FTP', 'Refactoring', 'Design Pattern'],
+        keywords: ['C#', '.NET Framework', 'WinForms', 'Algorithm', 'Performance Optimization'],
       },
       {
-        category: '성능 최적화 및 처리 구조화',
-        title: '병목 구간 분석 및 처리 성능 최적화',
+        category: '생산 시스템 연동 · 운영 안정화',
+        title: 'MES·SECS/GEM 생산 연동 안정화',
         metrics: [
-          'Gerber-Part ROI 매칭 시간 단축: 6분 22초 → 3.5초, 처리 시간 약 99% 단축',
-          '단축키 응답 시간 단축: Debug 로그 기준 약 2초 → 0.3초, 처리 시간 약 85% 단축',
-          '원격 PC의 파일 이동 처리 시간 단축: 14초 → 0.5초 이내, 처리 시간 약 96% 단축',
+          '이슈 등록 건수 감소: 수정 전 6개월 대비 수정 후 6개월 약 70% 감소',
+          '신규 고객사 연동: 생산 시스템 연동 시나리오 10개 이상 개발',
         ],
         details: [
-          'Module 후보군 선별과 변환 결과 캐싱으로 대용량 ROI 매칭 연산 축소',
-          '복합키 자료구조 적용과 실행 주체 조정으로 응답 지연 및 전송 오버헤드 완화',
+          'SECS/GEM·FTP·TCP/IP 기반으로 고객사별 생산 연동 요구사항 구현',
+          '고객사별 분기와 예외 흐름을 공통 이벤트 및 채널 책임 분리 구조로 정리',
         ],
-        keywords: ['C#', 'Data Structure', 'Parallel Processing', 'Producer-Consumer', 'System Design'],
+        keywords: ['C#', '.NET Framework', 'SECS/GEM', 'TCP/IP', 'FTP', 'Refactoring'],
       },
       {
-        category: '데이터 관리 및 이력 시스템',
-        title: 'MSSQL 기반 검사 이력 관리 시스템 개발',
+        category: 'Windows 기능 확장 · 응답성 개선',
+        title: '단축키 기능 확장 및 원격 I/O 병목 해소',
         metrics: [
-          'NG 검사 결과를 Board-Module-Part-Window-Algorithm-ROI 계층 모델로 저장·조회',
-          '공통 DLL과 SQL Mapper 기반 데이터 접근 구조로 검사 이력 조회 흐름 구축',
+          '키 지원 범위 확장: 28개 단일 키 → 전체 + 조합 키',
+          '입력 응답성 개선: 2초 → 0.3초, 약 85% 개선',
+          '원격 I/O 시간 단축: 32초 → 3초, 약 90% 단축',
         ],
         details: [
-          'MSSQL 테이블 생성·초기화·인덱스·트랜잭션 저장 구조 구현',
-          '기간/Group/Board/Slave 필터와 WinForms 이력 조회 UI 연동',
+          '복합키 자료구조와 KeyDown 매핑 구조를 적용해 설정 범위와 응답성 개선',
+          '공유 폴더 직접 처리 대신 원격 PC 로컬 실행 및 TCP/IP 제어 흐름으로 파일 처리 비용 축소',
         ],
-        keywords: ['C#', 'MSSQL', 'iBATIS.NET', 'SQL Mapper', 'DLL', 'Data Modeling'],
+        keywords: ['C#', 'WinForms', 'Data Structure', 'TCP/IP', 'File I/O'],
       },
       {
-        category: '영상처리',
-        title: '검출 영역 Polygon 가시화 체계 구축',
-        metrics: ['좌상/우하 Bounding Box 표시 한계를 개선하고 실제 검출 외곽을 N-point Polygon으로 가시화하는 공통 Polygon 바이너리 구조 표준화'],
-        details: [
-          'OpenCV 기반 Blob 외곽 추출과 공통 Polygon 바이너리 구조 구현',
-          'C++ 검사 엔진과 C# 검사 결과 UI 간 Polygon 표현 표준화',
+        category: '검사 데이터 · 이력 관리 · 가시화',
+        title: '검출 영역 폴리곤 표현 체계 구축',
+        metrics: [
+          '검출 영역 표현 체계 구축: 사각형 표시 → 폴리곤 표현',
+          '이력 추적 범위 확장: 검사 결과를 화면·부품·알고리즘 단위까지 조회 가능',
         ],
-        keywords: ['C++', 'C#', 'OpenCV', 'WinForms', 'Binary File', 'Image Processing'],
+        details: [
+          '검출 이미지 기준으로 외곽선을 추출해 공통 저장 구조로 정리',
+          '공통 데이터 접근 계층과 SQL Mapper 기반 검사 이력 조회 흐름 구현',
+        ],
+        keywords: ['C++', 'C#', 'OpenCV', 'MSSQL', 'Data Modeling'],
       },
     ],
   },
@@ -161,21 +164,21 @@ export const resumeExperiences: ResumeExperience[] = [
     period: '2019.10 ~ 2020.04',
     responsibilities: [
       '모빌리티 서비스 사용자용 Android 애플리케이션 개발',
-      'Naver Map API 연동 및 지도·검색 기능 개발',
+      'Naver Map API 연동 및 지도 기반 위치 기능 개발',
     ],
     highlights: [
       {
-        category: '지도·검색 기능 개발',
-        title: '지도 API 연동 및 지도·검색 기능 개발',
+        category: '지도 API 연동 · 위치 기반 기능',
+        title: '지도 API 연동 및 위치 기반 기능 개발',
         metrics: [
-          'Naver Map API에서 제공하지 않는 Polygon 영역 판별 기능을 직접 구현',
-          '비동기 주소 검색 제어와 SQLite 기반 검색 기록 저장 기능을 개발해 사용자 편의성 향상',
+          '영역 판별 로직 구현: 지도 API에서 제공하지 않는 위치 영역 판별 기능 직접 구현',
+          '사용 흐름 개선: 비동기 주소 검색 제어와 SQLite 기반 검색 기록 저장 기능 개발',
         ],
         details: [
-          '탑승 위치와 서비스 지역 경계를 구분하는 다각형 내부 판별 알고리즘 구현',
-          '입력 멈춤 후 검색을 수행해 API 요청을 줄이고 주소 검색 응답성 개선',
+          '사용자 위치와 서비스 영역을 비교하는 판별 로직 구현',
+          '입력 중복 요청을 줄이고 주소 검색 응답 흐름을 안정화',
         ],
-        keywords: ['Java', 'Android', 'Naver Map API', 'API Integration', 'SQLite', 'Async'],
+        keywords: ['Java', 'Android', 'Naver Map API', 'SQLite'],
       },
     ],
   },
@@ -192,8 +195,8 @@ export const additionalDetails: ResumeDetailGroup[] = [
         details: ['4.07 / 4.5, 수석 졸업'],
       },
       {
-        title: '순천고등학교',
-        meta: '이공계열',
+        title: '신천고등학교',
+        meta: '자연계열',
         period: '2009.03.02 ~ 2012.02.08',
       },
     ],
@@ -238,7 +241,7 @@ export const additionalDetails: ResumeDetailGroup[] = [
     items: [
       {
         title: '병장 만기 전역',
-        meta: '해군·갑판병',
+        meta: '육군 · 갑판병',
         period: '2013.01.07 ~ 2014.12.06',
       },
     ],
