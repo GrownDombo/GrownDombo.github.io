@@ -336,13 +336,13 @@
 
 .resume-highlight-list {
   display: grid;
-  gap: 24px;
+  gap: 44px;
 }
 
 .resume-highlight-company {
   display: grid;
   gap: 14px;
-  padding-top: 20px;
+  padding-top: 30px;
   border-top: 1px solid var(--resume-rule);
 }
 
