@@ -227,7 +227,7 @@ export const workCaseCards: WorkCaseCardData[] = [
   {
     title: '검사 이력 조회 구조 구축',
     subtitle: '검사 결과 추적 · 조건 검색 · 상세 복원',
-    summary: '검사 결과를 조건별로 조회하고 상세 화면까지 이어지는 이력 추적 흐름을 구축',
+    summary: '조건별 검사 이력 조회와 상세 추적 흐름 구축',
     image: '/assets/defect-history-data-layer.svg',
     imageAlt: 'DefectHistory inspection history UI mockup with filled sample data',
     detailPath: industrialAoiDefectHistoryDataLayerPath,
