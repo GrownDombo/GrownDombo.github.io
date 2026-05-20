@@ -1,6 +1,8 @@
 .resume-page {
-  width: min(940px, calc(100% - 40px));
+  width: min(1040px, calc(100% - 40px));
   padding: 34px 0 72px;
+  --resume-a4-width: 794px;
+  --resume-a4-height: 1123px;
   --resume-text: #302c2c;
   --resume-muted: #6a6262;
   --resume-soft: #f8f8f8;
@@ -36,11 +38,14 @@
 
 .resume-print-actions {
   display: flex;
-  justify-content: flex-end;
-  width: min(744px, 100%);
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: min(var(--resume-a4-width), 100%);
   margin: 0 auto 14px;
 }
 
+.resume-action-link,
 .resume-print-button {
   display: inline-flex;
   align-items: center;
@@ -66,6 +71,14 @@
     box-shadow 180ms ease;
 }
 
+.resume-action-link {
+  color: var(--resume-accent);
+  border-color: color-mix(in srgb, var(--resume-accent) 28%, var(--resume-rule));
+  box-shadow: none;
+}
+
+.resume-action-link:hover,
+.resume-action-link:focus-visible,
 .resume-print-button:hover,
 .resume-print-button:focus-visible {
   color: var(--resume-accent);
@@ -76,9 +89,9 @@
 
 .resume-document {
   position: relative;
-  width: min(595px, 100%);
-  min-height: 842px;
-  padding: 74px 48px 64px;
+  width: min(var(--resume-a4-width), 100%);
+  min-height: var(--resume-a4-height);
+  padding: 56px 54px 56px;
   margin: 0 auto;
   border: 1px solid var(--resume-rule);
   color: var(--resume-text);
@@ -91,16 +104,10 @@
   letter-spacing: -0.06em;
 }
 
-@media (min-width: 900px) {
-  .resume-document {
-    zoom: 1.25;
-  }
-}
-
 .resume-updated {
   position: absolute;
   top: 22px;
-  right: 48px;
+  right: 54px;
   margin: 0;
   color: var(--resume-muted);
   font-size: 0.62rem;

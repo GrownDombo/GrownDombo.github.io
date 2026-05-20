@@ -1,4 +1,5 @@
 export const resumePath = '/resume';
+export const careerPath = '/career';
 export const excelConditionPainterPath = '/projects/excel-condition-painter';
 export const cpuMemoryStressTestPath = '/projects/cpu-memory-stress-test';
 export const rfidCollisionSearchSimulatorPath = '/projects/rfid-collision-search-simulator';

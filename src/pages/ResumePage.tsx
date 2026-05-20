@@ -5,6 +5,7 @@ import { AnalyticsNotice } from '../components/AnalyticsNotice';
 import { SiteHeader } from '../components/SiteHeader';
 import { trackAnalyticsEvent } from '../analytics/google';
 import { additionalDetails, resumeExperiences, resumeInfo, resumeIntroduction } from '../data/resume';
+import { careerPath } from '../routes/paths';
 import type { ThemedPageProps } from '../types/navigation';
 import { ResumeIconLink, renderMetricResult, splitMetricText } from './resume/resumeFormatting';
 
@@ -26,6 +27,9 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
 
       <main className="resume-page" id="top" ref={resumePrintRef}>
         <div className="resume-print-actions no-print">
+          <a className="resume-action-link" href={careerPath} onClick={(event) => onNavigate(event, careerPath)}>
+            경력기술서 보기
+          </a>
           <button className="resume-print-button" type="button" onClick={handleResumePrint}>
             <FileDown size={17} aria-hidden="true" strokeWidth={2.2} />
             PDF로 저장

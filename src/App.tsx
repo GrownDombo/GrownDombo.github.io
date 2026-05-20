@@ -5,6 +5,7 @@ import { usePageAnalytics } from './hooks/usePageAnalytics';
 import { useThemeMode } from './hooks/useThemeMode';
 import { useTrackedLinkClicks } from './hooks/useTrackedLinkClicks';
 import { PortfolioHome } from './pages/PortfolioHome';
+import { CareerPage } from './pages/CareerPage';
 import { ResumePage } from './pages/ResumePage';
 import { CPUMemoryStressTestProjectPage } from './pages/projects/CPUMemoryStressTestProjectPage';
 import { ExcelConditionPainterProjectPage } from './pages/projects/ExcelConditionPainterProjectPage';
@@ -12,6 +13,7 @@ import { IndustrialAOIPlatformProjectPage } from './pages/projects/IndustrialAOI
 import { RFIDCollisionSearchSimulatorProjectPage } from './pages/projects/RFIDCollisionSearchSimulatorProjectPage';
 import {
   cpuMemoryStressTestPath,
+  careerPath,
   excelConditionPainterPath,
   industrialAoiBridgePolygonVisualizationPath,
   industrialAoiOperationFlowPath,
@@ -44,6 +46,7 @@ function App() {
   return (
     <Routes>
       <Route index element={<PortfolioHome {...themedPageProps} />} />
+      <Route path={careerPath} element={<CareerPage {...themedPageProps} />} />
       <Route path={resumePath} element={<ResumePage {...themedPageProps} />} />
       <Route path={excelConditionPainterPath} element={<ExcelConditionPainterProjectPage {...themedPageProps} />} />
       <Route path={cpuMemoryStressTestPath} element={<CPUMemoryStressTestProjectPage {...themedPageProps} />} />

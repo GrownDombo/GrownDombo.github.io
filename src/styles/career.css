@@ -1,0 +1,380 @@
+.career-document {
+  min-height: var(--resume-a4-height);
+}
+
+.career-document-header {
+  display: grid;
+  gap: 7px;
+}
+
+.career-kicker {
+  margin: 0;
+  color: var(--resume-accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.career-document-header h1 {
+  margin: 0;
+  color: var(--resume-text);
+  font-size: 1.16rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: -0.06em;
+}
+
+.career-name {
+  margin: 0;
+  color: var(--resume-text);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.career-headline {
+  max-width: 450px;
+  margin: 8px 0 0;
+  color: var(--resume-muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.career-profile-list {
+  margin-top: 26px;
+}
+
+.career-section h2 {
+  margin-bottom: 15px;
+}
+
+.career-summary-box {
+  display: grid;
+  gap: 9px;
+  padding-left: 12px;
+  border-left: 2px solid var(--resume-statement-line);
+}
+
+.career-summary-box p {
+  margin: 0;
+  color: var(--resume-text);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+.career-competency-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin-top: 20px;
+}
+
+.career-competency-grid article,
+.career-project-card {
+  border: 1px solid var(--resume-rule);
+  border-radius: 6px;
+  background: var(--resume-chip);
+}
+
+.career-competency-grid article {
+  min-width: 0;
+  padding: 12px;
+}
+
+.career-competency-grid h3,
+.career-experience-card h3,
+.career-project-card h3 {
+  margin: 0;
+  color: var(--resume-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.06em;
+}
+
+.career-competency-grid p {
+  margin: 4px 0 0;
+  color: var(--resume-muted);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.career-experience-list,
+.career-project-list {
+  display: grid;
+  gap: 16px;
+}
+
+.career-experience-list {
+  position: relative;
+  gap: 0;
+  padding-left: 26px;
+}
+
+.career-experience-list::before {
+  position: absolute;
+  top: 6px;
+  bottom: 10px;
+  left: 7px;
+  width: 2px;
+  border-radius: 999px;
+  background: var(--resume-statement-line);
+  content: "";
+}
+
+.career-experience-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 154px minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  padding: 0 0 22px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.career-experience-card + .career-experience-card {
+  padding-top: 20px;
+  border-top: 1px solid var(--resume-rule);
+}
+
+.career-experience-card::before {
+  position: absolute;
+  top: 6px;
+  left: -25px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--resume-paper);
+  border-radius: 50%;
+  background: var(--resume-accent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--resume-accent) 42%, var(--resume-rule)),
+    0 0 0 5px var(--resume-paper);
+  content: "";
+}
+
+.career-experience-card header,
+.career-experience-card > div {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.career-experience-card header {
+  gap: 3px;
+}
+
+.career-experience-card header p,
+.career-experience-card time,
+.career-project-card-header p,
+.career-project-summary dt,
+.career-experience-card h4,
+.career-project-detail-grid h4 {
+  margin: 0;
+  color: var(--resume-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.career-experience-card time {
+  font-weight: 500;
+}
+
+.career-experience-card > div,
+.career-project-detail-grid section {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+}
+
+.career-experience-card h4 {
+  color: var(--resume-accent);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.career-list {
+  display: grid;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.career-list li {
+  position: relative;
+  padding-left: 12px;
+  color: var(--resume-muted);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.career-list li::before {
+  position: absolute;
+  left: 0;
+  top: 0.66em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--resume-approach-dot);
+  content: "";
+}
+
+.career-list--result li {
+  color: var(--resume-metric-text);
+  font-weight: 600;
+}
+
+.career-list--result li::before {
+  background: var(--resume-primary-dot);
+}
+
+.career-project-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.career-project-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--resume-rule);
+}
+
+.career-project-card-header h3 {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.career-project-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.career-project-summary div {
+  display: grid;
+  gap: 4px;
+}
+
+.career-project-summary dd {
+  margin: 0;
+  color: var(--resume-text);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.career-project-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.career-tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.career-tech-list span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 21px;
+  padding: 2px 6px;
+  border: 1px solid var(--resume-rule);
+  border-radius: 4px;
+  color: var(--resume-muted);
+  background: var(--resume-paper);
+  font-size: 0.66rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.career-support-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.career-support-item {
+  display: grid;
+  gap: 10px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid var(--resume-rule);
+  border-radius: 6px;
+  background: var(--resume-chip);
+}
+
+.career-support-item header {
+  display: grid;
+  gap: 2px;
+}
+
+.career-support-item header p {
+  margin: 0;
+  color: var(--resume-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: normal;
+}
+
+.career-support-item h3 {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0;
+  color: var(--resume-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.06em;
+  overflow-wrap: normal;
+}
+
+.career-skill-lines {
+  gap: 9px;
+}
+
+@media (max-width: 700px) {
+  .career-document-header h1 {
+    font-size: 1.04rem;
+  }
+
+  .career-competency-grid,
+  .career-project-summary,
+  .career-project-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .career-experience-card {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .career-support-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .career-support-list {
+    grid-template-columns: 1fr;
+  }
+}
