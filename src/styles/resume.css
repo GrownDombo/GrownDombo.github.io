@@ -795,7 +795,11 @@
   }
 
   .resume-job-list::before {
-    background: var(--resume-statement-line) !important;
+    display: none !important;
+  }
+
+  .resume-job-list {
+    padding-left: 0 !important;
   }
 
   .resume-job-card {
@@ -806,6 +810,18 @@
 
   .resume-job-card + .resume-job-card {
     padding-top: 5mm !important;
+  }
+
+  .resume-job-card::before {
+    display: none !important;
+  }
+
+  .resume-job-header {
+    grid-column: 1 !important;
+  }
+
+  .resume-responsibility-list {
+    grid-column: 2 !important;
   }
 
   .resume-highlight-company {
