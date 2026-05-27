@@ -453,7 +453,7 @@
 
   .career-experience-card + .career-experience-card {
     padding-top: 5mm !important;
-    border-top: 0 !important;
+    border-top: 1px solid var(--resume-rule) !important;
   }
 
   .career-experience-card::before {

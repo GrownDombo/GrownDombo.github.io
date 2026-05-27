@@ -811,7 +811,7 @@
 
   .resume-job-card + .resume-job-card {
     padding-top: 5mm !important;
-    border-top: 0 !important;
+    border-top: 1px solid var(--resume-rule) !important;
   }
 
   .resume-job-card::before {
