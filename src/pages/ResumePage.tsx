@@ -7,7 +7,7 @@ import { trackAnalyticsEvent } from '../analytics/google';
 import { additionalDetails, resumeExperiences, resumeInfo, resumeIntroduction } from '../data/resume';
 import { careerPath } from '../routes/paths';
 import type { ThemedPageProps } from '../types/navigation';
-import { ResumeIconLink, renderMetricResult, splitMetricText } from './resume/resumeFormatting';
+import { ResumeIconLink, renderDocumentRole, renderMetricResult, splitMetricText } from './resume/resumeFormatting';
 
 export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageProps) {
   const resumePrintRef = useRef<HTMLElement>(null);
@@ -41,7 +41,6 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
 
           <header className="resume-document-header">
             <div>
-              <p className="resume-greeting">안녕하세요.</p>
               <h1 id="resume-title">
                 {resumeInfo.title}
                 <br />
@@ -138,7 +137,7 @@ export function ResumePage({ onNavigate, themeMode, onThemeToggle }: ThemedPageP
                         <ResumeIconLink href={job.companyHref} label={`${job.company} 웹사이트 바로가기`} />
                       ) : null}
                     </h3>
-                    <p>{job.role}</p>
+                    <p>{renderDocumentRole(job.role)}</p>
                     <time>{job.period}</time>
                   </div>
 

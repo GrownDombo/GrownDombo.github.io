@@ -102,6 +102,20 @@ export function ResumeIconLink({
   );
 }
 
+export function renderDocumentRole(role: string) {
+  if (role === 'C#/.NET Windows 응용프로그램 개발자') {
+    return (
+      <>
+        C#/.NET Windows
+        <br />
+        응용프로그램 개발자
+      </>
+    );
+  }
+
+  return role;
+}
+
 export function renderMetricResult(result: string) {
   const percentMatch = result.match(/(약\s*)?\d+%[^\s,]*(?:\s*(?:개선|감소|단축|향상))?/);
 

@@ -48,7 +48,7 @@ export type ResumeDetailGroup = {
 };
 
 export const resumeInfo = {
-  lastUpdated: '2026-05-18',
+  lastUpdated: '2026-05-27',
   name: '최준영',
   title: '7년 차 C#/.NET Windows 응용프로그램 개발자',
   photo: '/assets/resume/profile.jpg',
@@ -162,12 +162,12 @@ export const resumeExperiences: ResumeExperience[] = [
         category: '검사 데이터 · 이력 관리 · 가시화',
         title: '검출 영역 폴리곤 표현 체계 구축',
         metrics: [
+          '고객사 수주 요구사항 대응: 약 8억 원 규모 프로젝트의 필수 표시 기능 구현',
           '검출 영역 표현 체계 구축: 사각형 표시 → 폴리곤 표현',
-          '이력 추적 범위 확장: 검사 결과를 화면·부품·알고리즘 단위까지 조회 가능',
         ],
         details: [
+          '기존 사각형 표시를 실제 검출 외곽 기반 폴리곤 표현으로 개선',
           '검출 이미지 기준으로 외곽선을 추출해 공통 저장 구조로 정리',
-          '공통 데이터 접근 계층과 SQL Mapper 기반 검사 이력 조회 흐름 구현',
         ],
         keywords: ['C++', 'C#', 'OpenCV', 'MSSQL', 'Data Modeling'],
         detailHref: industrialAoiBridgePolygonVisualizationPath,

@@ -91,7 +91,7 @@
   position: relative;
   width: min(var(--resume-a4-width), 100%);
   min-height: var(--resume-a4-height);
-  padding: 56px 54px 56px;
+  padding: 50px 48px 52px;
   margin: 0 auto;
   border: 1px solid var(--resume-rule);
   color: var(--resume-text);
@@ -99,7 +99,7 @@
   box-shadow: var(--resume-shadow);
   font-family:
     Pretendard, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 0.84rem;
+  font-size: 0.88rem;
   line-height: 1.5;
   letter-spacing: -0.06em;
 }
@@ -107,7 +107,7 @@
 .resume-updated {
   position: absolute;
   top: 22px;
-  right: 54px;
+  right: 48px;
   margin: 0;
   color: var(--resume-muted);
   font-size: 0.62rem;
@@ -156,12 +156,20 @@
   align-items: start;
 }
 
-.resume-greeting,
-.resume-document-header h1 {
+.resume-greeting {
   margin: 0;
   color: var(--resume-text);
   font-size: 1.125rem;
   font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.06em;
+}
+
+.resume-document-header h1 {
+  margin: 0;
+  color: var(--resume-text);
+  font-size: 1.125rem;
+  font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.06em;
 }
@@ -178,7 +186,7 @@
 .resume-statement p {
   margin: 0;
   color: var(--resume-muted);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   line-height: 1.5;
 }
 
@@ -202,7 +210,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px 16px;
   padding: 0;
-  margin: 28px 0 0;
+  margin: 26px 0 0;
 }
 
 .resume-profile-list div {
@@ -212,8 +220,8 @@
 .resume-profile-list dt {
   margin: 0 0 2px;
   color: var(--resume-text);
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   line-height: 1.5;
 }
 
@@ -224,7 +232,7 @@
   min-width: 0;
   margin: 0;
   color: var(--resume-muted);
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
@@ -234,27 +242,27 @@
 }
 
 .resume-document-section {
-  margin-top: 42px;
+  margin-top: 38px;
 }
 
 .resume-document-section h2 {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   color: var(--resume-text);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.04rem;
+  font-weight: 700;
   line-height: 1.5;
   letter-spacing: -0.06em;
 }
 
 @media screen {
   .resume-document-section + .resume-document-section {
-    padding-top: 24px;
-    margin-top: 38px;
+    padding-top: 22px;
+    margin-top: 34px;
     border-top: 1px solid var(--resume-rule);
   }
 
   .resume-document-section[aria-labelledby="resume-additional-title"] {
-    margin-top: 48px;
+    margin-top: 42px;
   }
 }
 
@@ -272,8 +280,8 @@
 
 .resume-skill-lines strong {
   color: var(--resume-text);
-  font-size: 0.74rem;
-  font-weight: 600;
+  font-size: 0.76rem;
+  font-weight: 700;
   line-height: 1.5;
 }
 
@@ -293,7 +301,7 @@
   border-radius: 4px;
   color: var(--resume-muted);
   background: var(--resume-chip);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.5;
@@ -307,27 +315,62 @@
 .resume-paragraph-stack p {
   margin: 0;
   color: var(--resume-text);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   line-height: 1.5;
 }
 
 .resume-job-list {
+  position: relative;
   display: grid;
-  gap: 28px;
+  gap: 0;
+  padding-left: 26px;
+}
+
+.resume-job-list::before {
+  position: absolute;
+  top: 6px;
+  bottom: 10px;
+  left: 7px;
+  width: 2px;
+  border-radius: 999px;
+  background: var(--resume-statement-line);
+  content: "";
 }
 
 .resume-job-card {
+  position: relative;
   display: grid;
-  grid-template-columns: 136px minmax(0, 1fr);
-  gap: 18px;
-  padding-top: 0;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 12px 18px;
+  padding: 0 0 22px;
   border-top: 0;
+}
+
+.resume-job-card + .resume-job-card {
+  padding-top: 20px;
+  border-top: 1px solid var(--resume-rule);
+}
+
+.resume-job-card::before {
+  position: absolute;
+  top: 6px;
+  left: -25px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--resume-paper);
+  border-radius: 50%;
+  background: var(--resume-accent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--resume-accent) 42%, var(--resume-rule)),
+    0 0 0 5px var(--resume-paper);
+  content: "";
 }
 
 .resume-job-header {
   display: grid;
+  align-self: start;
   align-content: start;
-  gap: 2px;
+  gap: 3px;
 }
 
 .resume-job-header h3 {
@@ -336,8 +379,8 @@
   gap: 4px;
   margin: 0;
   color: var(--resume-text);
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-size: 0.9rem;
+  font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.06em;
 }
@@ -346,7 +389,7 @@
 .resume-job-header time {
   margin: 0;
   color: var(--resume-muted);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -367,7 +410,7 @@
   position: relative;
   padding-left: 12px;
   color: var(--resume-text);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   line-height: 1.5;
 }
 
@@ -408,7 +451,7 @@
 .resume-highlight-company-header h3 {
   margin: 0;
   color: var(--resume-text);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.06em;
@@ -417,7 +460,7 @@
 .resume-highlight-company-header p {
   margin: 0;
   color: var(--resume-muted);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -445,7 +488,7 @@
   gap: 4px;
   margin: 0;
   color: var(--resume-text);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.06em;
@@ -458,7 +501,7 @@
 .resume-highlight-card header p {
   margin: 0;
   color: var(--resume-muted);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -498,7 +541,7 @@
   display: inline-flex;
   justify-content: flex-end;
   color: var(--resume-muted);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
   text-align: right;
   white-space: nowrap;
@@ -529,7 +572,7 @@
 
 .resume-detail-list li {
   color: var(--resume-muted);
-  font-size: 0.7rem;
+  font-size: 0.74rem;
   font-weight: 400;
   line-height: 1.45;
 }
@@ -545,7 +588,7 @@
   border-radius: 4px;
   color: var(--resume-muted);
   background: var(--resume-chip);
-  font-size: 0.66rem;
+  font-size: 0.68rem;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -565,8 +608,8 @@
 .resume-detail-group h3 {
   margin: 0;
   color: var(--resume-accent);
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 700;
   line-height: 1.5;
 }
 
@@ -586,7 +629,7 @@
   gap: 4px;
   margin: 0;
   color: var(--resume-text);
-  font-size: 0.76rem;
+  font-size: 0.8rem;
   font-weight: 600;
   line-height: 1.5;
 }
@@ -596,7 +639,7 @@
 .resume-detail-item p {
   margin: 0;
   color: var(--resume-muted);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   line-height: 1.5;
 }
 
@@ -749,6 +792,20 @@
   .resume-detail-item {
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  .resume-job-list::before {
+    background: var(--resume-statement-line) !important;
+  }
+
+  .resume-job-card {
+    grid-template-columns: 38mm minmax(0, 1fr) !important;
+    gap: 3mm 5mm !important;
+    padding-bottom: 6mm !important;
+  }
+
+  .resume-job-card + .resume-job-card {
+    padding-top: 5mm !important;
   }
 
   .resume-highlight-company {
