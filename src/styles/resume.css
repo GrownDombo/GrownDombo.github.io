@@ -795,11 +795,12 @@
   }
 
   .resume-job-list::before {
-    display: none !important;
+    display: block !important;
+    background: var(--resume-statement-line) !important;
   }
 
   .resume-job-list {
-    padding-left: 0 !important;
+    padding-left: 26px !important;
   }
 
   .resume-job-card {
@@ -810,10 +811,11 @@
 
   .resume-job-card + .resume-job-card {
     padding-top: 5mm !important;
+    border-top: 0 !important;
   }
 
   .resume-job-card::before {
-    display: none !important;
+    display: block !important;
   }
 
   .resume-job-header {

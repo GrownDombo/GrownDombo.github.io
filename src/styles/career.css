@@ -437,7 +437,8 @@
   }
 
   .career-experience-list::before {
-    display: none !important;
+    display: block !important;
+    background: var(--resume-statement-line) !important;
   }
 
   .career-experience-card {
@@ -447,15 +448,16 @@
   }
 
   .career-experience-list {
-    padding-left: 0 !important;
+    padding-left: 26px !important;
   }
 
   .career-experience-card + .career-experience-card {
     padding-top: 5mm !important;
+    border-top: 0 !important;
   }
 
   .career-experience-card::before {
-    display: none !important;
+    display: block !important;
   }
 
   .career-experience-card header {
