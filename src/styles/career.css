@@ -437,7 +437,7 @@
   }
 
   .career-experience-list::before {
-    background: var(--resume-statement-line) !important;
+    display: none !important;
   }
 
   .career-experience-card {
@@ -446,13 +446,25 @@
     padding-bottom: 6mm !important;
   }
 
+  .career-experience-list {
+    padding-left: 0 !important;
+  }
+
   .career-experience-card + .career-experience-card {
     padding-top: 5mm !important;
   }
 
-  .career-experience-card header,
+  .career-experience-card::before {
+    display: none !important;
+  }
+
+  .career-experience-card header {
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+  }
+
   .career-experience-card > div {
-    grid-column: auto;
+    grid-column: 2 !important;
   }
 
   .career-learning-item {
