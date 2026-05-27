@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ChevronDown, ChevronUp, FileText, Github, Mail, Sparkles } from 'lucide-react';
+import { ArrowUpRight, ChevronDown, ChevronUp, FileText, Github, Mail } from 'lucide-react';
 import { Link } from 'react-router';
 import { AnalyticsNotice } from '../components/AnalyticsNotice';
 import { SiteHeader } from '../components/SiteHeader';
@@ -286,7 +286,6 @@ export function PortfolioHome({
             <section className="hero-section portfolio-hero" id="about" aria-labelledby="hero-title">
               <div className="hero-copy">
                 <p className="eyebrow">
-                  <Sparkles size={16} aria-hidden="true" />
                   {profile.availability}
                 </p>
                 <h1 id="hero-title">{profile.headline}</h1>
