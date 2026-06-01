@@ -5,7 +5,7 @@ export const rfidCollisionSearchSimulatorConfig: ProjectDetailConfig = {
   title: 'RFID Collision Search Simulator',
   path: rfidCollisionSearchSimulatorPath,
   assetPath: '/assets/rfid-collision-search-simulator',
-  fallbackTech: ['C++', 'STL', 'Visual Studio 2022'],
+  fallbackTech: ['C++', 'STL'],
 };
 
 export const downloadDescriptions: Record<string, DownloadDescription> = {

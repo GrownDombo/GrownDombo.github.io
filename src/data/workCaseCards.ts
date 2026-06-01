@@ -127,7 +127,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     priority: 1,
     metrics: [
       {
-        label: '장애 메일 감소',
+        label: '이슈 등록 감소',
         value: '약 70% 감소',
         evidenceLabel: '이슈 관리 시스템 측정',
         evidenceText: '수정 전후 6개월 단위 추적',
@@ -188,9 +188,9 @@ export const workCaseCards: WorkCaseCardData[] = [
     ],
   },
   {
-    title: '검출 영역 Polygon 가시화 체계 구축',
-    subtitle: 'Polygon 가시화 · 표현 표준화',
-    summary: 'Bounding Box 표시를 실제 Blob 외곽 Polygon 기반으로 표준화',
+    title: '검출 영역 폴리곤 표현 체계 구축',
+    subtitle: '폴리곤 가시화 · 표현 표준화',
+    summary: '사각형 표시를 실제 검출 외곽 기반 폴리곤 표현으로 표준화',
     image: '/assets/defect-polygon-visualization-standardization.png',
     imageAlt: 'Bounding Box display and Polygon visualization Before After inspection UI mockup',
     detailPath: industrialAoiBridgePolygonVisualizationPath,
@@ -203,7 +203,7 @@ export const workCaseCards: WorkCaseCardData[] = [
       },
       {
         label: '표준화',
-        value: '유관 부서 협의 기반 Polygon 바이너리 파일 구성',
+        value: '유관 부서 협의 기반 폴리곤 파일 구성',
       },
     ],
     phases: [
@@ -220,7 +220,7 @@ export const workCaseCards: WorkCaseCardData[] = [
       {
         label: 'After',
         title: '적용 방식',
-        details: ['N-point Polygon 가시화', '공통 Polygon 구조 표준화', '검사 UI 적용'],
+        details: ['검출 영역 폴리곤 가시화', '공통 폴리곤 구조 표준화', '검사 UI 적용'],
       },
     ],
   },
@@ -235,7 +235,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     metrics: [
       {
         label: '추적 범위',
-        value: '화면·부품·알고리즘·ROI 단위',
+        value: '화면·부품·알고리즘·영역 단위',
       },
       {
         label: '조회 흐름',

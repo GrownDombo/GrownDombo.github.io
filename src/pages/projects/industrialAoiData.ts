@@ -198,7 +198,7 @@ export const integrationComparisonRows = [
 
 export const integrationResultItems = [
   {
-    title: '연동 이슈 메일',
+    title: '이슈 등록 건수',
     metric: '약 70% 감소',
     description: '반복 장애 유형을 공통 처리 기준으로 정리',
   },

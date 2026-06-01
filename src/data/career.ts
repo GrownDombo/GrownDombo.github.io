@@ -180,11 +180,11 @@ export const careerProjects: CareerProject[] = [
       '신규 고객사 생산 시스템 연동 시나리오 10개 이상 개발',
       '변경 영향 범위와 장애 추적 비용 감소',
     ],
-    tech: ['C#', '.NET Framework', 'WinForms', 'SECS/GEM', 'TCP/IP', 'FTP'],
+    tech: ['C#', '.NET Framework', 'WinForms', 'SECS/GEM'],
     detailHref: industrialAoiProductionIntegrationPath,
   },
   {
-    title: '검사 이력 데이터 계층 구축',
+    title: '검사 이력 조회 구조 구축',
     subtitle: '파일과 로그 중심 확인을 DB 기반 조회 구조로 전환',
     role: '데이터 모델 설계, SQL Mapper 기반 접근 계층 구현, 이력 조회 UI 개발',
     problem: '검사 결과 확인이 파일과 로그 중심으로 분산되어 조건별 조회와 상세 결과 추적이 어려운 구조',

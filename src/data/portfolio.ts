@@ -7,7 +7,7 @@ import {
 export type ProfileLink = {
   label: string;
   href: string;
-  kind: 'github' | 'email' | 'blog' | 'resume';
+  kind: 'github' | 'email' | 'blog';
 };
 
 export type Profile = {
@@ -86,11 +86,6 @@ export const profile: Profile = {
       href: 'mailto:yjc0455@naver.com',
       kind: 'email',
     },
-    {
-      label: 'Resume',
-      href: 'https://growndombo.tistory.com/page/Grown-Dombo-%EC%9E%98-%EC%9D%BD%ED%9E%88%EB%8A%94-%EA%B0%9C%EB%B0%9C%EC%9E%90',
-      kind: 'resume',
-    },
   ],
 };
 
@@ -134,20 +129,20 @@ export const metrics: Metric[] = [
     },
   },
   {
-    value: '사각형 → Polygon',
-    label: '검출 영역 Polygon 표현 체계 구축',
-    description: 'Bounding Box 표시를 Polygon 기반 공통 가시화 구조로 표준화',
+    value: '사각형 → 폴리곤',
+    label: '검출 영역 폴리곤 표현 체계 구축',
+    description: '사각형 표시를 폴리곤 기반 공통 가시화 구조로 표준화',
     evidence: {
-      label: '공통 Polygon 바이너리 구조 표준화 · 검사 UI 가시화 적용',
+      label: '공통 폴리곤 구조 표준화 · 검사 UI 가시화 적용',
       href: industrialAoiBridgePolygonVisualizationPath,
     },
   },
   {
     value: '파일/로그 → 계층형 DB',
-    label: '검사 이력 추적 범위 확장',
-    description: 'NG 검사 이력을 6단계 계층 모델로 저장·조회해 추적 범위를 확장',
+    label: '검사 이력 조회 구조 구축',
+    description: '파일과 로그 중심 확인을 DB 기반 조회 흐름으로 전환',
     evidence: {
-      label: 'Board → Module → Part → Window → Algorithm → ROI 6단계 추적',
+      label: '화면·부품·알고리즘·영역 단위 추적',
       href: industrialAoiDefectHistoryDataLayerPath,
     },
   },
@@ -156,12 +151,12 @@ export const metrics: Metric[] = [
 export const skillGroups: SkillGroup[] = [
   {
     title: 'Languages',
-    description: '장비 SW와 운영 보조 도구 구현',
+    description: 'Windows 응용프로그램과 운영 보조 도구 구현',
     skills: ['C#', 'C++', 'Java', 'Python'],
   },
   {
     title: 'Core Tech',
-    description: '제조 장비용 Windows 앱 개발 기반',
+    description: 'Windows 앱 개발 기반',
     skills: ['.NET Framework', 'Android SDK'],
   },
   {
@@ -176,8 +171,8 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: 'Domain Tech',
-    description: '생산 연동과 영상처리 도메인',
-    skills: ['SECS/GEM', 'OpenCV', 'TCP/IP', 'FTP'],
+    description: '생산 연동과 검사 데이터 처리',
+    skills: ['SECS/GEM', 'OpenCV'],
   },
   {
     title: 'Tools / Workflow',
@@ -189,13 +184,13 @@ export const skillGroups: SkillGroup[] = [
 export const experiences: Experience[] = [
   {
     period: '2020.04 ~ 현재',
-    title: '제조 장비 소프트웨어 개발자',
+    title: '제조 시스템 Windows 응용프로그램 개발자',
     organization: '펨트론 (Pemtron)',
-    description: 'C#/.NET 기반 광학 검사 장비 SW 개발·유지보수',
+    description: 'C#/.NET 기반 검사 데이터 처리 및 운영용 Windows 앱 개발',
     outcomes: [
-      'AOI 데이터 처리 병목 분석 및 성능 최적화',
+      '대용량 검사 데이터 처리 병목 분석 및 성능 최적화',
       'MES·SECS-GEM 생산 연동 안정화',
-      'WinForms 장비 기능 유지보수 및 구조화',
+      'WinForms 기반 기능 개발 및 구조 개선',
     ],
     keywords: ['C#', 'C++', '.NET Framework', 'SECS/GEM', 'OpenCV', 'Refactoring'],
   },
@@ -217,7 +212,7 @@ export const workCaseStudies: Project[] = [
   {
     title: 'Gerber-Part ROI 매칭 성능 최적화',
     summary: '6분 22초 걸리던 대용량 ROI 매칭을 3.5초 수준으로 단축',
-    role: 'AOI 성능 최적화',
+    role: '대용량 매칭 성능 최적화',
     tech: ['C#', '.NET Framework', 'WinForms', 'Algorithm', 'Performance Optimization'],
     links: [],
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
@@ -239,7 +234,7 @@ export const workCaseStudies: Project[] = [
   {
     title: 'MES · SECS/GEM 생산 연동 안정화',
     summary: '공통 이벤트 기준과 책임 분리로 반복 장애 알림을 감소',
-    role: '장비 연동 안정화',
+    role: '생산 연동 안정화',
     tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM', 'Packet Framing'],
     links: [],
     image: '/assets/industrial-aoi-production-integration/main-image.png',
@@ -249,9 +244,9 @@ export const workCaseStudies: Project[] = [
   },
   {
     title: '원격 공유 폴더 I/O 병목 해소',
-    summary: '공유 폴더 파일 처리를 bat + TCP/IP 기반 로컬 실행 구조로 전환해 Confirm 전체 시간을 약 32초에서 3초대로 단축',
+    summary: '공유 폴더 파일 처리를 로컬 실행 위임 구조로 전환해 Confirm 전체 시간을 약 32초에서 3초대로 단축',
     role: '원격 I/O 처리 최적화',
-    tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'Batch Process', 'File I/O'],
+    tech: ['C#', '.NET Framework', 'WinForms', 'File I/O'],
     links: [],
     image: '/assets/shared-folder-bottleneck.png',
     priority: 4,
@@ -259,10 +254,10 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
-    title: '검출 영역 Polygon 가시화 체계 구축',
-    summary: 'Bounding Box 표시를 실제 Blob 외곽 Polygon 가시화 구조로 표준화',
-    role: '영상처리 기반 가시화 · Polygon 표현 표준 · 공통 바이너리 구조',
-    tech: ['C++', 'C#', '.NET Framework', 'WinForms', 'OpenCV', 'Binary File'],
+    title: '검출 영역 폴리곤 표현 체계 구축',
+    summary: '사각형 표시를 실제 검출 외곽 기반 폴리곤 가시화 구조로 표준화',
+    role: '검출 영역 가시화 · 표현 구조 표준화',
+    tech: ['C++', 'C#', '.NET Framework', 'WinForms', 'OpenCV'],
     links: [],
     image: '/assets/defect-polygon-visualization-standardization.png',
     priority: 2,
@@ -270,10 +265,10 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
-    title: '검사 이력 데이터 계층 구축',
-    summary: 'NG 검사 결과를 계층형 데이터 모델로 저장·조회하고 공통 DLL과 이력 조회 UI로 검사 이력 추적 흐름을 구축',
-    role: 'MSSQL · SQL Mapper · DLL 기반 데이터 접근',
-    tech: ['C#', '.NET Framework', 'WinForms', 'MSSQL', 'iBATIS.NET', 'DLL'],
+    title: '검사 이력 조회 구조 구축',
+    summary: 'NG 검사 결과를 계층형 데이터 모델로 저장·조회하고 이력 조회 UI로 추적 흐름을 구축',
+    role: 'MSSQL · SQL Mapper 기반 데이터 접근',
+    tech: ['C#', '.NET Framework', 'WinForms', 'MSSQL', 'iBATIS.NET'],
     links: [],
     image: '/assets/defect-history-data-layer.svg',
     priority: 2.5,
@@ -285,8 +280,8 @@ export const workCaseStudies: Project[] = [
 export const projects: Project[] = [
   {
     title: 'WinFormsCustomControls',
-    summary: '반복 WinForms UI를 DLL 기반 커스텀 컨트롤로 정리한 공개 라이브러리',
-    role: '개인 프로젝트 · 공개 코드 · DLL 설계',
+    summary: '반복 WinForms UI를 재사용 가능한 커스텀 컨트롤로 정리한 공개 라이브러리',
+    role: '개인 프로젝트 · 공개 코드 · UI 컴포넌트 설계',
     tech: ['C#', '.NET Framework 4.8', 'WinForms'],
     links: [
       {
@@ -332,7 +327,7 @@ export const projects: Project[] = [
     title: 'RFID Collision Search Simulator',
     summary: 'RFID 충돌 탐색을 Prefix 질의 모델로 검증한 C++ 콘솔 시뮬레이터',
     role: '개인 프로젝트 · C++ 알고리즘 검증',
-    tech: ['C++', 'STL', 'Visual Studio 2022'],
+    tech: ['C++', 'STL'],
     links: [
       {
         label: 'Repository',

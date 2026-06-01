@@ -497,10 +497,10 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       'bat 생성 및 실행 위임 구조 설계',
       '경로 치환과 cleanup 처리',
     ],
-    keywords: ['Confirm', 'SMB Bypass', 'Batch Process', 'File Move'],
+    keywords: ['Confirm', 'SMB Bypass', 'Local Execution', 'File Move'],
   },
   'bridge-polygon-visualization': {
-    title: '검출 영역 Polygon 가시화 표준화',
+    title: '검출 영역 폴리곤 표현 체계 구축',
     problem: {
       body: '이진화 검사 결과가 좌상/우하 2점 기반 Bounding Box로만 표시되어, 작업자가 실제 검출 외곽과 판정 근거를 화면에서 확인하기 어려운 구조.',
       points: [
@@ -537,7 +537,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         },
         {
           label: 'Crop 영역 Polygon 추출',
-          detail: '분리된 이미지에서 OpenCV 기반 외곽선을 추출해 실제 검출 형상에 가까운 N-point Polygon으로 구성',
+          detail: '분리된 이미지에서 OpenCV 기반 외곽선을 추출해 실제 검출 형상에 가까운 폴리곤으로 구성',
         },
         {
           label: '원본 좌표 복원 및 UI 적용',
@@ -564,7 +564,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     measurementNotes: [
       '대상 범위: 이진화 검사에서 검출된 Blob 외곽',
       '추출 기준: Blob 좌표 기준으로 crop한 이미지 영역',
-      '표현 방식: 좌상/우하 2점 Bounding Box에서 N-point Polygon으로 확장',
+      '표현 방식: 좌상/우하 2점 Bounding Box에서 폴리곤으로 확장',
       '연동 구조: C++ writer와 C# reader가 공유하는 공통 바이너리 계약',
       '조회 기준: Part ID, Window ID, Algorithm ID, ROI ID',
       '적용 화면: 검사 결과 확인 UI',
@@ -579,7 +579,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     keywords: ['C++', 'C#', 'OpenCV', 'WinForms', 'Binary File', 'Image Processing'],
   },
   'defect-history-data-layer': {
-    title: '검사 이력 데이터 계층 구축',
+    title: '검사 이력 조회 구조 구축',
     problem: {
       body: 'NG 검사 결과 확인이 로그와 파일 중심으로 분산되어, 기간별 검색과 제품·장비 조건 필터링, 알고리즘/ROI 단위 상세 추적이 어려운 구조.',
       points: [
@@ -593,7 +593,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         },
         {
           label: '접근 로직 중복',
-          detail: 'DB 초기화, 저장, 조회, 필터링 흐름을 화면별로 직접 처리하면 유지보수 비용이 증가',
+          detail: 'DB 초기화, 저장, 조회, 필터링 흐름을 화면별로 직접 처리하면 변경 비용이 증가',
         },
         {
           label: '조회 UI 연결 필요',
@@ -613,7 +613,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       note: '조건별 검색과 계층형 상세 확인이 제한',
     },
     improvement: {
-      body: 'NG 검사 결과를 Board-Module-Part-Window-Algorithm-ROI 계층 모델로 구성하고, 공통 DLL API와 iBATIS.NET SQL Mapper를 통해 저장·조회·복원 흐름을 분리. WinForms 이력 조회 UI에서는 기간/Job 조건 필터와 계층형 GridView, 2D/3D 이미지 확인 흐름을 연결.',
+      body: 'NG 검사 결과를 검사 결과 계층 모델로 구성하고, SQL Mapper 기반 접근 구조를 통해 저장·조회·복원 흐름을 분리. WinForms 이력 조회 UI에서는 기간/Job 조건 필터와 계층형 GridView, 2D/3D 이미지 확인 흐름을 연결.',
       points: [
         {
           label: '계층형 데이터 모델링',
@@ -652,7 +652,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     ],
     measurementNotes: [
       '저장 대상: GOOD/AIOK를 제외한 NG 검사 결과',
-      '데이터 모델: Board-Module-Part-Window-Algorithm-ROI 계층',
+      '데이터 모델: 검사 결과 계층 구조',
       'DB 접근: MSSQL + iBATIS.NET SQL Mapper',
       '저장 안정성: 테이블 생성, 인덱스 구성, 트랜잭션 저장',
       '조회 기준: 기간, Group, Board, Slave, 검사 시간',
@@ -661,7 +661,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       '검사 결과 계층 구조 분석 및 MSSQL 테이블 모델링',
       '공통 DLL API와 IDefectHistory 인터페이스 설계',
       'iBATIS.NET SQL Mapper 기반 저장·조회 매핑 구성',
-      '트랜잭션 기반 Board-Module-Part-Window-Algorithm-ROI 일괄 저장 흐름 구현',
+      '트랜잭션 기반 검사 결과 계층 일괄 저장 흐름 구현',
       'WinForms 이력 조회 UI의 필터, GridView, 2D/3D 이미지 확인 흐름 연동',
     ],
     keywords: ['C#', 'MSSQL', 'iBATIS.NET', 'SQL Mapper', 'WinForms', 'DLL', 'Data Modeling'],
@@ -2220,7 +2220,7 @@ export function IndustrialAOIPlatformProjectPage({
         },
       ],
       impact: [
-        '연동 이슈 메일 약 70% 감소',
+        '이슈 관리 시스템 등록 건수 약 70% 감소',
         '신규 고객사 연동 10개 이상 시나리오 대응',
         '이벤트-전송-응답 기준 운영 추적성 강화',
       ],
@@ -2340,8 +2340,8 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'bridge-polygon-visualization',
       step: '05',
-      title: '검출 영역 Polygon 가시화 표준화',
-      summary: 'Bounding Box 중심 표시를 실제 Blob 외곽 Polygon 표현과 공통 데이터 계약으로 확장',
+      title: '검출 영역 폴리곤 표현 체계 구축',
+      summary: '사각형 중심 표시를 실제 검출 외곽 폴리곤 표현과 공통 데이터 계약으로 확장',
       problem: '좌상/우하 2점 Bounding Box만으로는 실제 검출 외곽과 판정 근거를 화면에서 확인하기 어려운 구조',
       actions: [
         'Blob 좌표 기준 이미지 crop 및 crop 영역 외곽 Polygon 추출',
@@ -2363,7 +2363,7 @@ export function IndustrialAOIPlatformProjectPage({
         },
       ],
       impact: [
-        'Bounding Box 대신 실제 검출 영역을 N-point Polygon으로 확인',
+        'Bounding Box 대신 실제 검출 영역을 폴리곤으로 확인',
         'C++ 검사 엔진과 C# UI 사이의 Polygon 표현 방식 표준화',
         '검사 결과 확인 UI에서 동일한 판정 근거 제공',
       ],
@@ -2388,11 +2388,11 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'defect-history-data-layer',
       step: '06',
-      title: '검사 이력 데이터 계층 구축',
-      summary: 'NG 검사 결과를 계층형 데이터 모델과 공통 DLL 기반 조회 흐름으로 구축',
+      title: '검사 이력 조회 구조 구축',
+      summary: 'NG 검사 결과를 계층형 데이터 모델과 조회 UI로 연결',
       problem: '로그/파일 중심 확인만으로는 NG 이력의 조건 검색과 알고리즘/ROI 단위 상세 추적이 어려운 구조',
       actions: [
-        'Board-Module-Part-Window-Algorithm-ROI 계층 데이터 모델 정의',
+        '검사 결과 계층 데이터 모델 정의',
         'MSSQL 테이블 생성·초기화·인덱스 구성 흐름 구현',
         'iBATIS.NET SQL Mapper 기반 Insert/Select 매핑 구성',
         '공통 DLL API로 DB 초기화, 저장, 필터 조회, 상세 복원 기능 분리',
@@ -2412,7 +2412,7 @@ export function IndustrialAOIPlatformProjectPage({
       ],
       impact: [
         '검사 이력 저장·조회 흐름을 공통 데이터 접근 계층으로 분리',
-        'Board부터 ROI까지 이어지는 NG 검사 결과 상세 복원 기준 확보',
+        '화면부터 영역 단위까지 이어지는 NG 검사 결과 상세 복원 기준 확보',
         '기간/Group/Board/Slave 기준 이력 조회 UI 제공',
       ],
       improvements: [
@@ -2455,11 +2455,11 @@ export function IndustrialAOIPlatformProjectPage({
       : selectedArea?.id === 'production-integration'
         ? '서비스별로 분산된 생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 정리'
       : selectedArea?.id === 'bridge-polygon-visualization'
-        ? 'Blob 좌표 기준 crop 영역에서 실제 외곽 Polygon을 추출하고, offset 복원 좌표를 C# 검사 결과 UI까지 전달하는 가시화 구조로 표준화'
+        ? 'Blob 좌표 기준 crop 영역에서 실제 외곽 폴리곤을 추출하고, offset 복원 좌표를 C# 검사 결과 UI까지 전달하는 가시화 구조로 표준화'
       : selectedArea?.id === 'defect-history-data-layer'
-        ? 'NG 검사 결과를 계층형 데이터 모델로 저장하고 공통 DLL/SQL Mapper를 통해 이력 조회 UI에서 복원하는 데이터 접근 구조 구축'
+        ? 'NG 검사 결과를 계층형 데이터 모델로 저장하고 SQL Mapper 기반 이력 조회 UI에서 복원하는 구조 구축'
       : selectedArea?.summary ??
-        '3D AOI 장비 소프트웨어 업무 성과를 성능 최적화, 생산 연동, 기능 개발, 운영 안정화 기준으로 구성';
+        '검사 시스템 업무 성과를 성능 최적화, 생산 연동, 기능 개발, 운영 안정화 기준으로 구성';
   const pageTech =
     selectedArea?.id === 'inspection-automation'
       ? gerberPartReportTech
@@ -2492,7 +2492,7 @@ export function IndustrialAOIPlatformProjectPage({
   const guideTitle = selectedArea ? 'Key Contributions' : `${highlightAreas.length} Work Areas`;
   const guideDescription = selectedArea
     ? '문제, 기존 방식, 해결 방식, 결과, 담당 역할 중심 구성'
-    : '회사·고객사 세부 정보는 제외하고 성능 최적화, 생산 연동, 검사 결과 가시화, 데이터 계층 구축, UX/UI 응답성 기준으로 정리했습니다.';
+    : '회사·고객사 세부 정보는 제외하고 성능 최적화, 생산 연동, 검사 결과 가시화, 이력 조회 구조, UX/UI 응답성 기준으로 정리했습니다.';
 
   return (
     <div className="site-shell" data-theme={themeMode}>
