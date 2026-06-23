@@ -109,12 +109,12 @@ export function PortfolioHome({
   const prioritizedProjects = [...projects].sort((left, right) => {
     return (left.priority ?? Number.MAX_SAFE_INTEGER) - (right.priority ?? Number.MAX_SAFE_INTEGER);
   });
-  const roiSpeedMetric = metrics.find((metric) => metric.label === 'Gerber-Part ROI 매칭 시간 단축');
+  const roiSpeedMetric = metrics.find((metric) => metric.label === '대용량 좌표 매칭 시간 단축');
   const shortcutScopeMetric = metrics.find((metric) => metric.label === '단축키 기능 확장 및 리팩터링');
-  const issueMetric = metrics.find((metric) => metric.label === '장애 이슈 등록 건수 감소');
+  const issueMetric = metrics.find((metric) => metric.label === '시스템 연동 이슈 등록 건수 감소');
   const remoteIoMetric = metrics.find((metric) => metric.label === '원격 공유 폴더 I/O 처리 시간 단축');
-  const bridgePolygonMetric = metrics.find((metric) => metric.label === '검출 영역 폴리곤 표현 체계 구축');
-  const defectHistoryMetric = metrics.find((metric) => metric.label === '검사 이력 조회 구조 구축');
+  const bridgePolygonMetric = metrics.find((metric) => metric.label === '결과 영역 폴리곤 표현 체계 구축');
+  const defectHistoryMetric = metrics.find((metric) => metric.label === '처리 이력 조회 구조 구축');
   const visibleWorkCaseCards = prioritizedWorkCaseCards.slice(0, 2);
   const additionalWorkCaseCards = prioritizedWorkCaseCards.slice(2);
   const visibleProjects = prioritizedProjects.slice(0, 3);
@@ -424,7 +424,7 @@ export function PortfolioHome({
               <p className="section-kicker">Work Impact</p>
               <h2 id="work-cases-title">핵심 업무 성과</h2>
               <p className="section-heading-copy">
-                Windows 응용프로그램에서 성능 최적화, 생산 연동 안정화, 기능 개발 사례, 운영 응답성 개선을 정리한 프로젝트
+                Windows 응용프로그램에서 성능 최적화, 외부 시스템 연동 안정화, 기능 개발 사례, 운영 응답성 개선을 정리한 프로젝트
               </p>
             </div>
           </div>
@@ -534,7 +534,7 @@ export function PortfolioHome({
             <div>
               <p className="section-kicker">Experience</p>
               <h2 id="experience-title">핵심 경력</h2>
-              <p className="section-heading-copy">Windows 응용프로그램 개발과 생산 시스템 연동 개선 중심의 경력 요약</p>
+              <p className="section-heading-copy">Windows 응용프로그램 개발과 외부 시스템 연동 개선 중심의 경력 요약</p>
             </div>
           </div>
           <ol className="experience-timeline">

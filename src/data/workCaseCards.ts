@@ -40,9 +40,9 @@ export type WorkCaseCardData = {
 
 export const workCaseCards: WorkCaseCardData[] = [
   {
-    title: 'Gerber-Part ROI 매칭 성능 최적화',
-    subtitle: 'ROI 매칭 병목 개선',
-    summary: '좌표의 후보 선별과 캐시 구조로 ROI 매칭 병목 해소',
+    title: '대용량 좌표 매칭 성능 최적화',
+    subtitle: '좌표 매칭 병목 개선',
+    summary: '후보 선별과 캐시 구조로 좌표 매칭 병목 해소',
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
     imageAlt: 'Module and Part ROI matching mockup',
     detailPath: industrialAoiInspectionAutomationPath,
@@ -61,17 +61,17 @@ export const workCaseCards: WorkCaseCardData[] = [
       {
         label: 'Problem',
         title: '문제 상황',
-        details: ['대량 ROI 전수 비교', '검사 준비 시간 지연', '좌표 변환 반복'],
+        details: ['대량 좌표 전수 비교', '처리 준비 시간 지연', '좌표 변환 반복'],
       },
       {
         label: 'Before',
         title: '기존 방식',
-        details: ['전체 Gerber 순회', 'Window마다 재계산'],
+        details: ['전체 후보 순회', '항목마다 재계산'],
       },
       {
         label: 'After',
         title: '적용 방식',
-        details: ['Module 후보 선별', '변환 결과 캐싱', '기존 결과 유지'],
+        details: ['상위 영역 후보 선별', '변환 결과 캐싱', '기존 결과 유지'],
       },
     ],
   },
@@ -118,9 +118,9 @@ export const workCaseCards: WorkCaseCardData[] = [
     ],
   },
   {
-    title: 'MES · SECS/GEM 생산 연동 안정화',
-    subtitle: '생산 시스템 연동 안정화',
-    summary: '고객사별 차이를 공통 이벤트로 정리해 반복 장애 알림을 감소',
+    title: '외부 시스템 연동 안정화',
+    subtitle: '시스템 연동 안정화',
+    summary: '고객사별 연동 차이를 공통 이벤트로 정리해 반복 이슈 등록을 감소',
     image: '/assets/industrial-aoi-production-integration/main-image.png',
     imageAlt: 'MES SECS GEM production integration mockup',
     detailPath: industrialAoiProductionIntegrationPath,
@@ -188,9 +188,9 @@ export const workCaseCards: WorkCaseCardData[] = [
     ],
   },
   {
-    title: '검출 영역 폴리곤 표현 체계 구축',
+    title: '결과 영역 폴리곤 표현 체계 구축',
     subtitle: '폴리곤 가시화 · 표현 표준화',
-    summary: '사각형 표시를 실제 검출 외곽 기반 폴리곤 표현으로 표준화',
+    summary: '사각형 표시를 실제 결과 외곽 기반 폴리곤 표현으로 표준화',
     image: '/assets/defect-polygon-visualization-standardization.png',
     imageAlt: 'Bounding Box display and Polygon visualization Before After inspection UI mockup',
     detailPath: industrialAoiBridgePolygonVisualizationPath,
@@ -198,7 +198,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     metrics: [
       {
         label: '가시화',
-        value: '다각형 검출 알고리즘 및 표시 기능 개발',
+        value: '다각형 영역 추출 및 표시 기능 개발',
         tone: 'accent',
       },
       {
@@ -210,24 +210,24 @@ export const workCaseCards: WorkCaseCardData[] = [
       {
         label: 'Problem',
         title: '문제 상황',
-        details: ['Bounding Box 기반 표시', '실제 검출 외곽 미표현'],
+        details: ['Bounding Box 기반 표시', '실제 결과 외곽 미표현'],
       },
       {
         label: 'Before',
         title: '기존 방식',
-        details: ['좌상/우하 2점 기준', 'Blob 실제 형상 표현 부재'],
+        details: ['좌상/우하 2점 기준', '실제 형상 표현 부재'],
       },
       {
         label: 'After',
         title: '적용 방식',
-        details: ['검출 영역 폴리곤 가시화', '공통 폴리곤 구조 표준화', '검사 UI 적용'],
+        details: ['결과 영역 폴리곤 가시화', '공통 폴리곤 구조 표준화', '결과 UI 적용'],
       },
     ],
   },
   {
-    title: '검사 이력 조회 구조 구축',
-    subtitle: '검사 결과 추적 · 조건 검색 · 상세 복원',
-    summary: '조건별 검사 이력 조회와 상세 추적 흐름 구축',
+    title: '처리 이력 조회 구조 구축',
+    subtitle: '처리 결과 추적 · 조건 검색 · 상세 복원',
+    summary: '조건별 처리 이력 조회와 상세 추적 흐름 구축',
     image: '/assets/defect-history-data-layer.svg',
     imageAlt: 'DefectHistory inspection history UI mockup with filled sample data',
     detailPath: industrialAoiDefectHistoryDataLayerPath,

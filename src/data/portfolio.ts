@@ -92,20 +92,20 @@ export const profile: Profile = {
 export const metrics: Metric[] = [
   {
     value: '6분 22초 → 3.5초',
-    label: 'Gerber-Part ROI 매칭 시간 단축',
-    description: 'Module 후보 선별과 캐싱으로 대용량 ROI 매칭 병목 해소',
+    label: '대용량 좌표 매칭 시간 단축',
+    description: '후보 선별과 캐싱으로 대용량 좌표 매칭 병목 해소',
     evidence: {
-      label: '동일 검사 데이터 · Start/End 로그 기준',
+      label: '동일 처리 데이터 · Start/End 로그 기준',
       href: '/work/gerber-part-roi-matching-optimization',
       suffix: ' 약 99% 개선',
     },
   },
   {
     value: '약 70% 감소',
-    label: '장애 이슈 등록 건수 감소',
-    description: '생산 연동 책임 분리로 장애 이슈 등록 건수 감소',
+    label: '시스템 연동 이슈 등록 건수 감소',
+    description: '외부 연동 책임 분리로 이슈 등록 건수 감소',
     evidence: {
-      label: 'MES · SECS/GEM 연동 장애 감소를 위한 생산 이벤트 처리 구조화',
+      label: '외부 시스템 연동 이벤트 처리 구조화',
       href: '/work/mes-secs-gem-data-flow',
     },
   },
@@ -130,19 +130,19 @@ export const metrics: Metric[] = [
   },
   {
     value: '사각형 → 폴리곤',
-    label: '검출 영역 폴리곤 표현 체계 구축',
-    description: '사각형 표시를 폴리곤 기반 공통 가시화 구조로 표준화',
+    label: '결과 영역 폴리곤 표현 체계 구축',
+    description: '사각형 표시를 폴리곤 기반 결과 가시화 구조로 표준화',
     evidence: {
-      label: '공통 폴리곤 구조 표준화 · 검사 UI 가시화 적용',
+      label: '공통 폴리곤 구조 표준화 · 결과 UI 가시화 적용',
       href: industrialAoiBridgePolygonVisualizationPath,
     },
   },
   {
     value: '파일/로그 → 계층형 DB',
-    label: '검사 이력 조회 구조 구축',
+    label: '처리 이력 조회 구조 구축',
     description: '파일과 로그 중심 확인을 DB 기반 조회 흐름으로 전환',
     evidence: {
-      label: '화면·부품·알고리즘·영역 단위 추적',
+      label: '화면·항목·알고리즘·영역 단위 추적',
       href: industrialAoiDefectHistoryDataLayerPath,
     },
   },
@@ -161,7 +161,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: 'Database',
-    description: '검사 이력과 운영 데이터 관리',
+    description: '업무 이력과 운영 데이터 관리',
     skills: ['MSSQL', 'MariaDB', 'SQLite'],
   },
   {
@@ -171,8 +171,8 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: 'Domain Tech',
-    description: '생산 연동과 검사 데이터 처리',
-    skills: ['SECS/GEM', 'OpenCV'],
+    description: '외부 시스템 연동과 데이터 처리',
+    skills: ['System Integration', 'OpenCV'],
   },
   {
     title: 'Tools / Workflow',
@@ -184,15 +184,15 @@ export const skillGroups: SkillGroup[] = [
 export const experiences: Experience[] = [
   {
     period: '2020.04 ~ 현재',
-    title: '제조 시스템 Windows 응용프로그램 개발자',
+    title: 'Windows 응용프로그램 개발자',
     organization: '펨트론 (Pemtron)',
-    description: 'C#/.NET 기반 검사 데이터 처리 및 운영용 Windows 앱 개발',
+    description: 'C#/.NET 기반 데이터 처리, 업무 화면, 운영 도구 개발',
     outcomes: [
-      '대용량 검사 데이터 처리 병목 분석 및 성능 최적화',
-      'MES·SECS-GEM 생산 연동 안정화',
+      '대용량 데이터 처리 병목 분석 및 성능 최적화',
+      '외부 시스템 연동 안정화',
       'WinForms 기반 기능 개발 및 구조 개선',
     ],
-    keywords: ['C#', 'C++', '.NET Framework', 'SECS/GEM', 'OpenCV', 'Refactoring'],
+    keywords: ['C#', 'C++', '.NET Framework', 'WinForms', 'MSSQL', 'Refactoring'],
   },
   {
     period: '2019.10 ~ 2020.04',
@@ -210,9 +210,9 @@ export const experiences: Experience[] = [
 
 export const workCaseStudies: Project[] = [
   {
-    title: 'Gerber-Part ROI 매칭 성능 최적화',
-    summary: '6분 22초 걸리던 대용량 ROI 매칭을 3.5초 수준으로 단축',
-    role: '대용량 매칭 성능 최적화',
+    title: '대용량 좌표 매칭 성능 최적화',
+    summary: '6분 22초 걸리던 대용량 좌표 매칭을 3.5초 수준으로 단축',
+    role: '데이터 매칭 성능 최적화',
     tech: ['C#', '.NET Framework', 'WinForms', 'Algorithm', 'Performance Optimization'],
     links: [],
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
@@ -232,10 +232,10 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
-    title: 'MES · SECS/GEM 생산 연동 안정화',
-    summary: '공통 이벤트 기준과 책임 분리로 반복 장애 알림을 감소',
-    role: '생산 연동 안정화',
-    tech: ['C#', '.NET Framework', 'WinForms', 'TCP/IP', 'SECS/GEM', 'Packet Framing'],
+    title: '외부 시스템 연동 안정화',
+    summary: '공통 이벤트 기준과 책임 분리로 반복 이슈 등록을 감소',
+    role: '시스템 연동 안정화',
+    tech: ['C#', '.NET Framework', 'WinForms', 'System Integration', 'Refactoring'],
     links: [],
     image: '/assets/industrial-aoi-production-integration/main-image.png',
     priority: 1,
@@ -254,9 +254,9 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
-    title: '검출 영역 폴리곤 표현 체계 구축',
-    summary: '사각형 표시를 실제 검출 외곽 기반 폴리곤 가시화 구조로 표준화',
-    role: '검출 영역 가시화 · 표현 구조 표준화',
+    title: '결과 영역 폴리곤 표현 체계 구축',
+    summary: '사각형 표시를 실제 결과 외곽 기반 폴리곤 가시화 구조로 표준화',
+    role: '결과 영역 가시화 · 표현 구조 표준화',
     tech: ['C++', 'C#', '.NET Framework', 'WinForms', 'OpenCV'],
     links: [],
     image: '/assets/defect-polygon-visualization-standardization.png',
@@ -265,8 +265,8 @@ export const workCaseStudies: Project[] = [
     status: 'Work Case',
   },
   {
-    title: '검사 이력 조회 구조 구축',
-    summary: 'NG 검사 결과를 계층형 데이터 모델로 저장·조회하고 이력 조회 UI로 추적 흐름을 구축',
+    title: '처리 이력 조회 구조 구축',
+    summary: '처리 결과를 계층형 데이터 모델로 저장·조회하고 이력 조회 UI로 추적 흐름을 구축',
     role: 'MSSQL · SQL Mapper 기반 데이터 접근',
     tech: ['C#', '.NET Framework', 'WinForms', 'MSSQL', 'iBATIS.NET'],
     links: [],

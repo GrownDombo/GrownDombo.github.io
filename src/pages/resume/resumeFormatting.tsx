@@ -26,18 +26,18 @@ export function splitMetricText(metric: string, highlightTitle: string) {
     return splitMap[metric] ?? { label: metric, result: '' };
   }
 
-  if (highlightTitle === '검사 이력 조회 구조 구축') {
+  if (highlightTitle === '처리 이력 조회 구조 구축') {
     const splitMap: Record<string, { label: string; result: string }> = {
-      'NG 검사 결과를 검사 결과 계층 구조로 저장·조회': {
-        label: '검사 이력 데이터 모델링',
-        result: '검사 결과 계층 구조화',
+      '처리 결과를 계층형 데이터 모델로 저장·조회하는 공통 데이터 구조 설계': {
+        label: '처리 이력 데이터 모델링',
+        result: '처리 결과 계층 구조화',
       },
       'SQL Mapper 기반 데이터 접근 구조로 검사 이력 조회 흐름 구축': {
         label: '데이터 접근 계층 구축',
         result: 'SQL Mapper 기반 조회 흐름',
       },
-      '로그 기반으로만 가능하던 검사 결과 분석을 UI 기반으로 전환': {
-        label: '검사 결과 분석 환경 개선',
+      '로그 기반으로만 가능하던 처리 결과 분석을 UI 기반으로 전환': {
+        label: '처리 결과 분석 환경 개선',
         result: 'UI 기반 분석으로 전환',
       },
       '파일 시스템 기반 관리 방식에서 발생하던 접근 충돌 문제 완화': {
@@ -53,10 +53,10 @@ export function splitMetricText(metric: string, highlightTitle: string) {
     return splitMap[metric] ?? { label: metric, result: '' };
   }
 
-  if (highlightTitle === '검출 영역 폴리곤 표현 체계 구축') {
+  if (highlightTitle === '결과 영역 폴리곤 표현 체계 구축') {
     const splitMap: Record<string, { label: string; result: string }> = {
       '좌상/우하 Bounding Box 표시 한계를 개선하고 실제 검출 외곽을 폴리곤으로 가시화하는 공통 표현 구조 표준화': {
-        label: '검출 외곽 폴리곤 가시화',
+        label: '결과 외곽 폴리곤 가시화',
         result: '공통 폴리곤 표현 표준화',
       },
     };
