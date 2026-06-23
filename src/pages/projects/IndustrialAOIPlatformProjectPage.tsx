@@ -189,17 +189,17 @@ function renderCsharpCode(code: string) {
 
 const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport> = {
   'inspection-automation': {
-    title: 'Gerber-Part ROI 매칭 성능 최적화',
+    title: '대용량 좌표 매칭 성능 최적화',
     problem: {
-      body: '대용량 ROI 매칭에서 각 Part Window ROI가 전체 Gerber ROI를 반복 순회하는 기존 구조로 인해 검사 준비 시간이 증가.',
+      body: '대용량 좌표 매칭에서 각 처리 항목이 전체 후보 좌표를 반복 순회하는 기존 구조로 인해 처리 준비 시간이 증가.',
       points: [
         {
           label: '데이터 규모',
-          detail: '동일 검사 데이터 기준 70,448개 Part Window ROI와 387,600개 Gerber ROI 매칭 필요',
+          detail: '동일 처리 데이터 기준 70,448개 처리 항목과 387,600개 후보 좌표 매칭 필요',
         },
         {
           label: '기존 방식',
-          detail: '각 Part Window ROI가 전체 Gerber ROI를 반복 순회해 데이터 규모 증가에 따라 비교 횟수 급증',
+          detail: '각 처리 항목이 전체 후보 좌표를 반복 순회해 데이터 규모 증가에 따라 비교 횟수 급증',
         },
         {
           label: '처리 비용',
@@ -207,54 +207,54 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         },
         {
           label: '작업 영향',
-          detail: 'Start/End 로그 기준 검사 준비 시간이 약 6분 22초까지 증가',
+          detail: 'Start/End 로그 기준 처리 준비 시간이 약 6분 22초까지 증가',
         },
       ],
       stats: [
-        { label: 'Part Window ROI', value: '70,448개' },
-        { label: 'Gerber ROI', value: '387,600개' },
+        { label: '처리 항목', value: '70,448개' },
+        { label: '후보 좌표', value: '387,600개' },
         { label: '기존 비교 횟수', value: '약 273억 회', tone: 'danger' },
         { label: '처리 시간', value: '약 6분 22초', tone: 'danger' },
       ],
     },
     before: {
-      body: '각 Part Window ROI가 전체 Gerber ROI를 반복 순회해 데이터 규모가 커질수록 비교 횟수가 급증했습니다.',
+      body: '각 처리 항목이 전체 후보 좌표를 반복 순회해 데이터 규모가 커질수록 비교 횟수가 급증했습니다.',
       label: '개선 전 비교 횟수',
       highlight: '약 273억 회',
       note: '70,448 x 387,600 기준',
     },
     improvement: {
-      body: '전체 Gerber ROI 반복 순회를 제거하고, Module 영역과 교차하는 Gerber ROI 후보를 먼저 구성한 뒤 매칭 루프에서 재사용하도록 처리 흐름을 재구성.',
+      body: '전체 후보 좌표 반복 순회를 제거하고, 상위 영역과 교차하는 후보 좌표를 먼저 구성한 뒤 매칭 루프에서 재사용하도록 처리 흐름을 재구성.',
       points: [
         {
-          label: 'Module 영역 후보 선별',
-          detail: 'Module 영역과 교차하는 Gerber ROI만 후보로 캐싱해 비교 대상을 먼저 축소',
+          label: '상위 영역 후보 선별',
+          detail: '상위 영역과 교차하는 좌표만 후보로 캐싱해 비교 대상을 먼저 축소',
         },
         {
           label: '비교 범위 축소',
-          detail: '각 Part Window ROI가 전체 Gerber ROI를 반복 순회하지 않고 영역 후보 내에서만 비교',
+          detail: '각 처리 항목이 전체 후보 좌표를 반복 순회하지 않고 영역 후보 내에서만 비교',
         },
         {
           label: '후보 목록 재사용',
-          detail: 'Module 영역 기준 Gerber 후보 목록을 먼저 만들고 Part·Window 매칭 루프에서 반복 사용',
+          detail: '상위 영역 기준 후보 목록을 먼저 만들고 매칭 루프에서 반복 사용',
         },
         {
           label: '기존 결과 호환',
-          detail: '후속 검사 흐름에 영향이 없도록 기존 매칭 결과 포맷 유지',
+          detail: '후속 처리 흐름에 영향이 없도록 기존 매칭 결과 포맷 유지',
         },
       ],
       stats: [
         { label: '비교 기준', value: '전체 순회 → 후보군' },
-        { label: '후보 단위', value: 'Module 영역 기준' },
+        { label: '후보 단위', value: '상위 영역 기준' },
         { label: '계산 방식', value: '후보 목록 재사용' },
         { label: '후속 영향', value: '결과 포맷 유지' },
       ],
       steps: gerberPartOptimizationSteps,
     },
     results: [
-      { title: '처리 시간', metric: '6분 22초 → 3.5초', description: '동일 검사 데이터 기준' },
+      { title: '처리 시간', metric: '6분 22초 → 3.5초', description: '동일 처리 데이터 기준' },
       { title: '개선율', metric: '99%+', description: '개선 전후 평균 비교' },
-      { title: '비교 횟수', metric: '273억 → 1억', description: 'Module 영역 후보 기준 축소' },
+      { title: '비교 횟수', metric: '273억 → 1억', description: '상위 영역 후보 기준 축소' },
     ],
     measurementNotes: gerberPartMeasurementNotes,
     roles: gerberPartRoleItems,
@@ -308,7 +308,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         },
         {
           label: '설정 안정성 확보',
-          detail: '중복 단축키 검증, XML 저장·백업, 사용자·장비 기준 설정 반영',
+          detail: '중복 단축키 검증, XML 저장·백업, 사용자별 설정 반영',
         },
         {
           label: '데모 대응 흐름 정비',
@@ -349,9 +349,9 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     keywords: ['단축키', 'TwoKeysDictionary', 'WinForms UX/UI', 'Input Response', 'Debug Log'],
   },
   'production-integration': {
-    title: 'MES · SECS/GEM 생산 연동 안정화',
+    title: '외부 시스템 연동 안정화',
     problem: {
-      body: '서비스별 조건 분기 안에 생산 이벤트 처리, 전송, 응답 반영, 고객사 예외가 함께 누적되어 변경 영향 범위와 장애 추적 비용이 증가.',
+      body: '서비스별 조건 분기 안에 연동 이벤트 처리, 전송, 응답 반영, 고객사 예외가 함께 누적되어 변경 영향 범위와 이슈 추적 비용이 증가.',
       points: [
         {
           label: '이벤트 기준',
@@ -367,14 +367,14 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         },
         {
           label: '운영 영향',
-          detail: '반복 장애 알림이 누적되고 이슈 원인 추적 비용 증가',
+          detail: '반복 이슈 등록이 누적되고 원인 추적 비용 증가',
         },
       ],
       stats: [
         { label: '기존 구조', value: '조건 분기 누적', tone: 'danger' },
         { label: '책임 경계', value: '생성·전송·응답 혼재', tone: 'danger' },
         { label: '예외 처리', value: '고객사별 혼재', tone: 'danger' },
-        { label: '운영 영향', value: '반복 장애 알림', tone: 'danger' },
+        { label: '운영 영향', value: '반복 이슈 등록', tone: 'danger' },
       ],
     },
     before: {
@@ -384,10 +384,10 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       note: 'MES/SECS-GEM/TCP-IP 변경이 같은 흐름에 집중',
     },
     improvement: {
-      body: '공통 생산 이벤트 기준을 정의하고, 요청 생성·전송 분기·응답 반영·로그 추적 책임을 채널별로 분리.',
+      body: '공통 연동 이벤트 기준을 정의하고, 요청 생성·전송 분기·응답 반영·로그 추적 책임을 채널별로 분리.',
       points: [
         {
-          label: '생산 이벤트 표준화',
+          label: '연동 이벤트 표준화',
           detail: 'Job, Barcode, Result, Alarm을 서비스별 조건에서 분리된 공통 기준으로 정리',
         },
         {
@@ -419,11 +419,11 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
   'operation-flow': {
     title: '원격 공유 폴더 I/O 병목 해소',
     problem: {
-      body: 'Repair Confirm 과정에서 원격 PC가 AOI 산출 파일을 공유 폴더 경로로 직접 이동·삭제하며 네트워크 I/O 대기 시간이 Confirm 흐름에 누적.',
+      body: '확정 처리 과정에서 원격 PC가 처리 산출 파일을 공유 폴더 경로로 직접 이동·삭제하며 네트워크 I/O 대기 시간이 흐름에 누적.',
       points: [
         {
           label: '처리 대상',
-          detail: 'AOI가 생성한 이미지와 XML 파일을 Repair Confirm 시점에 이동·삭제해야 하는 구조',
+          detail: '응용프로그램이 생성한 이미지와 XML 파일을 확정 처리 시점에 이동·삭제해야 하는 구조',
         },
         {
           label: '기존 방식',
@@ -446,7 +446,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       ],
     },
     before: {
-      body: 'Repair가 AOI 산출 파일 이동·삭제를 원격 PC에서 직접 수행하면서 네트워크 왕복 비용이 Confirm 흐름에 누적',
+      body: '처리 산출 파일 이동·삭제를 원격 PC에서 직접 수행하면서 네트워크 왕복 비용이 확정 처리 흐름에 누적',
       label: '기존 방식',
       highlight: '원격 직접 조작',
       note: '공유 폴더 접근 비용이 작업 시간에 반영',
@@ -500,21 +500,21 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
     keywords: ['Confirm', 'SMB Bypass', 'Local Execution', 'File Move'],
   },
   'bridge-polygon-visualization': {
-    title: '검출 영역 폴리곤 표현 체계 구축',
+    title: '결과 영역 폴리곤 표현 체계 구축',
     problem: {
-      body: '이진화 검사 결과가 좌상/우하 2점 기반 Bounding Box로만 표시되어, 작업자가 실제 검출 외곽과 판정 근거를 화면에서 확인하기 어려운 구조.',
+      body: '처리 결과가 좌상/우하 2점 기반 Bounding Box로만 표시되어, 사용자가 실제 결과 외곽과 판단 근거를 화면에서 확인하기 어려운 구조.',
       points: [
         {
-          label: '판정 근거 가시성 부족',
-          detail: '사각형 표시만으로는 Blob 외곽의 굴곡과 실제 검출 형상을 확인하기 어려움',
+          label: '판단 근거 가시성 부족',
+          detail: '사각형 표시만으로는 Blob 외곽의 굴곡과 실제 결과 형상을 확인하기 어려움',
         },
         {
           label: '엔진-UI 표현 계약 부재',
-          detail: 'C++ 검사 엔진의 다각형 결과를 C# UI에서 안정적으로 읽을 수 있는 공통 구조가 필요',
+          detail: 'C++ 처리 엔진의 다각형 결과를 C# UI에서 안정적으로 읽을 수 있는 공통 구조가 필요',
         },
         {
           label: '좌표계 연결 필요',
-          detail: 'Part/Window/Algorithm/ROI 기준으로 검사 좌표를 화면 좌표에 맞게 복원해야 함',
+          detail: '원본 이미지 기준 좌표를 화면 좌표에 맞게 복원해야 함',
         },
       ],
       stats: [
@@ -523,17 +523,17 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       ],
     },
     before: {
-      body: '기존 UI는 검사 결과를 좌상/우하 2점으로 계산한 사각형 영역으로만 표시해, 실제 검출 외곽이 어디까지인지 확인하기 어려웠음',
+      body: '기존 UI는 처리 결과를 좌상/우하 2점으로 계산한 사각형 영역으로만 표시해, 실제 결과 외곽이 어디까지인지 확인하기 어려웠음',
       label: '기존 방식',
       highlight: '2점 기반 Bounding Box',
-      note: '검출 형상 확인보다 대략적인 위치 확인에 가까운 표시 방식',
+      note: '실제 형상 확인보다 대략적인 위치 확인에 가까운 표시 방식',
     },
     improvement: {
-      body: '검출된 Blob 좌표를 기준으로 원본 이미지를 crop하고, 해당 crop 영역에서 실제 외곽 Polygon을 추출한 뒤 원본 이미지 좌표로 복원해 검사 결과 UI에 적용.',
+      body: 'Blob 좌표를 기준으로 원본 이미지를 crop하고, 해당 crop 영역에서 실제 외곽 Polygon을 추출한 뒤 원본 이미지 좌표로 복원해 결과 확인 UI에 적용.',
       points: [
         {
           label: 'Blob 기준 이미지 Crop',
-          detail: '기존 Bounding Box 좌표를 활용해 검출 Blob 영역만 분리하고 외곽 추출 대상 이미지를 최소화',
+          detail: '기존 Bounding Box 좌표를 활용해 Blob 영역만 분리하고 외곽 추출 대상 이미지를 최소화',
         },
         {
           label: 'Crop 영역 Polygon 추출',
@@ -541,7 +541,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         },
         {
           label: '원본 좌표 복원 및 UI 적용',
-          detail: 'crop offset을 반영해 Part Image 좌표로 복원하고, C# 검사 결과 UI에서 화면 좌표로 변환해 표시',
+          detail: 'crop offset을 반영해 원본 이미지 좌표로 복원하고, C# 결과 확인 UI에서 화면 좌표로 변환해 표시',
         },
       ],
       stats: [
@@ -550,46 +550,46 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         { label: '좌표 복원', value: 'Offset 적용' },
       ],
       steps: [
-        { icon: Box, title: 'Blob Crop', description: '검출 좌표 기준으로 이미지 영역 분리' },
+        { icon: Box, title: 'Blob Crop', description: '결과 좌표 기준으로 이미지 영역 분리' },
         { icon: Database, title: 'Polygon 저장', description: 'Offset 복원 좌표와 Defect ID 저장' },
-        { icon: Layers, title: 'UI Overlay', description: '검사 화면 좌표로 변환 후 표시' },
+        { icon: Layers, title: 'UI Overlay', description: '결과 화면 좌표로 변환 후 표시' },
       ],
     },
     results: [
-      { title: '검출 근거', metric: 'Bounding Box → Polygon', description: '실제 Blob 외곽 기준으로 판정 근거 확인' },
+      { title: '결과 근거', metric: 'Bounding Box → Polygon', description: '실제 Blob 외곽 기준으로 판단 근거 확인' },
       { title: '표현 표준', metric: '공통 바이너리 구조', description: 'C++ 엔진과 C# UI의 Polygon 표현 방식 통일' },
-      { title: 'UI 적용', metric: '검사 결과 화면', description: '기존 확인 흐름 안에서 Polygon 가시화 제공' },
-      { title: '호환성', metric: '판정 로직 유지', description: '검사 판정 흐름은 유지하고 표시 정보만 확장' },
+      { title: 'UI 적용', metric: '결과 확인 화면', description: '기존 확인 흐름 안에서 Polygon 가시화 제공' },
+      { title: '호환성', metric: '처리 로직 유지', description: '기존 처리 흐름은 유지하고 표시 정보만 확장' },
     ],
     measurementNotes: [
-      '대상 범위: 이진화 검사에서 검출된 Blob 외곽',
+      '대상 범위: 결과 이미지에서 추출된 Blob 외곽',
       '추출 기준: Blob 좌표 기준으로 crop한 이미지 영역',
       '표현 방식: 좌상/우하 2점 Bounding Box에서 폴리곤으로 확장',
       '연동 구조: C++ writer와 C# reader가 공유하는 공통 바이너리 계약',
       '조회 기준: Part ID, Window ID, Algorithm ID, ROI ID',
-      '적용 화면: 검사 결과 확인 UI',
+      '적용 화면: 결과 확인 UI',
     ],
     roles: [
       'Bounding Box 표시 한계 분석 및 Polygon 기반 표현 방식 설계',
       'Blob 좌표 기준 이미지 crop 및 crop 영역 Polygon 추출 흐름 구현',
       'crop offset을 반영한 Polygon 좌표 복원 및 공통 바이너리 writer 구현',
       'C# reader에서 Part/Window/Algorithm/ROI 기준 Polygon 조회 로직 구현',
-      '검사 이미지 좌표를 화면 좌표로 변환하는 UI 가시화 흐름 연결',
+      '결과 이미지 좌표를 화면 좌표로 변환하는 UI 가시화 흐름 연결',
     ],
     keywords: ['C++', 'C#', 'OpenCV', 'WinForms', 'Binary File', 'Image Processing'],
   },
   'defect-history-data-layer': {
-    title: '검사 이력 조회 구조 구축',
+    title: '처리 이력 조회 구조 구축',
     problem: {
-      body: 'NG 검사 결과 확인이 로그와 파일 중심으로 분산되어, 기간별 검색과 제품·장비 조건 필터링, 알고리즘/ROI 단위 상세 추적이 어려운 구조.',
+      body: '처리 결과 확인이 로그와 파일 중심으로 분산되어, 기간별 검색과 조건 필터링, 상세 추적이 어려운 구조.',
       points: [
         {
           label: '이력 추적 한계',
-          detail: '검사 결과를 시간, 제품, 장비 조건으로 빠르게 좁혀 확인하기 어려움',
+          detail: '처리 결과를 시간과 조건 기준으로 빠르게 좁혀 확인하기 어려움',
         },
         {
           label: '데이터 구조 분산',
-          detail: 'Board부터 Algorithm/ROI까지 이어지는 검사 결과 관계를 공통 모델로 복원할 필요',
+          detail: '화면부터 영역 단위까지 이어지는 처리 결과 관계를 공통 모델로 복원할 필요',
         },
         {
           label: '접근 로직 중복',
@@ -597,7 +597,7 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         },
         {
           label: '조회 UI 연결 필요',
-          detail: '저장된 검사 이력을 WinForms 화면에서 계층형 GridView와 2D/3D 이미지 조회 흐름으로 연결해야 함',
+          detail: '저장된 처리 이력을 WinForms 화면에서 계층형 GridView와 이미지 조회 흐름으로 연결해야 함',
         },
       ],
       stats: [
@@ -607,21 +607,21 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
       ],
     },
     before: {
-      body: '검사 결과 확인이 로그와 파일에 의존해 특정 NG 이력의 조건 검색, 상세 복원, 이미지 확인 흐름이 분산되어 있었습니다.',
+      body: '처리 결과 확인이 로그와 파일에 의존해 특정 이력의 조건 검색, 상세 복원, 이미지 확인 흐름이 분산되어 있었습니다.',
       label: '기존 방식',
       highlight: '분산 조회',
       note: '조건별 검색과 계층형 상세 확인이 제한',
     },
     improvement: {
-      body: 'NG 검사 결과를 검사 결과 계층 모델로 구성하고, SQL Mapper 기반 접근 구조를 통해 저장·조회·복원 흐름을 분리. WinForms 이력 조회 UI에서는 기간/Job 조건 필터와 계층형 GridView, 2D/3D 이미지 확인 흐름을 연결.',
+      body: '처리 결과를 계층 모델로 구성하고, SQL Mapper 기반 접근 구조를 통해 저장·조회·복원 흐름을 분리. WinForms 이력 조회 UI에서는 기간/Job 조건 필터와 계층형 GridView, 이미지 확인 흐름을 연결.',
       points: [
         {
           label: '계층형 데이터 모델링',
-          detail: 'Board, Module, Part, Window, Algorithm, ROI 관계를 MSSQL 테이블과 데이터 클래스로 분리',
+          detail: '화면, 항목, 알고리즘, 영역 관계를 MSSQL 테이블과 데이터 클래스로 분리',
         },
         {
           label: '공통 DLL API 설계',
-          detail: 'DB 연결·초기화, 검사 결과 저장, 필터 조회, 검사 시간 기준 상세 복원을 IDefectHistory 인터페이스로 제공',
+          detail: 'DB 연결·초기화, 처리 결과 저장, 필터 조회, 시간 기준 상세 복원을 공통 인터페이스로 제공',
         },
         {
           label: 'SQL Mapper 기반 접근',
@@ -639,29 +639,29 @@ const compactWorkCaseReports: Record<IndustrialAoiAreaId, CompactWorkCaseReport>
         { label: '조회 기준', value: '기간/Job 조건' },
       ],
       steps: [
-        { icon: Database, title: 'MSSQL 모델링', description: '검사 결과 계층을 테이블과 키 관계로 구성' },
+        { icon: Database, title: 'MSSQL 모델링', description: '처리 결과 계층을 테이블과 키 관계로 구성' },
         { icon: Layers, title: 'DLL API 분리', description: '저장·조회·필터링 진입점을 공통 인터페이스로 제공' },
         { icon: ShieldCheck, title: '조회 UI 연동', description: '조건 필터와 상세 복원 데이터를 화면 흐름에 연결' },
       ],
     },
     results: [
-      { title: '이력 조회', metric: '조건 기반 검색', description: '기간/Group/Board/Slave 기준으로 검사 이력 목록 조회' },
-      { title: '상세 복원', metric: 'Board → ROI', description: '검사 시간 기준으로 계층형 검사 결과 복원' },
+      { title: '이력 조회', metric: '조건 기반 검색', description: '기간/Group/Board/Slave 기준으로 처리 이력 목록 조회' },
+      { title: '상세 복원', metric: '화면 → 영역', description: '처리 시간 기준으로 계층형 결과 복원' },
       { title: '데이터 접근', metric: '공통 DLL API', description: 'DB 초기화, 저장, 조회 책임을 화면에서 분리' },
       { title: '운영 확인', metric: 'WinForms UI 연동', description: 'GridView와 2D/3D 이미지 조회 흐름으로 연결' },
     ],
     measurementNotes: [
-      '저장 대상: GOOD/AIOK를 제외한 NG 검사 결과',
-      '데이터 모델: 검사 결과 계층 구조',
+      '저장 대상: GOOD/AIOK를 제외한 처리 결과',
+      '데이터 모델: 처리 결과 계층 구조',
       'DB 접근: MSSQL + iBATIS.NET SQL Mapper',
       '저장 안정성: 테이블 생성, 인덱스 구성, 트랜잭션 저장',
       '조회 기준: 기간, Group, Board, Slave, 검사 시간',
     ],
     roles: [
-      '검사 결과 계층 구조 분석 및 MSSQL 테이블 모델링',
+      '처리 결과 계층 구조 분석 및 MSSQL 테이블 모델링',
       '공통 DLL API와 IDefectHistory 인터페이스 설계',
       'iBATIS.NET SQL Mapper 기반 저장·조회 매핑 구성',
-      '트랜잭션 기반 검사 결과 계층 일괄 저장 흐름 구현',
+      '트랜잭션 기반 처리 결과 계층 일괄 저장 흐름 구현',
       'WinForms 이력 조회 UI의 필터, GridView, 2D/3D 이미지 확인 흐름 연동',
     ],
     keywords: ['C#', 'MSSQL', 'iBATIS.NET', 'SQL Mapper', 'WinForms', 'DLL', 'Data Modeling'],
@@ -939,7 +939,7 @@ function CompactWorkCaseReport({ areaId }: { areaId: IndustrialAoiAreaId }) {
 
 const bridgePolygonPseudoSnippets = [
   {
-    file: 'C++ 검사 엔진',
+    file: 'C++ 처리 엔진',
     title: 'Blob Crop 기반 Polygon 추출',
     code: `cv::Rect blobBounds = detectedBlob.Bounds();
 cv::Mat blobCrop = sourceImage(blobBounds).clone();
@@ -949,7 +949,7 @@ auto polygonPoints = CoordinateMapper.Offset(localPolygon, blobBounds.tl());
 commonPolygonBinaryWriter.Write(partId, windowId, algoId, roiId, defectId, polygonPoints);`,
   },
   {
-    file: 'C# 검사 결과 UI',
+    file: 'C# 결과 확인 UI',
     title: 'Polygon 조회 및 화면 좌표 복원',
     code: `var polygons = commonPolygonBinaryFile.Read(partId, windowId, algoId, roiId);
 foreach (var polygon in polygons)
@@ -966,7 +966,7 @@ const bridgePolygonFlowSteps = [
     title: '좌상/우하 2점',
     subtitle: 'Bounding Box 표시',
     tone: 'bounds',
-    details: ['실제 외곽 표현 한계', '판정 근거 확인 제한'],
+    details: ['실제 외곽 표현 한계', '판단 근거 확인 제한'],
   },
   {
     marker: 'Extract',
@@ -984,7 +984,7 @@ const bridgePolygonFlowSteps = [
   },
   {
     marker: 'Visualize',
-    title: '검사 결과 UI',
+    title: '결과 확인 UI',
     subtitle: 'Polygon 근거 표시',
     tone: 'overlay',
     details: ['C# reader 복원', '화면 좌표 변환'],
@@ -1000,7 +1000,7 @@ function BridgePolygonDiagramSection() {
           <h5 id="bridge-polygon-flow-title">처리 흐름</h5>
         </div>
         <p>
-          Blob 좌표로 원본 이미지를 crop해 외곽 Polygon을 추출하고, crop offset을 반영한 좌표를 공통 바이너리 구조로 전달해 검사 결과 UI에서 같은 형상으로 복원하는 흐름.
+          Blob 좌표로 원본 이미지를 crop해 외곽 Polygon을 추출하고, crop offset을 반영한 좌표를 공통 바이너리 구조로 전달해 결과 확인 UI에서 같은 형상으로 복원하는 흐름.
         </p>
         <div className="industrial-aoi-polygon-structure-diagram" role="img" aria-label="Bounding Box to OpenCV polygon extraction to shared polygon binary structure to inspection UI visualization flow">
           <ol className="industrial-aoi-polygon-structure-flow">
@@ -1043,7 +1043,7 @@ function BridgePolygonDiagramSection() {
             </div>
           </div>
           <p className="industrial-aoi-polygon-structure-caption">
-            Blob 좌표 crop → Polygon 추출 → offset 좌표 복원 → 검사 UI 가시화
+            Blob 좌표 crop → Polygon 추출 → offset 좌표 복원 → 결과 UI 가시화
           </p>
         </div>
       </section>
@@ -1082,7 +1082,7 @@ const defectHistoryFlowSteps: {
     icon: Box,
     marker: '01',
     title: 'AOI NG Result',
-    subtitle: '검사 결과 수집',
+    subtitle: '처리 결과 수집',
     details: ['GOOD/AIOK 제외', 'Board 기준 시작'],
   },
   {
@@ -1110,7 +1110,7 @@ const defectHistoryFlowSteps: {
     icon: Database,
     marker: '05',
     title: 'MSSQL DB',
-    subtitle: '검사 이력 저장소',
+    subtitle: '처리 이력 저장소',
     details: ['테이블 자동 생성', '트랜잭션 저장'],
   },
   {
@@ -1125,7 +1125,7 @@ const defectHistoryFlowSteps: {
 const defectHistoryPseudoSnippets = [
   {
     file: 'C# 제품 연동부',
-    title: 'NG 검사 결과 계층 모델 구성',
+    title: '처리 결과 계층 모델 구성',
     code: `void SaveDefectHistory(InspectionResult result, JobData job)
 {
     if (result.Board.IsGoodOrAiOk())
@@ -1184,7 +1184,7 @@ function DefectHistoryDataLayerDiagramSection() {
           <h5 id="defect-history-flow-title">데이터 계층 흐름</h5>
         </div>
         <p>
-          제품 검사 결과에서 NG 대상만 계층형 데이터로 구성하고, 공통 DLL의 SQL Mapper 매핑을 통해 MSSQL에 저장한 뒤 이력 조회 UI에서 조건 검색과 상세 복원을 수행하는 구조.
+          처리 결과 중 추적이 필요한 대상만 계층형 데이터로 구성하고, 공통 DLL의 SQL Mapper 매핑을 통해 MSSQL에 저장한 뒤 이력 조회 UI에서 조건 검색과 상세 복원을 수행하는 구조.
         </p>
         <ol className="industrial-aoi-data-layer-flow" aria-label="AOI NG result to history viewer data flow">
           {defectHistoryFlowSteps.map((step) => {
@@ -1206,7 +1206,7 @@ function DefectHistoryDataLayerDiagramSection() {
           })}
         </ol>
         <div className="industrial-aoi-data-layer-model">
-          <strong>계층형 검사 이력 모델</strong>
+          <strong>계층형 처리 이력 모델</strong>
           <div>
             <span>Board</span>
             <ArrowRight size={16} aria-hidden="true" />
@@ -1518,7 +1518,7 @@ function GerberPartDiagramSection() {
 function HotKeyOptimizationDiagramSection() {
   const stabilityItems = [
     { icon: ShieldCheck, title: '중복 키 검증', detail: '동일 키 조합 등록 방지' },
-    { icon: Database, title: 'XML 저장/백업', detail: '사용자·장비별 설정 보존' },
+    { icon: Database, title: 'XML 저장/백업', detail: '사용자별 설정 보존' },
     { icon: CheckCircle, title: '안내 문구 동기화', detail: '설정값과 화면 안내 일치' },
     { icon: MousePointerClick, title: '사용자 지정 버튼', detail: '키보드 단축키와 마우스 버튼 연계' },
   ];
@@ -1690,7 +1690,7 @@ function ProductionIntegrationDiagramSection() {
             <span>6</span>
             <h5 id="integration-structure-title">구조 다이어그램</h5>
           </div>
-          <p>생산 이벤트 발생, 전송, 응답 반영, 로그 추적을 단일 처리 흐름으로 구성</p>
+          <p>연동 이벤트 발생, 전송, 응답 반영, 로그 추적을 단일 처리 흐름으로 구성</p>
         </div>
 
         <div className="industrial-aoi-integration-structure-map">
@@ -1704,13 +1704,13 @@ function ProductionIntegrationDiagramSection() {
               </header>
               <div className="industrial-aoi-refactor-flow industrial-aoi-refactor-flow-before">
                 <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-source">
-                  <span>AOI Events</span>
+                  <span>App Events</span>
                   <strong>연동 이벤트</strong>
                   <div>
                     <em>작업 정보</em>
                     <em>바코드</em>
                     <em>판정 결과</em>
-                    <em>장비 알림</em>
+                    <em>시스템 알림</em>
                     <em>...</em>
                   </div>
                 </div>
@@ -1740,12 +1740,12 @@ function ProductionIntegrationDiagramSection() {
                   <div>
                     <em>중복 구현</em>
                     <em>변경 영향 확대</em>
-                    <em>장애 추적 분산</em>
+                    <em>이슈 추적 분산</em>
                   </div>
                 </div>
               </div>
               <div className="industrial-aoi-structure-caption">
-                <p>서비스별 분기와 고객사 예외 누적으로 변경 범위 및 장애 추적 비용 증가</p>
+                <p>서비스별 분기와 고객사 예외 누적으로 변경 범위 및 이슈 추적 비용 증가</p>
               </div>
             </article>
 
@@ -1758,13 +1758,13 @@ function ProductionIntegrationDiagramSection() {
               </header>
               <div className="industrial-aoi-refactor-after-map">
                 <div className="industrial-aoi-refactor-node industrial-aoi-refactor-node-source">
-                  <span>AOI Events</span>
+                  <span>App Events</span>
                   <strong>연동 이벤트</strong>
                   <div>
                     <em>작업 정보</em>
                     <em>바코드</em>
                     <em>판정 결과</em>
-                    <em>장비 알림</em>
+                    <em>시스템 알림</em>
                     <em>...</em>
                   </div>
                 </div>
@@ -1773,7 +1773,7 @@ function ProductionIntegrationDiagramSection() {
 
                 <div className="industrial-aoi-refactor-contract">
                   <span>Integration Event</span>
-                  <strong>공통 생산 연동 기준</strong>
+                  <strong>공통 시스템 연동 기준</strong>
                   <p>서비스별 포맷 변환과 응답 처리 기준 공통화</p>
                   <div>
                     <em>전송 전처리</em>
@@ -1814,12 +1814,12 @@ function ProductionIntegrationDiagramSection() {
           </div>
         </div>
 
-        <div className="industrial-aoi-code-flow-diagram" aria-label="코드 기준 생산 연동 처리 흐름">
+        <div className="industrial-aoi-code-flow-diagram" aria-label="코드 기준 시스템 연동 처리 흐름">
           <div className="industrial-aoi-code-flow-main">
             <div className="industrial-aoi-code-flow-node industrial-aoi-code-flow-node-event">
               <Database aria-hidden="true" />
               <div>
-                <strong>생산 이벤트 발생</strong>
+                <strong>연동 이벤트 발생</strong>
                 <span>Job · Barcode · Result · Alarm</span>
               </div>
             </div>
@@ -2157,52 +2157,52 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'inspection-automation',
       step: '01',
-      title: 'Gerber-Part ROI 매칭 성능 최적화',
-      summary: '대용량 ROI 매칭 병목을 후보 선별과 캐싱으로 줄여 검사 준비 시간을 단축',
-      problem: '대용량 ROI 매칭으로 검사 준비 시간이 길어지고 원인 추적이 어려운 구조',
+      title: '대용량 좌표 매칭 성능 최적화',
+      summary: '대용량 좌표 매칭 병목을 후보 선별과 캐싱으로 줄여 처리 준비 시간을 단축',
+      problem: '대용량 좌표 매칭으로 처리 준비 시간이 길어지고 원인 추적이 어려운 구조',
       actions: [
-        'Gerber ROI와 Part Window ROI 매칭 기준 정리',
-        'Module 영역 교차 기준의 Gerber ROI 후보 캐시 적용',
-        '기존 검사 결과를 유지하면서 미매칭 항목 보정 흐름 정리',
+        '처리 항목과 후보 좌표 매칭 기준 정리',
+        '상위 영역 교차 기준의 후보 좌표 캐시 적용',
+        '기존 처리 결과를 유지하면서 미매칭 항목 보정 흐름 정리',
       ],
       impact: [
-        '대용량 ROI 매칭 처리 시간 단축',
-        '기존 검사 결과 포맷과 후속 흐름 호환성 유지',
+        '대용량 좌표 매칭 처리 시간 단축',
+        '기존 처리 결과 포맷과 후속 흐름 호환성 유지',
         '매칭 기준과 성능 측정 근거를 추적 가능한 형태로 정리',
       ],
       directions: [
         {
           label: 'Track 01',
-          title: 'AOI Matching',
-          points: ['Gerber-Part ROI 매칭 병목 해소', 'Module 영역 후보 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
+          title: 'Coordinate Matching',
+          points: ['대용량 좌표 매칭 병목 해소', '상위 영역 후보 기반 탐색 범위 축소', '기존 매칭 결과 호환 유지'],
         },
         {
           label: 'Track 02',
-          title: 'Teaching / Inspection UI',
-          points: ['Teaching 화면 흐름 정리', '검사 Window 상태 관리', '작업자 확인 지점 보완'],
+          title: '작업 화면 흐름',
+          points: ['작업 화면 흐름 정리', '처리 상태 관리', '사용자 확인 지점 보완'],
         },
       ],
       improvements: [
         {
-          title: 'Gerber / Part / Fiducial Matching',
-          description: 'Module 영역과 교차하는 Gerber 후보 목록을 구성해 대용량 ROI 매칭 비용을 줄인 최적화 작업',
-          details: ['Module-area candidate filtering', 'Gerber candidate reuse', 'Compatibility validation'],
+          title: 'Coordinate Candidate Matching',
+          description: '상위 영역과 교차하는 후보 목록을 구성해 대용량 좌표 매칭 비용을 줄인 최적화 작업',
+          details: ['Candidate filtering', 'Converted coordinate reuse', 'Compatibility validation'],
         },
         {
-          title: 'Teaching Screen Flow',
-          description: '검사 Window와 Teaching 화면에 필요한 상태 변경 흐름 정리',
-          details: ['Window 상태 갱신 보완', '작업자 확인 흐름 단순화'],
+          title: 'Work Screen Flow',
+          description: '작업 화면에 필요한 상태 변경 흐름 정리',
+          details: ['상태 갱신 보완', '사용자 확인 흐름 단순화'],
         },
       ],
     },
     {
       id: 'production-integration',
       step: '02',
-      title: 'MES · SECS/GEM 생산 연동 안정화',
-      summary: '공통 이벤트 기준과 채널별 책임 분리로 반복 장애 알림을 감소',
-      problem: '생산 이벤트 처리 기준이 서비스별로 분산되어 변경 범위와 장애 추적 비용이 증가한 구조',
+      title: '외부 시스템 연동 안정화',
+      summary: '공통 이벤트 기준과 채널별 책임 분리로 반복 이슈 등록을 감소',
+      problem: '연동 이벤트 처리 기준이 서비스별로 분산되어 변경 범위와 이슈 추적 비용이 증가한 구조',
       actions: [
-        'Job, Barcode, Result, Alarm 기준 공통 생산 이벤트 기준 정리',
+        'Job, Barcode, Result, Alarm 기준 공통 연동 이벤트 기준 정리',
         '요청 데이터 생성, 전송 분기, 응답 반영 책임 분리',
         'SECS/GEM 공통 계약과 고객사별 Override 구조 분리',
         'Header/Length 기반 Packet Framing으로 TCP/IP 대용량 메시지 안정화',
@@ -2226,7 +2226,7 @@ export function IndustrialAOIPlatformProjectPage({
       ],
       improvements: [
         {
-          title: '공통 생산 이벤트 기준',
+          title: '공통 연동 이벤트 기준',
           description: 'Job, Barcode, Result, Alarm을 서비스 조건에서 분리된 기준 데이터로 정리',
           details: ['이벤트 기준 정리', '변경 영향 범위 축소', '로그 추적 기준 확보'],
         },
@@ -2292,7 +2292,7 @@ export function IndustrialAOIPlatformProjectPage({
         {
           title: '설정 안정성 보완',
           description: '중복 키와 설정 복구 리스크 완화',
-          details: ['중복 키 검증', '사용자별·장비별 설정', 'XML 버전 확인·백업'],
+          details: ['중복 키 검증', '사용자별 설정', 'XML 버전 확인·백업'],
         },
         {
           title: '사용자 지정 버튼 확장',
@@ -2340,32 +2340,32 @@ export function IndustrialAOIPlatformProjectPage({
     {
       id: 'bridge-polygon-visualization',
       step: '05',
-      title: '검출 영역 폴리곤 표현 체계 구축',
-      summary: '사각형 중심 표시를 실제 검출 외곽 폴리곤 표현과 공통 데이터 계약으로 확장',
-      problem: '좌상/우하 2점 Bounding Box만으로는 실제 검출 외곽과 판정 근거를 화면에서 확인하기 어려운 구조',
+      title: '결과 영역 폴리곤 표현 체계 구축',
+      summary: '사각형 중심 표시를 실제 결과 외곽 폴리곤 표현과 공통 데이터 계약으로 확장',
+      problem: '좌상/우하 2점 Bounding Box만으로는 실제 결과 외곽과 판단 근거를 화면에서 확인하기 어려운 구조',
       actions: [
         'Blob 좌표 기준 이미지 crop 및 crop 영역 외곽 Polygon 추출',
         'crop offset을 반영한 원본 이미지 좌표 복원',
         'Polygon 좌표와 Defect ID를 저장하는 공통 바이너리 계약 정의',
         'C# UI에서 Part/Window/Algo/ROI 기준 Polygon 조회와 좌표 복원 구현',
-        '검사 결과 확인 UI에 Polygon 판정 근거 가시화 적용',
+        '결과 확인 UI에 Polygon 판단 근거 가시화 적용',
       ],
       directions: [
         {
           label: 'Track 01',
-          title: 'C++ 검사 엔진',
+          title: 'C++ 처리 엔진',
           points: ['Blob 영역 crop', 'crop 영역 외곽 추출', 'offset 좌표 복원'],
         },
         {
           label: 'Track 02',
-          title: 'C# 검사 결과 UI',
+          title: 'C# 결과 확인 UI',
           points: ['공통 바이너리 조회', 'Part Image 좌표 변환', 'Polygon 화면 표시'],
         },
       ],
       impact: [
-        'Bounding Box 대신 실제 검출 영역을 폴리곤으로 확인',
-        'C++ 검사 엔진과 C# UI 사이의 Polygon 표현 방식 표준화',
-        '검사 결과 확인 UI에서 동일한 판정 근거 제공',
+        'Bounding Box 대신 실제 결과 영역을 폴리곤으로 확인',
+        'C++ 처리 엔진과 C# UI 사이의 Polygon 표현 방식 표준화',
+        '결과 확인 UI에서 동일한 판단 근거 제공',
       ],
       improvements: [
         {
@@ -2375,24 +2375,24 @@ export function IndustrialAOIPlatformProjectPage({
         },
         {
           title: 'Polygon Data Contract',
-          description: 'C++ 검사 엔진과 C# UI가 공유하는 Polygon 데이터 계약 정의',
+          description: 'C++ 처리 엔진과 C# UI가 공유하는 Polygon 데이터 계약 정의',
           details: ['공통 바이너리 구조', 'Part/Window/Algo/ROI 조회', '좌표 기준 동기화'],
         },
         {
           title: 'Inspection UI Overlay',
-          description: '검사 결과 UI에서 Polygon 데이터를 화면 좌표로 복원해 표시',
-          details: ['좌표 변환', '검사 화면 보정', '화면 가시화'],
+          description: '결과 확인 UI에서 Polygon 데이터를 화면 좌표로 복원해 표시',
+          details: ['좌표 변환', '결과 화면 보정', '화면 가시화'],
         },
       ],
     },
     {
       id: 'defect-history-data-layer',
       step: '06',
-      title: '검사 이력 조회 구조 구축',
-      summary: 'NG 검사 결과를 계층형 데이터 모델과 조회 UI로 연결',
-      problem: '로그/파일 중심 확인만으로는 NG 이력의 조건 검색과 알고리즘/ROI 단위 상세 추적이 어려운 구조',
+      title: '처리 이력 조회 구조 구축',
+      summary: '처리 결과를 계층형 데이터 모델과 조회 UI로 연결',
+      problem: '로그/파일 중심 확인만으로는 이력의 조건 검색과 상세 추적이 어려운 구조',
       actions: [
-        '검사 결과 계층 데이터 모델 정의',
+        '처리 결과 계층 데이터 모델 정의',
         'MSSQL 테이블 생성·초기화·인덱스 구성 흐름 구현',
         'iBATIS.NET SQL Mapper 기반 Insert/Select 매핑 구성',
         '공통 DLL API로 DB 초기화, 저장, 필터 조회, 상세 복원 기능 분리',
@@ -2411,14 +2411,14 @@ export function IndustrialAOIPlatformProjectPage({
         },
       ],
       impact: [
-        '검사 이력 저장·조회 흐름을 공통 데이터 접근 계층으로 분리',
-        '화면부터 영역 단위까지 이어지는 NG 검사 결과 상세 복원 기준 확보',
+        '처리 이력 저장·조회 흐름을 공통 데이터 접근 계층으로 분리',
+        '화면부터 영역 단위까지 이어지는 처리 결과 상세 복원 기준 확보',
         '기간/Group/Board/Slave 기준 이력 조회 UI 제공',
       ],
       improvements: [
         {
           title: 'Hierarchical Data Model',
-          description: '검사 결과 관계를 Board부터 ROI까지 이어지는 계층 구조로 모델링',
+          description: '처리 결과 관계를 화면부터 영역 단위까지 이어지는 계층 구조로 모델링',
           details: ['Board/Module/Part/Window', 'Algorithm/ROI', 'Foreign key 기준 복원'],
         },
         {
@@ -2428,7 +2428,7 @@ export function IndustrialAOIPlatformProjectPage({
         },
         {
           title: 'History Search UI',
-          description: '저장된 검사 이력을 조건 검색과 상세 확인 화면에 연결',
+          description: '저장된 처리 이력을 조건 검색과 상세 확인 화면에 연결',
           details: ['기간 필터', 'Group/Board/Slave 필터', '2D/3D 확인 흐름'],
         },
       ],
@@ -2441,25 +2441,25 @@ export function IndustrialAOIPlatformProjectPage({
   const displayedAreas = selectedArea ? [selectedArea] : highlightAreas;
   const pageTitle =
     selectedArea?.id === 'inspection-automation'
-      ? 'Gerber-Part ROI 매칭 성능 최적화'
+      ? '대용량 좌표 매칭 성능 최적화'
       : selectedArea?.id === 'hotkey-optimization'
         ? '단축키 설정 범위 확장 및 입력 응답성 최적화'
       : selectedArea?.id === 'production-integration'
-        ? 'MES · SECS/GEM 생산 연동 안정화'
-      : selectedArea?.title ?? 'Industrial AOI Platform Work Areas';
+        ? '외부 시스템 연동 안정화'
+      : selectedArea?.title ?? 'Windows Application Work Areas';
   const pageLead =
     selectedArea?.id === 'inspection-automation'
-      ? '6분 22초 걸리던 대용량 ROI 매칭을 Module 영역 후보 캐시와 매칭 대상 선별로 3.5초 수준까지 단축'
+      ? '6분 22초 걸리던 대용량 좌표 매칭을 후보 캐시와 매칭 대상 선별로 3.5초 수준까지 단축'
       : selectedArea?.id === 'hotkey-optimization'
         ? '단축키 설정 UI에서 키 지원 범위를 확장하고 KeyDown 입력 매칭부를 개선해 응답 시간 0.3초 달성'
       : selectedArea?.id === 'production-integration'
-        ? '서비스별로 분산된 생산 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 정리'
+        ? '서비스별로 분산된 외부 시스템 연동 로직을 공통 이벤트 기준과 채널별 책임 구조로 정리'
       : selectedArea?.id === 'bridge-polygon-visualization'
-        ? 'Blob 좌표 기준 crop 영역에서 실제 외곽 폴리곤을 추출하고, offset 복원 좌표를 C# 검사 결과 UI까지 전달하는 가시화 구조로 표준화'
+        ? 'Blob 좌표 기준 crop 영역에서 실제 외곽 폴리곤을 추출하고, offset 복원 좌표를 C# 결과 확인 UI까지 전달하는 가시화 구조로 표준화'
       : selectedArea?.id === 'defect-history-data-layer'
-        ? 'NG 검사 결과를 계층형 데이터 모델로 저장하고 SQL Mapper 기반 이력 조회 UI에서 복원하는 구조 구축'
+        ? '처리 결과를 계층형 데이터 모델로 저장하고 SQL Mapper 기반 이력 조회 UI에서 복원하는 구조 구축'
       : selectedArea?.summary ??
-        '검사 시스템 업무 성과를 성능 최적화, 생산 연동, 기능 개발, 운영 안정화 기준으로 구성';
+        'Windows 응용프로그램 업무 성과를 성능 최적화, 외부 시스템 연동, 기능 개발, 운영 안정화 기준으로 구성';
   const pageTech =
     selectedArea?.id === 'inspection-automation'
       ? gerberPartReportTech
@@ -2468,7 +2468,7 @@ export function IndustrialAOIPlatformProjectPage({
       : selectedArea?.id === 'production-integration'
         ? integrationReportTech
       : selectedProject?.tech ?? ['C#', 'C++', '.NET Framework', 'WinForms', 'SECS/GEM', 'OpenCV'];
-  const issueReductionMetric = metrics.find((metric) => metric.label === '장애 이슈 등록 건수 감소');
+  const issueReductionMetric = metrics.find((metric) => metric.label === '시스템 연동 이슈 등록 건수 감소');
   const showIntegrationIssueBadge = selectedArea?.id === 'production-integration' && issueReductionMetric;
   const heroImage =
     selectedArea?.id === 'inspection-automation'
@@ -2478,21 +2478,21 @@ export function IndustrialAOIPlatformProjectPage({
     selectedArea?.id === 'inspection-automation'
       ? [
           {
-            alt: 'Module and Part ROI matching mockup',
+            alt: '대용량 좌표 매칭 최적화 화면 목업',
             image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
-            label: 'Module / Part View',
+            label: '처리 항목 View',
           },
           {
-            alt: 'Gerber ROI matching mockup',
+            alt: '후보 좌표 매칭 화면 목업',
             image: '/assets/aoi-gerber-part-matching/gerber-aligned.png',
-            label: 'Gerber View',
+            label: '후보 좌표 View',
           },
         ]
       : null;
   const guideTitle = selectedArea ? 'Key Contributions' : `${highlightAreas.length} Work Areas`;
   const guideDescription = selectedArea
     ? '문제, 기존 방식, 해결 방식, 결과, 담당 역할 중심 구성'
-    : '회사·고객사 세부 정보는 제외하고 성능 최적화, 생산 연동, 검사 결과 가시화, 이력 조회 구조, UX/UI 응답성 기준으로 정리했습니다.';
+    : '회사·고객사 세부 정보는 제외하고 성능 최적화, 외부 시스템 연동, 결과 가시화, 이력 조회 구조, UX/UI 응답성 기준으로 정리했습니다.';
 
   return (
     <div className="site-shell" data-theme={themeMode}>
@@ -2532,7 +2532,7 @@ export function IndustrialAOIPlatformProjectPage({
               <aside className="industrial-aoi-hero-kpi industrial-aoi-hero-kpi--compact" aria-label="Issue mail reduction summary">
                 <span>Improvement</span>
                 <strong>{issueReductionMetric.value}</strong>
-                <p>장애 이슈 메일</p>
+                <p>이슈 등록 건수</p>
               </aside>
             ) : null}
             </figure>
@@ -2541,7 +2541,7 @@ export function IndustrialAOIPlatformProjectPage({
 
         <article
           className={`project-guide industrial-aoi-guide${selectedArea ? ' industrial-aoi-guide-detail' : ''}`}
-          aria-label={selectedArea ? 'AOI contribution details' : undefined}
+          aria-label={selectedArea ? 'application contribution details' : undefined}
           aria-labelledby={selectedArea ? undefined : 'industrial-aoi-guide-title'}
         >
           {!selectedArea ? (
@@ -2554,7 +2554,7 @@ export function IndustrialAOIPlatformProjectPage({
 
           {selectedArea ? null : (
             <>
-              <ol className="guide-flow industrial-aoi-flow" aria-label="Industrial AOI Platform 업무 성과 구성">
+              <ol className="guide-flow industrial-aoi-flow" aria-label="Windows application 업무 성과 구성">
                 {highlightAreas.map((area) => (
                   <li key={area.id}>
                     <strong>{area.step}. {area.title.split(' ')[0]}</strong>

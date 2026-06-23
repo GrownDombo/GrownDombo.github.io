@@ -44,7 +44,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     subtitle: '좌표 매칭 병목 개선',
     summary: '후보 선별과 캐시 구조로 좌표 매칭 병목 해소',
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
-    imageAlt: 'Module and Part ROI matching mockup',
+    imageAlt: '대용량 좌표 매칭 최적화 화면 목업',
     detailPath: industrialAoiInspectionAutomationPath,
     priority: 0,
     metrics: [
@@ -122,7 +122,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     subtitle: '시스템 연동 안정화',
     summary: '고객사별 연동 차이를 공통 이벤트로 정리해 반복 이슈 등록을 감소',
     image: '/assets/industrial-aoi-production-integration/main-image.png',
-    imageAlt: 'MES SECS GEM production integration mockup',
+    imageAlt: '외부 시스템 연동 안정화 화면 목업',
     detailPath: industrialAoiProductionIntegrationPath,
     priority: 1,
     metrics: [
@@ -229,7 +229,7 @@ export const workCaseCards: WorkCaseCardData[] = [
     subtitle: '처리 결과 추적 · 조건 검색 · 상세 복원',
     summary: '조건별 처리 이력 조회와 상세 추적 흐름 구축',
     image: '/assets/defect-history-data-layer.svg',
-    imageAlt: 'DefectHistory inspection history UI mockup with filled sample data',
+    imageAlt: '처리 이력 조회 UI 목업',
     detailPath: industrialAoiDefectHistoryDataLayerPath,
     priority: 2.5,
     metrics: [

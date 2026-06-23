@@ -2,20 +2,20 @@ import { Box, CheckCircle, Code2, Database, FileText, Gauge, Layers, Target } fr
 
 export const gerberPartMatchingMockups = [
   {
-    title: 'Module / Part View',
+    title: '처리 항목 View',
     image: '/assets/aoi-gerber-part-matching/module-part-fiducial-aligned.png',
-    description: 'Red: Module area · Green: Part ROI',
+    description: 'Red: 상위 영역 · Green: 처리 항목',
     legend: [
-      { label: 'Module area', tone: 'red' },
-      { label: 'Part ROI', tone: 'green' },
+      { label: '상위 영역', tone: 'red' },
+      { label: '처리 항목', tone: 'green' },
     ],
   },
   {
-    title: 'Gerber View',
+    title: '후보 좌표 View',
     image: '/assets/aoi-gerber-part-matching/gerber-aligned.png',
-    description: 'Gerber ROI 기준 Part Window ROI 후보 확인 화면',
+    description: '후보 좌표 기준 처리 항목 매칭 확인 화면',
     legend: [
-      { label: 'Gerber ROI', tone: 'pink' },
+      { label: '후보 좌표', tone: 'pink' },
     ],
   },
 ];
@@ -27,13 +27,13 @@ export const gerberPartPerformanceSummary = {
 };
 
 export const gerberPartPerformanceScale = [
-  { label: 'Modules', value: '272개' },
-  { label: 'Part Window ROI', value: '70,448개' },
-  { label: 'Gerber ROI', value: '387,600개' },
+  { label: '상위 영역', value: '272개' },
+  { label: '처리 항목', value: '70,448개' },
+  { label: '후보 좌표', value: '387,600개' },
 ];
 
 export const gerberPartMeasurementNotes = [
-  '동일 검사 데이터에서 Start/End 로그 기준 개선 전후 2회 평균 비교',
+  '동일 처리 데이터에서 Start/End 로그 기준 개선 전후 2회 평균 비교',
 ];
 
 export const gerberPartReportTech = [
@@ -47,13 +47,13 @@ export const gerberPartReportTech = [
 export const gerberPartOptimizationSteps = [
   {
     icon: Target,
-    title: 'Module 후보군 선별',
-    description: 'Module 영역 기준으로 비교 대상 Gerber ROI를 먼저 축소',
+    title: '후보군 선별',
+    description: '상위 영역 기준으로 비교 대상 후보를 먼저 축소',
   },
   {
     icon: Box,
     title: '변환 결과 캐싱',
-    description: 'Gerber ROI 변환 결과를 재사용해 반복 계산 감소',
+    description: '좌표 변환 결과를 재사용해 반복 계산 감소',
   },
   {
     icon: CheckCircle,
@@ -107,16 +107,16 @@ export const structurePartGerberLinks = [
 
 export const gerberPartRoleItems = [
   'Start/End 로그 기반 병목 확인',
-  'Module 후보군 선별 로직 구현',
-  'Gerber ROI 변환 캐싱 적용',
+  '후보군 선별 로직 구현',
+  '좌표 변환 캐싱 적용',
   '기존 결과 포맷 호환성 검증',
 ];
 
 export const gerberPartKeywordItems = [
   '성능 최적화',
   '탐색 범위 축소',
-  'Gerber-Part Matching',
-  'ROI 캐싱',
+  'Coordinate Matching',
+  'Candidate Cache',
   '대용량 데이터',
   '호환성 유지',
 ];
@@ -124,7 +124,7 @@ export const gerberPartKeywordItems = [
 export const gerberPartSkillItems = [
   { icon: Code2, label: 'C#' },
   { icon: Database, label: 'Data Structure' },
-  { icon: Layers, label: 'ROI Matching' },
+  { icon: Layers, label: 'Coordinate Matching' },
   { icon: Gauge, label: 'Profiling' },
 ];
 
@@ -143,7 +143,7 @@ export const integrationReportTech = [
 export const integrationDirectionSteps = [
   {
     icon: Database,
-    title: '생산 이벤트 표준화',
+    title: '연동 이벤트 표준화',
     description: 'Job, Barcode, Result, Alarm 기준을 공통화',
   },
   {
@@ -167,7 +167,7 @@ export const integrationComparisonRows = [
   {
     target: '이벤트 처리',
     before: '서비스별 조건 분기 누적',
-    after: '공통 생산 이벤트 기준',
+    after: '공통 연동 이벤트 기준',
     method: '이벤트 표준화',
   },
   {
@@ -189,7 +189,7 @@ export const integrationComparisonRows = [
     method: 'Packet Framing',
   },
   {
-    target: '장애 추적',
+    target: '이슈 추적',
     before: '로그 위치와 응답 흐름 분산',
     after: '이벤트-전송-응답 기준 추적',
     method: '표준 로그 흐름',
@@ -200,7 +200,7 @@ export const integrationResultItems = [
   {
     title: '이슈 등록 건수',
     metric: '약 70% 감소',
-    description: '반복 장애 유형을 공통 처리 기준으로 정리',
+    description: '반복 이슈 유형을 공통 처리 기준으로 정리',
   },
   {
     title: '신규 고객사 연동',
@@ -219,8 +219,8 @@ export const integrationMeasurementNotes = [
 ];
 
 export const integrationRoleItems = [
-  '기존 분기 구조와 장애 유형 분석',
-  '공통 생산 이벤트 기준 정리',
+  '기존 분기 구조와 이슈 유형 분석',
+  '공통 연동 이벤트 기준 정리',
   '생성·전송·응답 책임 분리',
   'SECS/GEM Override 구조 정리',
 ];
@@ -228,7 +228,7 @@ export const integrationRoleItems = [
 export const integrationKeywordItems = [
   'MES',
   'SECS/GEM',
-  'Production Integration',
+  'System Integration',
   'Request Builder',
   'Facade',
   'Abstract / Override',

@@ -155,7 +155,7 @@ export const careerProjects: CareerProject[] = [
     results: [
       '처리 시간 6분 22초 → 3.5초, 약 99% 단축',
       '비교 범위 약 273억 회 → 약 1억 회 수준으로 축소',
-      '후속 검사 흐름 변경 없이 성능 개선 적용',
+      '후속 처리 흐름 변경 없이 성능 개선 적용',
     ],
     tech: ['C#', '.NET Framework', 'WinForms', 'Algorithm', 'Performance Optimization'],
     detailHref: industrialAoiInspectionAutomationPath,
@@ -178,7 +178,7 @@ export const careerProjects: CareerProject[] = [
     results: [
       '수정 전후 6개월 기준 이슈 관리 시스템 등록 건수 약 70% 감소',
       '신규 고객사 외부 시스템 연동 시나리오 10개 이상 개발',
-      '변경 영향 범위와 장애 추적 비용 감소',
+      '변경 영향 범위와 이슈 추적 비용 감소',
     ],
     tech: ['C#', '.NET Framework', 'WinForms', 'System Integration'],
     detailHref: industrialAoiProductionIntegrationPath,
@@ -221,7 +221,7 @@ export const careerProjects: CareerProject[] = [
     results: [
       '약 8억 원 규모 고객사 수주를 위한 필수 표시 요구사항 대응',
       '사각형 중심 표시를 실제 결과 외곽 기반 표현으로 개선',
-      '검사 엔진과 UI 사이의 표현 방식 표준화',
+      '처리 엔진과 UI 사이의 표현 방식 표준화',
     ],
     tech: ['C++', 'C#', '.NET Framework', 'WinForms', 'OpenCV', 'MSSQL'],
     detailHref: industrialAoiBridgePolygonVisualizationPath,

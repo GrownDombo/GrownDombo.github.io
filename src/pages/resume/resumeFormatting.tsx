@@ -11,14 +11,14 @@ export function splitMetricText(metric: string, highlightTitle: string) {
     };
   }
 
-  if (highlightTitle === '생산 시스템 연동 기능 개발 및 운영 안정화') {
+  if (highlightTitle === '외부 시스템 연동 안정화') {
     const splitMap: Record<string, { label: string; result: string }> = {
-      '장애 이슈 관련 메일 전분기 대비 약 70% 감소': {
-        label: '장애 이슈 관련 메일 발생량 감소',
-        result: '전분기 대비 약 70% 감소',
+      '이슈 등록 건수 감소: 수정 전 6개월 대비 수정 후 6개월 약 70% 감소': {
+        label: '이슈 관리 시스템 등록 건수 감소',
+        result: '수정 후 6개월 약 70% 감소',
       },
-      '10개 이상 신규 고객사 생산 시스템 연동 시나리오 개발': {
-        label: '신규 고객사 유치 및 생산 시스템 연동',
+      '신규 고객사 연동: 외부 시스템 연동 시나리오 10개 이상 개발': {
+        label: '신규 고객사 외부 시스템 연동',
         result: '시나리오 10개 이상 개발',
       },
     };
@@ -32,7 +32,7 @@ export function splitMetricText(metric: string, highlightTitle: string) {
         label: '처리 이력 데이터 모델링',
         result: '처리 결과 계층 구조화',
       },
-      'SQL Mapper 기반 데이터 접근 구조로 검사 이력 조회 흐름 구축': {
+      'SQL Mapper 기반 데이터 접근 계층과 이력 조회 UI를 구현해 분석 흐름을 표준화': {
         label: '데이터 접근 계층 구축',
         result: 'SQL Mapper 기반 조회 흐름',
       },
@@ -44,9 +44,9 @@ export function splitMetricText(metric: string, highlightTitle: string) {
         label: '파일 기반 데이터 관리 안정화',
         result: '접근 충돌 문제 완화',
       },
-      '향후 다른 검사 결과 시스템에도 확장 적용할 수 있는 공통 DB 구조 마련': {
+      '향후 다른 처리 결과 시스템에도 확장 적용할 수 있는 공통 DB 구조 마련': {
         label: '공통 DB 구조 설계',
-        result: '타 검사 결과 시스템 확장 기반 마련',
+        result: '타 처리 결과 시스템 확장 기반 마련',
       },
     };
 
@@ -55,7 +55,7 @@ export function splitMetricText(metric: string, highlightTitle: string) {
 
   if (highlightTitle === '결과 영역 폴리곤 표현 체계 구축') {
     const splitMap: Record<string, { label: string; result: string }> = {
-      '좌상/우하 Bounding Box 표시 한계를 개선하고 실제 검출 외곽을 폴리곤으로 가시화하는 공통 표현 구조 표준화': {
+      '기존 사각형 표시를 실제 결과 외곽 기반 폴리곤 표현으로 개선': {
         label: '결과 외곽 폴리곤 가시화',
         result: '공통 폴리곤 표현 표준화',
       },
