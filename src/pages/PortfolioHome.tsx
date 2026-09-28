@@ -479,7 +479,6 @@ export function PortfolioHome({
                     aria-label={`${project.title} 상세 페이지 보기`}
                   >
                     <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
-                    <span>{project.status}</span>
                   </a>
                 ) : project.detailPath ? (
                   <Link
@@ -489,12 +488,10 @@ export function PortfolioHome({
                     onClick={(event) => onNavigate(event, project.detailPath!)}
                   >
                     <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
-                    <span>{project.status}</span>
                   </Link>
                 ) : (
                   <div className="project-image-wrap">
                     <img src={project.image} alt={`${project.title} 썸네일`} loading="lazy" />
-                    <span>{project.status}</span>
                   </div>
                 )}
                 <div className="project-content">

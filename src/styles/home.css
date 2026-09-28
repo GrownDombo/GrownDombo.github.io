@@ -1202,20 +1202,6 @@
   box-shadow: 0 22px 58px color-mix(in srgb, var(--accent) 16%, transparent);
 }
 
-.project-image-wrap > span {
-  position: absolute;
-  left: 12px;
-  top: 12px;
-  max-width: calc(100% - 24px);
-  padding: 7px 9px;
-  border-radius: 8px;
-  color: #ffffff;
-  background: rgb(23 32 51 / 78%);
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
 .case-study-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
